@@ -1,0 +1,27 @@
+{
+  "name": "alexcinisi-photography",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.24.0",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^5.9.0",
+    "next": "^15.1.0",
+    "next-sanity": "^12.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "resend": "^4.0.0",
+    "sanity": "^5.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}
