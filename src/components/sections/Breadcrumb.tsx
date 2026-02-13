@@ -1,15 +1,25 @@
-// src/components/sections/Breadcrumb.tsx
 import Link from 'next/link';
 
-export default function Breadcrumb({ items }: { items: { label: string, href: string }[] }) {
+interface BreadcrumbProps {
+    items: {
+        label: string;
+        href?: string;
+    }[];
+}
+
+export default function Breadcrumb({ items }: BreadcrumbProps) {
     return (
-        <nav className="text-xs uppercase tracking-widest text-[var(--mid)] mb-8">
-            {items.map((item, i) => (
-                <span key={item.href}>
-                    <Link href={item.href} className="hover:text-[var(--ink)]">{item.label}</Link>
-                    {i < items.length - 1 && <span className="mx-2">/</span>}
+        <div className="breadcrumb" style={{ paddingTop: '90px' }}>
+            {items.map((item, index) => (
+                <span key={index}>
+                    {item.href ? (
+                        <Link href={item.href}>{item.label}</Link>
+                    ) : (
+                        item.label
+                    )}
+                    {index < items.length - 1 && <span>/</span>}
                 </span>
             ))}
-        </nav>
+        </div>
     );
 }

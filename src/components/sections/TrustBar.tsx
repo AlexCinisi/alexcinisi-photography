@@ -1,17 +1,35 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-export default function TrustBar() {
+interface TrustItem {
+    number: string;
+    label: React.ReactNode;
+}
+
+interface TrustBarProps {
+    items?: TrustItem[];
+}
+
+export default function TrustBar({ items }: TrustBarProps) {
+    const defaultItems: TrustItem[] = [
+        { number: "10+", label: <>Years<br />Experience</> },
+        { number: "50+", label: <>Weddings<br />Captured</> },
+        { number: "100%", label: <>Client<br />Satisfaction</> },
+        { number: "Sicily", label: <>Based<br />& Worldwide</> },
+    ];
+
+    const displayItems = items || defaultItems;
+
     return (
         <RevealOnScroll className="trust-bar">
-            <div className="trust-item"><span className="trust-n">30+</span><span className="trust-l">International<br />Weddings</span></div>
-            <div className="trust-sep"></div>
-            <div className="trust-item"><span className="trust-n">15+</span><span className="trust-l">Countries<br />Served</span></div>
-            <div className="trust-sep"></div>
-            <div className="trust-item"><span className="trust-n">2</span><span className="trust-l">Photographers<br />Included</span></div>
-            <div className="trust-sep"></div>
-            <div className="trust-item"><span className="trust-n">8h</span><span className="trust-l">Full Day<br />Coverage</span></div>
-            <div className="trust-sep"></div>
-            <div className="trust-item"><span className="trust-n">Film</span><span className="trust-l">&amp; Digital<br />Artistry</span></div>
+            {displayItems.map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
+                    <div className="trust-item">
+                        <span className="trust-n">{item.number}</span>
+                        <span className="trust-l">{item.label}</span>
+                    </div>
+                    {i < displayItems.length - 1 && <div className="trust-sep"></div>}
+                </div>
+            ))}
         </RevealOnScroll>
     );
 }

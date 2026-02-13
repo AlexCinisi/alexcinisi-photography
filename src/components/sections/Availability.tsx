@@ -1,26 +1,43 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import Link from 'next/link';
 
-export default function Availability() {
+interface AvailabilityProps {
+    items?: {
+        year: string;
+        status: string;
+        substatus: string;
+        dotClass: "open" | "soon" | "closed";
+    }[];
+    text?: string;
+    ctaText?: string;
+}
+
+export default function Availability({
+    items = [
+        { year: "2025", status: "Fully Booked", substatus: "Waitlist Only", dotClass: "closed" },
+        { year: "2026", status: "Now Booking", substatus: "Spring & Summer", dotClass: "open" }
+    ],
+    text = "To ensure every couple receives my complete creative attention, I accept a limited number of weddings each year.",
+    ctaText = "Check Your Date"
+}: AvailabilityProps) {
     return (
-        <section className="s-grey pad">
+        <section className="s-grey pad-sm">
             <div className="max">
                 <RevealOnScroll className="avail-inner">
                     <div>
-                        <div className="f-label">Availability Update</div>
-                        <div className="h2">2026 Season<br />Calendar Status</div>
-                        <p>I accept a limited number of weddings per year (25 max) to ensure I can give every couple my full creative energy and attention. Late Summer/Autumn dates are booking rapidly.</p>
+                        <div className="f-label" style={{ marginBottom: '18px' }}>Availability</div>
+                        <div className="h2"><em>Limited &amp;</em><br />Intentional Selection</div>
+                        <p style={{ marginTop: '18px' }}>{text}</p>
                     </div>
                     <div className="avail-cards">
-                        <div className="avail-card">
-                            <div className="avail-yr">2025</div>
-                            <div className="avail-st">Fully Booked<span>Waitlist Only</span></div>
-                            <div style={{ marginLeft: 'auto' }}><div className="avail-dot open"></div></div>
-                        </div>
-                        <div className="avail-card">
-                            <div className="avail-yr">2026</div>
-                            <div className="avail-st">Booking Now<span>Apr, May, Jun, Sep, Oct</span></div>
-                            <div style={{ marginLeft: 'auto' }}><div className="avail-dot soon"></div></div>
-                        </div>
+                        {items.map((item, i) => (
+                            <div className="avail-card" key={i}>
+                                <span className={`avail-dot ${item.dotClass}`}></span>
+                                <span className="avail-yr">{item.year}</span>
+                                <div className="avail-st">{item.status}<span>{item.substatus}</span></div>
+                            </div>
+                        ))}
+                        <Link href="#contact" className="btn-fill" style={{ textAlign: 'center' }}>{ctaText} →</Link>
                     </div>
                 </RevealOnScroll>
             </div>

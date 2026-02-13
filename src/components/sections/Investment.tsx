@@ -1,43 +1,82 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import Link from 'next/link';
 
-export default function Investment() {
+interface InvestmentProps {
+    intro?: {
+        label: string;
+        title: React.ReactNode;
+    };
+    price?: string;
+    priceRange?: string;
+    description?: string;
+    includes?: string[];
+    enhancements?: string[];
+    signatureQuote?: React.ReactNode;
+    ctaText?: string;
+}
+
+export default function Investment({
+    intro = {
+        label: "Your Investment",
+        title: <>Transparent Pricing,<br /><em>Exceptional Value</em></>
+    },
+    price = "€ 2,500",
+    priceRange = "Most couples invest between €2,500 – €4,000",
+    description = "I believe in complete transparency. Your investment covers everything you need for a beautifully documented wedding — no hidden costs, no unexpected add-ons.",
+    includes = [
+        "Full wedding day coverage — 8 hours",
+        "Professional photographer dedicated to your day",
+        "400 – 600 beautifully edited high-resolution images",
+        "Private online gallery with sharing & download",
+        "High-resolution files with full print rights",
+        "Pre-wedding consultation",
+        "Sneak peek delivery within 48–72 hours"
+    ],
+    enhancements = [
+        "Extended coverage (10–12 hours or multi-day)",
+        "Second photographer",
+        "Engagement session",
+        "Film photography (medium format)",
+        "Rehearsal dinner coverage",
+        "Fine Art wedding albums (Made in Italy)",
+        "Drone aerial photography"
+    ],
+    signatureQuote = <>"Your wedding memories<br />deserve to be preserved<br />as timeless art."</>,
+    ctaText = "Request Your Proposal"
+}: InvestmentProps) {
     return (
-        <section className="s-white pad" id="invest">
+        <section className="s-offwh pad" id="invest">
             <div className="max">
-                <div className="sec-head">
-                    <div className="f-label">Investment</div>
-                    <div className="h2-lg">Simple, Transparent<br />Pricing for 2026.</div>
-                </div>
+                <RevealOnScroll className="sec-head">
+                    <div className="f-label">{intro.label}</div>
+                    <div className="h2-lg">{intro.title}</div>
+                </RevealOnScroll>
                 <div className="invest-grid">
-                    <RevealOnScroll className="invest-left">
-                        <p className="hero-sub">I believe you shouldn't need a spreadsheet to understand your wedding photography package. I offer one comprehensive collection that covers everything 95% of couples need.</p>
+                    <RevealOnScroll>
+                        <p style={{ fontSize: '.88rem', lineHeight: '1.85', color: 'var(--charcoal)', marginBottom: '8px' }}>{description}</p>
                         <div className="invest-price-block">
-                            <span className="price-eye">Full Day Collection</span>
-                            <span className="price-big">€3,500</span>
-                            <span className="price-rng">All-inclusive for Sicily Weddings</span>
+                            <span className="price-eye">Starting Investment</span>
+                            <span className="price-big">{price}</span>
+                            <span className="price-rng">{priceRange}</span>
                         </div>
                         <ul className="includes">
-                            <li>Up to 10 Hours of Coverage</li>
-                            <li>400+ High-Res Edited Images</li>
-                            <li>Online Private Gallery (10 Years)</li>
-                            <li>Sneak Peeks within 48 Hours</li>
-                            <li>Travel included throughout Sicily</li>
-                            <li>Personal Printing Rights</li>
+                            {includes.map((item, i) => (
+                                <li key={i}>{item}</li>
+                            ))}
                         </ul>
-                        <div className="invest-sig">
-                            <p>"No hidden travel fees, no confusing tiers. Just me, your wedding, and a commitment to excellence."</p>
-                            <span>— Alex Cinisi</span>
-                        </div>
+                        <Link href="#contact" className="btn-fill">{ctaText}</Link>
                     </RevealOnScroll>
-                    <RevealOnScroll className="invest-right d2">
+                    <RevealOnScroll className="d2">
                         <div className="enhancements-box">
-                            <h3>Enhancements</h3>
-                            <p>Customise your collection with these optional extras.</p>
-                            <div className="e-item">Second Photographer (Recommended for 100+ guests)</div>
-                            <div className="e-item">35mm Film Add-On (3 Rolls)</div>
-                            <div className="e-item">Rehearsal Dinner Coverage (2 Hours)</div>
-                            <div className="e-item">Next-Day Editorial Session</div>
-                            <div className="e-item">Fine Art Album (30x30cm)</div>
+                            <h3>Bespoke Enhancements</h3>
+                            <p>Every wedding is unique. Tailor your experience with add-ons detailed in your personalised proposal.</p>
+                            {enhancements.map((item, i) => (
+                                <div className="e-item" key={i}>{item}</div>
+                            ))}
+                            <div className="invest-sig">
+                                <p>{signatureQuote}</p>
+                                <span>— Alex Cinisi</span>
+                            </div>
                         </div>
                     </RevealOnScroll>
                 </div>
