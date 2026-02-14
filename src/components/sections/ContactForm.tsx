@@ -35,6 +35,8 @@ export default function ContactForm({
         partnerName: '',
         email: '',
         phone: '',
+        instagram: '',
+        planner: '',
         weddingDate: '',
         location: venueValue,
         guestCount: '',
@@ -155,6 +157,8 @@ export default function ContactForm({
                 partnerName: '',
                 email: '',
                 phone: '',
+                instagram: '',
+                planner: '',
                 weddingDate: '',
                 location: venueValue, // Keep venue value if provided via props
                 guestCount: '',
@@ -276,6 +280,28 @@ export default function ContactForm({
                                         name="phone"
                                         placeholder="+1 (555) 000-0000"
                                         value={formData.phone}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+
+                                {/* Row 3: Instagram + Wedding Planner */}
+                                <div className="fg">
+                                    <Label text="Instagram Handle" />
+                                    <input
+                                        type="text"
+                                        name="instagram"
+                                        placeholder="@yourhandle"
+                                        value={formData.instagram}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                <div className="fg">
+                                    <Label text="Wedding Planner" />
+                                    <input
+                                        type="text"
+                                        name="planner"
+                                        placeholder="Name of your planner, or 'Not yet'"
+                                        value={formData.planner}
                                         onChange={handleInputChange}
                                     />
                                 </div>
