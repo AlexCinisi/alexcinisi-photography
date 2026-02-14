@@ -305,7 +305,7 @@ export default function ContactForm({
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <div className="fg full">
+                                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
                                     <Label text="Wedding Date" required />
                                     <input
                                         type={dateType}
@@ -347,7 +347,7 @@ export default function ContactForm({
                                 )}
 
                                 {!venueHidden && (
-                                    <div className="fg full">
+                                    <div className="fg full" style={{ gridColumn: '1 / -1' }}>
                                         <Label text={venueLabel} required />
                                         <input
                                             type="text"
@@ -361,7 +361,7 @@ export default function ContactForm({
                                 )}
 
                                 {showBudget && (
-                                    <div className="fg full">
+                                    <div className="fg full" style={{ gridColumn: '1 / -1' }}>
                                         <Label text="Estimated Photography Investment" required />
                                         <select name="budget" value={formData.budget} onChange={handleInputChange}>
                                             <option value="">Select a range…</option>
@@ -374,7 +374,7 @@ export default function ContactForm({
                                     </div>
                                 )}
 
-                                <div className="fg full">
+                                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
                                     <Label text={messageLabel} required />
                                     <textarea
                                         name="vision"
@@ -386,7 +386,7 @@ export default function ContactForm({
                                 </div>
 
                                 {showInterestCheckboxes && (
-                                    <div className="check-group">
+                                    <div className="check-group" style={{ gridColumn: '1 / -1' }}>
                                         <label className="check-lbl"><input type="checkbox" value="Wedding Photography" onChange={handleCheckboxChange} checked={formData.interests.includes("Wedding Photography")} />Wedding Photography</label>
                                         <label className="check-lbl"><input type="checkbox" value="Elopement" onChange={handleCheckboxChange} checked={formData.interests.includes("Elopement")} />Elopement</label>
                                         <label className="check-lbl"><input type="checkbox" value="Couple Session" onChange={handleCheckboxChange} checked={formData.interests.includes("Couple Session")} />Couple Session</label>
@@ -394,7 +394,7 @@ export default function ContactForm({
                                     </div>
                                 )}
 
-                                <div className="priv-row" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                                <div className="priv-row" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', gridColumn: '1 / -1' }}>
                                     <label className="custom-checkbox" style={{
                                         position: 'relative',
                                         display: 'inline-block',
@@ -441,7 +441,7 @@ export default function ContactForm({
                                         I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).
                                     </span>
                                 </div>
-                                <ErrorMsg field="privacyConsent" />
+                                <div style={{ gridColumn: '1 / -1' }}><ErrorMsg field="privacyConsent" /></div>
 
                                 <button
                                     type="submit"
@@ -450,7 +450,8 @@ export default function ContactForm({
                                     style={{
                                         opacity: (status === 'submitting' || !formData.privacyConsent) ? 0.5 : 1,
                                         marginTop: '1rem',
-                                        cursor: (status === 'submitting' || !formData.privacyConsent) ? 'not-allowed' : 'pointer'
+                                        cursor: (status === 'submitting' || !formData.privacyConsent) ? 'not-allowed' : 'pointer',
+                                        gridColumn: '1 / -1'
                                     }}
                                 >
                                     {status === 'submitting' ? 'Sending...' : 'Request Your Proposal'}
