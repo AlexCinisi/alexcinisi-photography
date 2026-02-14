@@ -232,11 +232,6 @@ export default function ContactForm({
                             <form onSubmit={handleSubmit} ref={formRef}>
 
 
-                                {status === 'error' && errorMessage && (
-                                    <div style={{ color: 'red', marginBottom: '1.5rem', padding: '10px', backgroundColor: '#fff0f0', border: '1px solid #ffcccc', borderRadius: '4px' }}>
-                                        {errorMessage}
-                                    </div>
-                                )}
 
                                 <div className="fg">
                                     <Label text="First Name" required />
@@ -456,6 +451,12 @@ export default function ContactForm({
                                 >
                                     {status === 'submitting' ? 'Sending...' : 'Request Your Proposal'}
                                 </button>
+
+                                {status === 'error' && errorMessage && (
+                                    <div style={{ gridColumn: '1 / -1', color: '#C53030', padding: '12px 16px', backgroundColor: '#FFF0F0', border: '1px solid #FED7D7', borderRadius: '4px', textAlign: 'center', fontSize: '0.85rem', marginTop: '8px' }}>
+                                        {errorMessage}
+                                    </div>
+                                )}
                             </form>
                         )}
                     </RevealOnScroll>
