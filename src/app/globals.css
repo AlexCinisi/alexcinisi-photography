@@ -169,14 +169,21 @@ nav.scrolled {
 
 .hamburger.active span:nth-child(1) {
   transform: translateY(8.25px) rotate(45deg);
+  transition-delay: .1s;
 }
 
 .hamburger.active span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
+  width: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all .2s ease-out;
 }
 
 .hamburger.active span:nth-child(3) {
   transform: translateY(-8.25px) rotate(-45deg);
+  transition-delay: .1s;
 }
 
 /* Fullscreen Overlay Menu */

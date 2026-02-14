@@ -35,9 +35,13 @@ export default function Home() {
             {/* 14 */}  <FAQ />
             {/* 15 */}  <Availability />
             {/* 16 */}  <ContactForm
-                showGuestCount={true}
-                showBudget={true}
-                showSource={true}
+                showGuestCount={false}
+                showBudget={false}
+                showSource={false}
+                showPhone={false}
+                showPlanner={false}
+                ctaText="Tell Me About Your Wedding →"
+                interests={["Wedding Photography", "Elopement", "Couple Session"]}
             />
             {/* 17 */}  <FinalCTA />
         </>

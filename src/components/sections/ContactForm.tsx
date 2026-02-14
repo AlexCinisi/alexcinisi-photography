@@ -12,6 +12,10 @@ interface ContactFormProps {
     showBudget?: boolean;
     showSource?: boolean;
     messageLabel?: string;
+    showPhone?: boolean;
+    showPlanner?: boolean;
+    ctaText?: string;
+    interests?: string[];
     showInterestCheckboxes?: boolean;
     dateType?: "date" | "text";
     datePlaceholder?: string;
@@ -26,6 +30,10 @@ export default function ContactForm({
     showBudget = false,
     showSource = false,
     messageLabel = "Tell Me About Your Story",
+    showPhone = true,
+    showPlanner = true,
+    ctaText = "Request Your Proposal",
+    interests = ["Wedding Photography", "Elopement", "Couple Session", "Film Photography"],
     showInterestCheckboxes = true,
     dateType = "date",
     datePlaceholder
@@ -268,16 +276,18 @@ export default function ContactForm({
                                     />
                                     <ErrorMsg field="email" />
                                 </div>
-                                <div className="fg">
-                                    <Label text="Phone Number" />
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        placeholder="+1 (555) 000-0000"
-                                        value={formData.phone}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
+                                {showPhone && (
+                                    <div className="fg">
+                                        <Label text="Phone Number" />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            placeholder="+1 (555) 000-0000"
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                )}
 
                                 {/* Row 3: Instagram + Wedding Planner */}
                                 <div className="fg">
@@ -290,16 +300,18 @@ export default function ContactForm({
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <div className="fg">
-                                    <Label text="Wedding Planner" />
-                                    <input
-                                        type="text"
-                                        name="planner"
-                                        placeholder="Name of your planner, or 'Not yet'"
-                                        value={formData.planner}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
+                                {showPlanner && (
+                                    <div className="fg">
+                                        <Label text="Wedding Planner" />
+                                        <input
+                                            type="text"
+                                            name="planner"
+                                            placeholder="Name of your planner, or 'Not yet'"
+                                            value={formData.planner}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                )}
                                 <div className="fg full" style={{ gridColumn: '1 / -1' }}>
                                     <Label text="Wedding Date" required />
                                     <input
@@ -382,10 +394,17 @@ export default function ContactForm({
 
                                 {showInterestCheckboxes && (
                                     <div className="check-group" style={{ gridColumn: '1 / -1' }}>
-                                        <label className="check-lbl"><input type="checkbox" value="Wedding Photography" onChange={handleCheckboxChange} checked={formData.interests.includes("Wedding Photography")} />Wedding Photography</label>
-                                        <label className="check-lbl"><input type="checkbox" value="Elopement" onChange={handleCheckboxChange} checked={formData.interests.includes("Elopement")} />Elopement</label>
-                                        <label className="check-lbl"><input type="checkbox" value="Couple Session" onChange={handleCheckboxChange} checked={formData.interests.includes("Couple Session")} />Couple Session</label>
-                                        <label className="check-lbl"><input type="checkbox" value="Film Photography" onChange={handleCheckboxChange} checked={formData.interests.includes("Film Photography")} />Film Photography</label>
+                                        {interests.map((interest) => (
+                                            <label key={interest} className="check-lbl">
+                                                <input
+                                                    type="checkbox"
+                                                    value={interest}
+                                                    onChange={handleCheckboxChange}
+                                                    checked={formData.interests.includes(interest)}
+                                                />
+                                                {interest}
+                                            </label>
+                                        ))}
                                     </div>
                                 )}
 
@@ -449,7 +468,7 @@ export default function ContactForm({
                                         gridColumn: '1 / -1'
                                     }}
                                 >
-                                    {status === 'submitting' ? 'Sending...' : 'Request Your Proposal'}
+                                    {status === 'submitting' ? 'Sending...' : ctaText}
                                 </button>
 
                                 {status === 'error' && errorMessage && (
