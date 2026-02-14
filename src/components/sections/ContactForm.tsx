@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useRef } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 interface ContactFormProps {
@@ -47,18 +47,27 @@ export default function ContactForm({
 
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+    const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+    // Refs for scrolling to errors
+    const formRef = useRef<HTMLFormElement>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        // Clear error when user types
+        if (formErrors[name]) {
+            setFormErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[name];
+                return newErrors;
+            });
+        }
     };
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, checked } = e.target;
         setFormData(prev => {
-            if (name === 'privacyConsent') {
-                return { ...prev, privacyConsent: checked };
-            }
             // For interests checkboxes
             if (checked) {
                 return { ...prev, interests: [...prev.interests, value] };
@@ -70,13 +79,62 @@ export default function ContactForm({
 
     // Special handler for privacy consent since it has a specific name
     const handlePrivacyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData(prev => ({ ...prev, privacyConsent: e.target.checked }));
+        const checked = e.target.checked;
+        setFormData(prev => ({ ...prev, privacyConsent: checked }));
+        if (checked && formErrors.privacyConsent) {
+            setFormErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.privacyConsent;
+                return newErrors;
+            });
+        }
+    };
+
+    const validateForm = () => {
+        const errors: Record<string, string> = {};
+
+        if (!formData.name.trim()) errors.name = "This field is required";
+        if (!formData.partnerName.trim()) errors.partnerName = "This field is required";
+        if (!formData.email.trim()) errors.email = "This field is required";
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = "Please enter a valid email";
+
+        if (!formData.weddingDate.trim()) errors.weddingDate = "This field is required";
+
+        if (!venueHidden && !formData.location.trim()) errors.location = "This field is required";
+
+        if (showGuestCount && !formData.guestCount) errors.guestCount = "This field is required";
+        if (showBudget && !formData.budget) errors.budget = "This field is required";
+
+        if (!formData.vision.trim()) errors.vision = "This field is required";
+
+        if (!formData.privacyConsent) errors.privacyConsent = "You must accept the Privacy Policy to continue";
+
+        return errors;
     };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        // precise validation
+        const errors = validateForm();
+
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            setErrorMessage("Please complete all required fields before submitting");
+            setStatus('error'); // Show general error message at top
+
+            // Scroll to the first error
+            const firstErrorField = Object.keys(errors)[0];
+            const element = formRef.current?.querySelector(`[name="${firstErrorField}"]`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return;
+        }
+
         setStatus('submitting');
         setErrorMessage('');
+        setFormErrors({});
 
         try {
             const response = await fetch('/api/contact', {
@@ -112,6 +170,19 @@ export default function ContactForm({
             setErrorMessage('Something went wrong. Please try again later or email me directly at info@alexcinisiphotography.com');
         }
     };
+
+    // Helper to render label with asterisk
+    const Label = ({ text, required = false }: { text: string, required?: boolean }) => (
+        <label>
+            {text}
+            {required && <span style={{ color: 'red', marginLeft: '4px' }}>*</span>}
+        </label>
+    );
+
+    // Helper to render error message
+    const ErrorMsg = ({ field }: { field: string }) => (
+        formErrors[field] ? <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>{formErrors[field]}</div> : null
+    );
 
     return (
         <section className="s-white pad" id="contact">
@@ -154,20 +225,31 @@ export default function ContactForm({
                                 </button>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} ref={formRef}>
+                                <div style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#666' }}>
+                                    Fields marked with <span style={{ color: 'red' }}>*</span> are required
+                                </div>
+
+                                {status === 'error' && errorMessage && (
+                                    <div style={{ color: 'red', marginBottom: '1.5rem', padding: '10px', backgroundColor: '#fff0f0', border: '1px solid #ffcccc', borderRadius: '4px' }}>
+                                        {errorMessage}
+                                    </div>
+                                )}
+
                                 <div className="fg">
-                                    <label>First Name</label>
+                                    <Label text="First Name" required />
                                     <input
                                         type="text"
                                         name="name"
                                         placeholder="Your Name"
                                         value={formData.name}
                                         onChange={handleInputChange}
-                                        required
+                                        required={false} // Disable browser validation to use custom
                                     />
+                                    <ErrorMsg field="name" />
                                 </div>
                                 <div className="fg">
-                                    <label>Last Name</label>
+                                    <Label text="Partner Type / Name" required />
                                     <input
                                         type="text"
                                         name="partnerName"
@@ -175,20 +257,22 @@ export default function ContactForm({
                                         value={formData.partnerName}
                                         onChange={handleInputChange}
                                     />
+                                    <ErrorMsg field="partnerName" />
                                 </div>
                                 <div className="fg">
-                                    <label>Email Address</label>
+                                    <Label text="Email Address" required />
                                     <input
                                         type="email"
                                         name="email"
                                         placeholder="best.email@example.com"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        required
+                                        required={false}
                                     />
+                                    <ErrorMsg field="email" />
                                 </div>
                                 <div className="fg">
-                                    <label>Phone Number</label>
+                                    <Label text="Phone Number" />
                                     <input
                                         type="tel"
                                         name="phone"
@@ -198,7 +282,7 @@ export default function ContactForm({
                                     />
                                 </div>
                                 <div className="fg">
-                                    <label>Wedding Date</label>
+                                    <Label text="Wedding Date" required />
                                     <input
                                         type={dateType}
                                         name="weddingDate"
@@ -206,11 +290,12 @@ export default function ContactForm({
                                         value={formData.weddingDate}
                                         onChange={handleInputChange}
                                     />
+                                    <ErrorMsg field="weddingDate" />
                                 </div>
 
                                 {showGuestCount && (
                                     <div className="fg">
-                                        <label>Guest Count</label>
+                                        <Label text="Guest Count" required />
                                         <select name="guestCount" value={formData.guestCount} onChange={handleInputChange}>
                                             <option value="">Select…</option>
                                             <option value="Elopement (just us)">Elopement (just us)</option>
@@ -218,12 +303,13 @@ export default function ContactForm({
                                             <option value="Medium (50–100)">Medium (50–100)</option>
                                             <option value="Grand (100+)">Grand (100+)</option>
                                         </select>
+                                        <ErrorMsg field="guestCount" />
                                     </div>
                                 )}
 
                                 {showSource && (
                                     <div className="fg">
-                                        <label>How did you find us?</label>
+                                        <Label text="How did you find us?" />
                                         <select name="howFound" value={formData.howFound} onChange={handleInputChange}>
                                             <option value="">Select…</option>
                                             <option value="Google">Google</option>
@@ -238,7 +324,7 @@ export default function ContactForm({
 
                                 {!venueHidden && (
                                     <div className={`fg ${showGuestCount || showSource ? '' : 'full'}`}>
-                                        <label>{venueLabel}</label>
+                                        <Label text={venueLabel} required />
                                         <input
                                             type="text"
                                             name="location"
@@ -246,12 +332,13 @@ export default function ContactForm({
                                             value={formData.location}
                                             onChange={handleInputChange}
                                         />
+                                        <ErrorMsg field="location" />
                                     </div>
                                 )}
 
                                 {showBudget && (
                                     <div className="fg full">
-                                        <label>Estimated Photography Investment</label>
+                                        <Label text="Estimated Photography Investment" required />
                                         <select name="budget" value={formData.budget} onChange={handleInputChange}>
                                             <option value="">Select a range…</option>
                                             <option value="€2,000 – €2,500">€2,000 – €2,500</option>
@@ -259,17 +346,19 @@ export default function ContactForm({
                                             <option value="€3,000+">€3,000+</option>
                                             <option value="Flexible / Let's discuss">Flexible / Let's discuss</option>
                                         </select>
+                                        <ErrorMsg field="budget" />
                                     </div>
                                 )}
 
                                 <div className="fg full">
-                                    <label>{messageLabel}</label>
+                                    <Label text={messageLabel} required />
                                     <textarea
                                         name="vision"
                                         placeholder="How did you meet? What is the vibe of your day? Be as detailed as you like - I love stories."
                                         value={formData.vision}
                                         onChange={handleInputChange}
                                     ></textarea>
+                                    <ErrorMsg field="vision" />
                                 </div>
 
                                 {showInterestCheckboxes && (
@@ -285,22 +374,23 @@ export default function ContactForm({
                                     <input
                                         type="checkbox"
                                         name="privacyConsent"
-                                        required
+                                        // required={false} // Custom validation
                                         checked={formData.privacyConsent}
                                         onChange={handlePrivacyChange}
                                     />
                                     <span>I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).</span>
                                 </div>
-
-                                {status === 'error' && (
-                                    <div style={{ color: 'red', marginBottom: '1rem' }}>{errorMessage}</div>
-                                )}
+                                <ErrorMsg field="privacyConsent" />
 
                                 <button
                                     type="submit"
                                     className="btn-sub"
-                                    disabled={status === 'submitting'}
-                                    style={{ opacity: status === 'submitting' ? 0.7 : 1 }}
+                                    disabled={status === 'submitting' || !formData.privacyConsent}
+                                    style={{
+                                        opacity: (status === 'submitting' || !formData.privacyConsent) ? 0.5 : 1,
+                                        marginTop: '1rem',
+                                        cursor: (status === 'submitting' || !formData.privacyConsent) ? 'not-allowed' : 'pointer'
+                                    }}
                                 >
                                     {status === 'submitting' ? 'Sending...' : 'Request Your Proposal'}
                                 </button>
