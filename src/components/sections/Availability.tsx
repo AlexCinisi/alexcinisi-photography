@@ -1,43 +1,50 @@
-import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import Link from 'next/link';
+import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-interface AvailabilityProps {
-    items?: {
-        year: string;
-        status: string;
-        substatus: string;
-        dotClass: "open" | "soon" | "closed";
-    }[];
-    text?: string;
-    ctaText?: string;
+interface AvailabilityItem {
+    year: string;
+    status: string;
+    substatus: string;
+    dotClass: string;
 }
 
-export default function Availability({
-    items = [
-        { year: "2025", status: "Fully Booked", substatus: "Waitlist Only", dotClass: "closed" },
-        { year: "2026", status: "Now Booking", substatus: "Spring & Summer", dotClass: "open" }
-    ],
-    text = "To ensure every couple receives my complete creative attention, I accept a limited number of weddings each year.",
-    ctaText = "Check Your Date"
-}: AvailabilityProps) {
+interface AvailabilityProps {
+    items?: AvailabilityItem[];
+    text?: string;
+}
+
+const defaultItems: AvailabilityItem[] = [
+    { year: '2026', status: 'Select dates still available', substatus: 'Spring & Autumn openings remaining', dotClass: 'open' },
+    { year: '2027', status: 'Now accepting enquiries', substatus: 'Secure your date early', dotClass: 'soon' },
+];
+
+const defaultText = "I accept a limited number of weddings each year to ensure every couple receives my full creative attention and bespoke service. Peak season dates fill 12–18 months in advance.";
+
+export default function Availability({ items, text }: AvailabilityProps) {
+    const displayItems = items || defaultItems;
+    const displayText = text || defaultText;
+
     return (
-        <section className="s-grey pad-sm">
+        <section className="s-offwh pad-sm">
             <div className="max">
                 <RevealOnScroll className="avail-inner">
                     <div>
-                        <div className="f-label" style={{ marginBottom: '18px' }}>Availability</div>
-                        <div className="h2"><em>Limited &amp;</em><br />Intentional Selection</div>
-                        <p style={{ marginTop: '18px' }}>{text}</p>
+                        <div className="f-label" style={{ marginBottom: '22px' }}>Availability</div>
+                        <div className="h2" style={{ marginBottom: '16px' }}>Limited Dates<br /><em>Remaining</em></div>
+                        <p>{displayText}</p>
+                        <Link href="#contact" className="btn-fill" style={{ marginTop: '28px' }}>Check Your Date</Link>
                     </div>
                     <div className="avail-cards">
-                        {items.map((item, i) => (
+                        {displayItems.map((item, i) => (
                             <div className="avail-card" key={i}>
-                                <span className={`avail-dot ${item.dotClass}`}></span>
-                                <span className="avail-yr">{item.year}</span>
-                                <div className="avail-st">{item.status}<span>{item.substatus}</span></div>
+                                <div className={`avail-dot ${item.dotClass}`}></div>
+                                <div className="avail-yr">{item.year}</div>
+                                <div className="avail-st">
+                                    {item.status}
+                                    <span>{item.substatus}</span>
+                                </div>
                             </div>
                         ))}
-                        <Link href="#contact" className="btn-fill" style={{ textAlign: 'center' }}>{ctaText} →</Link>
                     </div>
                 </RevealOnScroll>
             </div>

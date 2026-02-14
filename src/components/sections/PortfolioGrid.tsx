@@ -1,88 +1,105 @@
-import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import { ReactNode } from 'react';
 import Link from 'next/link';
+import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-export interface PortfolioItem {
+interface PortfolioItem {
     title: string;
     subtitle: string;
     badge: string;
 }
 
+interface PortfolioIntro {
+    label: string;
+    title: ReactNode;
+    note?: string;
+}
+
 interface PortfolioGridProps {
-    intro?: {
-        label: string;
-        title: React.ReactNode;
-        note: string;
-    };
+    intro?: PortfolioIntro;
     items?: PortfolioItem[];
-    ctaLink?: string;
     ctaText?: string;
+    ctaLink?: string;
 }
 
 const defaultItems: PortfolioItem[] = [
-    { title: "Marina & James", subtitle: "Villa Valguarnera · Bagheria", badge: "Film + Digital" },
-    { title: "Sophie & David", subtitle: "Taormina · Full Day", badge: "Destination" },
-    { title: "Lucia & Marco", subtitle: "Tonnara di Scopello", badge: "Editorial" },
-    { title: "Anna & Mark", subtitle: "Taormina · UK Couple", badge: "Film" },
-    { title: "Julia & Thomas", subtitle: "Noto · USA Couple", badge: "Intimate" },
-    { title: "Chiara & Luca", subtitle: "Scopello · Weekend", badge: "Full Weekend" },
+    { title: 'Marina & James', subtitle: 'Villa Valguarnera · Bagheria', badge: 'Film + Digital' },
+    { title: 'Sophie & David', subtitle: 'Taormina · Full Day', badge: 'Destination' },
+    { title: 'Lucia & Marco', subtitle: 'Tonnara di Scopello', badge: 'Editorial' },
+    { title: 'Anna & Mark', subtitle: 'Taormina · UK Couple', badge: 'Film' },
+    { title: 'Julia & Thomas', subtitle: 'Noto · USA Couple', badge: 'Intimate' },
+    { title: 'Chiara & Luca', subtitle: 'Scopello · Weekend', badge: 'Full Weekend' },
+    { title: 'Elena & Robert', subtitle: 'Villa Igiea · Palermo', badge: 'Luxury' },
+];
+
+const defaultSpans = [
+    { col: 'span 7', h: 460 },
+    { col: 'span 5', h: 460 },
+    { col: 'span 4', h: 380 },
+    { col: 'span 4', h: 380 },
+    { col: 'span 4', h: 380 },
+    { col: 'span 5', h: 420 },
+    { col: 'span 7', h: 420 },
+];
+
+// Location page spans (6 items)
+const locationSpans = [
+    { col: 'span 5', h: 560 },
+    { col: 'span 7', h: 272 },
+    { col: 'span 4', h: 272 },
+    { col: 'span 3', h: 272 },
+    { col: 'span 5', h: 300 },
+    { col: 'span 7', h: 300 },
 ];
 
 export default function PortfolioGrid({
-    intro = {
-        label: "Selected Work",
-        title: <>Love Stories<br />Across Sicily</>,
-        note: "Every frame tells a story. Hover each image to discover the couple behind it."
-    },
-    items = defaultItems,
-    ctaLink = "#contact",
-    ctaText = "View Complete Portfolio"
+    intro,
+    items,
+    ctaText = 'Explore All Stories',
+    ctaLink = 'https://www.alexcinisiphotography.com/stories/',
 }: PortfolioGridProps) {
+    const displayItems = items || defaultItems;
+    const spans = items ? locationSpans : defaultSpans;
 
-    // Placeholder SVG for images
-    const cameraIcon = (
-        <div className="iph">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.6" width="32" height="32">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" />
-            </svg>
-        </div>
-    );
+    const headerLabel = intro?.label || 'Selected Work';
+    const headerTitle = intro?.title || <>Love Stories From<br /><em>Sicily &amp; Beyond</em></>;
+    const headerNote = intro?.note;
 
     return (
-        <section className="s-white pad" id="portfolio">
+        <section className="s-white pad-sm" id="portfolio">
             <div className="max">
-                <RevealOnScroll className="port-intro">
-                    <div>
-                        <div className="f-label" style={{ marginBottom: '14px' }}>{intro.label}</div>
-                        <div className="h2-lg">{intro.title}</div>
-                    </div>
-                    <p className="port-intro-note">{intro.note}</p>
+                <RevealOnScroll className="sec-head">
+                    <div className="f-label">{headerLabel}</div>
+                    <div className="h2-lg">{headerTitle}</div>
+                    {headerNote && (
+                        <p style={{ fontSize: '.82rem', color: 'var(--mid)', maxWidth: 260, lineHeight: 1.7 }}>
+                            {headerNote}
+                        </p>
+                    )}
                 </RevealOnScroll>
-
-                <RevealOnScroll className="port-grid d1">
-                    {items.map((item, i) => (
-                        <div className="port-item" key={i}>
-                            <div className="port-bg">
-                                <div className="iph">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.6" width="32" height="32">
-                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div className="port-ov">
-                                <div className="port-cap">
-                                    <h4>{item.title}</h4>
-                                    <span>{item.subtitle}</span>
-                                </div>
+            </div>
+            <RevealOnScroll className="port-grid d1">
+                {displayItems.map((item, i) => {
+                    const span = spans[i] || spans[spans.length - 1];
+                    return (
+                        <div
+                            key={i}
+                            className="port-item"
+                            style={{ gridColumn: span.col, height: span.h }}
+                        >
+                            <div className="port-info">
+                                <strong>{item.title}</strong>
+                                <span>{item.subtitle}</span>
                             </div>
                             <div className="port-badge">{item.badge}</div>
                         </div>
-                    ))}
-                </RevealOnScroll>
-
-                <RevealOnScroll className="d2" style={{ textAlign: 'center', marginTop: '48px' }}>
-                    <Link href={ctaLink} className="btn-outline">{ctaText}</Link>
-                </RevealOnScroll>
-            </div>
+                    );
+                })}
+            </RevealOnScroll>
+            <RevealOnScroll>
+                <div style={{ textAlign: 'center', paddingTop: '56px' }}>
+                    <Link href={ctaLink} className="btn-fill">{ctaText}</Link>
+                </div>
+            </RevealOnScroll>
         </section>
     );
 }

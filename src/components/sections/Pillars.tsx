@@ -1,50 +1,67 @@
+import { ReactNode } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 interface PillarItem {
     number: string;
     title: string;
     description: string;
-    quote?: string;
-    quoteAuthor?: string;
+    quote: string;
+    quoteAuthor: string;
+}
+
+interface PillarIntro {
+    label: string;
+    title: ReactNode;
 }
 
 interface PillarsProps {
-    intro?: {
-        label: string;
-        title: React.ReactNode;
-    };
+    intro?: PillarIntro;
     items?: PillarItem[];
 }
 
 const defaultItems: PillarItem[] = [
-    { number: "01", title: "Timeless Editing", description: "My editing style is true to life, refined, and consistent. Your photos will look as beautiful in 50 years as they do today.", quote: "The colors are so natural and elegant.", quoteAuthor: "Julia & Sam" },
-    { number: "02", title: "Unobtrusive Approach", description: "I capture moments as they unfold, without interfering. You enjoy your day; I preserve the memories.", quote: "We basically forgot he was there!", quoteAuthor: "Mark & Sarah" },
-    { number: "03", title: "Curated Experience", description: "From the first call to album delivery, every step is handled with care and attention to detail.", quote: "Professional, kind, and incredibly talented.", quoteAuthor: "Elena & Tom" },
+    {
+        number: '01',
+        title: 'Invisible Presence',
+        description: 'My approach is quiet, intuitive, human. You live your day — I capture it unfolding naturally. No intrusion, no interruption, just authentic moments preserved forever.',
+        quote: '"Alex made us forget there was a camera. We were just… us."',
+        quoteAuthor: 'Sofia & Michael, USA',
+    },
+    {
+        number: '02',
+        title: 'Editorial Sensibility',
+        description: "When gentle guidance is needed — portraits, golden hour, family formals — it's subtle, elegant and natural. No stiff poses. No awkward \"say cheese.\"",
+        quote: '"Every image feels natural, timeless and deeply emotional."',
+        quoteAuthor: 'Chiara & Luca, Italy',
+    },
+    {
+        number: '03',
+        title: 'Bespoke Attention',
+        description: "Every couple, every celebration is different. You're not a number — you're a story I'm honoured to tell, with my full creative focus from first inquiry to final gallery.",
+        quote: '"Everything was so far above expectations. No words."',
+        quoteAuthor: 'Francesca, Italy',
+    },
 ];
 
-export default function Pillars({
-    intro = {
-        label: "My Approach",
-        title: <>Photography rooted<br />in <em>Connection</em></>
-    },
-    items = defaultItems
-}: PillarsProps) {
+export default function Pillars({ intro, items }: PillarsProps) {
+    const displayItems = items || defaultItems;
+    const label = intro?.label || 'Why Couples Choose Alex';
+    const title = intro?.title || <>Three Pillars of<br /><em>Unforgettable Imagery</em></>;
+
     return (
-        <section className="s-white pad">
+        <section className="s-grey pad" id="approach">
             <div className="max">
-                <RevealOnScroll className="sec-head">
-                    <div className="f-label">{intro.label}</div>
-                    <div className="h2-lg">{intro.title}</div>
+                <RevealOnScroll className="sec-head center">
+                    <div className="f-label">{label}</div>
+                    <div className="h2-lg">{title}</div>
                 </RevealOnScroll>
                 <RevealOnScroll className="pillars d1">
-                    {items.map((item, i) => (
+                    {displayItems.map((item, i) => (
                         <div className="pillar" key={i}>
                             <div className="pillar-n">{item.number}</div>
                             <h3>{item.title}</h3>
                             <p>{item.description}</p>
-                            {item.quote && (
-                                <p className="pillar-q">&quot;{item.quote}&quot;{item.quoteAuthor && ` — ${item.quoteAuthor}`}</p>
-                            )}
+                            <p className="pillar-q">{item.quote} — {item.quoteAuthor}</p>
                         </div>
                     ))}
                 </RevealOnScroll>

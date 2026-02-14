@@ -1,24 +1,27 @@
+import Link from 'next/link';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 export default function FilmSection() {
     return (
-        <section className="film-wrap">
+        <div className="film-wrap">
             <div className="film-media">
-                <div className="film-fr"></div>
-                <div className="film-fr"></div>
-                <div className="film-fr"></div>
-                <div className="film-fr"></div>
+                <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={36} height={36}>
+                        <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+                        <line x1="7" y1="2" x2="7" y2="22" />
+                        <line x1="17" y1="2" x2="17" y2="22" />
+                        <line x1="2" y1="12" x2="22" y2="12" />
+                    </svg>
+                    Film &amp; Digital Samples
+                </div>
             </div>
             <RevealOnScroll className="film-copy">
-                <div className="f-label" style={{ marginBottom: '22px' }}>Hybird Coverage</div>
-                <div className="h2">The Nostalgia of Analog.<br />The Reliability of Digital.</div>
-                <p>Why choose? I shoot with both.</p>
-                <p><strong>Digital</strong> ensures I never miss a split-second reaction in low light. <strong>Film</strong> (35mm & 120mm) forces me to slow down and compose with intention, creating images with a texture, grain, and soul that digital filters simply cannot fake.</p>
-                <div className="film-callout">
-                    <strong>My Approach</strong>
-                    <p>80% Digital for safety & speed.<br />20% Film for artistry & soul.</p>
-                </div>
+                <div className="f-label" style={{ marginBottom: '22px' }}>Film &amp; Digital</div>
+                <div className="h2" style={{ color: 'var(--off-white)', marginBottom: '22px' }}>The Best of<br /><em>Both Worlds</em></div>
+                <p>Every wedding receives the richness of digital mastery — vibrant colours, flawless detail, fast turnaround. For those who want something even more special, medium-format film adds an unmistakable warmth, grain, and timelessness that digital cannot replicate.</p>
+                <p>Film photography is available as a bespoke enhancement to any package. The two mediums complement each other beautifully — giving you a gallery that feels both contemporary and eternal.</p>
+                <Link href="#invest" className="btn-fill" style={{ background: 'var(--off-white)', color: 'var(--ink)', marginTop: '22px' }}>See Investment Details</Link>
             </RevealOnScroll>
-        </section>
+        </div>
     );
 }

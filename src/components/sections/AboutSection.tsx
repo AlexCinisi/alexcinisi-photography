@@ -2,20 +2,33 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 export default function AboutSection() {
     return (
-        <section className="about-grid" id="about">
-            <div className="about-img"></div>
+        <div className="about-grid" id="about">
+            <div className="about-img">
+                <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={34} height={34}>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Portrait of Alex
+                </div>
+            </div>
             <RevealOnScroll className="about-copy">
-                <div className="f-label" style={{ marginBottom: '22px' }}>The Photographer</div>
-                <div className="h2">Observing Life,<br />Frame by Frame.</div>
-                <p>I grew up in Palermo, surrounded by chaotic beauty and ancient light. Photography was never just a job — it was my way of making sense of the world.</p>
-                <p><em>"Alex has a way of seeing things that others miss. A shadow, a touch, a fleeting look."</em></p>
-                <p>When I'm not shooting weddings, you'll find me shooting street photography in the markets of Ballarò, drinking too much espresso, or swimming in the sea at Mondello (even in winter).</p>
-                <div className="traits">
-                    <div className="trait">Fluent English</div>
-                    <div className="trait">Sicily Native</div>
-                    <div className="trait">Film &amp; Digital</div>
+                <div className="f-label" style={{ marginBottom: '22px' }}>About Alex</div>
+                <div className="h2" style={{ marginBottom: '26px' }}>Why I Do<br /><em>This Work</em></div>
+                <p>Hi, I&apos;m Alex. I fell in love with wedding photography not because of cameras or compositions — but because of <em>people</em>.</p>
+                <p>There&apos;s something sacred about being invited into someone&apos;s most important day. The nervousness before the ceremony. The father&apos;s eyes when he sees his daughter. The way <strong>you two look at each other when no one&apos;s watching</strong>.</p>
+                <p>That&apos;s what makes me feel alive.</p>
+                <p>I grew up in Sicily, surrounded by extraordinary light and endless stories. My approach is quiet, intuitive, human. You live your day — I capture it unfolding naturally.</p>
+
+                <div className="traits-grid">
+                    <div className="trait-cell"><span className="trait-val">Sicilian</span><span className="trait-lbl">Born &amp; Raised</span></div>
+                    <div className="trait-cell"><span className="trait-val">IT · EN</span><span className="trait-lbl">Bilingual</span></div>
+                    <div className="trait-cell"><span className="trait-val">Film</span><span className="trait-lbl">&amp; Digital</span></div>
+                    <div className="trait-cell"><span className="trait-val">Editorial</span><span className="trait-lbl">Style</span></div>
+                    <div className="trait-cell"><span className="trait-val">30+</span><span className="trait-lbl">Weddings</span></div>
+                    <div className="trait-cell"><span className="trait-val">15+</span><span className="trait-lbl">Countries</span></div>
                 </div>
             </RevealOnScroll>
-        </section>
+        </div>
     );
 }

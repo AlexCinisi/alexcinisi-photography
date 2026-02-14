@@ -11,36 +11,79 @@ interface TestimonialsProps {
     items?: TestimonialItem[];
 }
 
-const defaultTestimonials: TestimonialItem[] = [
-    { flag: "🇺🇸", quote: "We were nervous about booking a photographer from abroad, but Alex made it so easy. The photos... they are just masterpieces.", author: "Sarah & Mike", location: "Married in Taormina" },
-    { flag: "🇬🇧", quote: "He felt like a friend. He calmed us down when the rain started, and took the most incredible rainy photos I've ever seen.", author: "Emma & Liam", location: "Married in Cefalù" },
-    { flag: "🇦🇺", quote: "The film photos are everything. They have this timeless quality that we just love. Worth every single penny.", author: "Olivia & Noah", location: "Married in Noto" }
+const defaultItems: TestimonialItem[] = [
+    {
+        flag: '🇺🇸',
+        quote: "Alex has an extraordinary ability to disappear into the background while capturing the most intimate, beautiful moments. We couldn't imagine our Sicilian wedding without him.",
+        author: 'Sofia & Michael',
+        location: 'Villa Valguarnera · Bagheria',
+    },
+    {
+        flag: '🇬🇧',
+        quote: "From our very first call, Alex understood exactly the feeling we wanted. The photos are not just beautiful — they're the truest version of our day. We're forever grateful.",
+        author: 'Sophie & David',
+        location: 'Taormina · Destination Wedding',
+    },
+    {
+        flag: '🇮🇹',
+        quote: "Every image feels natural, timeless and deeply emotional. Alex captured moments we didn't even know were happening. His work is pure artistry.",
+        author: 'Chiara & Luca',
+        location: 'Tonnara di Scopello',
+    },
+    {
+        flag: '🇩🇪',
+        quote: "We flew from Berlin for our Sicily dream wedding and Alex was the best decision we made. He guided us beautifully through every moment while keeping everything completely natural.",
+        author: 'Anna & Thomas',
+        location: 'Noto · Baroque Palazzo',
+    },
+    {
+        flag: '🇮🇹',
+        quote: "Everything was so far above expectations. No words. The album is the most precious thing we own. Alex, you are family to us now.",
+        author: 'Francesca & Marco',
+        location: 'Palermo · Intimate Ceremony',
+    },
 ];
 
-export default function Testimonials({ items = defaultTestimonials }: TestimonialsProps) {
-    const star = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-        </svg>
-    );
+export default function Testimonials({ items }: TestimonialsProps) {
+    const displayItems = items || defaultItems;
+    const topItems = displayItems.slice(0, 3);
+    const bottomItems = displayItems.slice(3);
 
     return (
-        <section className="s-grey pad">
-            <div className="max">
-                <div className="sec-head center">
-                    <div className="f-label">Kind Words</div>
-                    <div className="h2-lg">Couples in Love</div>
-                </div>
-                <RevealOnScroll className="test-grid">
-                    {items.map((item, i) => (
+        <section className="s-grey" id="reviews">
+            <RevealOnScroll className="sec-head center" style={{ padding: '72px 64px 0' }}>
+                <div className="f-label">What Couples Say</div>
+                <div className="h2-lg">Straight From<br /><em>Their Hearts</em></div>
+            </RevealOnScroll>
+            <div style={{ padding: '44px 0 0' }}>
+                <RevealOnScroll className="test-grid d1">
+                    {topItems.map((item, i) => (
                         <div className="tcard" key={i}>
                             <span className="tcard-flag">{item.flag}</span>
-                            <div className="tcard-stars"><span>{star}{star}{star}{star}{star}</span></div>
-                            <p className="tcard-quote">&quot;{item.quote}&quot;</p>
-                            <div className="tcard-auth"><strong>{item.author}</strong><span>{item.location}</span></div>
+                            <div className="tcard-stars"><span>★ ★ ★ ★ ★</span></div>
+                            <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
+                            <div className="tcard-auth">
+                                <strong>{item.author}</strong>
+                                <span>{item.location}</span>
+                            </div>
                         </div>
                     ))}
                 </RevealOnScroll>
+                {bottomItems.length > 0 && (
+                    <RevealOnScroll className="test-grid-2 d2">
+                        {bottomItems.map((item, i) => (
+                            <div className="tcard" key={i}>
+                                <span className="tcard-flag">{item.flag}</span>
+                                <div className="tcard-stars"><span>★ ★ ★ ★ ★</span></div>
+                                <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
+                                <div className="tcard-auth">
+                                    <strong>{item.author}</strong>
+                                    <span>{item.location}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </RevealOnScroll>
+                )}
             </div>
         </section>
     );

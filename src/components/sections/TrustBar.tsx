@@ -1,35 +1,34 @@
+import React, { ReactNode } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-interface TrustItem {
+interface TrustBarItem {
     number: string;
-    label: React.ReactNode;
+    label: ReactNode;
 }
 
 interface TrustBarProps {
-    items?: TrustItem[];
+    items?: TrustBarItem[];
 }
 
-export default function TrustBar({ items }: TrustBarProps) {
-    const defaultItems: TrustItem[] = [
-        { number: "10+", label: <>Years<br />Experience</> },
-        { number: "50+", label: <>Weddings<br />Captured</> },
-        { number: "100%", label: <>Client<br />Satisfaction</> },
-        { number: "Sicily", label: <>Based<br />& Worldwide</> },
-    ];
+const defaultItems: TrustBarItem[] = [
+    { number: '30+', label: <>International<br />Weddings</> },
+    { number: '15+', label: <>Countries<br />Served</> },
+    { number: '2', label: <>Photographers<br />Included</> },
+    { number: '8h', label: <>Full Day<br />Coverage</> },
+    { number: 'Film', label: <>&amp; Digital<br />Artistry</> },
+];
 
-    const displayItems = items || defaultItems;
-
+export default function TrustBar({ items = defaultItems }: TrustBarProps) {
     return (
-        <RevealOnScroll className="trust-bar">
-            {displayItems.map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
-                    <div className="trust-item">
+        <RevealOnScroll>
+            <div className="trust-bar">
+                {items.map((item, index) => (
+                    <div key={index} className="trust-item">
                         <span className="trust-n">{item.number}</span>
                         <span className="trust-l">{item.label}</span>
                     </div>
-                    {i < displayItems.length - 1 && <div className="trust-sep"></div>}
-                </div>
-            ))}
+                ))}
+            </div>
         </RevealOnScroll>
     );
 }
