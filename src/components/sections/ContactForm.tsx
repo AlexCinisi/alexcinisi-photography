@@ -226,9 +226,7 @@ export default function ContactForm({
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} ref={formRef}>
-                                <div style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#666' }}>
-                                    Fields marked with <span style={{ color: 'red' }}>*</span> are required
-                                </div>
+
 
                                 {status === 'error' && errorMessage && (
                                     <div style={{ color: 'red', marginBottom: '1.5rem', padding: '10px', backgroundColor: '#fff0f0', border: '1px solid #ffcccc', borderRadius: '4px' }}>
@@ -281,7 +279,7 @@ export default function ContactForm({
                                         onChange={handleInputChange}
                                     />
                                 </div>
-                                <div className="fg">
+                                <div className="fg full">
                                     <Label text="Wedding Date" required />
                                     <input
                                         type={dateType}
@@ -323,7 +321,7 @@ export default function ContactForm({
                                 )}
 
                                 {!venueHidden && (
-                                    <div className={`fg ${showGuestCount || showSource ? '' : 'full'}`}>
+                                    <div className="fg full">
                                         <Label text={venueLabel} required />
                                         <input
                                             type="text"
@@ -370,15 +368,52 @@ export default function ContactForm({
                                     </div>
                                 )}
 
-                                <div className="priv-row">
-                                    <input
-                                        type="checkbox"
-                                        name="privacyConsent"
-                                        // required={false} // Custom validation
-                                        checked={formData.privacyConsent}
-                                        onChange={handlePrivacyChange}
-                                    />
-                                    <span>I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).</span>
+                                <div className="priv-row" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                                    <label className="custom-checkbox" style={{
+                                        position: 'relative',
+                                        display: 'inline-block',
+                                        width: '20px',
+                                        height: '20px',
+                                        flexShrink: 0,
+                                        marginTop: '2px', // Align with top line of text
+                                        cursor: 'pointer'
+                                    }}>
+                                        <input
+                                            type="checkbox"
+                                            name="privacyConsent"
+                                            checked={formData.privacyConsent}
+                                            onChange={handlePrivacyChange}
+                                            style={{
+                                                opacity: 0,
+                                                width: 0,
+                                                height: 0,
+                                                position: 'absolute'
+                                            }}
+                                        />
+                                        <span style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            height: '20px',
+                                            width: '20px',
+                                            backgroundColor: formData.privacyConsent ? 'var(--ink, #1E1D1B)' : 'transparent',
+                                            border: '1px solid var(--ink, #1E1D1B)',
+                                            borderRadius: '2px', // Slight radius or 0 depending on design system
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            transition: 'all 0.2s ease'
+                                        }}>
+                                            {formData.privacyConsent && (
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '14px', height: '14px' }}>
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            )}
+                                        </span>
+                                    </label>
+                                    <span style={{ fontSize: '0.9em', lineHeight: '1.4', cursor: 'pointer' }} onClick={() => handlePrivacyChange({ target: { checked: !formData.privacyConsent } } as any)}>
+                                        I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).
+                                    </span>
                                 </div>
                                 <ErrorMsg field="privacyConsent" />
 
