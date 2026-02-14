@@ -251,7 +251,7 @@ export default function ContactForm({
                                     <ErrorMsg field="name" />
                                 </div>
                                 <div className="fg">
-                                    <Label text="Partner Type / Name" required />
+                                    <Label text="Partner's Name" required />
                                     <input
                                         type="text"
                                         name="partnerName"
