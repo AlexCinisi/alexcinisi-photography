@@ -120,6 +120,11 @@ nav.scrolled {
   z-index: 202;
 }
 
+.nav-logo img {
+  height: 28px;
+  width: auto;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -1644,6 +1649,12 @@ footer {
   text-transform: uppercase;
   color: var(--off-white);
   text-decoration: none;
+}
+
+.footer-logo img {
+  height: 22px;
+  width: auto;
+  opacity: .85;
 }
 
 .footer-copy {

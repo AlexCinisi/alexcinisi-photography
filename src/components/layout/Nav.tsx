@@ -1,9 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { urlFor } from '@/lib/sanity/image';
 
-export default function Nav() {
+interface NavProps {
+    logo?: any;
+}
+
+export default function Nav({ logo }: NavProps) {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -28,7 +34,19 @@ export default function Nav() {
     return (
         <>
             <nav id="nav" className={scrolled ? 'scrolled' : ''}>
-                <Link href="/" className="nav-logo">Alex Cinisi Photography</Link>
+                <Link href="/" className="nav-logo">
+                    {logo ? (
+                        <Image
+                            src={urlFor(logo).height(40).auto('format').url()}
+                            alt="Alex Cinisi Photography"
+                            width={180}
+                            height={40}
+                            priority={true}
+                        />
+                    ) : (
+                        "Alex Cinisi Photography"
+                    )}
+                </Link>
                 <div className="nav-right">
                     <Link href="#contact" className="nav-cta">Reserve Your Date</Link>
                     <button

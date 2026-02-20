@@ -1,10 +1,12 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 interface TestimonialItem {
-    flag: string;
+    flag?: string;
     quote: string;
-    author: string;
-    location: string;
+    author?: string;
+    location?: string;
+    coupleName?: string;
+    countryFlag?: string;
 }
 
 interface TestimonialsProps {
@@ -59,11 +61,11 @@ export default function Testimonials({ items }: TestimonialsProps) {
                 <RevealOnScroll className="test-grid d1">
                     {topItems.map((item, i) => (
                         <div className="tcard" key={i}>
-                            <span className="tcard-flag">{item.flag}</span>
+                            <span className="tcard-flag">{item.countryFlag || item.flag}</span>
                             <div className="tcard-stars"><span>★ ★ ★ ★ ★</span></div>
                             <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
                             <div className="tcard-auth">
-                                <strong>{item.author}</strong>
+                                <strong>{item.coupleName || item.author}</strong>
                                 <span>{item.location}</span>
                             </div>
                         </div>
@@ -73,11 +75,11 @@ export default function Testimonials({ items }: TestimonialsProps) {
                     <RevealOnScroll className="test-grid-2 d2">
                         {bottomItems.map((item, i) => (
                             <div className="tcard" key={i}>
-                                <span className="tcard-flag">{item.flag}</span>
+                                <span className="tcard-flag">{item.countryFlag || item.flag}</span>
                                 <div className="tcard-stars"><span>★ ★ ★ ★ ★</span></div>
                                 <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
                                 <div className="tcard-auth">
-                                    <strong>{item.author}</strong>
+                                    <strong>{item.coupleName || item.author}</strong>
                                     <span>{item.location}</span>
                                 </div>
                             </div>

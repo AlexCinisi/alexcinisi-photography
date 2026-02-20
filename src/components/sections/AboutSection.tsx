@@ -1,16 +1,32 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import Image from 'next/image';
+import { urlFor } from '@/lib/sanity/image';
 
-export default function AboutSection() {
+interface AboutSectionProps {
+    image?: any;
+}
+
+export default function AboutSection({ image }: AboutSectionProps) {
     return (
         <div className="about-grid" id="about">
-            <div className="about-img">
-                <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={34} height={34}>
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                    Portrait of Alex
-                </div>
+            <div className="about-img" style={{ position: 'relative' }}>
+                {image ? (
+                    <Image
+                        src={urlFor(image).width(1200).auto('format').quality(80).url()}
+                        alt="Alex Cinisi, wedding photographer in Sicily"
+                        fill
+                        sizes="(max-width:960px) 0px, 50vw"
+                        style={{ objectFit: 'cover' }}
+                    />
+                ) : (
+                    <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={34} height={34}>
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        Portrait of Alex
+                    </div>
+                )}
             </div>
             <RevealOnScroll className="about-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>About Alex</div>

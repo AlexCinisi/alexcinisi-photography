@@ -1,17 +1,33 @@
 import Link from 'next/link';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import Image from 'next/image';
+import { urlFor } from '@/lib/sanity/image';
 
-export default function Manifesto() {
+interface ManifestoProps {
+    image?: any;
+}
+
+export default function Manifesto({ image }: ManifestoProps) {
     return (
         <div className="manifesto-grid">
-            <div className="manifesto-media">
-                <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={36} height={36}>
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                        <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    Emotional Moment
-                </div>
+            <div className="manifesto-media" style={{ position: 'relative' }}>
+                {image ? (
+                    <Image
+                        src={urlFor(image).width(1200).auto('format').quality(80).url()}
+                        alt="Emotional wedding moment captured by Alex Cinisi Photography"
+                        fill
+                        sizes="(max-width:960px) 0px, 50vw"
+                        style={{ objectFit: 'cover' }}
+                    />
+                ) : (
+                    <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={36} height={36}>
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                            <circle cx="12" cy="13" r="4" />
+                        </svg>
+                        Emotional Moment
+                    </div>
+                )}
             </div>
             <RevealOnScroll className="manifesto-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>Our Philosophy</div>

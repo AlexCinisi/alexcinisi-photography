@@ -1,8 +1,18 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import Image from 'next/image';
+import { urlFor } from '@/lib/sanity/image';
 
 interface PortfolioItem {
+    coupleName: string;
+    location: string;
+    badge?: string;
+    image?: any;
+    slug?: any;
+}
+
+interface LegacyPortfolioItem {
     title: string;
     subtitle: string;
     badge: string;
@@ -17,11 +27,12 @@ interface PortfolioIntro {
 interface PortfolioGridProps {
     intro?: PortfolioIntro;
     items?: PortfolioItem[];
+    legacyItems?: LegacyPortfolioItem[];
     ctaText?: string;
     ctaLink?: string;
 }
 
-const defaultItems: PortfolioItem[] = [
+const defaultItems: LegacyPortfolioItem[] = [
     { title: 'Marina & James', subtitle: 'Villa Valguarnera · Bagheria', badge: 'Film + Digital' },
     { title: 'Sophie & David', subtitle: 'Taormina · Full Day', badge: 'Destination' },
     { title: 'Lucia & Marco', subtitle: 'Tonnara di Scopello', badge: 'Editorial' },
@@ -54,11 +65,20 @@ const locationSpans = [
 export default function PortfolioGrid({
     intro,
     items,
+    legacyItems,
     ctaText = 'Explore All Stories',
     ctaLink = 'https://www.alexcinisiphotography.com/stories/',
 }: PortfolioGridProps) {
-    const displayItems = items || defaultItems;
-    const spans = items ? locationSpans : defaultSpans;
+    const hasSanityItems = items && items.length > 0;
+    const isLocationsPage = legacyItems && legacyItems.length > 0;
+
+    // We decide what to loop over based on what's provided
+    const displaySpans = hasSanityItems || isLocationsPage ? locationSpans : defaultSpans;
+
+    // Calculate total items to display
+    const totalItemsCount = hasSanityItems
+        ? items.length
+        : (isLocationsPage ? legacyItems.length : defaultItems.length);
 
     const headerLabel = intro?.label || 'Selected Work';
     const headerTitle = intro?.title || <>Love Stories From<br /><em>Sicily &amp; Beyond</em></>;
@@ -78,19 +98,52 @@ export default function PortfolioGrid({
                 </RevealOnScroll>
             </div>
             <RevealOnScroll className="port-grid d1">
-                {displayItems.map((item, i) => {
-                    const span = spans[i] || spans[spans.length - 1];
+                {Array.from({ length: totalItemsCount }).map((_, i) => {
+                    const span = displaySpans[i] || displaySpans[displaySpans.length - 1];
+
+                    let title = '';
+                    let subtitle = '';
+                    let badge = '';
+                    let sanityImage = null;
+
+                    if (hasSanityItems) {
+                        const item = items[i];
+                        title = item.coupleName;
+                        subtitle = item.location;
+                        badge = item.badge || '';
+                        sanityImage = item.image;
+                    } else if (isLocationsPage && legacyItems) {
+                        const item = legacyItems[i];
+                        title = item.title;
+                        subtitle = item.subtitle;
+                        badge = item.badge;
+                    } else {
+                        const item = defaultItems[i];
+                        title = item.title;
+                        subtitle = item.subtitle;
+                        badge = item.badge;
+                    }
+
                     return (
                         <div
                             key={i}
                             className="port-item"
-                            style={{ gridColumn: span.col, height: span.h }}
+                            style={{ gridColumn: span.col, height: span.h, position: 'relative', overflow: 'hidden' }}
                         >
+                            {sanityImage ? (
+                                <Image
+                                    src={urlFor(sanityImage).width(800).auto('format').quality(80).url()}
+                                    alt={`${title} wedding at ${subtitle}`}
+                                    fill
+                                    sizes="(max-width:960px) 100vw, 50vw"
+                                    style={{ objectFit: 'cover' }}
+                                />
+                            ) : null}
                             <div className="port-info">
-                                <strong>{item.title}</strong>
-                                <span>{item.subtitle}</span>
+                                <strong>{title}</strong>
+                                <span>{subtitle}</span>
                             </div>
-                            <div className="port-badge">{item.badge}</div>
+                            <div className="port-badge">{badge}</div>
                         </div>
                     );
                 })}

@@ -188,11 +188,17 @@ const breadcrumbSchema = {
     ],
 };
 
-export default function RootLayout({
+import { client as sanityClient } from "@/lib/sanity/client";
+import { siteLogoQuery } from "@/lib/sanity/queries";
+
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const layoutData = await sanityClient.fetch(siteLogoQuery).catch(() => null);
+    const siteLogo = layoutData?.siteLogo;
+
     return (
         <html lang="en">
             <body
@@ -214,9 +220,9 @@ export default function RootLayout({
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
                 />
-                <Nav />
+                <Nav logo={siteLogo} />
                 {children}
-                <Footer />
+                <Footer logo={siteLogo} />
                 <StickyMobileCTA />
             </body>
         </html>

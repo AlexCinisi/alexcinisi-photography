@@ -168,7 +168,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                     title: <>Love Stories at<br /><em>Villa Igiea</em></>,
                     note: "Every frame captures the Art Nouveau grandeur and Mediterranean light that make this venue extraordinary."
                 }}
-                items={[
+                legacyItems={[
                     { title: "Amber & Art", subtitle: "Sala Basile · Luxury Wedding", badge: "Featured" },
                     { title: "Terrazza Mare Sunset", subtitle: "Golden Hour · Gulf of Palermo", badge: "Editorial" },
                     { title: "Garden Ceremony", subtitle: "Temple · English Garden", badge: "Ceremony" },

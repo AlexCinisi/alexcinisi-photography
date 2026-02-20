@@ -1,16 +1,33 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { urlFor } from '@/lib/sanity/image';
 
-export default function Hero() {
+interface HeroProps {
+    image?: any;
+}
+
+export default function Hero({ image }: HeroProps) {
     return (
         <section className="hero">
-            <div className="hero-bg">
-                <div className="iph" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={48} height={48}>
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                        <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    Full-Width Hero Photo
-                </div>
+            <div className="hero-bg" style={{ position: 'relative' }}>
+                {image ? (
+                    <Image
+                        src={urlFor(image).width(1920).auto('format').quality(85).url()}
+                        alt="Luxury destination wedding photography in Sicily by Alex Cinisi"
+                        fill
+                        sizes="100vw"
+                        style={{ objectFit: 'cover' }}
+                        priority={true}
+                    />
+                ) : (
+                    <div className="iph" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={48} height={48}>
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                            <circle cx="12" cy="13" r="4" />
+                        </svg>
+                        Full-Width Hero Photo
+                    </div>
+                )}
             </div>
             <div className="hero-content">
                 <div className="hero-eyebrow f-label">Luxury Wedding Photographer · Sicily &amp; Worldwide</div>

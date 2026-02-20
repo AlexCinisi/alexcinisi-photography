@@ -1,3 +1,6 @@
+import { client as sanityClient } from '@/lib/sanity/client';
+import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery } from '@/lib/sanity/queries';
+
 import Hero from "@/components/sections/Hero";
 import TrustBar from "@/components/sections/TrustBar";
 import ProofBar from "@/components/sections/ProofBar";
@@ -16,25 +19,31 @@ import Availability from "@/components/sections/Availability";
 import ContactForm from "@/components/sections/ContactForm";
 import FinalCTA from "@/components/sections/FinalCTA";
 
-export default function Home() {
+export default async function Home() {
+    const [homePage, portfolio, testimonials] = await Promise.all([
+        sanityClient.fetch(homePageQuery).catch(() => null),
+        sanityClient.fetch(featuredPortfolioQuery).catch(() => null),
+        sanityClient.fetch(featuredTestimonialsQuery).catch(() => null),
+    ]);
+
     return (
         <>
-            {/* 1 */}  <Hero />
-            {/* 2 */}  <TrustBar />
-            {/* 3 */}  <ProofBar />
-            {/* 4 */}  <Manifesto />
-            {/* 5 */}  <Pillars />
-            {/* 6 */}  <PortfolioGrid />
-            {/* 7 */}  <Testimonials />
-            {/* 8 */}  <FilmSection />
-            {/* 9 */}  <Investment />
-            {/* 10 */}  <ProcessSteps />
-            {/* 11 */}  <AboutSection />
-            {/* 12 */}  <LocationsGrid />
-            {/* 13 */}  <PhotoBreak />
-            {/* 14 */}  <FAQ />
-            {/* 15 */}  <Availability />
-            {/* 16 */}  <ContactForm
+            <Hero image={homePage?.heroImage} />
+            <TrustBar />
+            <ProofBar logos={homePage?.proofLogos} />
+            <Manifesto image={homePage?.manifestoImage} />
+            <Pillars />
+            <PortfolioGrid items={portfolio} />
+            <Testimonials items={testimonials} />
+            <FilmSection image={homePage?.filmSectionImage} />
+            <Investment />
+            <ProcessSteps />
+            <AboutSection image={homePage?.aboutImage} />
+            <LocationsGrid />
+            <PhotoBreak image={homePage?.photoBreakImage} />
+            <FAQ />
+            <Availability />
+            <ContactForm
                 showGuestCount={false}
                 showBudget={false}
                 showSource={false}
@@ -43,7 +52,7 @@ export default function Home() {
                 ctaText="Tell Me About Your Wedding →"
                 interests={["Wedding Photography", "Elopement", "Couple Session"]}
             />
-            {/* 17 */}  <FinalCTA />
+            <FinalCTA />
         </>
     );
 }
