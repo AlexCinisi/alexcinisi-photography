@@ -132,7 +132,7 @@ export default function PortfolioGrid({
                         >
                             {sanityImage ? (
                                 <Image
-                                    src={urlFor(sanityImage).width(800).auto('format').quality(80).url()}
+                                    src={urlFor(sanityImage).width(1200).auto('format').quality(85).url()}
                                     alt={`${title} wedding at ${subtitle}`}
                                     fill
                                     sizes="(max-width:960px) 100vw, 50vw"

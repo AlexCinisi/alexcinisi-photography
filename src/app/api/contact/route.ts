@@ -64,7 +64,7 @@ export async function POST(request: Request) {
                 <p>Dear ${name} & ${partnerName || 'Partner'},</p>
                 <p>Thank you so much for reaching out! I have received your enquiry and am truly honored that you are considering me to capture your special memories.</p>
                 <p>I review every message personally and will get back to you within <strong>24 hours</strong>.</p>
-                <p>In the meantime, feel free to browse my latest stories on <a href="https://instagram.com/alexcinisi" style="color: #000; text-decoration: underline;">Instagram</a>.</p>
+                <p>In the meantime, feel free to browse my latest stories on <a href="https://www.instagram.com/alexcinisi" style="color: #000; text-decoration: underline;">Instagram</a>.</p>
                 <br/>
                 <p>Warmly,</p>
                 <p><strong>Alex Cinisi</strong><br/>

@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { urlFor } from '@/lib/sanity/image';
 
 interface NavProps {
     logo?: any;
@@ -35,9 +34,9 @@ export default function Nav({ logo }: NavProps) {
         <>
             <nav id="nav" className={scrolled ? 'scrolled' : ''}>
                 <Link href="/" className="nav-logo">
-                    {logo ? (
+                    {logo?.asset?.url ? (
                         <Image
-                            src={urlFor(logo).height(40).auto('format').url()}
+                            src={logo.asset.url}
                             alt="Alex Cinisi Photography"
                             width={180}
                             height={40}
@@ -61,17 +60,19 @@ export default function Nav({ logo }: NavProps) {
             </nav>
 
             <div className={`menu-overlay${menuOpen ? ' open' : ''}`} id="menuOverlay">
-                <ul className="menu-links">
-                    <li><Link href="#portfolio" onClick={closeMenu}>Portfolio</Link></li>
-                    <li><Link href="#approach" onClick={closeMenu}>Approach</Link></li>
-                    <li><Link href="#invest" onClick={closeMenu}>Investment</Link></li>
-                    <li><Link href="#about" onClick={closeMenu}>About</Link></li>
-                    <li><Link href="#locations" onClick={closeMenu}>Locations</Link></li>
-                    <li><Link href="https://www.alexcinisiphotography.com/stories/">Stories</Link></li>
-                    <li><Link href="#contact" onClick={closeMenu}>Contact</Link></li>
-                </ul>
+                <div className="menu-nav">
+                    <ul className="menu-links">
+                        <li><Link href="#portfolio" onClick={closeMenu}>Portfolio</Link></li>
+                        <li><Link href="#approach" onClick={closeMenu}>Approach</Link></li>
+                        <li><Link href="#invest" onClick={closeMenu}>Investment</Link></li>
+                        <li><Link href="#about" onClick={closeMenu}>About</Link></li>
+                        <li><Link href="#locations" onClick={closeMenu}>Locations</Link></li>
+                        <li><Link href="https://www.alexcinisiphotography.com/stories/">Stories</Link></li>
+                        <li><Link href="#contact" onClick={closeMenu}>Contact</Link></li>
+                    </ul>
+                </div>
                 <div className="menu-footer">
-                    <a href="https://www.instagram.com/alexcinisiphotography/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.instagram.com/alexcinisi" target="_blank" rel="noopener noreferrer">Instagram</a>
                     <a href="mailto:info@alexcinisiphotography.com">Email</a>
                     <a href="/policies/Privacy_Policy_Alex_Cinisi_Photography.pdf">Privacy</a>
                 </div>

@@ -13,7 +13,7 @@ export default function FilmSection({ image }: FilmSectionProps) {
             <div className="film-media" style={{ position: 'relative' }}>
                 {image ? (
                     <Image
-                        src={urlFor(image).width(1200).auto('format').quality(80).url()}
+                        src={urlFor(image).width(1600).auto('format').quality(85).url()}
                         alt="Film and digital wedding photography comparison"
                         fill
                         sizes="(max-width:960px) 0px, 50vw"

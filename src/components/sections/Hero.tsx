@@ -9,15 +9,16 @@ interface HeroProps {
 export default function Hero({ image }: HeroProps) {
     return (
         <section className="hero">
-            <div className="hero-bg" style={{ position: 'relative' }}>
+            <div className="hero-bg">
                 {image ? (
                     <Image
-                        src={urlFor(image).width(1920).auto('format').quality(85).url()}
+                        src={urlFor(image).width(2400).auto('format').quality(90).url()}
                         alt="Luxury destination wedding photography in Sicily by Alex Cinisi"
                         fill
                         sizes="100vw"
                         style={{ objectFit: 'cover' }}
                         priority={true}
+                        quality={90}
                     />
                 ) : (
                     <div className="iph" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>

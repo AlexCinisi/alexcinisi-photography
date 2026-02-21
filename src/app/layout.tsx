@@ -98,7 +98,7 @@ const localBusinessSchema = {
     ],
     award: ["Featured in Vogue", "ANFM Certified Photographer", "Wezoree Top Photographer"],
     sameAs: [
-        "https://www.instagram.com/alexcinisiphotography/",
+        "https://www.instagram.com/alexcinisi",
         "https://wezoree.com/it/vendors/profile/19253-alex-cinisi/",
         "https://anfm.it/fotografo/3902-alex-cinisi/",
     ],
@@ -198,6 +198,7 @@ export default async function RootLayout({
 }>) {
     const layoutData = await sanityClient.fetch(siteLogoQuery).catch(() => null);
     const siteLogo = layoutData?.siteLogo;
+    const siteLogoFooter = layoutData?.siteLogoFooter;
 
     return (
         <html lang="en">
@@ -222,7 +223,7 @@ export default async function RootLayout({
                 />
                 <Nav logo={siteLogo} />
                 {children}
-                <Footer logo={siteLogo} />
+                <Footer logo={siteLogo} logoFooter={siteLogoFooter} />
                 <StickyMobileCTA />
             </body>
         </html>

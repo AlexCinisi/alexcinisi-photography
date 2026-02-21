@@ -5,8 +5,9 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   aboutImage,
   filmSectionImage,
   photoBreakImage,
-  siteLogo,
-  proofLogos[] { name, logo, url }
+  siteLogo { asset-> { url } },
+  siteLogoFooter { asset-> { url } },
+  proofLogos[] { name, logo { asset-> { url } }, url }
 }`
 
 // Fetch featured portfolio items for homepage grid (max 7)
@@ -21,5 +22,6 @@ export const featuredTestimonialsQuery = `*[_type == "testimonial" && featured =
 
 // Fetch site logo for layout
 export const siteLogoQuery = `*[_type == "homePage"][0] {
-  siteLogo
+  siteLogo { asset-> { url } },
+  siteLogoFooter { asset-> { url } }
 }`

@@ -36,6 +36,22 @@ export default defineType({
             options: { hotspot: true },
         }),
         defineField({
+            name: 'siteLogo',
+            title: 'Site Logo',
+            type: 'file',
+            options: {
+                accept: '.svg,image/svg+xml,image/png,image/webp'
+            }
+        }),
+        defineField({
+            name: 'siteLogoFooter',
+            title: 'Footer Logo (Monogram)',
+            type: 'file',
+            options: {
+                accept: '.svg,image/svg+xml,image/png,image/webp'
+            }
+        }),
+        defineField({
             name: 'proofLogos',
             title: 'Proof Logos',
             type: 'array',
@@ -45,7 +61,14 @@ export default defineType({
                     name: 'logoItem',
                     fields: [
                         { name: 'name', title: 'Name', type: 'string' },
-                        { name: 'logo', title: 'Logo', type: 'image' },
+                        {
+                            name: 'logo',
+                            title: 'Logo',
+                            type: 'file',
+                            options: {
+                                accept: '.svg,image/svg+xml,image/png,image/webp'
+                            }
+                        },
                         { name: 'url', title: 'URL', type: 'url' },
                     ],
                 },

@@ -211,7 +211,9 @@ export default function ContactForm({
                             </div>
                             <div className="cd">
                                 <span className="cd-lbl">Email</span>
-                                <span className="cd-val">info@alexcinisiphotography.com</span>
+                                <span className="cd-val">
+                                    <a href="mailto:info@alexcinisiphotography.com" style={{ color: 'inherit', textDecoration: 'none' }}>info@alexcinisiphotography.com</a>
+                                </span>
                             </div>
                             <div className="cd">
                                 <span className="cd-lbl">Studio</span>
@@ -219,7 +221,9 @@ export default function ContactForm({
                             </div>
                             <div className="cd">
                                 <span className="cd-lbl">Social</span>
-                                <span className="cd-val">@alexcinisi</span>
+                                <span className="cd-val">
+                                    <a href="https://www.instagram.com/alexcinisi" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>@alexcinisi</a>
+                                </span>
                             </div>
                         </div>
                     </RevealOnScroll>

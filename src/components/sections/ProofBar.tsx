@@ -1,6 +1,5 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import Image from 'next/image';
-import { urlFor } from '@/lib/sanity/image';
 
 interface ProofBarProps {
     logos?: Array<{ name: string; logo: any; url: string }>;
@@ -16,9 +15,9 @@ export default function ProofBar({ logos }: ProofBarProps) {
                         {logos && logos.length > 0 ? (
                             logos.map((logo, index) => (
                                 <a key={index} href={logo.url || '#'} className="proof-logo" title={logo.name}>
-                                    {logo.logo ? (
+                                    {logo.logo?.asset?.url ? (
                                         <Image
-                                            src={urlFor(logo.logo).height(28).auto('format').url()}
+                                            src={logo.logo.asset.url}
                                             alt={logo.name || 'Proof Logo'}
                                             width={100} // Placeholder, will set auto in css if needed
                                             height={28}

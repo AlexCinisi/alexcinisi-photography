@@ -12,11 +12,12 @@ export default function PhotoBreak({ image }: PhotoBreakProps) {
             <section className="photo-break" style={{ position: 'relative' }}>
                 {image ? (
                     <Image
-                        src={urlFor(image).width(2400).auto('format').quality(85).url()}
+                        src={urlFor(image).width(2400).auto('format').quality(90).url()}
                         alt="Wedding photography in Sicily - golden hour at a luxury venue"
                         fill
                         sizes="100vw"
                         style={{ objectFit: 'cover' }}
+                        quality={90}
                     />
                 ) : (
                     <div className="iph">
