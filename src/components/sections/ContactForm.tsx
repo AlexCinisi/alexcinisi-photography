@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent, useRef } from 'react';
+import { useState, FormEvent, useRef, useEffect } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 interface ContactFormProps {
@@ -54,6 +54,24 @@ export default function ContactForm({
         interests: [] as string[],
         privacyConsent: false
     });
+
+    const [trackingData, setTrackingData] = useState({
+        pageUrl: '',
+        referrer: '',
+        userAgent: '',
+        browserLang: '',
+        formStartTime: 0
+    });
+
+    useEffect(() => {
+        setTrackingData({
+            pageUrl: window.location.href,
+            referrer: document.referrer || 'Direct',
+            userAgent: navigator.userAgent,
+            browserLang: navigator.language || (navigator.languages && navigator.languages[0]) || 'unknown',
+            formStartTime: Date.now()
+        });
+    }, []);
 
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
@@ -152,7 +170,11 @@ export default function ContactForm({
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    ...trackingData,
+                    timeOnPage: Math.round((Date.now() - trackingData.formStartTime) / 1000)
+                }),
             });
 
             if (!response.ok) {

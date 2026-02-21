@@ -22,14 +22,45 @@ export async function POST(request: Request) {
             howFound,
             budget,
             vision,
-            interests, // Array of strings
-            privacyConsent
+            interests,
+            privacyConsent,
+            pageUrl,
+            referrer,
+            userAgent,
+            browserLang,
+            timeOnPage
         } = body;
 
         // Basic validation
         if (!name || !email || !privacyConsent) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
+
+        // Tracking data from headers and body
+        const city = request.headers.get('x-vercel-ip-city') || 'Unknown';
+        const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
+        const region = request.headers.get('x-vercel-ip-country-region') || '';
+
+        // UA Parsing
+        const isMobile = /Mobile|iPhone|Android/i.test(userAgent || '');
+        const deviceType = isMobile ? 'Mobile' : 'Desktop';
+
+        let browserName = 'Other';
+        const ua = userAgent || '';
+        if (ua.includes('Firefox')) browserName = 'Firefox';
+        else if (ua.includes('Edg')) browserName = 'Edge';
+        else if (ua.includes('Chrome')) browserName = 'Chrome';
+        else if (ua.includes('Safari')) browserName = 'Safari';
+
+        const timestamp = new Date().toLocaleString('en-GB', {
+            timeZone: 'Europe/Rome',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+        });
 
         // 1. Send notification email to Owner
         const adminEmailContent = `
@@ -47,12 +78,23 @@ export async function POST(request: Request) {
             <br/>
             <h3>Vision / Story:</h3>
             <p style="white-space: pre-wrap;">${vision || 'No details provided.'}</p>
+            <br/>
+            <p>────────────────────────</p>
+            <p>📊 <strong>TRACKING DATA</strong></p>
+            <p>────────────────────────</p>
+            <p>📍 <strong>Client location:</strong> ${city}, ${region}, ${country}</p>
+            <p>🌐 <strong>Submitted from:</strong> ${pageUrl || 'unknown'}</p>
+            <p>🔗 <strong>Came from:</strong> ${referrer || 'unknown'}</p>
+            <p>📱 <strong>Device:</strong> ${deviceType} — ${browserName}</p>
+            <p>🗣️ <strong>Browser language:</strong> ${browserLang || 'unknown'}</p>
+            <p>⏱️ <strong>Time on page before submitting:</strong> ${timeOnPage || 0} seconds</p>
+            <p>🕐 <strong>Submitted at:</strong> ${timestamp}</p>
         `;
 
         const ownerEmailPromise = resend.emails.send({
-            from: 'Alex Cinisi Photography <info@alexcinisiphotography.com>', // Update with verified domain
+            from: 'Alex Cinisi Photography <info@alexcinisiphotography.com>',
             to: ['info@alexcinisiphotography.com'],
-            replyTo: email, // Reply directly to the client
+            replyTo: email,
             subject: `New Wedding Enquiry — ${name} & ${partnerName || 'Partner'} · ${location || 'Unknown Location'}`,
             html: adminEmailContent,
         });
