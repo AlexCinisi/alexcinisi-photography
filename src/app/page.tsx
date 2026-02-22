@@ -13,6 +13,7 @@ import Investment from "@/components/sections/Investment";
 import ProcessSteps from "@/components/sections/ProcessSteps";
 import AboutSection from "@/components/sections/AboutSection";
 import LocationsGrid from "@/components/sections/LocationsGrid";
+import PhotoPause from '@/components/sections/PhotoPause'
 import PhotoBreak from "@/components/sections/PhotoBreak";
 import FAQ from "@/components/sections/FAQ";
 import Availability from "@/components/sections/Availability";
@@ -31,12 +32,15 @@ export default async function Home() {
             <Hero image={homePage?.heroImage} />
             <TrustBar />
             <ProofBar logos={homePage?.proofLogos} />
+            <PhotoPause image={homePage?.photoPause1} alt="Destination wedding in Sicily" />
             <Manifesto image={homePage?.manifestoImage} />
             <Pillars />
+            <PhotoPause image={homePage?.photoPause2} alt="Luxury wedding photography detail" />
             <PortfolioGrid items={portfolio} />
             <Testimonials items={testimonials} />
             <FilmSection image={homePage?.filmSectionImage} />
             <Investment />
+            <PhotoPause image={homePage?.photoPause3} alt="Wedding ceremony in Sicily" />
             <ProcessSteps />
             <AboutSection image={homePage?.aboutImage} />
             <LocationsGrid />

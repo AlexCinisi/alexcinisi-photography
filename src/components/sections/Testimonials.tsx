@@ -13,43 +13,48 @@ interface TestimonialsProps {
     items?: TestimonialItem[];
 }
 
-const defaultItems: TestimonialItem[] = [
+const FALLBACK_TESTIMONIALS = [
     {
         flag: '🇺🇸',
-        quote: "Alex has an extraordinary ability to disappear into the background while capturing the most intimate, beautiful moments. We couldn't imagine our Sicilian wedding without him.",
+        stars: 5,
+        quote: 'Alex made us forget there was a camera. We were just… us. The photos are pure magic.',
         author: 'Sofia & Michael',
-        location: 'Villa Valguarnera · Bagheria',
+        location: 'Villa Valguarnera, Bagheria'
+    },
+    {
+        flag: '🇮🇹',
+        stars: 5,
+        quote: 'Every image feels natural, timeless and deeply emotional. Far beyond our expectations.',
+        author: 'Chiara & Luca',
+        location: 'Tonnara di Scopello'
+    },
+    {
+        flag: '🇮🇹',
+        stars: 5,
+        quote: 'Everything was so far above expectations. No words can describe how beautiful our photos are.',
+        author: 'Francesca',
+        location: 'Villa Igiea, Palermo'
     },
     {
         flag: '🇬🇧',
-        quote: "From our very first call, Alex understood exactly the feeling we wanted. The photos are not just beautiful — they're the truest version of our day. We're forever grateful.",
-        author: 'Sophie & David',
-        location: 'Taormina · Destination Wedding',
+        stars: 5,
+        quote: "We couldn't have imagined a more perfect experience. Alex captured our day so naturally.",
+        author: 'Anna & Mark',
+        location: 'Taormina'
     },
     {
-        flag: '🇮🇹',
-        quote: "Every image feels natural, timeless and deeply emotional. Alex captured moments we didn't even know were happening. His work is pure artistry.",
-        author: 'Chiara & Luca',
-        location: 'Tonnara di Scopello',
-    },
-    {
-        flag: '🇩🇪',
-        quote: "We flew from Berlin for our Sicily dream wedding and Alex was the best decision we made. He guided us beautifully through every moment while keeping everything completely natural.",
-        author: 'Anna & Thomas',
-        location: 'Noto · Baroque Palazzo',
-    },
-    {
-        flag: '🇮🇹',
-        quote: "Everything was so far above expectations. No words. The album is the most precious thing we own. Alex, you are family to us now.",
-        author: 'Francesca & Marco',
-        location: 'Palermo · Intimate Ceremony',
-    },
+        flag: '🇺🇸',
+        stars: 5,
+        quote: 'The light, the atmosphere, the emotions — everything was real and effortless.',
+        author: 'Julia & Thomas',
+        location: 'Noto'
+    }
 ];
 
 export default function Testimonials({ items }: TestimonialsProps) {
-    const displayItems = items || defaultItems;
+    const displayItems = (items && items.length > 0) ? items : FALLBACK_TESTIMONIALS;
     const topItems = displayItems.slice(0, 3);
-    const bottomItems = displayItems.slice(3);
+    const bottomItems = displayItems.slice(3, 5);
 
     return (
         <section className="s-grey" id="reviews">
@@ -61,11 +66,11 @@ export default function Testimonials({ items }: TestimonialsProps) {
                 <RevealOnScroll className="test-grid d1">
                     {topItems.map((item, i) => (
                         <div className="tcard" key={i}>
-                            <span className="tcard-flag">{item.countryFlag || item.flag}</span>
+                            <span className="tcard-flag">{item.flag}</span>
                             <div className="tcard-stars"><span>★ ★ ★ ★ ★</span></div>
-                            <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
+                            <p className="tcard-quote"><em>&ldquo;{item.quote}&rdquo;</em></p>
                             <div className="tcard-auth">
-                                <strong>{item.coupleName || item.author}</strong>
+                                <strong>{item.author}</strong>
                                 <span>{item.location}</span>
                             </div>
                         </div>
@@ -75,11 +80,11 @@ export default function Testimonials({ items }: TestimonialsProps) {
                     <RevealOnScroll className="test-grid-2 d2">
                         {bottomItems.map((item, i) => (
                             <div className="tcard" key={i}>
-                                <span className="tcard-flag">{item.countryFlag || item.flag}</span>
+                                <span className="tcard-flag">{item.flag}</span>
                                 <div className="tcard-stars"><span>★ ★ ★ ★ ★</span></div>
-                                <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
+                                <p className="tcard-quote"><em>&ldquo;{item.quote}&rdquo;</em></p>
                                 <div className="tcard-auth">
-                                    <strong>{item.coupleName || item.author}</strong>
+                                    <strong>{item.author}</strong>
                                     <span>{item.location}</span>
                                 </div>
                             </div>
