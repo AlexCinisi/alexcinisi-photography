@@ -150,11 +150,7 @@ export default function PortfolioGrid({
                     ))}
                 </RevealOnScroll>
 
-                <RevealOnScroll>
-                    <div className="portfolio-cta">
-                        <Link href={ctaLink}>{ctaText}</Link>
-                    </div>
-                </RevealOnScroll>
+
             </div>
         </section>
     );

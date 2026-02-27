@@ -1135,6 +1135,21 @@ nav.scrolled .nav-logo img {
   max-width: 500px;
 }
 
+.stories-section .btn-text {
+  color: rgba(250, 250, 248, 0.7);
+  border-bottom: 1px solid rgba(250, 250, 248, 0.2);
+  margin-top: 1.5rem;
+  display: block;
+  padding-bottom: 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.stories-section .btn-text:hover {
+  color: var(--off-white);
+  border-bottom-color: var(--off-white);
+}
+
 .story-card {
   display: grid;
   grid-template-columns: 55fr 45fr;

@@ -42,6 +42,7 @@ export default function FeaturedStories() {
                     <div className="f-label">Real Weddings</div>
                     <h2>Every Wedding Story Is<br /><em>Unique</em></h2>
                     <p>Woven with intent, captured with editorial precision. A glimpse into celebrations across Sicily and beyond.</p>
+                    <Link href="/portfolio" className="btn-text">See All Stories</Link>
                 </RevealOnScroll>
             </div>
             <div className="stories-list">
