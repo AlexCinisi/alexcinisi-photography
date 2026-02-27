@@ -1519,21 +1519,24 @@ nav.scrolled .nav-logo img {
   margin-bottom: 28px;
 }
 
-.about-copy p {
+.about-copy p,
+.about-grid p {
   font-size: .9rem;
   line-height: 1.9;
-  color: var(--charcoal);
+  color: rgba(250, 250, 248, 0.6);
   margin-bottom: 14px;
   max-width: 480px;
 }
 
-.about-copy p em {
+.about-copy p em,
+.about-grid em {
   font-style: italic;
-  color: var(--ink);
+  color: rgba(250, 250, 248, 0.65);
 }
 
-.about-copy p strong {
-  color: var(--ink);
+.about-copy p strong,
+.about-grid strong {
+  color: rgba(250, 250, 248, 0.85);
   font-weight: 400;
 }
 
