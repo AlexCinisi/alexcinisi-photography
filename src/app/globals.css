@@ -61,7 +61,8 @@ body {
   flex-shrink: 0;
 }
 
-.h2 {
+.h2,
+h2 {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-weight: 300;
   font-size: clamp(1.7rem, 3vw, 2.4rem);
@@ -80,10 +81,16 @@ body {
 }
 
 .h2 em,
-.h2-lg em {
+.h2-lg em,
+h2 em {
   font-family: var(--font-bodoni), 'Bodoni Moda', serif;
   font-style: italic;
   font-weight: 300;
+}
+
+h3 {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
+  font-weight: 400;
 }
 
 .s-ink .h2,
@@ -1178,6 +1185,7 @@ nav.scrolled .nav-logo img {
 
 .story-card-badge {
   display: inline-block;
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-size: .55rem;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -1186,6 +1194,7 @@ nav.scrolled .nav-logo img {
 }
 
 .story-card-cta {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-size: .65rem;
   font-weight: 400;
   letter-spacing: .2em;
@@ -1201,6 +1210,10 @@ nav.scrolled .nav-logo img {
 .story-card-cta:hover {
   color: var(--accent);
   border-color: var(--accent);
+}
+
+.story-card-venue {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
 }
 
 
@@ -1267,20 +1280,22 @@ nav.scrolled .nav-logo img {
 
 .film-copy .btn-fill,
 .film-copy .btn-text,
+.film-copy a[class*="btn"],
 .film-copy [class*="btn"] {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
-  background: transparent;
-  border: 1px solid rgba(250, 250, 248, 0.2);
-  color: var(--off-white);
+  background: transparent !important;
+  border: 1px solid rgba(250, 250, 248, 0.2) !important;
+  color: var(--off-white) !important;
   transition: border-color 0.3s, background 0.3s;
 }
 
 .film-copy .btn-fill:hover,
 .film-copy .btn-text:hover,
+.film-copy a[class*="btn"]:hover,
 .film-copy [class*="btn"]:hover {
   border-color: var(--off-white);
-  background: rgba(250, 250, 248, 0.05);
-  color: var(--off-white);
+  background: rgba(250, 250, 248, 0.05) !important;
+  color: var(--off-white) !important;
 }
 
 /* ============================================
@@ -1508,24 +1523,41 @@ nav.scrolled .nav-logo img {
 }
 
 /* 2×3 Traits Grid */
-.traits-grid {
+.about-grid .traits-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--rule);
+  background: transparent;
   margin-top: 36px;
-  border: 1px solid var(--rule);
+  border: 1px solid rgba(250, 250, 248, 0.15);
 }
 
-.trait-cell {
-  background: var(--white);
+.about-grid .trait-cell {
+  background: transparent;
   padding: 18px 20px;
   text-align: center;
   transition: background .25s;
+  border: 1px solid rgba(250, 250, 248, 0.15);
 }
 
-.trait-cell:hover {
-  background: var(--off-white);
+.about-grid .trait-cell:hover {
+  background: rgba(250, 250, 248, 0.05);
+}
+
+.about-grid .trait-cell .trust-n,
+.about-grid .trait-cell strong {
+  color: var(--off-white);
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
+}
+
+.about-grid .trait-cell .trust-l,
+.about-grid .trait-cell span,
+.about-grid .trait-cell small {
+  color: rgba(250, 250, 248, 0.4);
+}
+
+.about-grid .traits-grid {
+  border-color: rgba(250, 250, 248, 0.15);
 }
 
 .trait-val {
