@@ -8,7 +8,7 @@ interface AboutSectionProps {
 
 export default function AboutSection({ image }: AboutSectionProps) {
     return (
-        <div className="about-grid" id="about">
+        <div className="about-grid s-ink" id="about">
             <div className="about-img" style={{ position: 'relative' }}>
                 {image ? (
                     <Image

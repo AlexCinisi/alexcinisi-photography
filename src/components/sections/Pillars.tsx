@@ -49,7 +49,7 @@ export default function Pillars({ intro, items }: PillarsProps) {
     const title = intro?.title || <>Three Pillars of<br /><em>Unforgettable Imagery</em></>;
 
     return (
-        <section className="s-grey pad" id="approach">
+        <section className="s-pearl pad" id="approach">
             <div className="max">
                 <RevealOnScroll className="sec-head center">
                     <div className="f-label">{label}</div>

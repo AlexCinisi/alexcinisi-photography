@@ -2,7 +2,7 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 export default function ProcessSteps() {
     return (
-        <section className="s-white pad">
+        <section className="s-pearl pad">
             <div className="max">
                 <RevealOnScroll className="sec-head">
                     <div className="f-label">How It Works</div>

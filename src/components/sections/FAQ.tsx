@@ -54,7 +54,7 @@ export default function FAQ({ label, items }: FAQProps) {
     };
 
     return (
-        <section className="s-white pad">
+        <section className="s-pearl pad">
             <div className="max">
                 <RevealOnScroll className="sec-head center">
                     <div className="f-label">{displayLabel}</div>

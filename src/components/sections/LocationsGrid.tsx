@@ -2,7 +2,7 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 export default function LocationsGrid() {
     return (
-        <section className="s-grey pad" id="locations">
+        <section className="s-white pad" id="locations">
             <div className="max">
                 <RevealOnScroll className="sec-head center">
                     <div className="f-label">Wedding Venues</div>

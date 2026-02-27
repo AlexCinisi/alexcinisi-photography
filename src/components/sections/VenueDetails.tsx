@@ -14,7 +14,7 @@ interface VenueDetailsProps {
 
 export default function VenueDetails({ label, title, items }: VenueDetailsProps) {
     return (
-        <section className="s-grey pad">
+        <section className="s-pearl pad">
             <div className="max">
                 <RevealOnScroll className="sec-head">
                     <div className="f-label">{label}</div>

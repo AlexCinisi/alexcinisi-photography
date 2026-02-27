@@ -9,27 +9,21 @@ interface FilmSectionProps {
 
 export default function FilmSection({ image }: FilmSectionProps) {
     return (
-        <div className="film-wrap">
-            <div className="film-media" style={{ position: 'relative' }}>
-                {image ? (
-                    <Image
-                        src={urlFor(image).width(1600).auto('format').quality(85).url()}
-                        alt="Film and digital wedding photography comparison"
-                        fill
-                        sizes="(max-width:960px) 0px, 50vw"
-                        style={{ objectFit: 'cover' }}
-                    />
-                ) : (
-                    <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={36} height={36}>
-                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
-                            <line x1="7" y1="2" x2="7" y2="22" />
-                            <line x1="17" y1="2" x2="17" y2="22" />
-                            <line x1="2" y1="12" x2="22" y2="12" />
-                        </svg>
-                        Film &amp; Digital Samples
-                    </div>
-                )}
+        <div className="film-wrap s-ink">
+            <div className="film-media">
+                <div className="film-single-img">
+                    {image ? (
+                        <Image
+                            src={urlFor(image).width(800).quality(85).auto('format').url()}
+                            alt="Film photography by Alex Cinisi"
+                            width={600}
+                            height={900}
+                            style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
+                        />
+                    ) : (
+                        <div className="film-img-ph" />
+                    )}
+                </div>
             </div>
             <RevealOnScroll className="film-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>Film &amp; Digital</div>

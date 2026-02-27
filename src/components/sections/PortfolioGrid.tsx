@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useEffect, useState } from 'react';
 import Link from 'next/link';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import Image from 'next/image';
@@ -42,25 +44,13 @@ const defaultItems: LegacyPortfolioItem[] = [
     { title: 'Elena & Robert', subtitle: 'Villa Igiea · Palermo', badge: 'Luxury' },
 ];
 
-const defaultSpans = [
-    { col: 'span 7', h: 460 },
-    { col: 'span 5', h: 460 },
-    { col: 'span 4', h: 380 },
-    { col: 'span 4', h: 380 },
-    { col: 'span 4', h: 380 },
-    { col: 'span 5', h: 420 },
-    { col: 'span 7', h: 420 },
-];
-
-// Location page spans (6 items)
-const locationSpans = [
-    { col: 'span 5', h: 560 },
-    { col: 'span 7', h: 272 },
-    { col: 'span 4', h: 272 },
-    { col: 'span 3', h: 272 },
-    { col: 'span 5', h: 300 },
-    { col: 'span 7', h: 300 },
-];
+function distributeToColumns<T>(items: T[], numCols: number): T[][] {
+    const columns: T[][] = Array.from({ length: numCols }, () => []);
+    items.forEach((item, i) => {
+        columns[i % numCols].push(item);
+    });
+    return columns;
+}
 
 export default function PortfolioGrid({
     intro,
@@ -69,90 +59,104 @@ export default function PortfolioGrid({
     ctaText = 'Explore All Stories',
     ctaLink = 'https://www.alexcinisiphotography.com/stories/',
 }: PortfolioGridProps) {
+    const [numCols, setNumCols] = useState(4);
+
+    useEffect(() => {
+        const checkWidth = () => {
+            setNumCols(window.innerWidth <= 960 ? 3 : 4);
+        };
+        checkWidth();
+        window.addEventListener('resize', checkWidth);
+        return () => window.removeEventListener('resize', checkWidth);
+    }, []);
+
     const hasSanityItems = items && items.length > 0;
     const isLocationsPage = legacyItems && legacyItems.length > 0;
 
-    // We decide what to loop over based on what's provided
-    const displaySpans = hasSanityItems || isLocationsPage ? locationSpans : defaultSpans;
+    let displayItems: any[] = [];
+    if (hasSanityItems && items) {
+        displayItems = items.map(item => ({
+            title: item.coupleName,
+            subtitle: item.location,
+            badge: item.badge || '',
+            sanityImage: item.image,
+            aspect: '3/4'
+        }));
+    } else if (isLocationsPage && legacyItems) {
+        displayItems = legacyItems.map(item => ({
+            title: item.title,
+            subtitle: item.subtitle,
+            badge: item.badge,
+            sanityImage: null,
+            aspect: '3/4'
+        }));
+    } else {
+        displayItems = defaultItems.map((item, index) => ({
+            title: item.title,
+            subtitle: item.subtitle,
+            badge: item.badge,
+            sanityImage: null,
+            aspect: index % 3 === 0 && index !== 0 ? '3/2' : '3/4' // Vary aspect ratios for rhythm
+        }));
+    }
 
-    // Calculate total items to display
-    const totalItemsCount = hasSanityItems
-        ? items.length
-        : (isLocationsPage ? legacyItems.length : defaultItems.length);
+    const columns = distributeToColumns(displayItems, numCols);
 
     const headerLabel = intro?.label || 'Selected Work';
     const headerTitle = intro?.title || <>Love Stories From<br /><em>Sicily &amp; Beyond</em></>;
     const headerNote = intro?.note;
 
     return (
-        <section className="s-white pad-sm" id="portfolio">
-            <div className="max">
-                <RevealOnScroll className="sec-head">
+        <section className="portfolio-masonry" id="portfolio">
+            <div className="pad">
+                <RevealOnScroll className="sec-head center">
                     <div className="f-label">{headerLabel}</div>
                     <div className="h2-lg">{headerTitle}</div>
                     {headerNote && (
-                        <p style={{ fontSize: '.82rem', color: 'var(--mid)', maxWidth: 260, lineHeight: 1.7 }}>
+                        <p style={{ fontSize: '.82rem', color: 'var(--mid)', maxWidth: 260, lineHeight: 1.7, margin: '0 auto' }}>
                             {headerNote}
                         </p>
                     )}
                 </RevealOnScroll>
-            </div>
-            <RevealOnScroll className="port-grid d1">
-                {Array.from({ length: totalItemsCount }).map((_, i) => {
-                    const span = displaySpans[i] || displaySpans[displaySpans.length - 1];
 
-                    let title = '';
-                    let subtitle = '';
-                    let badge = '';
-                    let sanityImage = null;
-
-                    if (hasSanityItems) {
-                        const item = items[i];
-                        title = item.coupleName;
-                        subtitle = item.location;
-                        badge = item.badge || '';
-                        sanityImage = item.image;
-                    } else if (isLocationsPage && legacyItems) {
-                        const item = legacyItems[i];
-                        title = item.title;
-                        subtitle = item.subtitle;
-                        badge = item.badge;
-                    } else {
-                        const item = defaultItems[i];
-                        title = item.title;
-                        subtitle = item.subtitle;
-                        badge = item.badge;
-                    }
-
-                    return (
-                        <div
-                            key={i}
-                            className="port-item"
-                            style={{ gridColumn: span.col, height: span.h, position: 'relative', overflow: 'hidden' }}
-                        >
-                            {sanityImage ? (
-                                <Image
-                                    src={urlFor(sanityImage).width(1200).auto('format').quality(85).url()}
-                                    alt={`${title} wedding at ${subtitle}`}
-                                    fill
-                                    sizes="(max-width:960px) 100vw, 50vw"
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            ) : null}
-                            <div className="port-info">
-                                <strong>{title}</strong>
-                                <span>{subtitle}</span>
-                            </div>
-                            <div className="port-badge">{badge}</div>
+                <RevealOnScroll className="masonry-grid d1">
+                    {columns.map((col, colIndex) => (
+                        <div key={colIndex} className="masonry-col" style={{ marginTop: numCols === 4 && colIndex % 2 !== 0 ? '40px' : '0' }}>
+                            {col.map((item, itemIndex) => (
+                                <div key={itemIndex} className="masonry-item">
+                                    {item.sanityImage ? (
+                                        <Image
+                                            src={urlFor(item.sanityImage).width(800).auto('format').quality(85).url()}
+                                            alt={`${item.title} wedding at ${item.subtitle}`}
+                                            width={600}
+                                            height={800}
+                                            sizes="(max-width: 960px) 33vw, 25vw"
+                                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                                        />
+                                    ) : (
+                                        <div style={{
+                                            width: '100%',
+                                            aspectRatio: item.aspect,
+                                            background: `linear-gradient(${150 + (itemIndex * 10)}deg, #2a2825, #1e1c1a, #151412)`
+                                        }} />
+                                    )}
+                                    <div className="masonry-overlay">
+                                        <strong>{item.title}</strong>
+                                        <span>{item.subtitle}</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    );
-                })}
-            </RevealOnScroll>
-            <RevealOnScroll>
-                <div style={{ textAlign: 'center', paddingTop: '56px' }}>
-                    <Link href={ctaLink} className="btn-fill">{ctaText}</Link>
-                </div>
-            </RevealOnScroll>
+                    ))}
+                </RevealOnScroll>
+
+                <RevealOnScroll>
+                    <div className="portfolio-cta">
+                        <Link href={ctaLink}>{ctaText}</Link>
+                    </div>
+                </RevealOnScroll>
+            </div>
         </section>
     );
 }
+

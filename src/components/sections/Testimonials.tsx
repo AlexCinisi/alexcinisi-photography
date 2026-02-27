@@ -57,7 +57,7 @@ export default function Testimonials({ items }: TestimonialsProps) {
     const bottomItems = displayItems.slice(3, 5);
 
     return (
-        <section className="s-grey" id="reviews">
+        <section className="s-white" id="reviews">
             <RevealOnScroll className="sec-head center" style={{ padding: '72px 64px 0' }}>
                 <div className="f-label">What Couples Say</div>
                 <div className="h2-lg">Straight From<br /><em>Their Hearts</em></div>

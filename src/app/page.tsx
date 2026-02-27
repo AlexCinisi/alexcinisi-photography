@@ -14,6 +14,7 @@ import ProcessSteps from "@/components/sections/ProcessSteps";
 import AboutSection from "@/components/sections/AboutSection";
 import LocationsGrid from "@/components/sections/LocationsGrid";
 import PhotoPause from '@/components/sections/PhotoPause'
+import FeaturedStories from '@/components/sections/FeaturedStories'
 import PhotoBreak from "@/components/sections/PhotoBreak";
 import FAQ from "@/components/sections/FAQ";
 import Availability from "@/components/sections/Availability";
@@ -32,17 +33,17 @@ export default async function Home() {
             <Hero image={homePage?.heroImage} />
             <TrustBar />
             <ProofBar logos={homePage?.proofLogos} />
-            <PhotoPause image={homePage?.photoPause1} alt="Destination wedding in Sicily" />
+            <PhotoPause fallbackGradient="linear-gradient(160deg, #c4baa8 0%, #a89e8c 40%, #8c836e 100%)" />
             <Manifesto image={homePage?.manifestoImage} />
             <Pillars />
-            <PhotoPause image={homePage?.photoPause2} alt="Luxury wedding photography detail" />
+            <FeaturedStories />
             <PortfolioGrid items={portfolio} />
+            <AboutSection image={homePage?.aboutImage} />
             <Testimonials items={testimonials} />
             <FilmSection image={homePage?.filmSectionImage} />
             <Investment />
-            <PhotoPause image={homePage?.photoPause3} alt="Wedding ceremony in Sicily" />
+            <PhotoPause fallbackGradient="linear-gradient(155deg, #b8ac98 0%, #9e9280 40%, #8a7e6a 100%)" />
             <ProcessSteps />
-            <AboutSection image={homePage?.aboutImage} />
             <LocationsGrid />
             <PhotoBreak image={homePage?.photoBreakImage} />
             <FAQ />

@@ -10,8 +10,9 @@
   --charcoal: #3A3835;
   --mid: #7A7672;
   --rule: #DEDBD6;
-  --grey-bg: #F3F1EE;
   --off-white: #FAFAF8;
+  --pearl: #F5F3EF;
+  --warm-black: #0A0A09;
   --white: #FFFFFF;
   --accent: #B8A88A;
   --accent-dk: #8C7D65;
@@ -582,8 +583,13 @@ nav.scrolled {
   background: var(--white);
 }
 
-.s-grey {
-  background: var(--grey-bg);
+.s-pearl {
+  background: var(--pearl);
+}
+
+.s-warm {
+  background: var(--warm-black);
+  color: var(--off-white);
 }
 
 .s-ink {
