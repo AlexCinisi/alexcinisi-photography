@@ -6,8 +6,8 @@ import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import Script from "next/script";
 
-const redHatDisplay = Red_Hat_Display({
-    variable: "--font-red-hat",
+const redhat = Red_Hat_Display({
+    variable: "--font-redhat",
     subsets: ["latin"],
     weight: ["300", "400", "500", "700"],
     style: ["normal", "italic"],
@@ -203,7 +203,7 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${jost.variable} ${redHatDisplay.variable} ${bodoniModa.variable}`}
+                className={`${jost.variable} ${redhat.variable} ${bodoniModa.variable}`}
                 style={{ fontFamily: "var(--font-jost), sans-serif" }}
             >
                 <Script
