@@ -55,16 +55,19 @@ export default function Pillars({ intro, items }: PillarsProps) {
                     <div className="f-label">{label}</div>
                     <div className="h2-lg">{title}</div>
                 </RevealOnScroll>
-                <RevealOnScroll className="pillars d1">
-                    {displayItems.map((item, i) => (
-                        <div className="pillar" key={i}>
-                            <div className="pillar-n">{item.number}</div>
-                            <h3>{item.title}</h3>
-                            <p>{item.description}</p>
-                            <p className="pillar-q">{item.quote} — {item.quoteAuthor}</p>
-                        </div>
-                    ))}
-                </RevealOnScroll>
+                <div className="pillars">
+                    {displayItems.map((item, i) => {
+                        const delays = ["", "d1", "d2"];
+                        return (
+                            <RevealOnScroll key={i} delay={delays[i] || ""} className="pillar">
+                                <div className="pillar-n">{item.number}</div>
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                                <p className="pillar-q">{item.quote} — {item.quoteAuthor}</p>
+                            </RevealOnScroll>
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );

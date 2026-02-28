@@ -36,32 +36,39 @@ const FALLBACK_STORIES: StoryItem[] = [
 
 export default function FeaturedStories() {
     return (
-        <section className="stories-section">
-            <div className="stories-intro">
-                <RevealOnScroll>
-                    <div className="f-label">Real Weddings</div>
-                    <h2>Every Wedding Story Is<br /><em>Unique</em></h2>
-                    <p>Woven with intent, captured with editorial precision. A glimpse into celebrations across Sicily and beyond.</p>
-                    <Link href="/portfolio" className="btn-text">See All Stories</Link>
-                </RevealOnScroll>
-            </div>
-            <div className="stories-list">
-                {FALLBACK_STORIES.map((story, i) => (
-                    <RevealOnScroll key={i} className={`story-card d${i + 1}`}>
-                        <div className="story-card-img">
-                            <div className="story-card-img-ph" style={{ background: story.imageGradient }} />
-                        </div>
-                        <div className="story-card-copy">
-                            <span className="story-card-badge">{story.badge}</span>
-                            <h3 className="story-card-couple">{story.couple}</h3>
-                            <div className="story-card-venue">{story.location}</div>
-                            <Link href={`/stories/${story.slug || ''}`} className="story-card-cta">
-                                Explore This Story &rarr;
-                            </Link>
-                        </div>
+        <>
+            <section className="stories-intro-section s-pearl pad">
+                <div className="stories-intro">
+                    <RevealOnScroll>
+                        <div className="f-label">Real Weddings</div>
+                        <h2>Every Wedding Story Is<br /><em>Unique</em></h2>
+                        <p>Woven with intent, captured with editorial precision. A glimpse into celebrations across Sicily and beyond.</p>
+                        <Link href="/portfolio" className="btn-text">See All Stories</Link>
                     </RevealOnScroll>
-                ))}
-            </div>
-        </section>
+                </div>
+            </section>
+            <section className="stories-cards-section s-warm">
+                <div className="stories-list">
+                    {FALLBACK_STORIES.map((story, i) => {
+                        const delays = ["", "d1", "d2"];
+                        return (
+                            <RevealOnScroll key={i} className="story-card" delay={delays[i] || ""}>
+                                <div className="story-card-img">
+                                    <div className="story-card-img-ph" style={{ background: story.imageGradient }} />
+                                </div>
+                                <div className="story-card-copy">
+                                    <span className="story-card-badge">{story.badge}</span>
+                                    <h3 className="story-card-couple">{story.couple}</h3>
+                                    <div className="story-card-venue">{story.location}</div>
+                                    <Link href={`/stories/${story.slug || ''}`} className="story-card-cta">
+                                        Explore This Story &rarr;
+                                    </Link>
+                                </div>
+                            </RevealOnScroll>
+                        );
+                    })}
+                </div>
+            </section>
+        </>
     );
 }

@@ -1109,35 +1109,35 @@ nav.scrolled .nav-logo img {
 /* ============================================
    FEATURED STORIES
    ============================================ */
-.stories-section {
-  background: var(--warm-black);
-}
-
 .stories-intro {
   padding: 100px 64px 60px;
 }
 
-.stories-intro .f-label {
-  color: rgba(250, 250, 248, .3);
+.stories-intro-section .f-label {
+  color: var(--mid);
 }
 
-.stories-intro .f-label::before {
+.stories-intro-section .f-label::before {
   background: var(--accent);
 }
 
-.stories-intro h2 {
-  color: var(--off-white);
+.stories-intro-section h2 {
+  color: var(--ink);
   font-size: clamp(1.6rem, 3vw, 2.4rem);
 }
 
-.stories-intro p {
-  color: rgba(250, 250, 248, .45);
+.stories-intro-section h2 em {
+  color: var(--ink);
+}
+
+.stories-intro-section p {
+  color: var(--charcoal);
   max-width: 500px;
 }
 
-.stories-section .btn-text {
-  color: rgba(250, 250, 248, 0.7);
-  border-bottom: 1px solid rgba(250, 250, 248, 0.2);
+.stories-intro-section .btn-text {
+  color: var(--charcoal);
+  border-bottom: 1px solid var(--rule);
   margin-top: 1.5rem;
   display: block;
   padding-bottom: 1rem;
@@ -1145,9 +1145,14 @@ nav.scrolled .nav-logo img {
   max-width: 500px;
 }
 
-.stories-section .btn-text:hover {
-  color: var(--off-white);
-  border-bottom-color: var(--off-white);
+.stories-intro-section .btn-text:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.stories-cards-section {
+  background: var(--warm-black);
+  padding: 0 var(--pad-x) 100px;
 }
 
 .story-card {
