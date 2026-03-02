@@ -43,7 +43,7 @@ body {
 .f-label {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-weight: 400;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--mid);
@@ -65,18 +65,18 @@ body {
 h2 {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-weight: 300;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  letter-spacing: -.02em;
-  line-height: 1.1;
+  font-size: clamp(2.6rem, 4.2vw, 4rem);
+  letter-spacing: -.025em;
+  line-height: 1.06;
   color: var(--ink);
 }
 
 .h2-lg {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-weight: 300;
-  font-size: clamp(2rem, 3.6vw, 3rem);
-  letter-spacing: -.02em;
-  line-height: 1.08;
+  font-size: clamp(3rem, 5vw, 4.8rem);
+  letter-spacing: -.025em;
+  line-height: 1.04;
   color: var(--ink);
 }
 
@@ -357,6 +357,8 @@ nav.scrolled .nav-logo img {
   overflow: hidden;
 }
 
+
+
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -477,11 +479,11 @@ nav.scrolled .nav-logo img {
   background: var(--ink);
   color: var(--white);
   text-decoration: none;
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 400;
   letter-spacing: .22em;
   text-transform: uppercase;
-  padding: 15px 34px;
+  padding: 16px 36px;
   transition: background .25s, transform .25s, color .25s;
 }
 
@@ -491,14 +493,14 @@ nav.scrolled .nav-logo img {
 }
 
 .btn-text {
-  font-size: .68rem;
+  font-size: .78rem;
   font-weight: 400;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px solid var(--ink);
-  padding-bottom: 2px;
+  padding-bottom: 3px;
   transition: color .25s, border-color .25s;
 }
 
@@ -671,7 +673,11 @@ nav.scrolled .nav-logo img {
    LAYOUT HELPERS
    ============================================ */
 .pad {
-  padding: 110px 64px;
+  padding: 120px 64px;
+}
+
+.pad-lg {
+  padding: 160px 64px;
 }
 
 .pad-sm {
@@ -1106,60 +1112,44 @@ nav.scrolled .nav-logo img {
   color: var(--mid);
 }
 
-/* ============================================
-   FEATURED STORIES
-   ============================================ */
-.stories-intro {
-  padding: 100px 64px 60px;
+/* --- STORIES --- */
+.stories-intro-section {
+  will-change: background-color, color;
 }
 
-.stories-intro-section .f-label {
-  color: var(--mid);
-}
-
-.stories-intro-section .f-label::before {
-  background: var(--accent);
-}
-
-.stories-intro-section h2 {
-  color: var(--ink);
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-}
-
-.stories-intro-section h2 em {
-  color: var(--ink);
-}
-
-.stories-intro-section p {
-  color: var(--charcoal);
-  max-width: 500px;
-}
-
+.stories-intro-section .h2-lg,
+.stories-intro-section h2,
+.stories-intro-section h2 em,
+.stories-intro-section p,
+.stories-intro-section .f-label,
 .stories-intro-section .btn-text {
-  color: var(--charcoal);
-  border-bottom: 1px solid var(--rule);
-  margin-top: 1.5rem;
-  display: block;
-  padding-bottom: 1rem;
-  width: 100%;
-  max-width: 500px;
-}
-
-.stories-intro-section .btn-text:hover {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
+  color: inherit;
+  transition: none;
 }
 
 .stories-cards-section {
-  background: var(--warm-black);
-  padding: 0 var(--pad-x) 100px;
+  padding: 0;
+}
+
+.stories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .story-card {
   display: grid;
   grid-template-columns: 55fr 45fr;
-  min-height: 85vh;
-  border-top: 1px solid rgba(250, 250, 248, .06);
+  height: min(82vh, 780px);
+  overflow: hidden;
+}
+
+.story-card:nth-child(even) {
+  direction: rtl;
+}
+
+.story-card:nth-child(even)>* {
+  direction: ltr;
 }
 
 .story-card-img {
@@ -1167,75 +1157,63 @@ nav.scrolled .nav-logo img {
   overflow: hidden;
 }
 
-.story-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .story-card-img-ph {
   width: 100%;
   height: 100%;
+  background: #E8E5E0;
 }
 
 .story-card-copy {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px 64px;
-}
-
-.story-card-couple {
-  font-family: var(--font-bodoni), 'Bodoni Moda', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  color: var(--off-white);
-  line-height: 1.2;
-  margin-bottom: 12px;
-}
-
-.story-card-venue {
-  font-size: .7rem;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: rgba(250, 250, 248, .4);
-  margin-bottom: 8px;
+  padding: 64px;
+  gap: 12px;
 }
 
 .story-card-badge {
-  display: inline-block;
-  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
-  font-size: .55rem;
-  letter-spacing: .2em;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 28px;
+  color: rgba(250, 250, 248, .4);
+}
+
+.story-card-couple {
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--off-white);
+}
+
+.story-card-venue {
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 248, .45);
 }
 
 .story-card-cta {
-  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
-  font-size: .65rem;
+  font-size: 0.72rem;
   font-weight: 400;
-  letter-spacing: .2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--off-white);
+  color: rgba(250, 250, 248, .6);
   text-decoration: none;
   border-bottom: 1px solid rgba(250, 250, 248, .2);
-  padding-bottom: 2px;
+  padding-bottom: 3px;
+  margin-top: 12px;
   align-self: flex-start;
   transition: color .25s, border-color .25s;
 }
 
 .story-card-cta:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--off-white);
+  border-color: rgba(250, 250, 248, .5);
 }
-
-.story-card-venue {
-  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
-}
-
 
 /* ============================================
    FILM STRIP
@@ -2424,21 +2402,30 @@ footer {
   }
 
   /* Stories */
-  .stories-intro {
-    padding: 72px 24px 40px;
-  }
-
   .story-card {
     grid-template-columns: 1fr;
-    min-height: auto;
+    height: auto;
+  }
+
+  .story-card:nth-child(even) {
+    direction: ltr;
   }
 
   .story-card-img {
-    aspect-ratio: 3 / 4;
+    height: 60vh;
+    min-height: 400px;
   }
 
   .story-card-copy {
-    padding: 32px 24px 48px;
+    padding: 40px 24px 48px;
+  }
+
+  .story-card-couple {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+  }
+
+  .story-card-badge {
+    font-size: 0.62rem;
   }
 
   .photo-pause {
@@ -2529,7 +2516,11 @@ footer {
   }
 
   .pad {
-    padding: 72px 24px;
+    padding: 80px 24px;
+  }
+
+  .pad-lg {
+    padding: 100px 24px;
   }
 
   .pad-sm {
