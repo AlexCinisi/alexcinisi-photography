@@ -39,8 +39,8 @@ export default async function Home() {
             <FeaturedStories />
             <PortfolioGrid items={portfolio} />
             <AboutSection image={homePage?.aboutImage} />
-            <Testimonials items={testimonials} />
             <FilmSection image={homePage?.filmSectionImage} />
+            <Testimonials items={testimonials} />
             <Investment />
             <PhotoPause fallbackGradient="linear-gradient(155deg, #b8ac98 0%, #9e9280 40%, #8a7e6a 100%)" />
             <ProcessSteps />

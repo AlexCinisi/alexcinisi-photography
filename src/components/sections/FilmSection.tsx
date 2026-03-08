@@ -9,7 +9,7 @@ interface FilmSectionProps {
 
 export default function FilmSection({ image }: FilmSectionProps) {
     return (
-        <div className="film-wrap s-ink">
+        <div className="film-wrap s-warm">
             <div className="film-media">
                 <div className="film-single-img">
                     {image ? (
