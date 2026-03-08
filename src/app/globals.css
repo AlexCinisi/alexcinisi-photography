@@ -1100,6 +1100,12 @@ nav.scrolled .nav-logo img {
   margin-bottom: 1px;
 }
 
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 680px;
+}
+
 .test-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1183,13 +1189,17 @@ nav.scrolled .nav-logo img {
 
 .testimonials-section .test-grid,
 .testimonials-section .test-grid-2 {
-  background: transparent;
+  background: rgba(128, 128, 128, 0.15);
   gap: 1px;
-  border-bottom: 1px solid rgba(128,128,128,0.15);
 }
 
 .testimonials-section .test-grid {
-    border-top: 1px solid rgba(128,128,128,0.15);
+  border-top: 1px solid rgba(128, 128, 128, 0.15);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+.testimonials-section .test-grid-2 {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.15);
 }
 
 /* --- STORIES --- */
@@ -1373,7 +1383,6 @@ nav.scrolled .nav-logo img {
 .film-wrap {
   display: grid;
   grid-template-columns: 55fr 45fr;
-  background: var(--ink);
   padding: 80px 64px;
   gap: 64px;
   align-items: center;
