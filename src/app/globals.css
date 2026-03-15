@@ -1027,6 +1027,11 @@ nav.scrolled .nav-logo img {
   cursor: pointer;
 }
 
+.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
 .port-bg {
   width: 100%;
   aspect-ratio: var(--port-ratio, 3/4);

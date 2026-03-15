@@ -1,7 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
-import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { PORTFOLIO_HOME } from '@/lib/constants';
 
 interface PortfolioIntro {
@@ -19,6 +18,45 @@ interface PortfolioGridProps {
     ctaLink?: string;
 }
 
+function PortfolioItem({ item, index }: { item: typeof PORTFOLIO_HOME[0], index: number }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const [visible, setVisible] = useState(false);
+    
+    useEffect(() => {
+        const obs = new IntersectionObserver(
+            ([e]) => { 
+                if (e.isIntersecting) { 
+                    setVisible(true); 
+                    obs.disconnect(); 
+                } 
+            },
+            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+        );
+        if (ref.current) obs.observe(ref.current);
+        return () => obs.disconnect();
+    }, []);
+    
+    // Stagger: items nella stessa "onda" (posizione % colonne)
+    const staggerDelay = (index % 3) * 0.12; // 0ms, 120ms, 240ms
+    
+    return (
+        <div 
+            ref={ref}
+            className="port-item"
+            style={{
+                '--port-ratio': item.ratio,
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(32px)',
+                transition: `opacity 0.7s cubic-bezier(0.4,0,0.2,1) ${staggerDelay}s, 
+                             transform 0.7s cubic-bezier(0.4,0,0.2,1) ${staggerDelay}s`,
+            } as React.CSSProperties}
+            onClick={() => {/* openLightbox */}}
+        >
+            <div className="port-bg" />
+        </div>
+    );
+}
+
 export default function PortfolioGrid({
     intro,
     ctaText = 'Explore All Stories',
@@ -28,14 +66,35 @@ export default function PortfolioGrid({
     const headerTitle = intro?.title || <>Moments That Speak<br /><em>for Themselves</em></>;
     const headerNote = intro?.note;
 
-    const openLightbox = (item: typeof PORTFOLIO_HOME[0]) => {
-        // Implement lightbox functionality here or pass as prop later
-    };
+    const headRef = useRef<HTMLDivElement>(null);
+    const [headVisible, setHeadVisible] = useState(false);
+
+    useEffect(() => {
+        const obs = new IntersectionObserver(
+            ([e]) => { 
+                if (e.isIntersecting) { 
+                    setHeadVisible(true); 
+                    obs.disconnect(); 
+                } 
+            },
+            { threshold: 0.3 }
+        );
+        if (headRef.current) obs.observe(headRef.current);
+        return () => obs.disconnect();
+    }, []);
 
     return (
         <section className="portfolio-masonry" id="portfolio">
             <div className="pad">
-                <RevealOnScroll className="sec-head center">
+                <div 
+                    ref={headRef}
+                    className="sec-head center"
+                    style={{
+                        opacity: headVisible ? 1 : 0,
+                        transform: headVisible ? 'translateY(0)' : 'translateY(24px)',
+                        transition: 'all 0.8s cubic-bezier(0.4,0,0.2,1)',
+                    }}
+                >
                     <div className="f-label">{headerLabel}</div>
                     <div className="h2-lg">{headerTitle}</div>
                     {headerNote && (
@@ -43,20 +102,13 @@ export default function PortfolioGrid({
                             {headerNote}
                         </p>
                     )}
-                </RevealOnScroll>
+                </div>
 
-                <RevealOnScroll className="port-grid">
+                <div className="port-grid">
                     {PORTFOLIO_HOME.map((item, i) => (
-                        <div 
-                            className="port-item" 
-                            key={i} 
-                            style={{ '--port-ratio': item.ratio } as React.CSSProperties}
-                            onClick={() => openLightbox(item)}
-                        >
-                            <div className="port-bg" />
-                        </div>
+                        <PortfolioItem key={i} item={item} index={i} />
                     ))}
-                </RevealOnScroll>
+                </div>
             </div>
         </section>
     );
