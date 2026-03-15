@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { PORTFOLIO_HOME } from '@/lib/constants';
+import PortfolioLightbox from '@/components/PortfolioLightbox';
 
 interface PortfolioIntro {
     label: string;
@@ -18,7 +19,7 @@ interface PortfolioGridProps {
     ctaLink?: string;
 }
 
-function PortfolioItem({ item, index }: { item: typeof PORTFOLIO_HOME[0], index: number }) {
+function PortfolioItem({ item, index, onOpenLightbox }: { item: typeof PORTFOLIO_HOME[0], index: number, onOpenLightbox: () => void }) {
     const ref = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(false);
     
@@ -50,7 +51,7 @@ function PortfolioItem({ item, index }: { item: typeof PORTFOLIO_HOME[0], index:
                 transition: `opacity 0.7s cubic-bezier(0.4,0,0.2,1) ${staggerDelay}s, 
                              transform 0.7s cubic-bezier(0.4,0,0.2,1) ${staggerDelay}s`,
             } as React.CSSProperties}
-            onClick={() => {/* openLightbox */}}
+            onClick={onOpenLightbox}
         >
             <div className="port-bg" />
         </div>
@@ -68,6 +69,7 @@ export default function PortfolioGrid({
 
     const headRef = useRef<HTMLDivElement>(null);
     const [headVisible, setHeadVisible] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const obs = new IntersectionObserver(
@@ -106,10 +108,23 @@ export default function PortfolioGrid({
 
                 <div className="port-grid">
                     {PORTFOLIO_HOME.map((item, i) => (
-                        <PortfolioItem key={i} item={item} index={i} />
+                        <PortfolioItem 
+                            key={i} 
+                            item={item} 
+                            index={i} 
+                            onOpenLightbox={() => setLightboxIndex(i)} 
+                        />
                     ))}
                 </div>
             </div>
+
+            {lightboxIndex !== null && (
+                <PortfolioLightbox
+                    images={PORTFOLIO_HOME}
+                    startIndex={lightboxIndex}
+                    onClose={() => setLightboxIndex(null)}
+                />
+            )}
         </section>
     );
 }
