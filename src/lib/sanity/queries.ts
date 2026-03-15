@@ -10,9 +10,29 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   proofLogos[] { name, logo { asset-> { url } }, url }
 }`
 
-// Fetch featured portfolio items for homepage grid (max 7)
-export const featuredPortfolioQuery = `*[_type == "portfolioItem" && featured == true] | order(order asc) [0...7] {
-  coupleName, location, badge, image, slug
+// Fetch featured portfolio items for homepage grid (max 12)
+export const featuredPortfolioQuery = `*[_type == "portfolioItem" && featured == true] | order(order asc) [0...12] {
+  coupleName,
+  location,
+  badge,
+  slug,
+  "image": image {
+    asset-> {
+      _id,
+      url,
+      metadata {
+        dimensions {
+          width,
+          height,
+          aspectRatio
+        },
+        lqip
+      }
+    },
+    hotspot,
+    crop,
+    alt
+  }
 }`
 
 // Fetch featured testimonials for homepage (max 5)  

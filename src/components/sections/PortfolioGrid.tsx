@@ -3,6 +3,32 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { PORTFOLIO_HOME } from '@/lib/constants';
 import PortfolioLightbox from '@/components/PortfolioLightbox';
+import Image from 'next/image';
+import { urlFor, getHotspotPosition } from '@/lib/sanity/image';
+
+export interface SanityPortfolioItem {
+  coupleName: string
+  location: string
+  badge?: string
+  slug?: { current: string }
+  image?: {
+    asset: {
+      _id: string
+      url: string
+      metadata: {
+        dimensions: {
+          width: number
+          height: number
+          aspectRatio: number
+        }
+        lqip?: string
+      }
+    }
+    hotspot?: { x: number; y: number }
+    crop?: any
+    alt?: string
+  }
+}
 
 interface PortfolioIntro {
     label: string;
@@ -12,14 +38,20 @@ interface PortfolioIntro {
 
 interface PortfolioGridProps {
     intro?: PortfolioIntro;
-    // Keeping legacy props for backwards compatibility with any remaining usages
-    items?: any[];
-    legacyItems?: any[];
+    items?: SanityPortfolioItem[] | null;
     ctaText?: string;
     ctaLink?: string;
 }
 
-function PortfolioItem({ item, index, onOpenLightbox }: { item: typeof PORTFOLIO_HOME[0], index: number, onOpenLightbox: () => void }) {
+function getAspectRatio(item: any): string {
+  if (item.image?.asset?.metadata?.dimensions) {
+    const { width, height } = item.image.asset.metadata.dimensions
+    return `${width}/${height}`
+  }
+  return item.ratio || '3/4'
+}
+
+function PortfolioItem({ item, index, onOpenLightbox }: { item: any, index: number, onOpenLightbox: () => void }) {
     const ref = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(false);
     
@@ -45,7 +77,7 @@ function PortfolioItem({ item, index, onOpenLightbox }: { item: typeof PORTFOLIO
             ref={ref}
             className="port-item"
             style={{
-                '--port-ratio': item.ratio,
+                '--port-ratio': getAspectRatio(item),
                 opacity: visible ? 1 : 0,
                 transform: visible ? 'translateY(0)' : 'translateY(32px)',
                 transition: `opacity 0.7s cubic-bezier(0.4,0,0.2,1) ${staggerDelay}s, 
@@ -53,13 +85,41 @@ function PortfolioItem({ item, index, onOpenLightbox }: { item: typeof PORTFOLIO
             } as React.CSSProperties}
             onClick={onOpenLightbox}
         >
-            <div className="port-bg" />
+            <div className="port-bg">
+                {item.image?.asset ? (
+                    <Image
+                        src={urlFor(item.image)
+                            .width(800)
+                            .quality(85)
+                            .auto('format')
+                            .fit('crop')
+                            .crop('focalpoint')
+                            .url()}
+                        alt={item.image.alt || `${item.coupleName || 'Wedding'} photography by Alex Cinisi`}
+                        fill
+                        sizes="(max-width: 560px) 100vw, (max-width: 960px) 50vw, 33vw"
+                        style={{
+                            objectFit: 'cover',
+                            objectPosition: getHotspotPosition(item.image),
+                        }}
+                        placeholder={item.image.asset.metadata?.lqip ? 'blur' : 'empty'}
+                        blurDataURL={item.image.asset.metadata?.lqip}
+                    />
+                ) : (
+                    <div style={{
+                        width: '100%',
+                        height: '100%',
+                        background: '#E8E5E0',
+                    }} />
+                )}
+            </div>
         </div>
     );
 }
 
 export default function PortfolioGrid({
     intro,
+    items,
     ctaText = 'Explore All Stories',
     ctaLink = 'https://www.alexcinisiphotography.com/stories/',
 }: PortfolioGridProps) {
@@ -85,6 +145,13 @@ export default function PortfolioGrid({
         return () => obs.disconnect();
     }, []);
 
+    const portfolioItems = (items && items.length > 0)
+        ? items
+        : PORTFOLIO_HOME.map(item => ({
+            ...item,
+            image: null,
+        }));
+
     return (
         <section className="portfolio-masonry" id="portfolio">
             <div className="pad">
@@ -107,7 +174,7 @@ export default function PortfolioGrid({
                 </div>
 
                 <div className="port-grid">
-                    {PORTFOLIO_HOME.map((item, i) => (
+                    {portfolioItems.map((item, i) => (
                         <PortfolioItem 
                             key={i} 
                             item={item} 
@@ -120,7 +187,7 @@ export default function PortfolioGrid({
 
             {lightboxIndex !== null && (
                 <PortfolioLightbox
-                    images={PORTFOLIO_HOME}
+                    items={portfolioItems}
                     startIndex={lightboxIndex}
                     onClose={() => setLightboxIndex(null)}
                 />

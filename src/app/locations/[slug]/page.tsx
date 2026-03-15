@@ -168,14 +168,14 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                     title: <>Love Stories at<br /><em>Villa Igiea</em></>,
                     note: "Every frame captures the Art Nouveau grandeur and Mediterranean light that make this venue extraordinary."
                 }}
-                legacyItems={[
-                    { title: "Amber & Art", subtitle: "Sala Basile · Luxury Wedding", badge: "Featured" },
-                    { title: "Terrazza Mare Sunset", subtitle: "Golden Hour · Gulf of Palermo", badge: "Editorial" },
-                    { title: "Garden Ceremony", subtitle: "Temple · English Garden", badge: "Ceremony" },
-                    { title: "Bridal Details", subtitle: "Liberty Suite · Getting Ready", badge: "Details" },
-                    { title: "Couple Portraits", subtitle: "Tiered Gardens · Blue Hour", badge: "Portraits" },
-                    { title: "Belle Époque Reception", subtitle: "Ballroom · Full Day", badge: "Reception" }
-                ]}
+                items={[
+                    { coupleName: "Amber & Art", location: "Sala Basile · Luxury Wedding", badge: "Featured" },
+                    { coupleName: "Terrazza Mare Sunset", location: "Golden Hour · Gulf of Palermo", badge: "Editorial" },
+                    { coupleName: "Garden Ceremony", location: "Temple · English Garden", badge: "Ceremony" },
+                    { coupleName: "Bridal Details", location: "Liberty Suite · Getting Ready", badge: "Details" },
+                    { coupleName: "Couple Portraits", location: "Tiered Gardens · Blue Hour", badge: "Portraits" },
+                    { coupleName: "Belle Époque Reception", location: "Ballroom · Full Day", badge: "Reception" }
+                 ]}
                 ctaText="View Full Villa Igiea Story"
                 ctaLink="https://www.alexcinisiphotography.com/villa-igiea-wedding-a-luxury-love-story/"
             />

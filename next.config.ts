@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
                 hostname: 'cdn.sanity.io',
             },
         ],
+        qualities: [75, 85, 90],
     },
     experimental: {
         optimizePackageImports: ['@sanity/client', '@sanity/image-url', 'next-sanity', 'resend'],

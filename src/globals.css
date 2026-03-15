@@ -229,6 +229,16 @@ nav.scrolled {
   transition: transform .5s cubic-bezier(.4, 0, .2, 1), color .25s;
 }
 
+.port-bg {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.03);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #E8E5E0;
+    position: relative;
+    overflow: hidden;
+}
+
 .menu-overlay.open .menu-links a {
   transform: translateY(0);
 }
