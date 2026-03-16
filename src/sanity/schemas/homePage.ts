@@ -254,6 +254,7 @@ export default defineType({
       of: [
         {
           type: 'object',
+          name: 'logoItem',
           fields: [
             { name: 'name', title: 'Nome pubblicazione', type: 'string' },
             {
