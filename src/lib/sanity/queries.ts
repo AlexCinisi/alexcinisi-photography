@@ -1,10 +1,47 @@
 // Fetch homepage singleton images + site logo
 export const homePageQuery = `*[_type == "homePage"][0] {
-  heroImage,
-  manifestoImage,
-  aboutImage,
-  filmSectionImage,
-  photoBreakImage,
+  // Hero
+  heroImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+
+  // Sezioni
+  manifestoImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  aboutImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  filmSectionImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+
+  // Photo Breaks (3 separati)
+  photoBreakImage1 {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  photoBreakImage2 {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  photoBreakImage3 {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+
+  // Branding
   siteLogo { asset-> { url } },
   siteLogoFooter { asset-> { url } },
   proofLogos[] { name, logo { asset-> { url } }, url }

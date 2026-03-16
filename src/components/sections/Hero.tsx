@@ -4,16 +4,17 @@ import { urlFor, getHotspotPosition } from '@/lib/sanity/image';
 
 interface HeroProps {
     image?: any;
+    alt?: string;
 }
 
-export default function Hero({ image }: HeroProps) {
+export default function Hero({ image, alt }: HeroProps) {
     return (
         <section className="hero">
             <div className="hero-bg">
                 {image ? (
                     <Image
                         src={urlFor(image).fit('crop').crop('focalpoint').width(2400).auto('format').quality(90).url()}
-                        alt="Luxury destination wedding photography in Sicily by Alex Cinisi"
+                        alt={alt || 'Luxury destination wedding photography in Sicily by Alex Cinisi'}
                         fill
                         sizes="100vw"
                         style={{

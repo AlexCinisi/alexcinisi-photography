@@ -4,16 +4,17 @@ import { urlFor } from '@/lib/sanity/image';
 
 interface AboutSectionProps {
     image?: any;
+    alt?: string;
 }
 
-export default function AboutSection({ image }: AboutSectionProps) {
+export default function AboutSection({ image, alt }: AboutSectionProps) {
     return (
         <div className="about-grid s-warm" id="about">
             <div className="about-img" style={{ position: 'relative' }}>
                 {image ? (
                     <Image
                         src={urlFor(image).width(1600).auto('format').quality(85).url()}
-                        alt="Alex Cinisi, wedding photographer in Sicily"
+                        alt={alt || 'Alex Cinisi, wedding photographer in Sicily'}
                         fill
                         sizes="(max-width:960px) 0px, 50vw"
                         style={{ objectFit: 'cover' }}

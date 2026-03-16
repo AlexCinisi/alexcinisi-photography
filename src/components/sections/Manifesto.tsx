@@ -5,9 +5,10 @@ import { urlFor } from '@/lib/sanity/image';
 
 interface ManifestoProps {
     image?: any;
+    alt?: string;
 }
 
-export default function Manifesto({ image }: ManifestoProps) {
+export default function Manifesto({ image, alt }: ManifestoProps) {
     return (
         <div className="manifesto-grid">
             <div className="manifesto-media">
@@ -15,7 +16,7 @@ export default function Manifesto({ image }: ManifestoProps) {
                     {image ? (
                         <Image
                             src={urlFor(image).width(800).quality(85).auto('format').url()}
-                            alt="Wedding photography by Alex Cinisi"
+                            alt={alt || 'Wedding photography by Alex Cinisi'}
                             width={600}
                             height={800}
                             style={{ objectFit: 'contain', width: '100%', height: 'auto' }}

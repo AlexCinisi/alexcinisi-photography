@@ -8,9 +8,10 @@ import { urlFor } from '@/lib/sanity/image';
 
 interface FilmSectionProps {
     image?: any;
+    alt?: string;
 }
 
-export default function FilmSection({ image }: FilmSectionProps) {
+export default function FilmSection({ image, alt }: FilmSectionProps) {
     const filmSectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -76,7 +77,7 @@ export default function FilmSection({ image }: FilmSectionProps) {
                     {image ? (
                         <Image
                             src={urlFor(image).width(800).quality(85).auto('format').url()}
-                            alt="Film photography by Alex Cinisi"
+                            alt={alt || 'Film photography by Alex Cinisi'}
                             width={600}
                             height={900}
                             style={{ objectFit: 'contain', width: '100%', height: 'auto' }}
