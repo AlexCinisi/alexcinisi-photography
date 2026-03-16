@@ -191,6 +191,9 @@ const breadcrumbSchema = {
 import { client as sanityClient } from "@/lib/sanity/client";
 import { siteLogoQuery } from "@/lib/sanity/queries";
 
+// ISR: rigenera la pagina ogni 60 secondi per riflettere i contenuti Sanity (per il logo)
+export const revalidate = 60;
+
 export default async function RootLayout({
     children,
 }: Readonly<{

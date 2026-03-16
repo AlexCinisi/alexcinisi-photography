@@ -1,6 +1,9 @@
 import { client as sanityClient } from '@/lib/sanity/client';
 import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery } from '@/lib/sanity/queries';
 
+// ISR: rigenera la pagina ogni 60 secondi per riflettere i contenuti Sanity
+export const revalidate = 60;
+
 import Hero from "@/components/sections/Hero";
 import TrustBar from "@/components/sections/TrustBar";
 import ProofBar from "@/components/sections/ProofBar";
