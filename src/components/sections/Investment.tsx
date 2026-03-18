@@ -63,10 +63,10 @@ export default function Investment({
                             <div className="e-item">Second-day / rehearsal dinner coverage</div>
                             <div className="e-item">Additional premium albums (family sets)</div>
                         </div>
-                        <div className="invest-sig">
+                        <blockquote className="inv-quote">
                             <p>{quote}</p>
-                            <span>— Alex Cinisi</span>
-                        </div>
+                            <cite>— Alex Cinisi</cite>
+                        </blockquote>
                     </RevealOnScroll>
                 </div>
             </div>

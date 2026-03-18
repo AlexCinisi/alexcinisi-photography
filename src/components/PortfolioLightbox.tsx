@@ -15,6 +15,9 @@ export default function PortfolioLightbox({ items, startIndex, onClose }: Portfo
   const [isOpen, setIsOpen] = useState(false);
   const thumbsRef = useRef<HTMLDivElement>(null);
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
   // Mount - animate in + lock scroll
   useEffect(() => {
     requestAnimationFrame(() => setIsOpen(true));
@@ -45,6 +48,33 @@ export default function PortfolioLightbox({ items, startIndex, onClose }: Portfo
     el?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }, [currentIndex]);
 
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      // Swipe sinistra → foto successiva
+      setCurrentIndex(prev => Math.min(prev + 1, items.length - 1));
+    }
+    if (isRightSwipe) {
+      // Swipe destra → foto precedente
+      setCurrentIndex(prev => Math.max(prev - 1, 0));
+    }
+  };
+
   return (
     <div 
       className={`lb-overlay ${isOpen ? 'is-open' : ''}`} 
@@ -57,9 +87,15 @@ export default function PortfolioLightbox({ items, startIndex, onClose }: Portfo
         </button>
       </div>
 
-      <div className="lb-main" onClick={(e) => {
-        if (e.target === e.currentTarget) handleClose();
-      }}>
+      <div 
+        className="lb-main" 
+        onClick={(e) => {
+          if (e.target === e.currentTarget) handleClose();
+        }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <button 
           className="lb-arrow lb-prev" 
           onClick={() => setCurrentIndex(p => Math.max(p - 1, 0))}
