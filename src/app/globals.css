@@ -318,7 +318,7 @@ nav.scrolled .nav-logo img {
 
 .menu-footer {
   position: absolute;
-  bottom: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom, 24px));
   left: 0;
   right: 0;
   display: flex;
@@ -1047,6 +1047,10 @@ nav.scrolled .nav-logo img {
 }
 
 @media (max-width: 960px) {
+  .menu-overlay {
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
   .port-grid { 
     column-count: 2; 
     column-gap: 3px; 
