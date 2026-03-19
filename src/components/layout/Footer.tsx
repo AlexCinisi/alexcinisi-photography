@@ -25,9 +25,11 @@ export default function Footer({ logo, logoFooter }: FooterProps) {
             </Link>
             <p className="footer-copy">© 2026 Alex Cinisi Photography · Luxury Wedding Photographer · Sicily, Italy</p>
             <div className="footer-links">
-                <Link href="https://www.alexcinisiphotography.com/stories/">Portfolio</Link>
+                <Link href="/journal">Journal</Link>
+                <Link href="/locations">Locations</Link>
+                <Link href="/about">About</Link>
+                <Link href="/contact">Contact</Link>
                 <a href="https://www.instagram.com/alexcinisi" target="_blank" rel="noopener noreferrer">Instagram</a>
-                <Link href="#contact">Contact</Link>
                 <a href="/policies/Privacy_Policy_Alex_Cinisi_Photography.pdf">Privacy</a>
             </div>
         </footer>

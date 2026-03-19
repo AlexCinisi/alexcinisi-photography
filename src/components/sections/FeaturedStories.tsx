@@ -187,7 +187,7 @@ export default function FeaturedStories() {
                                 <p>Preserved with the intention<br />it deserves.</p>
                             </div>
                         </div>
-                        <Link href="/stories" className="stories-intro-cta-link">See All Stories</Link>
+                        <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
                     </RevealOnScroll>
                 </div>
             </section>
@@ -220,7 +220,7 @@ export default function FeaturedStories() {
                                     <span className="story-card-badge">{story.badge}</span>
                                     <h3 className="story-card-couple">{story.couple}</h3>
                                     <span className="story-card-venue">{story.location}</span>
-                                    <Link href={`/stories/${story.slug || story.couple.toLowerCase().replace(/\s&\s/g, '-').replace(/\s/g, '-')}`} className="story-card-cta">
+                                    <Link href={`/journal/${story.slug || story.couple.toLowerCase().replace(/\s&\s/g, '-').replace(/\s/g, '-')}`} className="story-card-cta">
                                         Explore This Story &rarr;
                                     </Link>
                                 </div>

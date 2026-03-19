@@ -47,7 +47,7 @@ export default function Nav({ logo }: NavProps) {
                     )}
                 </Link>
                 <div className="nav-right">
-                    <Link href="#contact" className="nav-cta">Reserve Your Date</Link>
+                    <Link href="/contact" className="nav-cta">Reserve Your Date</Link>
                     <button
                         className={`hamburger${menuOpen ? ' active' : ''}`}
                         id="hamburger"
@@ -62,13 +62,10 @@ export default function Nav({ logo }: NavProps) {
             <div className={`menu-overlay${menuOpen ? ' open' : ''}`} id="menuOverlay">
                 <div className="menu-nav">
                     <ul className="menu-links">
-                        <li><Link href="#portfolio" onClick={closeMenu}>Portfolio</Link></li>
-                        <li><Link href="#approach" onClick={closeMenu}>Approach</Link></li>
-                        <li><Link href="#invest" onClick={closeMenu}>Investment</Link></li>
-                        <li><Link href="#about" onClick={closeMenu}>About</Link></li>
-                        <li><Link href="#locations" onClick={closeMenu}>Locations</Link></li>
-                        <li><Link href="https://www.alexcinisiphotography.com/stories/">Stories</Link></li>
-                        <li><Link href="#contact" onClick={closeMenu}>Contact</Link></li>
+                        <li><Link href="/journal" onClick={closeMenu}>Journal</Link></li>
+                        <li><Link href="/locations" onClick={closeMenu}>Locations</Link></li>
+                        <li><Link href="/about" onClick={closeMenu}>About</Link></li>
+                        <li><Link href="/contact" onClick={closeMenu}>Contact</Link></li>
                     </ul>
                 </div>
                 <div className="menu-footer">

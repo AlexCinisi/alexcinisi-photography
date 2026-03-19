@@ -115,7 +115,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
             <Breadcrumb
                 items={[
                     { label: 'Home', href: '/' },
-                    { label: 'Stories', href: '/stories' },
+                    { label: 'Locations', href: '/locations' },
                     { label: 'Villa Igiea Wedding Photographer' }
                 ]}
             />
@@ -177,7 +177,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                     { coupleName: "Belle Époque Reception", location: "Ballroom · Full Day", badge: "Reception" }
                  ]}
                 ctaText="View Full Villa Igiea Story"
-                ctaLink="https://www.alexcinisiphotography.com/villa-igiea-wedding-a-luxury-love-story/"
+                ctaLink="/journal/villa-igiea-wedding"
             />
 
             <Pillars
