@@ -2710,6 +2710,12 @@ footer {
     text-align: center;
   }
 
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 18px;
+  }
+
   .sticky-mob {
     display: block;
   }
