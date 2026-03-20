@@ -19,6 +19,7 @@ interface ContactFormProps {
     showInterestCheckboxes?: boolean;
     dateType?: "date" | "text";
     datePlaceholder?: string;
+    standalone?: boolean;
 }
 
 export default function ContactForm({
@@ -36,7 +37,8 @@ export default function ContactForm({
     interests = ["Wedding Photography", "Elopement", "Couple Session", "Film Photography"],
     showInterestCheckboxes = true,
     dateType = "date",
-    datePlaceholder
+    datePlaceholder,
+    standalone = false
 }: ContactFormProps) {
     const [formData, setFormData] = useState({
         name: '',
@@ -218,6 +220,296 @@ export default function ContactForm({
         formErrors[field] ? <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>{formErrors[field]}</div> : null
     );
 
+    // Mostra i group labels solo nel form completo (standalone o con campi extra attivi)
+    const showGroupLabels = standalone || showGuestCount || showBudget;
+
+    // Crea il contenuto del form (o il messaggio di successo)
+    const formContent = status === 'success' ? (
+        <div className="success-message" style={{ padding: '2rem', background: 'var(--off-white)', borderRadius: '0' }}>
+            <h3 className="h2">Thank you.</h3>
+            <p style={{ fontSize: '.87rem', color: 'var(--charcoal)', lineHeight: 1.85, marginTop: 12 }}>
+                Your message has been received. I&apos;ll respond personally within 24 hours.
+            </p>
+            <button onClick={() => setStatus('idle')} className="btn-sub" style={{ marginTop: '1.5rem' }}>
+                Send another message
+            </button>
+        </div>
+    ) : (
+        <form onSubmit={handleSubmit} ref={formRef}>
+            {/* GRUPPO 1: About you */}
+            {showGroupLabels && <div className="form-group-label">About you</div>}
+
+            <div className="fg">
+                <Label text="First Name" required />
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required={false} // Disable browser validation to use custom
+                />
+                <ErrorMsg field="name" />
+            </div>
+            <div className="fg">
+                <Label text="Partner's Name" required />
+                <input
+                    type="text"
+                    name="partnerName"
+                    placeholder="Partner's Name"
+                    value={formData.partnerName}
+                    onChange={handleInputChange}
+                />
+                <ErrorMsg field="partnerName" />
+            </div>
+            <div className="fg">
+                <Label text="Email Address" required />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="best.email@example.com"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required={false}
+                />
+                <ErrorMsg field="email" />
+            </div>
+
+            {/* Instagram accanto a Email — solo nella versione ridotta (homepage) */}
+            {!showGroupLabels && (
+                <div className="fg">
+                    <Label text="Instagram Handle" />
+                    <input
+                        type="text"
+                        name="instagram"
+                        placeholder="@yourhandle"
+                        value={formData.instagram}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            )}
+            {showPhone && (
+                <div className="fg">
+                    <Label text="Phone Number" />
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="+1 (555) 000-0000"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            )}
+
+            {/* GRUPPO 2: Your wedding */}
+            {showGroupLabels && <div className="form-group-label">Your wedding</div>}
+
+            <div className="fg full" style={{ gridColumn: '1 / -1' }}>
+                <Label text="Wedding Date" required />
+                <input
+                    type={dateType}
+                    name="weddingDate"
+                    placeholder={datePlaceholder}
+                    value={formData.weddingDate}
+                    onChange={handleInputChange}
+                />
+                <ErrorMsg field="weddingDate" />
+            </div>
+
+            {!venueHidden && (
+                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
+                    <Label text={venueLabel} required />
+                    <input
+                        type="text"
+                        name="location"
+                        placeholder={venuePlaceholder}
+                        value={formData.location}
+                        onChange={handleInputChange}
+                    />
+                    <ErrorMsg field="location" />
+                </div>
+            )}
+
+            {showGuestCount && (
+                <div className="fg">
+                    <Label text="Guest Count" required />
+                    <select name="guestCount" value={formData.guestCount} onChange={handleInputChange}>
+                        <option value="">Select…</option>
+                        <option value="Elopement (just us)">Elopement (just us)</option>
+                        <option value="Intimate (under 50)">Intimate (under 50)</option>
+                        <option value="Medium (50–100)">Medium (50–100)</option>
+                        <option value="Grand (100+)">Grand (100+)</option>
+                    </select>
+                    <ErrorMsg field="guestCount" />
+                </div>
+            )}
+
+            {showBudget && (
+                <div className="fg">
+                    <Label text="Investment Range" required />
+                    <select name="budget" value={formData.budget} onChange={handleInputChange}>
+                        <option value="">Select a range…</option>
+                        <option value="€2,000 – €2,500">€2,000 – €2,500</option>
+                        <option value="€2,500 – €3,000">€2,500 – €3,000</option>
+                        <option value="€3,000+">€3,000+</option>
+                        <option value="Flexible / Let's discuss">Flexible / Let's discuss</option>
+                    </select>
+                    <ErrorMsg field="budget" />
+                </div>
+            )}
+
+            {showSource && (
+                <div className="fg">
+                    <Label text="How did you find me?" />
+                    <select name="howFound" value={formData.howFound} onChange={handleInputChange}>
+                        <option value="">Select…</option>
+                        <option value="Google">Google</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Wedding Planner">Wedding Planner</option>
+                        <option value="Venue recommendation">Venue recommendation</option>
+                        <option value="Friend / Referral">Friend / Referral</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            )}
+
+            {showPlanner && (
+                <div className="fg">
+                    <Label text="Wedding Planner" />
+                    <input
+                        type="text"
+                        name="planner"
+                        placeholder="Name of your planner, or 'Not yet'"
+                        value={formData.planner}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            )}
+
+            {/* GRUPPO 3: Your vision */}
+            {showGroupLabels && <div className="form-group-label">Your vision</div>}
+
+            <div className="fg full" style={{ gridColumn: '1 / -1' }}>
+                <Label text={messageLabel} required />
+                <textarea
+                    name="vision"
+                    placeholder="How did you meet? What is the vibe of your day? Be as detailed as you like - I love stories."
+                    value={formData.vision}
+                    onChange={handleInputChange}
+                ></textarea>
+                <ErrorMsg field="vision" />
+            </div>
+
+            {showInterestCheckboxes && (
+                <div className="check-group" style={{ gridColumn: '1 / -1' }}>
+                    {interests.map((interest) => (
+                        <label key={interest} className="check-lbl">
+                            <input
+                                type="checkbox"
+                                value={interest}
+                                onChange={handleCheckboxChange}
+                                checked={formData.interests.includes(interest)}
+                            />
+                            {interest}
+                        </label>
+                    ))}
+                </div>
+            )}
+            {/* Instagram nel gruppo vision — solo nella versione completa */}
+            {showGroupLabels && (
+                <div className="fg">
+                    <Label text="Instagram Handle" />
+                    <input
+                        type="text"
+                        name="instagram"
+                        placeholder="@yourhandle"
+                        value={formData.instagram}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            )}
+
+            <div className="priv-row" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', gridColumn: '1 / -1', marginTop: 12 }}>
+                <label className="custom-checkbox" style={{
+                    position: 'relative',
+                    display: 'inline-block',
+                    width: '20px',
+                    height: '20px',
+                    flexShrink: 0,
+                    marginTop: '2px', // Align with top line of text
+                    cursor: 'pointer'
+                }}>
+                    <input
+                        type="checkbox"
+                        name="privacyConsent"
+                        checked={formData.privacyConsent}
+                        onChange={handlePrivacyChange}
+                        style={{
+                            opacity: 0,
+                            width: 0,
+                            height: 0,
+                            position: 'absolute'
+                        }}
+                    />
+                    <span style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        height: '20px',
+                        width: '20px',
+                        backgroundColor: formData.privacyConsent ? 'var(--ink, #1E1D1B)' : 'transparent',
+                        border: '1px solid var(--ink, #1E1D1B)',
+                        borderRadius: '2px', // Slight radius or 0 depending on design system
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s ease'
+                    }}>
+                        {formData.privacyConsent && (
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '14px', height: '14px' }}>
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        )}
+                    </span>
+                </label>
+                <span style={{ fontSize: '0.9em', lineHeight: '1.4', cursor: 'pointer' }} onClick={() => handlePrivacyChange({ target: { checked: !formData.privacyConsent } } as any)}>
+                    I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).
+                </span>
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}><ErrorMsg field="privacyConsent" /></div>
+
+            <button
+                type="submit"
+                className="btn-sub"
+                disabled={status === 'submitting' || !formData.privacyConsent}
+                style={{
+                    opacity: (status === 'submitting' || !formData.privacyConsent) ? 0.5 : 1,
+                    marginTop: '1.5rem',
+                    cursor: (status === 'submitting' || !formData.privacyConsent) ? 'not-allowed' : 'pointer',
+                    gridColumn: '1 / -1'
+                }}
+            >
+                {status === 'submitting' ? 'Sending...' : ctaText}
+            </button>
+
+            {status === 'error' && errorMessage && (
+                <div style={{ gridColumn: '1 / -1', color: '#C53030', padding: '12px 16px', backgroundColor: '#FFF0F0', border: '1px solid #FED7D7', borderRadius: '4px', textAlign: 'center', fontSize: '0.85rem', marginTop: '8px' }}>
+                    {errorMessage}
+                </div>
+            )}
+        </form>
+    );
+
+    // Render condizionale
+    if (standalone) {
+        return (
+            <div style={{ maxWidth: 680 }}>
+                {formContent}
+            </div>
+        );
+    }
+
+    // Layout originale con section wrapper + 2 colonne (homepage, location pages)
     return (
         <section className="s-white pad" id="contact">
             <div className="max">
@@ -250,260 +542,7 @@ export default function ContactForm({
                         </div>
                     </RevealOnScroll>
                     <RevealOnScroll className="contact-right d2">
-                        {status === 'success' ? (
-                            <div className="success-message" style={{ padding: '2rem', background: '#f5f5f5', borderRadius: '4px' }}>
-                                <h3 className="h3">Thank you!</h3>
-                                <p>Your message has been received. I'll respond within 24 hours.</p>
-                                <button
-                                    onClick={() => setStatus('idle')}
-                                    className="btn-sub"
-                                    style={{ marginTop: '1rem' }}
-                                >
-                                    Send another message
-                                </button>
-                            </div>
-                        ) : (
-                            <form onSubmit={handleSubmit} ref={formRef}>
-
-
-
-                                <div className="fg">
-                                    <Label text="First Name" required />
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Your Name"
-                                        value={formData.name}
-                                        onChange={handleInputChange}
-                                        required={false} // Disable browser validation to use custom
-                                    />
-                                    <ErrorMsg field="name" />
-                                </div>
-                                <div className="fg">
-                                    <Label text="Partner's Name" required />
-                                    <input
-                                        type="text"
-                                        name="partnerName"
-                                        placeholder="Partner's Name"
-                                        value={formData.partnerName}
-                                        onChange={handleInputChange}
-                                    />
-                                    <ErrorMsg field="partnerName" />
-                                </div>
-                                <div className="fg">
-                                    <Label text="Email Address" required />
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="best.email@example.com"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        required={false}
-                                    />
-                                    <ErrorMsg field="email" />
-                                </div>
-                                {showPhone && (
-                                    <div className="fg">
-                                        <Label text="Phone Number" />
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            placeholder="+1 (555) 000-0000"
-                                            value={formData.phone}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div>
-                                )}
-
-                                {/* Row 3: Instagram + Wedding Planner */}
-                                <div className="fg">
-                                    <Label text="Instagram Handle" />
-                                    <input
-                                        type="text"
-                                        name="instagram"
-                                        placeholder="@yourhandle"
-                                        value={formData.instagram}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                {showPlanner && (
-                                    <div className="fg">
-                                        <Label text="Wedding Planner" />
-                                        <input
-                                            type="text"
-                                            name="planner"
-                                            placeholder="Name of your planner, or 'Not yet'"
-                                            value={formData.planner}
-                                            onChange={handleInputChange}
-                                        />
-                                    </div>
-                                )}
-                                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                                    <Label text="Wedding Date" required />
-                                    <input
-                                        type={dateType}
-                                        name="weddingDate"
-                                        placeholder={datePlaceholder}
-                                        value={formData.weddingDate}
-                                        onChange={handleInputChange}
-                                    />
-                                    <ErrorMsg field="weddingDate" />
-                                </div>
-
-                                {showGuestCount && (
-                                    <div className="fg">
-                                        <Label text="Guest Count" required />
-                                        <select name="guestCount" value={formData.guestCount} onChange={handleInputChange}>
-                                            <option value="">Select…</option>
-                                            <option value="Elopement (just us)">Elopement (just us)</option>
-                                            <option value="Intimate (under 50)">Intimate (under 50)</option>
-                                            <option value="Medium (50–100)">Medium (50–100)</option>
-                                            <option value="Grand (100+)">Grand (100+)</option>
-                                        </select>
-                                        <ErrorMsg field="guestCount" />
-                                    </div>
-                                )}
-
-                                {showSource && (
-                                    <div className="fg">
-                                        <Label text="How did you find us?" />
-                                        <select name="howFound" value={formData.howFound} onChange={handleInputChange}>
-                                            <option value="">Select…</option>
-                                            <option value="Google">Google</option>
-                                            <option value="Instagram">Instagram</option>
-                                            <option value="Wedding Planner">Wedding Planner</option>
-                                            <option value="Venue recommendation">Venue recommendation</option>
-                                            <option value="Friend / Referral">Friend / Referral</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                )}
-
-                                {!venueHidden && (
-                                    <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                                        <Label text={venueLabel} required />
-                                        <input
-                                            type="text"
-                                            name="location"
-                                            placeholder={venuePlaceholder}
-                                            value={formData.location}
-                                            onChange={handleInputChange}
-                                        />
-                                        <ErrorMsg field="location" />
-                                    </div>
-                                )}
-
-                                {showBudget && (
-                                    <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                                        <Label text="Estimated Photography Investment" required />
-                                        <select name="budget" value={formData.budget} onChange={handleInputChange}>
-                                            <option value="">Select a range…</option>
-                                            <option value="€2,000 – €2,500">€2,000 – €2,500</option>
-                                            <option value="€2,500 – €3,000">€2,500 – €3,000</option>
-                                            <option value="€3,000+">€3,000+</option>
-                                            <option value="Flexible / Let's discuss">Flexible / Let's discuss</option>
-                                        </select>
-                                        <ErrorMsg field="budget" />
-                                    </div>
-                                )}
-
-                                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                                    <Label text={messageLabel} required />
-                                    <textarea
-                                        name="vision"
-                                        placeholder="How did you meet? What is the vibe of your day? Be as detailed as you like - I love stories."
-                                        value={formData.vision}
-                                        onChange={handleInputChange}
-                                    ></textarea>
-                                    <ErrorMsg field="vision" />
-                                </div>
-
-                                {showInterestCheckboxes && (
-                                    <div className="check-group" style={{ gridColumn: '1 / -1' }}>
-                                        {interests.map((interest) => (
-                                            <label key={interest} className="check-lbl">
-                                                <input
-                                                    type="checkbox"
-                                                    value={interest}
-                                                    onChange={handleCheckboxChange}
-                                                    checked={formData.interests.includes(interest)}
-                                                />
-                                                {interest}
-                                            </label>
-                                        ))}
-                                    </div>
-                                )}
-
-                                <div className="priv-row" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', gridColumn: '1 / -1' }}>
-                                    <label className="custom-checkbox" style={{
-                                        position: 'relative',
-                                        display: 'inline-block',
-                                        width: '20px',
-                                        height: '20px',
-                                        flexShrink: 0,
-                                        marginTop: '2px', // Align with top line of text
-                                        cursor: 'pointer'
-                                    }}>
-                                        <input
-                                            type="checkbox"
-                                            name="privacyConsent"
-                                            checked={formData.privacyConsent}
-                                            onChange={handlePrivacyChange}
-                                            style={{
-                                                opacity: 0,
-                                                width: 0,
-                                                height: 0,
-                                                position: 'absolute'
-                                            }}
-                                        />
-                                        <span style={{
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            height: '20px',
-                                            width: '20px',
-                                            backgroundColor: formData.privacyConsent ? 'var(--ink, #1E1D1B)' : 'transparent',
-                                            border: '1px solid var(--ink, #1E1D1B)',
-                                            borderRadius: '2px', // Slight radius or 0 depending on design system
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            transition: 'all 0.2s ease'
-                                        }}>
-                                            {formData.privacyConsent && (
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '14px', height: '14px' }}>
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            )}
-                                        </span>
-                                    </label>
-                                    <span style={{ fontSize: '0.9em', lineHeight: '1.4', cursor: 'pointer' }} onClick={() => handlePrivacyChange({ target: { checked: !formData.privacyConsent } } as any)}>
-                                        I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).
-                                    </span>
-                                </div>
-                                <div style={{ gridColumn: '1 / -1' }}><ErrorMsg field="privacyConsent" /></div>
-
-                                <button
-                                    type="submit"
-                                    className="btn-sub"
-                                    disabled={status === 'submitting' || !formData.privacyConsent}
-                                    style={{
-                                        opacity: (status === 'submitting' || !formData.privacyConsent) ? 0.5 : 1,
-                                        marginTop: '1rem',
-                                        cursor: (status === 'submitting' || !formData.privacyConsent) ? 'not-allowed' : 'pointer',
-                                        gridColumn: '1 / -1'
-                                    }}
-                                >
-                                    {status === 'submitting' ? 'Sending...' : ctaText}
-                                </button>
-
-                                {status === 'error' && errorMessage && (
-                                    <div style={{ gridColumn: '1 / -1', color: '#C53030', padding: '12px 16px', backgroundColor: '#FFF0F0', border: '1px solid #FED7D7', borderRadius: '4px', textAlign: 'center', fontSize: '0.85rem', marginTop: '8px' }}>
-                                        {errorMessage}
-                                    </div>
-                                )}
-                            </form>
-                        )}
+                        {formContent}
                     </RevealOnScroll>
                 </div>
             </div>
