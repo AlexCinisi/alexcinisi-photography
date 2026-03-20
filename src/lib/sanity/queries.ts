@@ -82,3 +82,169 @@ export const siteLogoQuery = `*[_type == "homePage"][0] {
   siteLogo { asset-> { url } },
   siteLogoFooter { asset-> { url } }
 }`
+
+// ============================
+// JOURNAL QUERIES
+// ============================
+
+// All journal posts for /journal index page (paginated)
+export const allJournalPostsQuery = `*[_type == "journalPost"] | order(date desc) [$start...$end] {
+  _id,
+  title,
+  slug,
+  coupleName,
+  subtitle,
+  location,
+  country,
+  date,
+  category,
+  tags,
+  heroImage {
+    ...,
+    "alt": alt
+  }
+}`
+
+// Total count for pagination
+export const journalPostsCountQuery = `count(*[_type == "journalPost"])`
+
+// Journal posts filtered by category
+export const journalPostsByCategoryQuery = `*[_type == "journalPost" && category == $category] | order(date desc) [$start...$end] {
+  _id,
+  title,
+  slug,
+  coupleName,
+  subtitle,
+  location,
+  country,
+  date,
+  category,
+  tags,
+  heroImage {
+    ...,
+    "alt": alt
+  }
+}`
+
+// Single journal post by slug
+export const journalPostBySlugQuery = `*[_type == "journalPost" && slug.current == $slug][0] {
+  ...,
+  heroImage {
+    ...,
+    "alt": alt
+  },
+  portfolioImage {
+    ...,
+    "alt": alt
+  },
+  gallery[] {
+    ...,
+    "alt": alt,
+    "caption": caption
+  },
+  locationRef-> {
+    title,
+    slug,
+    venueName,
+    city
+  },
+  "relatedStories": *[_type == "journalPost" && slug.current != $slug && (
+    locationRef._ref == ^.locationRef._ref ||
+    category == ^.category
+  )] | order(date desc) [0...3] {
+    _id,
+    title,
+    slug,
+    coupleName,
+    location,
+    heroImage {
+      ...,
+      "alt": alt
+    }
+  }
+}`
+
+// All journal slugs (for generateStaticParams)
+export const allJournalSlugsQuery = `*[_type == "journalPost"] { "slug": slug.current }`
+
+// Featured journal posts for homepage stories section
+export const featuredJournalPostsQuery = `*[_type == "journalPost" && featured == true] | order(order asc) [0...6] {
+  _id,
+  title,
+  slug,
+  coupleName,
+  location,
+  tags,
+  heroImage {
+    ...,
+    "alt": alt
+  },
+  portfolioImage {
+    ...,
+    "alt": alt
+  }
+}`
+
+
+// ============================
+// LOCATION QUERIES
+// ============================
+
+// All locations for /locations hub page
+export const allLocationsQuery = `*[_type == "locationPage"] | order(priority asc) {
+  _id,
+  title,
+  slug,
+  venueName,
+  city,
+  region,
+  priority,
+  heroImage {
+    ...,
+    "alt": alt
+  }
+}`
+
+// Single location page by slug (full data)
+export const locationPageBySlugQuery = `*[_type == "locationPage" && slug.current == $slug][0] {
+  ...,
+  heroImage {
+    ...,
+    "alt": alt
+  },
+  calloutImage {
+    ...,
+    "alt": alt
+  },
+  galleryImages[] {
+    image {
+      ...,
+    },
+    title,
+    subtitle,
+    badge
+  },
+  testimonials[]-> {
+    _id,
+    coupleName,
+    country,
+    countryFlag,
+    location,
+    quote,
+    rating
+  },
+  "relatedStories": *[_type == "journalPost" && locationRef._ref == ^._id] | order(date desc) [0...3] {
+    _id,
+    title,
+    slug,
+    coupleName,
+    location,
+    heroImage {
+      ...,
+      "alt": alt
+    }
+  }
+}`
+
+// All location slugs (for generateStaticParams)
+export const allLocationSlugsQuery = `*[_type == "locationPage"] { "slug": slug.current }`
