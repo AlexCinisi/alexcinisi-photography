@@ -2655,7 +2655,51 @@ a.journal-credit-name:hover {
   color: var(--mid);
 }
 
+/* --- LOCATIONS HUB --- */
+.locations-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 24px;
+}
+.location-hub-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.location-hub-img {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--grey-bg);
+  margin-bottom: 16px;
+}
+.location-hub-img img {
+  transition: transform .6s ease;
+}
+.location-hub-card:hover .location-hub-img img {
+  transform: scale(1.03);
+}
+.location-hub-info h2 {
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: .9rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.location-hub-info p {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-size: .9rem;
+  color: var(--mid);
+}
+
 @media (max-width:960px) {
+
+  .locations-hub-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 
   /* Journal mobile */
   .journal-grid {
