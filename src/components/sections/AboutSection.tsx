@@ -10,14 +10,26 @@ interface AboutSectionProps {
 export default function AboutSection({ image, alt }: AboutSectionProps) {
     return (
         <div className="about-grid s-warm" id="about">
-            <div className="about-img" style={{ position: 'relative' }}>
+            <div className="about-img">
                 {image ? (
                     <Image
-                        src={urlFor(image).width(1600).auto('format').quality(85).url()}
-                        alt={alt || 'Alex Cinisi, wedding photographer in Sicily'}
-                        fill
-                        sizes="(max-width:960px) 0px, 50vw"
-                        style={{ objectFit: 'cover' }}
+                        src={urlFor(image)
+                            .width(1200)
+                            .quality(85)
+                            .auto('format')
+                            .fit('crop')
+                            .crop('focalpoint')
+                            .url()}
+                        alt={alt || "Alex Cinisi, luxury wedding photographer based in Sicily"}
+                        width={1200}
+                        height={1600}
+                        sizes="(max-width: 960px) 100vw, 50vw"
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center 25%',
+                        }}
                     />
                 ) : (
                     <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

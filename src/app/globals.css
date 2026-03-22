@@ -2628,19 +2628,16 @@ footer {
 
   .about-img {
     order: -1;
-    padding: 0;
     position: relative;
     overflow: hidden;
   }
 
   .about-img img {
-    position: relative !important;
-    height: auto !important;
-    inset: unset !important;
-    width: 100% !important;
-    max-width: none;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     object-position: center 25%;
+    max-height: 70vh;
   }
 
   .venue-media,
