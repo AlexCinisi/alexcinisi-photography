@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
 import { urlFor } from '@/lib/sanity/image';
-import { locationPageBySlugQuery, allLocationSlugsQuery } from '@/lib/sanity/queries';
+import { locationPageBySlugQuery, allLocationSlugsQuery, homePageQuery } from '@/lib/sanity/queries';
 import { PortableText } from '@portabletext/react';
 import Breadcrumb from '@/components/sections/Breadcrumb';
 import HeroLocation from '@/components/sections/HeroLocation';
@@ -62,6 +62,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
   const data = await client.fetch(locationPageBySlugQuery, { slug });
 
   if (!data) notFound();
+
+  // Fetch homepage data for shared components (About image)
+  const homeData = await client.fetch(homePageQuery);
 
   // === SCHEMA MARKUP — ProfessionalService ===
   const schemaMarkup = {
@@ -211,9 +214,10 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       {data.calloutTitle && (
         <VenueCallout
           label={data.calloutLabel}
-          title={data.calloutTitle}
+          title={<span dangerouslySetInnerHTML={{ __html: data.calloutTitle }} />}
           content={data.calloutText ? <PortableText value={data.calloutText} /> : null}
           imageAlt={data.calloutImage?.alt}
+          image={data.calloutImage}
         />
       )}
 
@@ -229,7 +233,10 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
 
       {/* Process + About — these use no location-specific data */}
       <ProcessSteps />
-      <AboutSection />
+      <AboutSection
+        image={homeData?.aboutImage}
+        alt="Alex Cinisi, luxury wedding photographer based in Sicily"
+      />
 
       {/* Testimonials */}
       {data.testimonials?.length > 0 && (
