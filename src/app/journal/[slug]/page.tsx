@@ -72,9 +72,48 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
     ]
   };
 
+  // Article schema for SEO
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.coupleName + (post.subtitle ? ' — ' + post.subtitle : ''),
+    "description": post.metaDescription || `${post.coupleName}'s wedding at ${post.location}`,
+    "image": post.heroImage ? urlFor(post.heroImage).width(1200).height(800).url() : undefined,
+    "datePublished": post.date,
+    "author": {
+      "@type": "Person",
+      "name": "Alex Cinisi",
+      "url": "https://www.alexcinisiphotography.com/about"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Alex Cinisi Photography",
+      "url": "https://www.alexcinisiphotography.com"
+    },
+    "mainEntityOfPage": `https://www.alexcinisiphotography.com/journal/${slug}`
+  };
+
+  // ImageGallery schema (solo se ci sono foto)
+  const gallerySchema = gallery.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": `${post.coupleName} Wedding Gallery`,
+    "description": `Wedding photography gallery from ${post.location}`,
+    "image": gallery.slice(0, 10).map((img: any, i: number) => ({
+      "@type": "ImageObject",
+      "url": urlFor(img).width(1200).height(800).url(),
+      "name": img.alt || `${post.coupleName} wedding photo ${i + 1}`,
+      "description": img.caption || `Wedding photography at ${post.location}`
+    }))
+  } : null;
+
   return (
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      {gallerySchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(gallerySchema) }} />
+      )}
 
       <Breadcrumb items={[
         { label: 'Home', href: '/' },
@@ -91,7 +130,14 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
               <p className="journal-post-subtitle">{post.subtitle}</p>
             )}
             <p className="journal-post-meta">
-              {post.location} · {formatDate(post.date)} · {categoryLabel(post.category)}
+              {post.locationRef ? (
+                <Link href={`/locations/${post.locationRef.slug.current}`} style={{ color: 'inherit', textDecoration: 'none', borderBottom: '1px solid var(--rule)', paddingBottom: 1 }}>
+                  {post.location}
+                </Link>
+              ) : (
+                post.location
+              )}
+              {' · '}{formatDate(post.date)} · {categoryLabel(post.category)}
               {post.tags?.length > 0 && ` · ${post.tags.join(' · ')}`}
             </p>
           </RevealOnScroll>

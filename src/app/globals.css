@@ -2576,9 +2576,6 @@ footer {
 .journal-rhythm-item.wide {
   grid-column: 1 / -1;
 }
-.journal-rhythm-item.half {
-  /* stays in natural grid flow */
-}
 
 /* Section 6: Body text (SEO content) */
 .journal-body {

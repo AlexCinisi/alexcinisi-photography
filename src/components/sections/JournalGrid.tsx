@@ -31,6 +31,7 @@ const CATEGORIES = [
 
 export default function JournalGrid({ posts }: { posts: JournalPost[] }) {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(12);
   
   const filtered = activeCategory === 'all' 
     ? posts 
@@ -44,7 +45,10 @@ export default function JournalGrid({ posts }: { posts: JournalPost[] }) {
           <button
             key={cat.value}
             className={`journal-filter-btn ${activeCategory === cat.value ? 'active' : ''}`}
-            onClick={() => setActiveCategory(cat.value)}
+            onClick={() => {
+              setActiveCategory(cat.value);
+              setVisibleCount(12);
+            }}
           >
             {cat.label}
           </button>
@@ -58,7 +62,7 @@ export default function JournalGrid({ posts }: { posts: JournalPost[] }) {
             No stories in this category yet.
           </p>
         ) : (
-          filtered.map((post, i) => (
+          filtered.slice(0, visibleCount).map((post, i) => (
             <RevealOnScroll key={post._id} className={i % 3 === 1 ? 'd1' : i % 3 === 2 ? 'd2' : ''}>
               <Link href={`/journal/${post.slug.current}`} className="journal-card">
                 <div className="journal-card-img">
@@ -83,6 +87,18 @@ export default function JournalGrid({ posts }: { posts: JournalPost[] }) {
           ))
         )}
       </div>
+
+      {filtered.length > visibleCount && (
+        <div style={{ textAlign: 'center', marginTop: 48 }}>
+          <button
+            className="btn-text"
+            onClick={() => setVisibleCount(prev => prev + 12)}
+            style={{ fontSize: '.65rem', letterSpacing: '.22em', textTransform: 'uppercase', cursor: 'pointer' }}
+          >
+            Load More Stories
+          </button>
+        </div>
+      )}
     </>
   );
 }
