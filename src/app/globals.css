@@ -2353,6 +2353,17 @@ footer {
   max-width: 440px;
 }
 
+.vc-copy blockquote {
+  font-size: .88rem;
+  line-height: 1.9;
+  color: rgba(250, 250, 248, .55);
+  margin-bottom: 14px;
+  max-width: 440px;
+  border: none;
+  padding: 0;
+  margin-left: 0;
+}
+
 /* --- Location page hero variant --- */
 .hero--location {
   min-height: 92vh;
