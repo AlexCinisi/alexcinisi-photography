@@ -208,6 +208,10 @@ export const allLocationsQuery = `*[_type == "locationPage"] | order(priority as
 // Single location page by slug (full data)
 export const locationPageBySlugQuery = `*[_type == "locationPage" && slug.current == $slug][0] {
   ...,
+  venueIntroImage {
+    ...,
+    "alt": alt
+  },
   heroImage {
     ...,
     "alt": alt

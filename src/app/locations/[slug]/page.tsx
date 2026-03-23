@@ -169,7 +169,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
         <VenueIntro
           label={data.venueIntroLabel || 'The Venue'}
           title={<span dangerouslySetInnerHTML={{ __html: data.venueIntroTitle }} />}
-          description={<PortableText value={data.venueIntroText} />}
+          description={data.venueIntroText ? <PortableText value={data.venueIntroText} /> : null}
+          galleryLinkText={data.venueGalleryLinkText || 'See Weddings'}
+          image={data.venueIntroImage}
         />
       )}
 
