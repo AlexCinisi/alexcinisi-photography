@@ -124,6 +124,22 @@ export default defineType({
       of: [{ type: 'block' }],
       description: 'Rich text describing the venue. SEO-critical — be specific about the location.',
     }),
+    defineField({
+      name: 'venueIntroImage',
+      title: 'Venue Intro Image',
+      description: 'Immagine editoriale verticale (3:4) per la sezione "The Venue". Appare accanto al testo introduttivo.',
+      type: 'image',
+      options: { hotspot: true },
+      fieldset: 'venue',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text (SEO)',
+          type: 'string',
+          description: 'Descrizione per accessibilità e SEO',
+        }),
+      ],
+    }),
     defineField({ name: 'venueGalleryLinkText', title: 'Gallery Link Text', type: 'string', fieldset: 'venue', description: 'e.g. "See Villa Igiea Weddings"' }),
 
     // === BEST PHOTO LOCATIONS ===
