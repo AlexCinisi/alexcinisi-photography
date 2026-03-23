@@ -25,20 +25,24 @@ export default function VenueIntro({ label, title, description, galleryLinkText 
 
       <RevealOnScroll className="venue-media d2">
         {image ? (
-          <Image
-            src={urlFor(image).width(1200).height(1600).quality(85).auto('format').fit('crop').crop('focalpoint').url()}
-            alt={image.alt || 'Venue editorial photograph'}
-            width={1200}
-            height={1600}
-            sizes="(max-width: 960px) 100vw, 50vw"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
+          <div className="venue-intro-frame">
+            <Image
+              src={urlFor(image).width(1200).height(1600).quality(85).auto('format').fit('crop').crop('focalpoint').url()}
+              alt={image.alt || 'Venue editorial photograph'}
+              width={1200}
+              height={1600}
+              sizes="(max-width: 960px) 100vw, 50vw"
+              style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block' }}
+            />
+          </div>
         ) : (
-          <div className="iph" style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 400 }}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={36} height={36}>
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-              <circle cx="12" cy="13" r="4" />
-            </svg>
+          <div className="venue-intro-frame">
+            <div className="iph" style={{ width: '100%', aspectRatio: '3/4', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(170deg, #DDD6CA, #C8C0B3, #B8AC98)' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.8" width={36} height={36}>
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+            </div>
           </div>
         )}
       </RevealOnScroll>

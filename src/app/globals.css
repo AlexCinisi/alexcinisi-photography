@@ -2248,8 +2248,20 @@ footer {
 }
 
 .venue-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 64px;
+  background: var(--pearl);
   overflow: hidden;
-  background: var(--grey-bg);
+}
+
+.venue-intro-frame {
+  max-width: 420px;
+  width: 100%;
+}
+.venue-intro-frame img {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .08);
 }
 
 /* --- VENUE DETAILS (4-col photo spots) --- */
@@ -2964,9 +2976,15 @@ a.journal-credit-name:hover {
   }
 
   .venue-media {
-    aspect-ratio: 3 / 4;
-    max-height: 60vh;
+    padding: 48px 24px;
+    max-height: none;
+    aspect-ratio: auto;
     overflow: hidden;
+    background: var(--pearl);
+  }
+  .venue-intro-frame {
+    max-width: 320px;
+    margin: 0 auto;
   }
   .vc-media {
     aspect-ratio: 4 / 3;
