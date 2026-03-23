@@ -146,6 +146,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       {/* Hero */}
       <HeroLocation
         image={data.heroImage}
+        darkText={data.heroTextDark || false}
         eyebrow={data.heroEyebrow || `${data.venueName} · ${data.city}, ${data.region || 'Sicily'}`}
         titleL1={data.heroLine1 || `Your ${data.venueName}`}
         titleL2={data.heroLine2Italic || 'Wedding, Captured'}

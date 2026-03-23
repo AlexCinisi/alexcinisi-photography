@@ -85,6 +85,14 @@ export default defineType({
         defineField({ name: 'alt', title: 'Alt Text (SEO)', type: 'string', description: '⚠️ Required for SEO.' }),
       ],
     }),
+    defineField({
+      name: 'heroTextDark',
+      title: 'Hero Text Dark Mode',
+      description: 'Attiva se l\'immagine hero è chiara/luminosa. Il testo e il gradiente diventeranno scuri per garantire leggibilità.',
+      type: 'boolean',
+      initialValue: false,
+      fieldset: 'hero',
+    }),
 
     // === TRUST BAR ===
     defineField({

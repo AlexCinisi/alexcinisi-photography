@@ -2389,6 +2389,43 @@ footer {
   max-width: 460px;
 }
 
+/* --- Hero dark-text mode (for light/bright hero images) --- */
+.hero--dark-text .hero-bg::after {
+  background: linear-gradient(0deg, rgba(250,250,248,.65) 0, rgba(250,250,248,.15) 45%, transparent);
+}
+.hero--dark-text h1 .l1,
+.hero--dark-text h1 .l2,
+.hero--dark-text h1 .l3 {
+  color: var(--ink);
+}
+.hero--dark-text .hero-eyebrow {
+  color: var(--mid);
+}
+.hero--dark-text .hero-eyebrow::before {
+  background: var(--ink);
+}
+.hero--dark-text .hero-sub {
+  color: var(--charcoal);
+}
+.hero--dark-text .hero-scroll {
+  color: var(--mid);
+}
+.hero--dark-text .btn-fill {
+  background: var(--ink);
+  color: var(--off-white);
+}
+.hero--dark-text .btn-fill:hover {
+  background: var(--charcoal);
+}
+.hero--dark-text .btn-text {
+  color: var(--charcoal);
+  border-color: var(--rule);
+}
+.hero--dark-text .btn-text:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
