@@ -5,11 +5,12 @@ import { urlFor, getHotspotPosition } from '@/lib/sanity/image';
 interface HeroProps {
     image?: any;
     alt?: string;
+    darkText?: boolean;
 }
 
-export default function Hero({ image, alt }: HeroProps) {
+export default function Hero({ image, alt, darkText }: HeroProps) {
     return (
-        <section className="hero">
+        <section className={`hero ${darkText ? 'hero--dark-text' : ''}`}>
             <div className="hero-bg">
                 {image ? (
                     <Image

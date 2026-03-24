@@ -48,7 +48,16 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     name,
     logo,
     url
-  }
+  },
+
+  // SEO & Hero Toggle
+  heroTextDark,
+  ogImage {
+    ...,
+    "alt": alt
+  },
+  metaTitle,
+  metaDescription
 }`
 
 // Fetch featured portfolio items for homepage grid (max 12)

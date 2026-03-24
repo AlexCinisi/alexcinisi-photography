@@ -30,11 +30,19 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-    title: "Wedding Photographer Sicily | Luxury Destination Weddings | Alex Cinisi Photography",
+    metadataBase: new URL('https://www.alexcinisiphotography.com'),
+    title: {
+        default: 'Alex Cinisi Photography | Luxury Wedding Photographer in Sicily',
+        template: '%s | Alex Cinisi Photography',
+    },
     description:
-        "Award-winning luxury wedding photographer in Sicily. Timeless editorial photography for destination weddings in Palermo, Taormina, Noto & across Italy. 30+ international weddings. Investment from €2,500.",
+        "Luxury destination wedding photographer based in Sicily. Editorial film & digital photography for refined couples worldwide.",
     keywords:
         "wedding photographer Sicily, luxury wedding photographer Italy, destination wedding photographer Sicily, wedding photographer Palermo, wedding photographer Taormina, editorial wedding photography Italy, Sicily wedding photographer",
+    icons: {
+        icon: '/favicon.ico',
+        apple: '/apple-touch-icon.png',
+    },
     openGraph: {
         title: "Alex Cinisi Photography — Luxury Wedding Photographer in Sicily",
         description:

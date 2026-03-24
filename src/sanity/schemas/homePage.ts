@@ -49,6 +49,11 @@ export default defineType({
       title: '📰 Press & Pubblicazioni',
       options: { collapsible: true, collapsed: true },
     },
+    {
+      name: 'seo',
+      title: '🔵 SEO & Social',
+      options: { collapsible: true, collapsed: true },
+    },
   ],
 
   fields: [
@@ -77,6 +82,16 @@ export default defineType({
           description: "Nome interno per riconoscere l'immagine. Non visibile sul sito. Es: \"Hero - Sposa Villa Valguarnera 2024\"",
         },
       ],
+    }),
+
+    defineField({
+      name: 'heroTextDark',
+      title: 'Hero Text Dark Mode',
+      type: 'boolean',
+      fieldset: 'hero', // stesso fieldset del heroImage
+      description:
+        "Attiva se l'immagine hero è chiara/luminosa. Il testo e il gradiente diventeranno scuri per garantire leggibilità.",
+      initialValue: false,
     }),
 
     // ═══════════════════════════════════════════
@@ -290,6 +305,46 @@ export default defineType({
           },
         },
       ],
+    }),
+
+    // SEO & Social
+    defineField({
+      name: 'ogImage',
+      title: 'OG Image (Social Share)',
+      type: 'image',
+      fieldset: 'seo',
+      description:
+        'Immagine che appare quando il sito viene condiviso su WhatsApp, Instagram, Facebook, LinkedIn, iMessage. Dimensioni ideali: 1200×630px. Se vuota, usa fallback statico.',
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          initialValue: 'Alex Cinisi Photography — Luxury Wedding Photographer in Sicily',
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'metaTitle',
+      title: 'Meta Title',
+      type: 'string',
+      fieldset: 'seo',
+      description:
+        'Default: "Alex Cinisi Photography | Luxury Wedding Photographer in Sicily". Max 60 caratteri.',
+      validation: (Rule) => Rule.max(70).warning('Idealmente sotto i 60 caratteri.'),
+    }),
+
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'text',
+      rows: 2,
+      fieldset: 'seo',
+      description:
+        'Default: "Luxury destination wedding photographer based in Sicily...". Max 155 caratteri.',
+      validation: (Rule) => Rule.max(160).warning('Idealmente sotto i 155 caratteri.'),
     }),
   ],
 });

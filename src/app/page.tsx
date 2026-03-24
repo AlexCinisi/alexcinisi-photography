@@ -1,4 +1,6 @@
-import { client as sanityClient } from '@/lib/sanity/client';
+import type { Metadata } from 'next';
+import { client } from '@/lib/sanity/client';
+import { urlFor } from '@/lib/sanity/image';
 import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery } from '@/lib/sanity/queries';
 
 // ISR: rigenera la pagina ogni 60 secondi per riflettere i contenuti Sanity
@@ -23,16 +25,215 @@ import Availability from "@/components/sections/Availability";
 import ContactForm from "@/components/sections/ContactForm";
 import FinalCTA from "@/components/sections/FinalCTA";
 
+// Default values (usati quando Sanity è vuoto)
+const DEFAULT_TITLE = 'Alex Cinisi Photography | Luxury Wedding Photographer in Sicily';
+const DEFAULT_DESCRIPTION =
+  "Luxury destination wedding photographer based in Sicily. Editorial film & digital photography for refined couples. Published in Vogue Italia, Marie Claire, L'Officiel. Available worldwide — 15 weddings per year.";
+const DEFAULT_OG_IMAGE = 'https://www.alexcinisiphotography.com/og-image.jpg';
+const SITE_URL = 'https://www.alexcinisiphotography.com';
+
+export async function generateMetadata(): Promise<Metadata> {
+  // Fetch SEO fields from Sanity (solo i campi SEO, non tutto il documento)
+  const data = await client
+    .fetch(`*[_type == "homePage"][0] { metaTitle, metaDescription, ogImage { ..., "alt": alt } }`)
+    .catch(() => null);
+
+  const title = data?.metaTitle || DEFAULT_TITLE;
+  const description = data?.metaDescription || DEFAULT_DESCRIPTION;
+  const ogImageUrl = data?.ogImage
+    ? urlFor(data.ogImage).width(1200).height(630).quality(90).auto('format').url()
+    : DEFAULT_OG_IMAGE;
+  const ogAlt =
+    data?.ogImage?.alt ||
+    'Alex Cinisi Photography — Luxury Wedding Photographer in Sicily';
+
+  return {
+    title,
+    description,
+    keywords:
+      'wedding photographer sicily, destination wedding photographer italy, luxury wedding photography palermo, film wedding photographer sicily, editorial wedding photographer, wedding photographer taormina, matrimonio sicilia fotografo',
+    alternates: {
+      canonical: SITE_URL,
+    },
+    openGraph: {
+      title,
+      description,
+      url: SITE_URL,
+      siteName: 'Alex Cinisi Photography',
+      type: 'website',
+      locale: 'en_US',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: ogAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
+}
+
 export default async function Home() {
     const [homePage, portfolio, testimonials] = await Promise.all([
-        sanityClient.fetch(homePageQuery).catch(() => null),
-        sanityClient.fetch(featuredPortfolioQuery).catch(() => null),
-        sanityClient.fetch(featuredTestimonialsQuery).catch(() => null),
+        client.fetch(homePageQuery).catch(() => null),
+        client.fetch(featuredPortfolioQuery).catch(() => null),
+        client.fetch(featuredTestimonialsQuery).catch(() => null),
     ]);
 
     return (
         <>
-            <Hero image={homePage?.heroImage} alt={homePage?.heroImage?.alt} />
+            {/* Schema JSON-LD — Homepage */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify([
+                  {
+                    '@context': 'https://schema.org',
+                    '@type': 'LocalBusiness',
+                    '@id': 'https://www.alexcinisiphotography.com/#business',
+                    name: 'Alex Cinisi Photography',
+                    description:
+                      'Luxury destination wedding photographer based in Sicily, Italy. Editorial film and digital photography for refined couples worldwide.',
+                    url: 'https://www.alexcinisiphotography.com',
+                    telephone: '+39 XXX XXX XXXX',
+                    email: 'info@alexcinisiphotography.com',
+                    image: 'https://www.alexcinisiphotography.com/og-image.jpg',
+                    logo: 'https://www.alexcinisiphotography.com/logo.svg',
+                    address: {
+                      '@type': 'PostalAddress',
+                      addressLocality: 'Palermo',
+                      addressRegion: 'Sicily',
+                      addressCountry: 'IT',
+                    },
+                    geo: {
+                      '@type': 'GeoCoordinates',
+                      latitude: 38.1157,
+                      longitude: 13.3615,
+                    },
+                    areaServed: [
+                      { '@type': 'Place', name: 'Sicily, Italy' },
+                      { '@type': 'Place', name: 'Italy' },
+                      { '@type': 'Country', name: 'Worldwide' },
+                    ],
+                    priceRange: '€€€',
+                    openingHoursSpecification: {
+                      '@type': 'OpeningHoursSpecification',
+                      dayOfWeek: [
+                        'Monday',
+                        'Tuesday',
+                        'Wednesday',
+                        'Thursday',
+                        'Friday',
+                        'Saturday',
+                        'Sunday',
+                      ],
+                      opens: '09:00',
+                      closes: '20:00',
+                    },
+                    sameAs: [
+                      'https://www.instagram.com/alexcinisi/',
+                      'https://www.facebook.com/alexcinisiphotography/',
+                    ],
+                    knowsLanguage: ['Italian', 'English'],
+                  },
+                  {
+                    '@context': 'https://schema.org',
+                    '@type': 'ProfessionalService',
+                    '@id': 'https://www.alexcinisiphotography.com/#service',
+                    name: 'Alex Cinisi Wedding Photography',
+                    description:
+                      "Editorial wedding photography blending analog film (Canon AE-1 Program, Kodak Portra 400) with digital. Published in Vogue Italia, L'Officiel, Marie Claire. Available for luxury destination weddings in Sicily, Italy, and worldwide.",
+                    provider: {
+                      '@type': 'Person',
+                      name: 'Alex Cinisi',
+                      jobTitle: 'Wedding Photographer',
+                      image: 'https://www.alexcinisiphotography.com/og-image.jpg',
+                    },
+                    serviceType: [
+                      'Wedding Photography',
+                      'Destination Wedding Photography',
+                      'Film Photography',
+                      'Editorial Photography',
+                      'Elopement Photography',
+                    ],
+                    areaServed: [
+                      {
+                        '@type': 'Place',
+                        name: 'Sicily',
+                        address: {
+                          '@type': 'PostalAddress',
+                          addressRegion: 'Sicily',
+                          addressCountry: 'IT',
+                        },
+                      },
+                      { '@type': 'Place', name: 'Palermo' },
+                      { '@type': 'Place', name: 'Taormina' },
+                      { '@type': 'Place', name: 'Noto' },
+                      { '@type': 'Place', name: 'Scopello' },
+                      { '@type': 'Place', name: 'Lake Como' },
+                      { '@type': 'Place', name: 'Amalfi Coast' },
+                      { '@type': 'Place', name: 'Puglia' },
+                      { '@type': 'Country', name: 'Italy' },
+                    ],
+                    url: 'https://www.alexcinisiphotography.com',
+                    telephone: '+39 XXX XXX XXXX',
+                    priceRange: '€€€',
+                    hasOfferCatalog: {
+                      '@type': 'OfferCatalog',
+                      name: 'Wedding Photography Collections',
+                      itemListElement: [
+                        {
+                          '@type': 'Offer',
+                          itemOffered: {
+                            '@type': 'Service',
+                            name: 'Full Wedding Day Coverage',
+                            description:
+                              'Complete wedding photography including getting ready, ceremony, reception, and last dance. Film & digital. 300-500 individually edited images.',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    '@context': 'https://schema.org',
+                    '@type': 'WebSite',
+                    '@id': 'https://www.alexcinisiphotography.com/#website',
+                    name: 'Alex Cinisi Photography',
+                    url: 'https://www.alexcinisiphotography.com',
+                    description:
+                      'Luxury destination wedding photographer in Sicily. Editorial film & digital photography.',
+                    publisher: {
+                      '@type': 'Organization',
+                      name: 'Alex Cinisi Photography',
+                      logo: {
+                        '@type': 'ImageObject',
+                        url: 'https://www.alexcinisiphotography.com/logo.svg',
+                      },
+                    },
+                    inLanguage: ['en', 'it'],
+                  },
+                ]),
+              }}
+            />
+            <Hero image={homePage?.heroImage} alt={homePage?.heroImage?.alt} darkText={homePage?.heroTextDark} />
             <TrustBar />
             <PressBar logos={homePage?.pressLogos} />
             <PhotoPause
