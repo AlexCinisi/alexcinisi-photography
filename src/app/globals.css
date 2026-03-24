@@ -1092,6 +1092,213 @@ nav.scrolled .nav-logo img {
   box-shadow: 0 24px 64px rgba(0, 0, 0, .35), 0 0 0 1px rgba(250, 250, 248, .04);
 }
 
+/* =============================================
+   ABOUT PAGE — Sezioni dedicate (/about)
+   ============================================= */
+
+/* Hero About — foto sx, copy dx, sfondo pearl */
+.about-hero {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  min-height: 85vh;
+  background: var(--pearl, #F5F3EF);
+}
+.about-hero-img {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 60px;
+}
+.about-hero-copy {
+  padding: 100px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-hero-copy .h1-about {
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 300;
+  font-size: 2.8rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 36px;
+}
+.about-hero-copy .h1-about em {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.about-hero-copy p {
+  font-size: .9rem;
+  line-height: 1.9;
+  color: var(--charcoal);
+  margin-bottom: 14px;
+  max-width: 480px;
+}
+
+/* Filosofia — testo sx, immagine dx */
+.about-philosophy {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  min-height: 600px;
+}
+.about-philosophy-copy {
+  padding: 100px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-philosophy-copy p {
+  font-size: .9rem;
+  line-height: 1.9;
+  color: var(--charcoal);
+  margin-bottom: 14px;
+  max-width: 480px;
+}
+.about-philosophy-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 60px;
+}
+
+/* Film section — sfondo ink, copy sx, immagine dx */
+.about-film {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  min-height: 600px;
+  background: var(--ink);
+  color: var(--off-white);
+}
+.about-film-copy {
+  padding: 100px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-film-copy .h2 { color: var(--off-white); }
+.about-film-copy .f-label { color: var(--accent); }
+.about-film-copy .f-label::before { background: var(--accent); }
+.about-film-copy p {
+  color: rgba(250, 250, 248, 0.8);
+  font-size: .9rem;
+  line-height: 1.9;
+  margin-bottom: 14px;
+  max-width: 480px;
+}
+.about-film-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 60px;
+}
+
+/* Credenziali section */
+.about-credentials {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  min-height: 600px;
+}
+.about-credentials-copy {
+  padding: 100px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about-credentials-copy p {
+  font-size: .9rem;
+  line-height: 1.9;
+  color: var(--charcoal);
+  margin-bottom: 14px;
+  max-width: 480px;
+}
+.about-credentials-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 60px;
+}
+
+/* Press line — riga testate small caps */
+.press-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.press-line span {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+/* CTA bridge */
+.about-cta-bridge {
+  text-align: center;
+  padding: 100px 64px;
+  background: var(--white);
+}
+.about-cta-bridge .h2 {
+  margin-bottom: 20px;
+}
+.about-cta-bridge p {
+  font-size: .9rem;
+  line-height: 1.9;
+  color: var(--charcoal);
+  max-width: 520px;
+  margin: 0 auto 36px;
+}
+.about-cta-bridge .response-time {
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 16px;
+}
+
+/* ── MOBILE OVERRIDES (About page) ── */
+@media (max-width: 960px) {
+  .about-hero,
+  .about-philosophy,
+  .about-film,
+  .about-credentials {
+    grid-template-columns: 1fr;
+  }
+  .about-hero { min-height: auto; }
+  .about-hero-img,
+  .about-philosophy-img,
+  .about-film-img,
+  .about-credentials-img {
+    padding: 48px 24px;
+    min-height: 400px;
+  }
+  /* REGOLA FONDAMENTALE: mai display:none sulle immagini mobile */
+  .about-hero-copy,
+  .about-philosophy-copy,
+  .about-film-copy,
+  .about-credentials-copy {
+    padding: 60px 24px;
+  }
+  .about-hero-copy .h1-about {
+    font-size: 2rem;
+  }
+  .about-cta-bridge {
+    padding: 72px 24px;
+  }
+  /* Su mobile: immagine sopra, testo sotto */
+  .about-philosophy-img { order: -1; }
+  .about-film-img { order: -1; }
+  .about-credentials-img { order: -1; }
+}
+
 @media (max-width: 960px) {
   .menu-overlay {
     min-height: 100dvh;
