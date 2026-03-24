@@ -44,6 +44,11 @@ export default defineType({
       description: 'Logo principale, monogramma footer, e loghi "As Featured In".',
       options: { collapsible: true, collapsed: true },
     },
+    {
+      name: 'press',
+      title: '📰 Press & Pubblicazioni',
+      options: { collapsible: true, collapsed: true },
+    },
   ],
 
   fields: [
@@ -246,27 +251,42 @@ export default defineType({
     }),
 
     defineField({
-      name: 'proofLogos',
-      title: 'As Featured In — Logos',
+      name: 'pressLogos',
+      title: 'Press Logos',
+      description: 'Loghi delle testate dove il tuo lavoro è apparso. Ordine: dal più prestigioso al meno. Formato: SVG o PNG trasparente.',
       type: 'array',
-      fieldset: 'branding',
-      description: 'Loghi delle pubblicazioni (Vogue, Wezoree, ANFM, ecc.)',
+      fieldset: 'press',
       of: [
         {
           type: 'object',
-          name: 'logoItem',
+          name: 'pressLogo',
+          title: 'Logo Testata',
           fields: [
-            { name: 'name', title: 'Nome pubblicazione', type: 'string' },
-            {
+            defineField({
+              name: 'name',
+              title: 'Nome Testata',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
               name: 'logo',
               title: 'Logo',
-              type: 'file',
-              options: { accept: '.svg,.png,.webp' },
-            },
-            { name: 'url', title: 'URL (opzionale)', type: 'url' },
+              type: 'image',
+              description: 'SVG o PNG trasparente. Verrà mostrato monocromo a 40px height.',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'url',
+              title: 'URL Articolo (opzionale)',
+              type: 'url',
+              description: "Link all'articolo dove appari. Se presente, il logo diventa cliccabile.",
+            }),
           ],
           preview: {
-            select: { title: 'name' },
+            select: {
+              title: 'name',
+              media: 'logo',
+            },
           },
         },
       ],

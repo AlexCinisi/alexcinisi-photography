@@ -6,7 +6,7 @@ export const revalidate = 60;
 
 import Hero from "@/components/sections/Hero";
 import TrustBar from "@/components/sections/TrustBar";
-import ProofBar from "@/components/sections/ProofBar";
+import PressBar from "@/components/sections/PressBar";
 import Manifesto from "@/components/sections/Manifesto";
 import Pillars from "@/components/sections/Pillars";
 import PortfolioGrid from "@/components/sections/PortfolioGrid";
@@ -34,7 +34,7 @@ export default async function Home() {
         <>
             <Hero image={homePage?.heroImage} alt={homePage?.heroImage?.alt} />
             <TrustBar />
-            <ProofBar logos={homePage?.proofLogos} />
+            <PressBar logos={homePage?.pressLogos} />
             <PhotoPause
                 image={homePage?.photoBreakImage1}
                 alt={homePage?.photoBreakImage1?.alt || 'Wedding photography by Alex Cinisi'}

@@ -44,7 +44,11 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   // Branding
   siteLogo { asset-> { url } },
   siteLogoFooter { asset-> { url } },
-  proofLogos[] { name, logo { asset-> { url } }, url }
+  pressLogos[] {
+    name,
+    logo,
+    url
+  }
 }`
 
 // Fetch featured portfolio items for homepage grid (max 12)
