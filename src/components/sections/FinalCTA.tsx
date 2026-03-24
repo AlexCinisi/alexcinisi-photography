@@ -1,7 +1,12 @@
+'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 export default function FinalCTA() {
+    const pathname = usePathname();
+    const isHomepage = pathname === '/';
+
     return (
         <section className="s-ink pad">
             <RevealOnScroll className="final-cta-inner">
@@ -10,7 +15,7 @@ export default function FinalCTA() {
                     Fifty Years From Now,<br />You&apos;ll Open This Album<br /><em>And Fall In Love Again</em>
                 </div>
                 <p>That&apos;s not a promise — it&apos;s the standard. Every image I create is designed to make you feel exactly what you felt in that moment, forever.</p>
-                <Link href="#contact" className="btn-fill" style={{ background: 'var(--off-white)', color: 'var(--ink)' }}>Begin Your Story →</Link>
+                <Link href={isHomepage ? '#contact' : '/contact'} className="btn-fill" style={{ background: 'var(--off-white)', color: 'var(--ink)' }}>Begin Your Story →</Link>
             </RevealOnScroll>
         </section>
     );

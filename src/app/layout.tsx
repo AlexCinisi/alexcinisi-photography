@@ -76,7 +76,7 @@ const localBusinessSchema = {
         "Luxury editorial wedding photographer specialising in destination weddings across Sicily and Italy. Capturing timeless imagery for refined international couples.",
     url: "https://www.alexcinisiphotography.com",
     image: "https://www.alexcinisiphotography.com/wp-content/uploads/alex-cinisi-photographer.webp",
-    telephone: "",
+    telephone: "+39 327 12 49 998",
     email: "info@alexcinisiphotography.com",
     address: {
         "@type": "PostalAddress",

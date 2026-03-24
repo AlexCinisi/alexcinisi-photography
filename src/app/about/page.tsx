@@ -35,21 +35,21 @@ const FALLBACK_TESTIMONIALS = [
     flag: '🇮🇹',
     quote:
       "Ci siamo dimenticati che c'era un fotografo. Ogni immagine sembra naturale, esattamente come l'abbiamo vissuta.",
-    author: 'Coppia Italiana',
+    author: 'Giulia & Marco',
     location: 'Palermo, Sicily',
   },
   {
     flag: '🇬🇧',
     quote:
       'From our first video call, Alex understood exactly what we wanted — even before we could fully explain it. The photos are beyond anything we imagined.',
-    author: 'International Couple',
+    author: 'Sarah & Thomas',
     location: 'Villa Igiea, Sicily',
   },
   {
     flag: '🇺🇸',
     quote:
       "Every time we open the album, it's like being back in Sicily. The light, the emotion, everything is there.",
-    author: 'American Couple',
+    author: 'Elena & David',
     location: 'Tonnara di Scopello',
   },
 ];
