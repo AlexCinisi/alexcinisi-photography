@@ -252,3 +252,39 @@ export const locationPageBySlugQuery = `*[_type == "locationPage" && slug.curren
 
 // All location slugs (for generateStaticParams)
 export const allLocationSlugsQuery = `*[_type == "locationPage"] { "slug": slug.current }`
+
+// ============================
+// ABOUT QUERIES
+// ============================
+
+// About page
+export const aboutPageQuery = `*[_type == "aboutPage"][0] {
+  heroImage {
+    ...,
+    "alt": alt
+  },
+  philosophyImage {
+    ...,
+    "alt": alt
+  },
+  filmImage {
+    ...,
+    "alt": alt
+  },
+  sicilyImage {
+    ...,
+    "alt": alt
+  },
+  testimonials[] {
+    flag,
+    quote,
+    author,
+    location
+  },
+  faqItems[] {
+    question,
+    answer
+  },
+  metaTitle,
+  metaDescription
+}`;
