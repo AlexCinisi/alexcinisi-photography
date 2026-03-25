@@ -301,3 +301,27 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   metaTitle,
   metaDescription
 }`;
+
+// ============================
+// CONTACT QUERIES
+// ============================
+
+export const contactPageQuery = `*[_type == "contactPage"][0] {
+  heroImage { ..., "alt": alt },
+  heroTextDark,
+  title,
+  subtitle,
+  email,
+  responseTime,
+  studio,
+  languages,
+  instagram,
+  sidebarTestimonial {
+    quote,
+    author,
+    location,
+    country
+  },
+  metaTitle,
+  metaDescription
+}`;
