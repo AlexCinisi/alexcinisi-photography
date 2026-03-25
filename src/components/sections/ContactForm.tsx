@@ -20,6 +20,7 @@ interface ContactFormProps {
     dateType?: "date" | "text";
     datePlaceholder?: string;
     standalone?: boolean;
+    showDualInstagram?: boolean; // NEW: shows 2 Instagram fields (your + partner's)
 }
 
 export default function ContactForm({
@@ -38,7 +39,8 @@ export default function ContactForm({
     showInterestCheckboxes = true,
     dateType = "date",
     datePlaceholder,
-    standalone = false
+    standalone = false,
+    showDualInstagram = false
 }: ContactFormProps) {
     const [formData, setFormData] = useState({
         name: '',
@@ -46,6 +48,7 @@ export default function ContactForm({
         email: '',
         phone: '',
         instagram: '',
+        partnerInstagram: '',
         planner: '',
         weddingDate: '',
         location: venueValue,
@@ -190,6 +193,7 @@ export default function ContactForm({
                 email: '',
                 phone: '',
                 instagram: '',
+                partnerInstagram: '',
                 planner: '',
                 weddingDate: '',
                 location: venueValue, // Keep venue value if provided via props
@@ -275,8 +279,8 @@ export default function ContactForm({
                 <ErrorMsg field="email" />
             </div>
 
-            {/* Instagram accanto a Email — solo nella versione ridotta (homepage) */}
-            {!showGroupLabels && (
+            {/* Instagram — single in homepage (no group labels), dual in full form */}
+            {!showGroupLabels && !showDualInstagram && (
                 <div className="fg">
                     <Label text="Instagram Handle" />
                     <input
@@ -286,6 +290,30 @@ export default function ContactForm({
                         value={formData.instagram}
                         onChange={handleInputChange}
                     />
+                </div>
+            )}
+            {showDualInstagram && (
+                <div className="fg full" style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <div className="fg">
+                        <Label text="Your Instagram" />
+                        <input
+                            type="text"
+                            name="instagram"
+                            placeholder="@yourhandle"
+                            value={formData.instagram}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="fg">
+                        <Label text="Partner's Instagram" />
+                        <input
+                            type="text"
+                            name="partnerInstagram"
+                            placeholder="@partnerhandle"
+                            value={formData.partnerInstagram}
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </div>
             )}
             {showPhone && (
@@ -304,18 +332,7 @@ export default function ContactForm({
             {/* GRUPPO 2: Your wedding */}
             {showGroupLabels && <div className="form-group-label">Your wedding</div>}
 
-            <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                <Label text="Wedding Date" required />
-                <input
-                    type={dateType}
-                    name="weddingDate"
-                    placeholder={datePlaceholder}
-                    value={formData.weddingDate}
-                    onChange={handleInputChange}
-                />
-                <ErrorMsg field="weddingDate" />
-            </div>
-
+            {/* Venue — FIRST, full width */}
             {!venueHidden && (
                 <div className="fg full" style={{ gridColumn: '1 / -1' }}>
                     <Label text={venueLabel} required />
@@ -329,6 +346,33 @@ export default function ContactForm({
                     <ErrorMsg field="location" />
                 </div>
             )}
+
+            {/* Date + Planner — same row, 2 columns */}
+            <div className="fg full" style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="fg">
+                    <Label text="Wedding Date" required />
+                    <input
+                        type={dateType}
+                        name="weddingDate"
+                        placeholder={datePlaceholder}
+                        value={formData.weddingDate}
+                        onChange={handleInputChange}
+                    />
+                    <ErrorMsg field="weddingDate" />
+                </div>
+                {showPlanner && (
+                    <div className="fg">
+                        <Label text="Wedding Planner" />
+                        <input
+                            type="text"
+                            name="planner"
+                            placeholder="Name of your planner, or 'Not yet'"
+                            value={formData.planner}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                )}
+            </div>
 
             {showGuestCount && (
                 <div className="fg">
@@ -373,19 +417,6 @@ export default function ContactForm({
                 </div>
             )}
 
-            {showPlanner && (
-                <div className="fg">
-                    <Label text="Wedding Planner" />
-                    <input
-                        type="text"
-                        name="planner"
-                        placeholder="Name of your planner, or 'Not yet'"
-                        value={formData.planner}
-                        onChange={handleInputChange}
-                    />
-                </div>
-            )}
-
             {/* GRUPPO 3: Your vision */}
             {showGroupLabels && <div className="form-group-label">Your vision</div>}
 
@@ -415,28 +446,14 @@ export default function ContactForm({
                     ))}
                 </div>
             )}
-            {/* Instagram nel gruppo vision — solo nella versione completa */}
-            {showGroupLabels && (
-                <div className="fg">
-                    <Label text="Instagram Handle" />
-                    <input
-                        type="text"
-                        name="instagram"
-                        placeholder="@yourhandle"
-                        value={formData.instagram}
-                        onChange={handleInputChange}
-                    />
-                </div>
-            )}
 
-            <div className="priv-row" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', gridColumn: '1 / -1', marginTop: 12 }}>
+            <div className="priv-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', gridColumn: '1 / -1', marginTop: 12 }}>
                 <label className="custom-checkbox" style={{
                     position: 'relative',
                     display: 'inline-block',
                     width: '20px',
                     height: '20px',
                     flexShrink: 0,
-                    marginTop: '2px', // Align with top line of text
                     cursor: 'pointer'
                 }}>
                     <input
@@ -472,8 +489,8 @@ export default function ContactForm({
                         )}
                     </span>
                 </label>
-                <span style={{ fontSize: '0.9em', lineHeight: '1.4', cursor: 'pointer' }} onClick={() => handlePrivacyChange({ target: { checked: !formData.privacyConsent } } as any)}>
-                    I have read and agree to the Privacy Policy and consent to the processing of my personal data (GDPR compliant).
+                <span style={{ fontSize: '0.78rem', lineHeight: '1.5', cursor: 'pointer', color: 'var(--mid)' }} onClick={() => handlePrivacyChange({ target: { checked: !formData.privacyConsent } } as any)}>
+                    I have read and agree to the <a href="/policies/Privacy_Policy_Alex_Cinisi_Photography.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy Policy</a> and consent to the processing of my personal data (GDPR compliant).
                 </span>
             </div>
             <div style={{ gridColumn: '1 / -1' }}><ErrorMsg field="privacyConsent" /></div>

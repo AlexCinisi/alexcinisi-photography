@@ -53,11 +53,6 @@ export default async function ContactPage() {
 
   const title = data?.title || DEFAULTS.title;
   const subtitle = data?.subtitle || DEFAULTS.subtitle;
-  const email = data?.email || DEFAULTS.email;
-  const responseTime = data?.responseTime || DEFAULTS.responseTime;
-  const studio = data?.studio || DEFAULTS.studio;
-  const languages = data?.languages || DEFAULTS.languages;
-  const instagram = data?.instagram || DEFAULTS.instagram;
   const testimonial = data?.sidebarTestimonial?.quote 
     ? data.sidebarTestimonial 
     : DEFAULTS.testimonial;
@@ -72,8 +67,8 @@ export default async function ContactPage() {
     mainEntity: {
       '@type': 'ProfessionalService',
       name: 'Alex Cinisi Photography',
-      email: email,
-      telephone: '', 
+      email: DEFAULTS.email,
+      telephone: '',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Palermo',
@@ -99,10 +94,10 @@ export default async function ContactPage() {
 
       <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
 
-      {/* ═══ HERO ═══ */}
-      <section className={`hero hero--contact ${heroTextDark ? 'hero--dark-text' : ''}`}>
-        <div className="hero-bg">
-          {data?.heroImage ? (
+      {/* ═══ HERO — conditonal: only renders when heroImage is set in Sanity ═══ */}
+      {data?.heroImage && (
+        <section className={`hero hero--contact ${heroTextDark ? 'hero--dark-text' : ''}`}>
+          <div className="hero-bg">
             <Image
               src={urlFor(data.heroImage).fit('crop').crop('focalpoint').width(2400).quality(85).auto('format').url()}
               alt={data.heroImage.alt || 'Contact Alex Cinisi Photography'}
@@ -111,25 +106,23 @@ export default async function ContactPage() {
               style={{ objectFit: 'cover' }}
               priority
             />
-          ) : (
-            <div className="hero-ph" />
-          )}
-        </div>
-        <div className="hero-content" style={{ maxWidth: 600 }}>
-          <RevealOnScroll>
-            <p className="f-label">Inquiries</p>
-          </RevealOnScroll>
-          <RevealOnScroll delay="d1">
-            <h1>
-              <span className="l1">{title.split(' ').slice(0, 2).join(' ')}</span>
-              <span className="l2"><em>{title.split(' ').slice(2).join(' ')}</em></span>
-            </h1>
-          </RevealOnScroll>
-          <RevealOnScroll delay="d2">
-            <p className="hero-sub">{subtitle}</p>
-          </RevealOnScroll>
-        </div>
-      </section>
+          </div>
+          <div className="hero-content" style={{ maxWidth: 600 }}>
+            <RevealOnScroll>
+              <p className="f-label">Inquiries</p>
+            </RevealOnScroll>
+            <RevealOnScroll delay="d1">
+              <h1>
+                <span className="l1">{title.split(' ').slice(0, 2).join(' ')}</span>
+                <span className="l2"><em>{title.split(' ').slice(2).join(' ')}</em></span>
+              </h1>
+            </RevealOnScroll>
+            <RevealOnScroll delay="d2">
+              <p className="hero-sub">{subtitle}</p>
+            </RevealOnScroll>
+          </div>
+        </section>
+      )}
 
       {/* ═══ FORM SECTION ═══ */}
       <section className="s-white contact-page-section pad">
@@ -140,23 +133,23 @@ export default async function ContactPage() {
               <RevealOnScroll>
                 <div className="contact-info-block">
                   <p className="f-label">Response</p>
-                  <p className="contact-info-value">{responseTime}</p>
+                  <p className="contact-info-value">{DEFAULTS.responseTime}</p>
                 </div>
                 <div className="contact-info-block">
                   <p className="f-label">Email</p>
-                  <p className="contact-info-value">{email}</p>
+                  <p className="contact-info-value">{DEFAULTS.email}</p>
                 </div>
                 <div className="contact-info-block">
                   <p className="f-label">Studio</p>
-                  <p className="contact-info-value">{studio}</p>
+                  <p className="contact-info-value">{DEFAULTS.studio}</p>
                 </div>
                 <div className="contact-info-block">
                   <p className="f-label">Languages</p>
-                  <p className="contact-info-value">{languages}</p>
+                  <p className="contact-info-value">{DEFAULTS.languages}</p>
                 </div>
                 <div className="contact-info-block">
                   <p className="f-label">Social</p>
-                  <p className="contact-info-value">{instagram}</p>
+                  <p className="contact-info-value">{DEFAULTS.instagram}</p>
                 </div>
               </RevealOnScroll>
 
@@ -171,14 +164,18 @@ export default async function ContactPage() {
               )}
             </div>
 
-            {/* Form — props aggiornate per rimuovere i 4 campi */}
+            {/* Form — full props per form completo */}
             <div className="contact-form-wrap">
               <ContactForm
                 standalone={true}
-                showGuestCount={false}
-                showBudget={false}
-                showSource={false}
-                showPhone={false}
+                showGuestCount={true}
+                showBudget={true}
+                showSource={true}
+                showPhone={true}
+                showPlanner={true}
+                showDualInstagram={true}
+                showInterestCheckboxes={true}
+                ctaText="Request Your Bespoke Proposal →"
               />
             </div>
           </div>

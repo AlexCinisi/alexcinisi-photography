@@ -316,11 +316,6 @@ export const contactPageQuery = `*[_type == "contactPage"][0] {
   heroTextDark,
   title,
   subtitle,
-  email,
-  responseTime,
-  studio,
-  languages,
-  instagram,
   sidebarTestimonial {
     quote,
     author,

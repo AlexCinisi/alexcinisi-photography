@@ -4,7 +4,7 @@ import "./globals.css";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
-import Script from "next/script";
+
 
 const redhat = Red_Hat_Display({
     variable: "--font-redhat",
@@ -217,17 +217,17 @@ export default async function RootLayout({
                 className={`${jost.variable} ${redhat.variable} ${bodoniModa.variable}`}
                 style={{ fontFamily: "var(--font-jost), sans-serif" }}
             >
-                <Script
+                <script
                     id="schema-local-business"
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
                 />
-                <Script
+                <script
                     id="schema-faq"
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
                 />
-                <Script
+                <script
                     id="schema-breadcrumb"
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

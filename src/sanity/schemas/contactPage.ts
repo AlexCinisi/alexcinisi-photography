@@ -12,11 +12,6 @@ export default defineType({
       options: { collapsible: true, collapsed: false },
     },
     {
-      name: 'info',
-      title: '🟢 Info Contatto',
-      options: { collapsible: true, collapsed: true },
-    },
-    {
       name: 'testimonial',
       title: '🟡 Testimonial (sidebar)',
       options: { collapsible: true, collapsed: true },
@@ -68,43 +63,6 @@ export default defineType({
       rows: 2,
       fieldset: 'hero',
       description: 'Default: "Every love story begins with a hello..."',
-    }),
-
-    // ── INFO CONTATTO ──
-    defineField({
-      name: 'email',
-      title: 'Email',
-      type: 'string',
-      fieldset: 'info',
-      description: 'Default: info@alexcinisiphotography.com',
-    }),
-    defineField({
-      name: 'responseTime',
-      title: 'Tempo di Risposta',
-      type: 'string',
-      fieldset: 'info',
-      description: 'Default: "Within 24 hours"',
-    }),
-    defineField({
-      name: 'studio',
-      title: 'Studio / Location',
-      type: 'string',
-      fieldset: 'info',
-      description: 'Default: "Palermo, Sicily"',
-    }),
-    defineField({
-      name: 'languages',
-      title: 'Lingue',
-      type: 'string',
-      fieldset: 'info',
-      description: 'Default: "Italian · English"',
-    }),
-    defineField({
-      name: 'instagram',
-      title: 'Instagram Handle',
-      type: 'string',
-      fieldset: 'info',
-      description: 'Default: "@alexcinisi"',
     }),
 
     // ── TESTIMONIAL SIDEBAR ──
