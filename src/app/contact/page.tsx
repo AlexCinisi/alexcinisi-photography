@@ -13,9 +13,9 @@ export const revalidate = 60;
 /* ── Default values ── */
 const DEFAULTS = {
   title: "Let's Start The Conversation.",
-  subtitle: 'Every love story begins with a hello. Tell me about your wedding — I read every message personally and respond within 3 hours.',
+  subtitle: 'Every love story begins with a hello. Tell me about your wedding — I read every message personally and respond within 24 hours.',
   email: 'info@alexcinisiphotography.com',
-  responseTime: 'Within 3 hours — personally',
+  responseTime: 'Within 24 hours — personally',
   studio: 'Palermo, Sicily',
   languages: 'Italian · English',
   instagram: '@alexcinisi',
@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(contactPageQuery).catch(() => null);
   const title = data?.metaTitle || 'Contact — Begin Your Wedding Story';
   const description = data?.metaDescription || 
-    "Get in touch about your Sicily destination wedding. Personal response within 3 hours. Luxury editorial wedding photographer based in Palermo.";
+    "Get in touch about your Sicily destination wedding. Personal response within 24 hours. Luxury editorial wedding photographer based in Palermo.";
 
   return {
     title,

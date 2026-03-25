@@ -169,6 +169,39 @@ export default async function AboutPage() {
       {/* Breadcrumb */}
       <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
 
+      {/* ═══ HERO ABOUT ═══ */}
+      {data?.heroFullImage && (
+        <section className={`hero hero--about ${data?.heroTextDark ? 'hero--dark-text' : ''}`}>
+          <div className="hero-bg">
+            <Image
+              src={urlFor(data.heroFullImage)
+                .fit('crop')
+                .crop('focalpoint')
+                .width(2400)
+                .quality(85)
+                .auto('format')
+                .url()}
+              alt={data.heroFullImage.alt || 'Alex Cinisi — Wedding Photographer in Sicily'}
+              fill
+              sizes="100vw"
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </div>
+          <div className="hero-content" style={{ maxWidth: 600 }}>
+            <RevealOnScroll>
+              <p className="f-label">About</p>
+            </RevealOnScroll>
+            <RevealOnScroll delay="d1">
+              <h1>
+                <span className="l1">The Person Behind</span>
+                <span className="l2"><em>Your Photographs</em></span>
+              </h1>
+            </RevealOnScroll>
+          </div>
+        </section>
+      )}
+
       {/* ═══════════════════════════════════════════
           SEZIONE 1 — Hero Intro (pearl)
           ═══════════════════════════════════════════ */}
@@ -213,13 +246,15 @@ export default async function AboutPage() {
               Digital
             </p>
           </RevealOnScroll>
-          <RevealOnScroll delay="d1">
-            <h1 className="h1-about">
-              The Person Behind
-              <br />
-              <em>Your Photographs</em>
-            </h1>
-          </RevealOnScroll>
+          {!data?.heroFullImage && (
+            <RevealOnScroll delay="d1">
+              <h1 className="h1-about">
+                The Person Behind
+                <br />
+                <em>Your Photographs</em>
+              </h1>
+            </RevealOnScroll>
+          )}
           <RevealOnScroll delay="d2">
             <p>
               I&rsquo;m Alex Cinisi. I&rsquo;m Sicilian — born and raised in
@@ -532,7 +567,7 @@ export default async function AboutPage() {
           <Link href="/contact" className="btn-fill">
             Get in Touch &rarr;
           </Link>
-          <p className="response-time">I respond within 3 hours</p>
+          <p className="response-time">I respond within 24 hours</p>
         </RevealOnScroll>
       </section>
 

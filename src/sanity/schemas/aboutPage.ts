@@ -46,8 +46,35 @@ export default defineType({
   fields: [
     // ──── HERO ────
     defineField({
+      name: 'heroFullImage',
+      title: 'Hero Full-Width Image',
+      type: 'image',
+      options: { hotspot: true },
+      fieldset: 'hero',
+      description:
+        'Immagine hero full-width che appare in cima alla pagina (come homepage e locations). Suggerimenti: Alex al lavoro durante un matrimonio, dettaglio mani con macchina fotografica, o immagine wedding iconica. Landscape o 16:9.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          description: '⚠️ SEO: Descrivi la scena. Es: "Alex Cinisi photographing a wedding ceremony in Sicily"',
+          validation: (Rule) => Rule.required().warning('Alt text mancante — penalizza SEO.'),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'heroTextDark',
+      title: 'Hero Text Dark Mode',
+      type: 'boolean',
+      fieldset: 'hero',
+      description:
+        "Attiva se l'immagine hero è chiara/luminosa. Il testo e il gradiente diventeranno scuri per garantire leggibilità.",
+      initialValue: false,
+    }),
+    defineField({
       name: 'heroImage',
-      title: 'Ritratto Alex',
+      title: 'Ritratto Alex (Floating Frame)',
       type: 'image',
       options: { hotspot: true },
       fieldset: 'hero',

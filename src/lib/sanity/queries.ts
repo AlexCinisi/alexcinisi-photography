@@ -272,6 +272,11 @@ export const allLocationSlugsQuery = `*[_type == "locationPage"] { "slug": slug.
 
 // About page
 export const aboutPageQuery = `*[_type == "aboutPage"][0] {
+  heroFullImage {
+    ...,
+    "alt": alt
+  },
+  heroTextDark,
   heroImage {
     ...,
     "alt": alt

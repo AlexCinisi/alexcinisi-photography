@@ -491,6 +491,32 @@ nav.scrolled .nav-logo img {
   }
 }
 
+/* About page hero (full-width, appears only when Sanity image exists) */
+.hero--about {
+  min-height: 65vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+}
+.hero--about .hero-content {
+  padding-left: 64px;
+}
+.hero--about h1 .l1 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+}
+.hero--about h1 .l2 {
+  font-size: clamp(2.4rem, 4.4vw, 4rem);
+}
+
+@media (max-width: 960px) {
+  .hero--about {
+    min-height: 50vh;
+    padding-bottom: 48px;
+  }
+  .hero--about .hero-content {
+    padding-left: 24px;
+  }
+}
 
 /* ============================================
    BUTTONS

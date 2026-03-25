@@ -83,7 +83,7 @@ export default defineType({
       title: 'Tempo di Risposta',
       type: 'string',
       fieldset: 'info',
-      description: 'Default: "Within 3 hours"',
+      description: 'Default: "Within 24 hours"',
     }),
     defineField({
       name: 'studio',
