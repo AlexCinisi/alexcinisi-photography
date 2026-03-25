@@ -464,6 +464,34 @@ nav.scrolled .nav-logo img {
   border-color: var(--off-white);
 }
 
+/* Contact page hero */
+.hero--contact {
+  min-height: 55vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+}
+.hero--contact .hero-content {
+  padding-left: 64px;
+}
+.hero--contact h1 .l1 {
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+}
+.hero--contact h1 .l2 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+}
+
+@media (max-width: 960px) {
+  .hero--contact {
+    min-height: 45vh;
+    padding-bottom: 48px;
+  }
+  .hero--contact .hero-content {
+    padding-left: 24px;
+  }
+}
+
+
 /* ============================================
    BUTTONS
    ============================================ */

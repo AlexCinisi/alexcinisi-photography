@@ -1,170 +1,192 @@
 import type { Metadata } from 'next';
-import ContactForm from '@/components/sections/ContactForm';
+import Image from 'next/image';
+import { client } from '@/lib/sanity/client';
+import { contactPageQuery } from '@/lib/sanity/queries';
+import { urlFor } from '@/lib/sanity/image';
 import Breadcrumb from '@/components/sections/Breadcrumb';
+import ContactForm from '@/components/sections/ContactForm';
+import FinalCTA from '@/components/sections/FinalCTA';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-export const metadata: Metadata = {
-  title: 'Contact — Begin Your Wedding Story | Alex Cinisi Photography',
-  description: 'Get in touch about your Sicily destination wedding. Personal response within 24 hours. Luxury editorial wedding photographer based in Palermo.',
-  alternates: {
-    canonical: '/contact',
+export const revalidate = 60;
+
+/* ── Default values ── */
+const DEFAULTS = {
+  title: "Let's Start The Conversation.",
+  subtitle: 'Every love story begins with a hello. Tell me about your wedding — I read every message personally and respond within 3 hours.',
+  email: 'info@alexcinisiphotography.com',
+  responseTime: 'Within 3 hours — personally',
+  studio: 'Palermo, Sicily',
+  languages: 'Italian · English',
+  instagram: '@alexcinisi',
+  testimonial: {
+    quote: "We couldn't have imagined a more perfect experience. Alex captured our day so naturally — we relive it every time we look at the photos.",
+    author: 'Anna & Mark',
+    location: 'Palermo',
+    country: 'United Kingdom',
   },
 };
 
-export default function ContactPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(contactPageQuery).catch(() => null);
+  const title = data?.metaTitle || 'Contact — Begin Your Wedding Story';
+  const description = data?.metaDescription || 
+    "Get in touch about your Sicily destination wedding. Personal response within 3 hours. Luxury editorial wedding photographer based in Palermo.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: 'https://www.alexcinisiphotography.com/contact',
+    },
+    openGraph: {
+      title: title + ' | Alex Cinisi Photography',
+      description,
+      url: 'https://www.alexcinisiphotography.com/contact',
+      type: 'website',
+    },
+  };
+}
+
+export default async function ContactPage() {
+  const data = await client.fetch(contactPageQuery).catch(() => null);
+
+  const title = data?.title || DEFAULTS.title;
+  const subtitle = data?.subtitle || DEFAULTS.subtitle;
+  const email = data?.email || DEFAULTS.email;
+  const responseTime = data?.responseTime || DEFAULTS.responseTime;
+  const studio = data?.studio || DEFAULTS.studio;
+  const languages = data?.languages || DEFAULTS.languages;
+  const instagram = data?.instagram || DEFAULTS.instagram;
+  const testimonial = data?.sidebarTestimonial?.quote 
+    ? data.sidebarTestimonial 
+    : DEFAULTS.testimonial;
+  const heroTextDark = data?.heroTextDark || false;
+
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Alex Cinisi Photography',
+    description: 'Get in touch for luxury destination wedding photography in Sicily and worldwide.',
+    url: 'https://www.alexcinisiphotography.com/contact',
+    mainEntity: {
+      '@type': 'ProfessionalService',
+      name: 'Alex Cinisi Photography',
+      email: email,
+      telephone: '', 
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Palermo',
+        addressRegion: 'Sicily',
+        addressCountry: 'IT',
+      },
+      areaServed: 'Worldwide',
+    },
+  };
+
   const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.alexcinisiphotography.com" },
-      { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.alexcinisiphotography.com/contact" }
-    ]
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.alexcinisiphotography.com' },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://www.alexcinisiphotography.com/contact' },
+    ],
   };
 
   return (
-    <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([contactSchema, breadcrumbSchema]) }} />
 
-      <Breadcrumb items={[
-        { label: 'Home', href: '/' },
-        { label: 'Contact' }
-      ]} />
+      <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
 
-      <section className="s-white contact-page-section">
+      {/* ═══ HERO ═══ */}
+      <section className={`hero hero--contact ${heroTextDark ? 'hero--dark-text' : ''}`}>
+        <div className="hero-bg">
+          {data?.heroImage ? (
+            <Image
+              src={urlFor(data.heroImage).fit('crop').crop('focalpoint').width(2400).quality(85).auto('format').url()}
+              alt={data.heroImage.alt || 'Contact Alex Cinisi Photography'}
+              fill
+              sizes="100vw"
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          ) : (
+            <div className="hero-ph" />
+          )}
+        </div>
+        <div className="hero-content" style={{ maxWidth: 600 }}>
+          <RevealOnScroll>
+            <p className="f-label">Inquiries</p>
+          </RevealOnScroll>
+          <RevealOnScroll delay="d1">
+            <h1>
+              <span className="l1">{title.split(' ').slice(0, 2).join(' ')}</span>
+              <span className="l2"><em>{title.split(' ').slice(2).join(' ')}</em></span>
+            </h1>
+          </RevealOnScroll>
+          <RevealOnScroll delay="d2">
+            <p className="hero-sub">{subtitle}</p>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* ═══ FORM SECTION ═══ */}
+      <section className="s-white contact-page-section pad">
         <div className="max">
           <div className="contact-grid">
-
-            {/* COLONNA SINISTRA — Intro + Details + Testimonianza */}
-            <RevealOnScroll className="contact-left">
-              <div className="f-label">Inquiries</div>
-              <div className="h2" style={{ marginBottom: 20 }}>
-                Let&apos;s Start<br />The Conversation.
-              </div>
-              <p style={{
-                fontSize: '.87rem',
-                lineHeight: 1.85,
-                color: 'var(--charcoal)',
-                marginBottom: 14,
-                maxWidth: 340
-              }}>
-                Every love story begins with a hello. Tell me about your wedding — I read every message personally and respond within 24 hours.
-              </p>
-
-              <div className="contact-details">
-                <div className="cd">
-                  <span className="cd-lbl">Response</span>
-                  <span className="cd-val">Within 24 hours — personally</span>
+            {/* Sidebar */}
+            <div className="contact-sidebar">
+              <RevealOnScroll>
+                <div className="contact-info-block">
+                  <p className="f-label">Response</p>
+                  <p className="contact-info-value">{responseTime}</p>
                 </div>
-                <div className="cd">
-                  <span className="cd-lbl">Email</span>
-                  <span className="cd-val">
-                    <a href="mailto:info@alexcinisiphotography.com" style={{ color: 'inherit', textDecoration: 'none' }}>
-                      info@alexcinisiphotography.com
-                    </a>
-                  </span>
+                <div className="contact-info-block">
+                  <p className="f-label">Email</p>
+                  <p className="contact-info-value">{email}</p>
                 </div>
-                <div className="cd">
-                  <span className="cd-lbl">Studio</span>
-                  <span className="cd-val">Palermo, Sicily</span>
+                <div className="contact-info-block">
+                  <p className="f-label">Studio</p>
+                  <p className="contact-info-value">{studio}</p>
                 </div>
-                <div className="cd">
-                  <span className="cd-lbl">Languages</span>
-                  <span className="cd-val">Italian &middot; English</span>
+                <div className="contact-info-block">
+                  <p className="f-label">Languages</p>
+                  <p className="contact-info-value">{languages}</p>
                 </div>
-                <div className="cd">
-                  <span className="cd-lbl">Social</span>
-                  <span className="cd-val">
-                    <a href="https://www.instagram.com/alexcinisi" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
-                      @alexcinisi
-                    </a>
-                  </span>
+                <div className="contact-info-block">
+                  <p className="f-label">Social</p>
+                  <p className="contact-info-value">{instagram}</p>
                 </div>
-              </div>
+              </RevealOnScroll>
 
-              {/* Foto editoriale — è il sito di un fotografo */}
-              <div className="contact-photo" style={{
-                marginTop: 36,
-                position: 'relative',
-                aspectRatio: '3 / 4',
-                overflow: 'hidden',
-                background: 'var(--grey-bg)',
-              }}>
-                <div style={{
-                  width: '100%',
-                  height: '100%',
-                  background: 'linear-gradient(155deg, #E8E4DE, #DDD8D1, #D2CCC4)',
-                }} />
-              </div>
+              {/* Testimonial */}
+              {testimonial.quote && (
+                <RevealOnScroll delay="d1">
+                  <blockquote className="contact-testimonial">
+                    <p>&ldquo;{testimonial.quote}&rdquo;</p>
+                    <cite>{testimonial.author} · {testimonial.country} · {testimonial.location}</cite>
+                  </blockquote>
+                </RevealOnScroll>
+              )}
+            </div>
 
-              {/* Testimonianza — posizionata nella colonna sinistra, visibile mentre si compila il form */}
-              <blockquote style={{
-                marginTop: 40,
-                paddingTop: 28,
-                borderTop: '1px solid var(--rule)'
-              }}>
-                <p style={{
-                  fontFamily: 'var(--font-bodoni), "Bodoni Moda", serif',
-                  fontStyle: 'italic',
-                  fontSize: '.95rem',
-                  lineHeight: 1.75,
-                  color: 'var(--charcoal)',
-                  marginBottom: 12,
-                  fontWeight: 300
-                }}>
-                  &ldquo;We couldn&apos;t have imagined a more perfect experience. Alex captured our day so naturally — we relive it every time we look at the photos.&rdquo;
-                </p>
-                <cite style={{
-                  fontStyle: 'normal',
-                  fontSize: '.6rem',
-                  letterSpacing: '.18em',
-                  textTransform: 'uppercase',
-                  color: 'var(--mid)'
-                }}>
-                  Anna &amp; Mark &middot; United Kingdom &middot; Palermo
-                </cite>
-              </blockquote>
-            </RevealOnScroll>
-
-            {/* COLONNA DESTRA — Form standalone */}
-            <RevealOnScroll className="contact-right d2">
+            {/* Form — props aggiornate per rimuovere i 4 campi */}
+            <div className="contact-form-wrap">
               <ContactForm
                 standalone={true}
-                showGuestCount={true}
-                showBudget={true}
-                showSource={true}
-                showPhone={true}
-                showPlanner={true}
-                showInterestCheckboxes={true}
-                ctaText="Request Your Proposal →"
-                dateType="text"
-                datePlaceholder="June 14, 2026 · or 'Flexible'"
+                showGuestCount={false}
+                showBudget={false}
+                showSource={false}
+                showPhone={false}
               />
-
-              {/* Trust bullets sotto le form */}
-              <div style={{
-                display: 'flex',
-                gap: 20,
-                marginTop: 16,
-                flexWrap: 'wrap'
-              }}>
-                <span style={{ fontSize: '.65rem', letterSpacing: '.06em', color: 'var(--mid)' }}>
-                  ✓ Personal response within 24h
-                </span>
-                <span style={{ fontSize: '.65rem', letterSpacing: '.06em', color: 'var(--mid)' }}>
-                  ✓ No obligation
-                </span>
-                <span style={{ fontSize: '.65rem', letterSpacing: '.06em', color: 'var(--mid)' }}>
-                  ✓ Bilingual IT/EN
-                </span>
-              </div>
-            </RevealOnScroll>
-
+            </div>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* ═══ FINAL CTA ═══ */}
+      <FinalCTA />
+    </>
   );
 }

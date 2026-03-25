@@ -228,7 +228,7 @@ export default function ContactForm({
         <div className="success-message" style={{ padding: '2rem', background: 'var(--off-white)', borderRadius: '0' }}>
             <h3 className="h2">Thank you.</h3>
             <p style={{ fontSize: '.87rem', color: 'var(--charcoal)', lineHeight: 1.85, marginTop: 12 }}>
-                Your message has been received. I&apos;ll respond personally within 24 hours.
+                Your message has been received. I&apos;ll respond personally within 3 hours.
             </p>
             <button onClick={() => setStatus('idle')} className="btn-sub" style={{ marginTop: '1.5rem' }}>
                 Send another message
@@ -517,11 +517,11 @@ export default function ContactForm({
                     <RevealOnScroll className="contact-left">
                         <div className="f-label">Inquiries</div>
                         <div className="h2">Let’s Start<br />The Conversation.</div>
-                        <p>Please use the form to check availability for your date. I respond to all inquiries within 24 hours (Monday-Friday).</p>
+                        <p>Please use the form to check availability for your date. I respond to all inquiries within 3 hours.</p>
                         <div className="contact-details">
                             <div className="cd">
                                 <span className="cd-lbl">Response</span>
-                                <span className="cd-val">Within 24 hours — personally</span>
+                                <span className="cd-val">Within 3 hours — personally</span>
                             </div>
                             <div className="cd">
                                 <span className="cd-lbl">Email</span>
