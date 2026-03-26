@@ -89,6 +89,23 @@ export default defineType({
       validation: (Rule) => Rule.max(70).warning('Idealmente sotto i 60 caratteri.'),
     }),
     defineField({
+      name: 'sidebarImage',
+      title: 'Sidebar Image',
+      type: 'image',
+      options: { hotspot: true },
+      fieldset: 'hero',
+      description:
+        'Immagine editoriale mostrata nel sidebar, tra le info contatto e la testimonial. Crea equilibrio visivo. Verticale 3:4.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+          validation: (Rule) => Rule.required().warning('Alt text mancante.'),
+        }),
+      ],
+    }),
+    defineField({
       name: 'metaDescription',
       title: 'Meta Description',
       type: 'text',

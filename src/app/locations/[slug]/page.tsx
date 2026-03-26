@@ -310,9 +310,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
 
       {/* Contact Form — venue-specific, full form */}
       <ContactForm
-        showGuestCount={true}
-        showBudget={true}
-        showSource={true}
+        showGuestCount={false}
+        showBudget={false}
+        showSource={false}
         showPhone={true}
         showPlanner={true}
         showDualInstagram={true}

@@ -322,6 +322,10 @@ export const contactPageQuery = `*[_type == "contactPage"][0] {
     location,
     country
   },
+  sidebarImage {
+    ...,
+    "alt": alt
+  },
   metaTitle,
   metaDescription
 }`;

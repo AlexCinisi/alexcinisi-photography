@@ -153,6 +153,31 @@ export default async function ContactPage() {
                 </div>
               </RevealOnScroll>
 
+              {/* Immagine sidebar — crea equilibrio visivo */}
+              {data?.sidebarImage && (
+                <RevealOnScroll delay="d1">
+                  <div style={{ marginTop: '32px', marginBottom: '32px' }}>
+                    <Image
+                      src={urlFor(data.sidebarImage)
+                        .fit('crop')
+                        .crop('focalpoint')
+                        .width(800)
+                        .quality(85)
+                        .auto('format')
+                        .url()}
+                      alt={data.sidebarImage.alt || 'Alex Cinisi Photography'}
+                      width={400}
+                      height={533}
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                </RevealOnScroll>
+              )}
+
               {/* Testimonial */}
               {testimonial.quote && (
                 <RevealOnScroll delay="d1">
@@ -168,9 +193,9 @@ export default async function ContactPage() {
             <div className="contact-form-wrap">
               <ContactForm
                 standalone={true}
-                showGuestCount={true}
-                showBudget={true}
-                showSource={true}
+                showGuestCount={false}
+                showBudget={false}
+                showSource={false}
                 showPhone={true}
                 showPlanner={true}
                 showDualInstagram={true}

@@ -267,8 +267,6 @@ export default async function Home() {
                 showGuestCount={false}
                 showBudget={false}
                 showSource={false}
-                showPhone={false}
-                showPlanner={false}
                 ctaText="Tell Me About Your Wedding →"
                 interests={["Wedding Photography", "Elopement", "Couple Session"]}
             />

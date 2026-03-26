@@ -266,6 +266,7 @@ export default function ContactForm({
                 />
                 <ErrorMsg field="partnerName" />
             </div>
+            {/* Email */}
             <div className="fg">
                 <Label text="Email Address" required />
                 <input
@@ -279,19 +280,20 @@ export default function ContactForm({
                 <ErrorMsg field="email" />
             </div>
 
-            {/* Instagram — single in homepage (no group labels), dual in full form */}
-            {!showGroupLabels && !showDualInstagram && (
+            {/* Phone — PRIMA di Instagram nella versione homepage */}
+            {showPhone && (
                 <div className="fg">
-                    <Label text="Instagram Handle" />
+                    <Label text="Phone Number" />
                     <input
-                        type="text"
-                        name="instagram"
-                        placeholder="@yourhandle"
-                        value={formData.instagram}
+                        type="tel"
+                        name="phone"
+                        placeholder="+1 (555) 000-0000"
+                        value={formData.phone}
                         onChange={handleInputChange}
                     />
                 </div>
             )}
+
             {showDualInstagram && (
                 <div className="fg full" style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <div className="fg">
@@ -316,14 +318,29 @@ export default function ContactForm({
                     </div>
                 </div>
             )}
-            {showPhone && (
+
+            {/* Wedding Date — NON full width quando c'è Instagram affianco (homepage) */}
+            <div className={showGroupLabels ? "fg full" : "fg"} style={showGroupLabels ? { gridColumn: '1 / -1' } : undefined}>
+                <Label text="Wedding Date" required />
+                <input
+                    type={dateType}
+                    name="weddingDate"
+                    placeholder={datePlaceholder}
+                    value={formData.weddingDate}
+                    onChange={handleInputChange}
+                />
+                <ErrorMsg field="weddingDate" />
+            </div>
+
+            {/* Instagram — single in homepage (no group labels), affianco a Wedding Date */}
+            {!showGroupLabels && (
                 <div className="fg">
-                    <Label text="Phone Number" />
+                    <Label text="Instagram Handle" />
                     <input
-                        type="tel"
-                        name="phone"
-                        placeholder="+1 (555) 000-0000"
-                        value={formData.phone}
+                        type="text"
+                        name="instagram"
+                        placeholder="@yourhandle"
+                        value={formData.instagram}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -347,32 +364,20 @@ export default function ContactForm({
                 </div>
             )}
 
-            {/* Date + Planner — same row, 2 columns */}
-            <div className="fg full" style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div className="fg">
-                    <Label text="Wedding Date" required />
+            {/* Planner — only in full form, after venue and date. Actually, prompt says: Wedding Date | Wedding Planner for full form. */}
+            {/* But I moved Wedding Date up. For full form, if I want them together: */}
+            {showGroupLabels && showPlanner && (
+                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
+                    <Label text="Wedding Planner" />
                     <input
-                        type={dateType}
-                        name="weddingDate"
-                        placeholder={datePlaceholder}
-                        value={formData.weddingDate}
+                        type="text"
+                        name="planner"
+                        placeholder="Name of your planner, or 'Not yet'"
+                        value={formData.planner}
                         onChange={handleInputChange}
                     />
-                    <ErrorMsg field="weddingDate" />
                 </div>
-                {showPlanner && (
-                    <div className="fg">
-                        <Label text="Wedding Planner" />
-                        <input
-                            type="text"
-                            name="planner"
-                            placeholder="Name of your planner, or 'Not yet'"
-                            value={formData.planner}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                )}
-            </div>
+            )}
 
             {showGuestCount && (
                 <div className="fg">
@@ -430,6 +435,21 @@ export default function ContactForm({
                 ></textarea>
                 <ErrorMsg field="vision" />
             </div>
+
+            {/* Instagram nel gruppo vision — SOLO se non c'è il dual Instagram in About You e non siamo in homepage layout */}
+            {/* Ma in homepage layout showGroupLabels è false, quindi non entra qui. */}
+            {showGroupLabels && !showDualInstagram && (
+                <div className="fg">
+                    <Label text="Instagram Handle" />
+                    <input
+                        type="text"
+                        name="instagram"
+                        placeholder="@yourhandle"
+                        value={formData.instagram}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            )}
 
             {showInterestCheckboxes && (
                 <div className="check-group" style={{ gridColumn: '1 / -1' }}>
