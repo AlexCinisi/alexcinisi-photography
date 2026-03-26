@@ -291,13 +291,24 @@ export default function ContactForm({
             {/* ── YOUR WEDDING ── */}
             {showGroupLabels && <div className="form-group-label">Your wedding</div>}
 
-            {!venueHidden && (
-                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                    <Label text="Venue / Location" required />
-                    <input type="text" name="location" placeholder="e.g. Tonnara di Scopello, or 'Undecided'" value={formData.location} onChange={handleInputChange} />
-                    <ErrorMsg field="location" />
-                </div>
-            )}
+            {/* Venue — sempre visibile. Disabilitato quando pre-compilato */}
+            <div className="fg full" style={{ gridColumn: '1 / -1' }}>
+                <Label text="Venue / Location" required={!venueHidden} />
+                <input
+                    type="text"
+                    name="location"
+                    placeholder="e.g. Tonnara di Scopello, or 'Undecided'"
+                    value={formData.location}
+                    onChange={handleInputChange}
+                    disabled={venueHidden}
+                    style={venueHidden ? {
+                        opacity: 0.6,
+                        cursor: 'not-allowed',
+                        backgroundColor: 'var(--grey-bg, #F3F1EE)',
+                    } : undefined}
+                />
+                {!venueHidden && <ErrorMsg field="location" />}
+            </div>
 
             {isFull && (
                 <>
