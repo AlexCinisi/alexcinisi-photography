@@ -263,13 +263,7 @@ export default async function Home() {
             />
             <FAQ />
             <Availability />
-            <ContactForm
-                showGuestCount={false}
-                showBudget={false}
-                showSource={false}
-                ctaText="Tell Me About Your Wedding →"
-                interests={["Wedding Photography", "Elopement", "Couple Session"]}
-            />
+            <ContactForm ctaText="Tell Me About Your Wedding →" />
             <FinalCTA />
         </>
     );

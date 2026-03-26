@@ -3,44 +3,30 @@
 import { useState, FormEvent, useRef, useEffect } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
+import Image from 'next/image';
+import { urlFor } from '@/lib/sanity/image';
+
 interface ContactFormProps {
-    venueLabel?: string;
-    venuePlaceholder?: string;
-    venueHidden?: boolean;
-    venueValue?: string; // Pre-filled value
-    showGuestCount?: boolean;
-    showBudget?: boolean;
-    showSource?: boolean;
-    messageLabel?: string;
-    showPhone?: boolean;
-    showPlanner?: boolean;
-    ctaText?: string;
-    interests?: string[];
-    showInterestCheckboxes?: boolean;
-    dateType?: "date" | "text";
-    datePlaceholder?: string;
-    standalone?: boolean;
-    showDualInstagram?: boolean; // NEW: shows 2 Instagram fields (your + partner's)
+    variant?: 'compact' | 'full';     // DEFAULT: 'compact'
+    venueHidden?: boolean;            // true nelle location pages
+    venueValue?: string;              // pre-filled venue name
+    ctaText?: string;                 // testo bottone submit
+    sidebarImage?: any;               // Sanity image object (solo nella contact page)
+    sidebarTestimonial?: {            // Testimonial nel sidebar (solo dove serve)
+        quote: string;
+        author: string;
+        location: string;
+        country: string;
+    };
 }
 
 export default function ContactForm({
-    venueLabel = "Venue / Location",
-    venuePlaceholder = "e.g. Tonnara di Scopello, or 'Undecided'",
+    variant = 'compact',
     venueHidden = false,
     venueValue = "",
-    showGuestCount = false,
-    showBudget = false,
-    showSource = false,
-    messageLabel = "Tell Me About Your Story",
-    showPhone = true,
-    showPlanner = true,
-    ctaText = "Request Your Proposal",
-    interests = ["Wedding Photography", "Elopement", "Couple Session", "Film Photography"],
-    showInterestCheckboxes = true,
-    dateType = "date",
-    datePlaceholder,
-    standalone = false,
-    showDualInstagram = false
+    ctaText,
+    sidebarImage,
+    sidebarTestimonial,
 }: ContactFormProps) {
     const [formData, setFormData] = useState({
         name: '',
@@ -52,9 +38,9 @@ export default function ContactForm({
         planner: '',
         weddingDate: '',
         location: venueValue,
-        guestCount: '',
-        howFound: '',
-        budget: '',
+        guestCount: '',         // non usato, ma mantenuto per backward compat API
+        howFound: '',           // non usato
+        budget: '',             // non usato
         vision: '',
         interests: [] as string[],
         privacyConsent: false
@@ -85,6 +71,22 @@ export default function ContactForm({
     // Refs for scrolling to errors
     const formRef = useRef<HTMLFormElement>(null);
 
+    // Derivare tutto dalla variant
+    const isCompact = variant === 'compact';
+    const isFull = variant === 'full';
+
+    const showGroupLabels = isFull;
+    const showDualInstagram = isFull;
+    const showPlanner = isFull;
+
+    const defaultCtaText = isCompact
+        ? 'Tell Me About Your Wedding →'
+        : 'Request Your Bespoke Proposal →';
+
+    const interestsList = isCompact
+        ? ['Wedding Photography', 'Elopement', 'Couple Session']
+        : ['Wedding Photography', 'Elopement', 'Couple Session', 'Film Photography'];
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -99,7 +101,7 @@ export default function ContactForm({
     };
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, checked } = e.target;
+        const { value, checked } = e.target;
         setFormData(prev => {
             // For interests checkboxes
             if (checked) {
@@ -134,9 +136,6 @@ export default function ContactForm({
         if (!formData.weddingDate.trim()) errors.weddingDate = "This field is required";
 
         if (!venueHidden && !formData.location.trim()) errors.location = "This field is required";
-
-        if (showGuestCount && !formData.guestCount) errors.guestCount = "This field is required";
-        if (showBudget && !formData.budget) errors.budget = "This field is required";
 
         if (!formData.vision.trim()) errors.vision = "This field is required";
 
@@ -224,11 +223,7 @@ export default function ContactForm({
         formErrors[field] ? <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>{formErrors[field]}</div> : null
     );
 
-    // Mostra i group labels solo nel form completo (standalone o con campi extra attivi)
-    const showGroupLabels = standalone || showGuestCount || showBudget;
-
-    // Crea il contenuto del form (o il messaggio di successo)
-    const formContent = status === 'success' ? (
+    const successMessage = (
         <div className="success-message" style={{ padding: '2rem', background: 'var(--off-white)', borderRadius: '0' }}>
             <h3 className="h2">Thank you.</h3>
             <p style={{ fontSize: '.87rem', color: 'var(--charcoal)', lineHeight: 1.85, marginTop: 12 }}>
@@ -238,234 +233,103 @@ export default function ContactForm({
                 Send another message
             </button>
         </div>
-    ) : (
+    );
+
+    const formContent = (
         <form onSubmit={handleSubmit} ref={formRef}>
-            {/* GRUPPO 1: About you */}
+            {/* ── ABOUT YOU ── */}
             {showGroupLabels && <div className="form-group-label">About you</div>}
 
             <div className="fg">
                 <Label text="First Name" required />
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required={false} // Disable browser validation to use custom
-                />
+                <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleInputChange} />
                 <ErrorMsg field="name" />
             </div>
             <div className="fg">
                 <Label text="Partner's Name" required />
-                <input
-                    type="text"
-                    name="partnerName"
-                    placeholder="Partner's Name"
-                    value={formData.partnerName}
-                    onChange={handleInputChange}
-                />
+                <input type="text" name="partnerName" placeholder="Partner's Name" value={formData.partnerName} onChange={handleInputChange} />
                 <ErrorMsg field="partnerName" />
             </div>
-            {/* Email */}
+
             <div className="fg">
                 <Label text="Email Address" required />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="best.email@example.com"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required={false}
-                />
+                <input type="email" name="email" placeholder="best.email@example.com" value={formData.email} onChange={handleInputChange} />
                 <ErrorMsg field="email" />
             </div>
+            <div className="fg">
+                <Label text="Phone Number" />
+                <input type="tel" name="phone" placeholder="+1 (555) 000-0000" value={formData.phone} onChange={handleInputChange} />
+            </div>
 
-            {/* Phone — PRIMA di Instagram nella versione homepage */}
-            {showPhone && (
-                <div className="fg">
-                    <Label text="Phone Number" />
-                    <input
-                        type="tel"
-                        name="phone"
-                        placeholder="+1 (555) 000-0000"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                    />
-                </div>
+            {isCompact && (
+                <>
+                    <div className="fg">
+                        <Label text="Wedding Date" required />
+                        <input type="date" name="weddingDate" value={formData.weddingDate} onChange={handleInputChange} />
+                        <ErrorMsg field="weddingDate" />
+                    </div>
+                    <div className="fg">
+                        <Label text="Instagram Handle" />
+                        <input type="text" name="instagram" placeholder="@yourhandle" value={formData.instagram} onChange={handleInputChange} />
+                    </div>
+                </>
             )}
 
-            {showDualInstagram && (
-                <div className="fg full" style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            {isFull && (
+                <>
                     <div className="fg">
                         <Label text="Your Instagram" />
-                        <input
-                            type="text"
-                            name="instagram"
-                            placeholder="@yourhandle"
-                            value={formData.instagram}
-                            onChange={handleInputChange}
-                        />
+                        <input type="text" name="instagram" placeholder="@yourhandle" value={formData.instagram} onChange={handleInputChange} />
                     </div>
                     <div className="fg">
                         <Label text="Partner's Instagram" />
-                        <input
-                            type="text"
-                            name="partnerInstagram"
-                            placeholder="@partnerhandle"
-                            value={formData.partnerInstagram}
-                            onChange={handleInputChange}
-                        />
+                        <input type="text" name="partnerInstagram" placeholder="@partnerhandle" value={formData.partnerInstagram} onChange={handleInputChange} />
                     </div>
-                </div>
+                </>
             )}
 
-            {/* Wedding Date — NON full width quando c'è Instagram affianco (homepage) */}
-            <div className={showGroupLabels ? "fg full" : "fg"} style={showGroupLabels ? { gridColumn: '1 / -1' } : undefined}>
-                <Label text="Wedding Date" required />
-                <input
-                    type={dateType}
-                    name="weddingDate"
-                    placeholder={datePlaceholder}
-                    value={formData.weddingDate}
-                    onChange={handleInputChange}
-                />
-                <ErrorMsg field="weddingDate" />
-            </div>
-
-            {/* Instagram — single in homepage (no group labels), affianco a Wedding Date */}
-            {!showGroupLabels && (
-                <div className="fg">
-                    <Label text="Instagram Handle" />
-                    <input
-                        type="text"
-                        name="instagram"
-                        placeholder="@yourhandle"
-                        value={formData.instagram}
-                        onChange={handleInputChange}
-                    />
-                </div>
-            )}
-
-            {/* GRUPPO 2: Your wedding */}
+            {/* ── YOUR WEDDING ── */}
             {showGroupLabels && <div className="form-group-label">Your wedding</div>}
 
-            {/* Venue — FIRST, full width */}
             {!venueHidden && (
                 <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                    <Label text={venueLabel} required />
-                    <input
-                        type="text"
-                        name="location"
-                        placeholder={venuePlaceholder}
-                        value={formData.location}
-                        onChange={handleInputChange}
-                    />
+                    <Label text="Venue / Location" required />
+                    <input type="text" name="location" placeholder="e.g. Tonnara di Scopello, or 'Undecided'" value={formData.location} onChange={handleInputChange} />
                     <ErrorMsg field="location" />
                 </div>
             )}
 
-            {/* Planner — only in full form, after venue and date. Actually, prompt says: Wedding Date | Wedding Planner for full form. */}
-            {/* But I moved Wedding Date up. For full form, if I want them together: */}
-            {showGroupLabels && showPlanner && (
-                <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                    <Label text="Wedding Planner" />
-                    <input
-                        type="text"
-                        name="planner"
-                        placeholder="Name of your planner, or 'Not yet'"
-                        value={formData.planner}
-                        onChange={handleInputChange}
-                    />
-                </div>
+            {isFull && (
+                <>
+                    <div className="fg">
+                        <Label text="Wedding Date" required />
+                        <input type="date" name="weddingDate" value={formData.weddingDate} onChange={handleInputChange} />
+                        <ErrorMsg field="weddingDate" />
+                    </div>
+                    <div className="fg">
+                        <Label text="Wedding Planner" />
+                        <input type="text" name="planner" placeholder="Name of your planner, or 'Not yet'" value={formData.planner} onChange={handleInputChange} />
+                    </div>
+                </>
             )}
 
-            {showGuestCount && (
-                <div className="fg">
-                    <Label text="Guest Count" required />
-                    <select name="guestCount" value={formData.guestCount} onChange={handleInputChange}>
-                        <option value="">Select…</option>
-                        <option value="Elopement (just us)">Elopement (just us)</option>
-                        <option value="Intimate (under 50)">Intimate (under 50)</option>
-                        <option value="Medium (50–100)">Medium (50–100)</option>
-                        <option value="Grand (100+)">Grand (100+)</option>
-                    </select>
-                    <ErrorMsg field="guestCount" />
-                </div>
-            )}
-
-            {showBudget && (
-                <div className="fg">
-                    <Label text="Investment Range" required />
-                    <select name="budget" value={formData.budget} onChange={handleInputChange}>
-                        <option value="">Select a range…</option>
-                        <option value="€2,000 – €2,500">€2,000 – €2,500</option>
-                        <option value="€2,500 – €3,000">€2,500 – €3,000</option>
-                        <option value="€3,000+">€3,000+</option>
-                        <option value="Flexible / Let's discuss">Flexible / Let's discuss</option>
-                    </select>
-                    <ErrorMsg field="budget" />
-                </div>
-            )}
-
-            {showSource && (
-                <div className="fg">
-                    <Label text="How did you find me?" />
-                    <select name="howFound" value={formData.howFound} onChange={handleInputChange}>
-                        <option value="">Select…</option>
-                        <option value="Google">Google</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Wedding Planner">Wedding Planner</option>
-                        <option value="Venue recommendation">Venue recommendation</option>
-                        <option value="Friend / Referral">Friend / Referral</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-            )}
-
-            {/* GRUPPO 3: Your vision */}
+            {/* ── YOUR VISION ── */}
             {showGroupLabels && <div className="form-group-label">Your vision</div>}
 
             <div className="fg full" style={{ gridColumn: '1 / -1' }}>
-                <Label text={messageLabel} required />
-                <textarea
-                    name="vision"
-                    placeholder="How did you meet? What is the vibe of your day? Be as detailed as you like - I love stories."
-                    value={formData.vision}
-                    onChange={handleInputChange}
-                ></textarea>
+                <Label text="Tell Me About Your Story" required />
+                <textarea name="vision" placeholder="How did you meet? What is the vibe of your day? Be as detailed as you like - I love stories." value={formData.vision} onChange={handleInputChange} />
                 <ErrorMsg field="vision" />
             </div>
 
-            {/* Instagram nel gruppo vision — SOLO se non c'è il dual Instagram in About You e non siamo in homepage layout */}
-            {/* Ma in homepage layout showGroupLabels è false, quindi non entra qui. */}
-            {showGroupLabels && !showDualInstagram && (
-                <div className="fg">
-                    <Label text="Instagram Handle" />
-                    <input
-                        type="text"
-                        name="instagram"
-                        placeholder="@yourhandle"
-                        value={formData.instagram}
-                        onChange={handleInputChange}
-                    />
-                </div>
-            )}
-
-            {showInterestCheckboxes && (
-                <div className="check-group" style={{ gridColumn: '1 / -1' }}>
-                    {interests.map((interest) => (
-                        <label key={interest} className="check-lbl">
-                            <input
-                                type="checkbox"
-                                value={interest}
-                                onChange={handleCheckboxChange}
-                                checked={formData.interests.includes(interest)}
-                            />
-                            {interest}
-                        </label>
-                    ))}
-                </div>
-            )}
+            <div className="check-group" style={{ gridColumn: '1 / -1' }}>
+                {interestsList.map((interest) => (
+                    <label key={interest} className="check-lbl">
+                        <input type="checkbox" value={interest} onChange={handleCheckboxChange} checked={formData.interests.includes(interest)} />
+                        {interest}
+                    </label>
+                ))}
+            </div>
 
             <div className="priv-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', gridColumn: '1 / -1', marginTop: 12 }}>
                 <label className="custom-checkbox" style={{
@@ -526,7 +390,7 @@ export default function ContactForm({
                     gridColumn: '1 / -1'
                 }}
             >
-                {status === 'submitting' ? 'Sending...' : ctaText}
+                {status === 'submitting' ? 'Sending...' : (ctaText || defaultCtaText)}
             </button>
 
             {status === 'error' && errorMessage && (
@@ -537,23 +401,14 @@ export default function ContactForm({
         </form>
     );
 
-    // Render condizionale
-    if (standalone) {
-        return (
-            <div style={{ maxWidth: 680 }}>
-                {formContent}
-            </div>
-        );
-    }
-
-    // Layout originale con section wrapper + 2 colonne (homepage, location pages)
     return (
         <section className="s-white pad" id="contact">
             <div className="max">
                 <div className="contact-grid">
+                    {/* Sidebar SX — identico sempre */}
                     <RevealOnScroll className="contact-left">
                         <div className="f-label">Inquiries</div>
-                        <div className="h2">Let’s Start<br />The Conversation.</div>
+                        <div className="h2">Let&apos;s Start<br />The Conversation.</div>
                         <p>Please use the form to check availability for your date. I respond to all inquiries within 24 hours.</p>
                         <div className="contact-details">
                             <div className="cd">
@@ -577,9 +432,32 @@ export default function ContactForm({
                                 </span>
                             </div>
                         </div>
+
+                        {/* Immagine sidebar — opzionale, da prop */}
+                        {sidebarImage && (
+                            <div style={{ marginTop: '32px' }}>
+                                <Image
+                                    src={urlFor(sidebarImage).fit('crop').crop('focalpoint').width(800).quality(85).auto('format').url()}
+                                    alt={sidebarImage.alt || 'Alex Cinisi Photography'}
+                                    width={400}
+                                    height={533}
+                                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                                />
+                            </div>
+                        )}
+
+                        {/* Testimonial — opzionale, da prop */}
+                        {sidebarTestimonial?.quote && (
+                            <blockquote className="contact-testimonial" style={{ marginTop: '32px' }}>
+                                <p>&ldquo;{sidebarTestimonial.quote}&rdquo;</p>
+                                <cite>{sidebarTestimonial.author} · {sidebarTestimonial.country} · {sidebarTestimonial.location}</cite>
+                            </blockquote>
+                        )}
                     </RevealOnScroll>
+
+                    {/* Form DX */}
                     <RevealOnScroll className="contact-right d2">
-                        {formContent}
+                        {status === 'success' ? successMessage : formContent}
                     </RevealOnScroll>
                 </div>
             </div>

@@ -310,18 +310,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
 
       {/* Contact Form — venue-specific, full form */}
       <ContactForm
-        showGuestCount={false}
-        showBudget={false}
-        showSource={false}
-        showPhone={true}
-        showPlanner={true}
-        showDualInstagram={true}
-        showInterestCheckboxes={true}
-        messageLabel={`Tell me about your ${data.venueName} vision *`}
+        variant="full"
         venueHidden={true}
-        venueValue={data.venueName || 'Villa Igiea'}
-        dateType="text"
-        datePlaceholder="June 14, 2026 · or 'TBD'"
+        venueValue={data?.venueName || ''}
       />
 
       <FinalCTA />

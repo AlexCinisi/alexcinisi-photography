@@ -124,88 +124,12 @@ export default async function ContactPage() {
         </section>
       )}
 
-      {/* ═══ FORM SECTION ═══ */}
-      <section className="s-white contact-page-section pad">
-        <div className="max">
-          <div className="contact-grid">
-            {/* Sidebar */}
-            <div className="contact-sidebar">
-              <RevealOnScroll>
-                <div className="contact-info-block">
-                  <p className="f-label">Response</p>
-                  <p className="contact-info-value">{DEFAULTS.responseTime}</p>
-                </div>
-                <div className="contact-info-block">
-                  <p className="f-label">Email</p>
-                  <p className="contact-info-value">{DEFAULTS.email}</p>
-                </div>
-                <div className="contact-info-block">
-                  <p className="f-label">Studio</p>
-                  <p className="contact-info-value">{DEFAULTS.studio}</p>
-                </div>
-                <div className="contact-info-block">
-                  <p className="f-label">Languages</p>
-                  <p className="contact-info-value">{DEFAULTS.languages}</p>
-                </div>
-                <div className="contact-info-block">
-                  <p className="f-label">Social</p>
-                  <p className="contact-info-value">{DEFAULTS.instagram}</p>
-                </div>
-              </RevealOnScroll>
-
-              {/* Immagine sidebar — crea equilibrio visivo */}
-              {data?.sidebarImage && (
-                <RevealOnScroll delay="d1">
-                  <div style={{ marginTop: '32px', marginBottom: '32px' }}>
-                    <Image
-                      src={urlFor(data.sidebarImage)
-                        .fit('crop')
-                        .crop('focalpoint')
-                        .width(800)
-                        .quality(85)
-                        .auto('format')
-                        .url()}
-                      alt={data.sidebarImage.alt || 'Alex Cinisi Photography'}
-                      width={400}
-                      height={533}
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        display: 'block',
-                      }}
-                    />
-                  </div>
-                </RevealOnScroll>
-              )}
-
-              {/* Testimonial */}
-              {testimonial.quote && (
-                <RevealOnScroll delay="d1">
-                  <blockquote className="contact-testimonial">
-                    <p>&ldquo;{testimonial.quote}&rdquo;</p>
-                    <cite>{testimonial.author} · {testimonial.country} · {testimonial.location}</cite>
-                  </blockquote>
-                </RevealOnScroll>
-              )}
-            </div>
-
-            {/* Form — full props per form completo */}
-            <div className="contact-form-wrap">
-              <ContactForm
-                standalone={true}
-                showGuestCount={false}
-                showBudget={false}
-                showSource={false}
-                showPhone={true}
-                showPlanner={true}
-                showDualInstagram={true}
-                showInterestCheckboxes={true}
-                ctaText="Request Your Bespoke Proposal →"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Form — il sidebar è DENTRO il componente */}
+      <ContactForm
+        variant="full"
+        sidebarImage={data?.sidebarImage}
+        sidebarTestimonial={data?.sidebarTestimonial}
+      />
 
       {/* ═══ FINAL CTA ═══ */}
       <FinalCTA />
