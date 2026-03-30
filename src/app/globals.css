@@ -3514,17 +3514,3 @@ a.journal-credit-name:hover {
     gap: 32px;
   }
 }
-
-/* Normalizzare date input per uniformità con text input */
-input[type="date"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  min-height: 44px;  /* Stessa altezza degli input text */
-}
-
-/* Rimuovere l'icona del calendario nativa su webkit (opzionale — rende più uniforme) */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0.4;
-  cursor: pointer;
-}

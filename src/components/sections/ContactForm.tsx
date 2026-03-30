@@ -265,7 +265,7 @@ export default function ContactForm({
                 <>
                     <div className="fg">
                         <Label text="Wedding Date" required />
-                        <input type="date" name="weddingDate" value={formData.weddingDate} onChange={handleInputChange} />
+                        <input type="text" name="weddingDate" placeholder="June 14, 2026 · or 'TBD'" value={formData.weddingDate} onChange={handleInputChange} />
                         <ErrorMsg field="weddingDate" />
                     </div>
                     <div className="fg">
@@ -314,7 +314,7 @@ export default function ContactForm({
                 <>
                     <div className="fg">
                         <Label text="Wedding Date" required />
-                        <input type="date" name="weddingDate" value={formData.weddingDate} onChange={handleInputChange} />
+                        <input type="text" name="weddingDate" placeholder="June 14, 2026 · or 'TBD'" value={formData.weddingDate} onChange={handleInputChange} />
                         <ErrorMsg field="weddingDate" />
                     </div>
                     <div className="fg">

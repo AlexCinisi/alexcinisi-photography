@@ -16,11 +16,10 @@ export async function POST(request: Request) {
             partnerName,
             email,
             phone,
+            instagram,
+            partnerInstagram,
             weddingDate,
             location,
-            guestCount,
-            howFound,
-            budget,
             vision,
             interests,
             privacyConsent,
@@ -71,9 +70,8 @@ export async function POST(request: Request) {
             <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
             <p><strong>Wedding Date:</strong> ${weddingDate || 'Not provided'}</p>
             <p><strong>Location/Venue:</strong> ${location || 'Not provided'}</p>
-            <p><strong>Guest Count:</strong> ${guestCount || 'Not provided'}</p>
-            <p><strong>Budget:</strong> ${budget || 'Not provided'}</p>
-            <p><strong>How they found us:</strong> ${howFound || 'Not provided'}</p>
+            <p><strong>Instagram:</strong> ${instagram || 'Not provided'}</p>
+            <p><strong>Partner's Instagram:</strong> ${partnerInstagram || 'Not provided'}</p>
             <p><strong>Interests:</strong> ${Array.isArray(interests) ? interests.join(', ') : 'None selected'}</p>
             <br/>
             <h3>Vision / Story:</h3>
