@@ -567,7 +567,6 @@ nav.scrolled .nav-logo img {
    TRUST BAR
    ============================================ */
 .trust-bar {
-  border-bottom: 1px solid var(--rule);
   padding: 26px 64px;
   display: flex;
   justify-content: space-between;
@@ -628,8 +627,8 @@ nav.scrolled .nav-logo img {
 
 /* --- PRESS BAR (homepage) --- */
 .press-bar {
-  padding: 48px 64px;
-  background: var(--white);
+  padding: 20px 64px 48px;
+  background: var(--pearl);
   border-bottom: 1px solid var(--rule);
 }
 .press-bar-inner {
@@ -638,8 +637,8 @@ nav.scrolled .nav-logo img {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 48px;
-  flex-wrap: wrap;
+  gap: 40px;
+  flex-wrap: nowrap;
 }
 .press-bar-logo {
   height: 40px;
@@ -652,6 +651,23 @@ nav.scrolled .nav-logo img {
 .press-bar-logo:hover {
   filter: grayscale(0%);
   opacity: 1;
+}
+
+/* Press Bar — responsive per 7 loghi */
+@media (max-width: 1280px) {
+  .press-bar-inner { gap: 32px; }
+  .press-bar-logo { height: 32px; }
+}
+
+@media (max-width: 960px) {
+  .press-bar { padding: 16px 24px 32px; }
+  .press-bar-inner { gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .press-bar-logo { height: 28px; }
+}
+
+@media (max-width: 480px) {
+  .press-bar-inner { gap: 16px; }
+  .press-bar-logo { height: 24px; }
 }
 .press-bar-link {
   display: inline-flex;

@@ -15,14 +15,14 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: 'About Alex Cinisi — Wedding Photographer in Sicily | Film & Digital',
   description:
-    "Meet Alex Cinisi, a Sicilian wedding photographer blending editorial photography and analog film. Published in Vogue Italia, L'Officiel, and Marie Claire. Available for destination weddings worldwide.",
+    "Meet Alex Cinisi, a Sicilian wedding photographer blending editorial photography and analog film. Published in Vogue Italia, Le Point, Marie Claire, L'Officiel, and La Cucina Italiana. Available for destination weddings worldwide.",
   alternates: {
     canonical: 'https://www.alexcinisiphotography.com/about',
   },
   openGraph: {
     title: 'About Alex Cinisi — Wedding Photographer in Sicily',
     description:
-      "Sicilian wedding photographer with editorial credits in Vogue Italia, L'Officiel, Marie Claire. Film & digital, 15 weddings per year.",
+      "Sicilian wedding photographer with editorial credits in Vogue Italia, Le Point, Marie Claire, L'Officiel. Film & digital, 15 weddings per year.",
     url: 'https://www.alexcinisiphotography.com/about',
     type: 'profile',
   },
@@ -79,7 +79,7 @@ function buildSchemas(faqItems: { q: string; a: string }[]) {
       name: 'Alex Cinisi',
       jobTitle: 'Wedding Photographer',
       description:
-        "Sicilian wedding photographer specializing in editorial and analog film photography. Published in Vogue Italia, L'Officiel, Marie Claire.",
+        "Sicilian wedding photographer specializing in editorial and analog film photography. Published in Vogue Italia, Le Point, Marie Claire, L'Officiel.",
       url: 'https://www.alexcinisiphotography.com/about',
       sameAs: [
         'https://www.instagram.com/alexcinisi/',
@@ -464,8 +464,8 @@ export default async function AboutPage() {
           <RevealOnScroll delay="d2">
             <p>
               My work extends beyond weddings. As an editorial photographer, my
-              images have appeared in Vogue Italia, L&rsquo;Officiel, Marie
-              Claire, and La Cucina Italiana. This background shapes how I see
+              images have appeared in Vogue Italia, Le Point, Marie Claire,
+              L&rsquo;Officiel, and La Cucina Italiana. This background shapes how I see
               your wedding day — not as a checklist of moments to capture, but as
               a story with light, composition, and emotion at its center.
             </p>
@@ -495,6 +495,7 @@ export default async function AboutPage() {
           <RevealOnScroll delay="d3">
             <div className="press-line">
               <span>Vogue Italia</span>
+              <span>Le Point</span>
               <span>Marie Claire</span>
               <span>L&rsquo;Officiel</span>
               <span>La Cucina Italiana</span>
