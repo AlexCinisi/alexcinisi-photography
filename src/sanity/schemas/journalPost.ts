@@ -71,7 +71,7 @@ export default defineType({
       title: 'Date',
       type: 'date',
       fieldset: 'couple',
-      validation: Rule => Rule.required(),
+      description: 'Data del matrimonio. Lasciare vuoto se non nota.',
     }),
     defineField({
       name: 'category',
@@ -158,17 +158,6 @@ export default defineType({
             type: 'string',
           }),
         ],
-        preview: {
-          select: {
-            imageUrl: 'asset.url',
-            title: 'alt',
-          },
-          prepare({ title }) {
-            return {
-              title: title || 'No alt text',
-            };
-          },
-        },
       }],
       description: 'All photos for this story. Upload in the order you want them displayed.',
     }),
