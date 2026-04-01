@@ -126,6 +126,13 @@ export default defineType({
       validation: Rule => Rule.required(),
     }),
     defineField({
+      name: 'heroTextDark',
+      title: 'Hero Text Dark',
+      type: 'boolean',
+      description: 'Toggle ON for bright/light hero images. Switches overlay text to dark color for readability.',
+      initialValue: false
+    }),
+    defineField({
       name: 'portfolioImage',
       title: 'Portfolio Grid Image',
       type: 'image',

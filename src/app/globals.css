@@ -2664,6 +2664,72 @@ footer {
   background: linear-gradient(to right, rgba(30,29,27,0.75) 0%, rgba(30,29,27,0.4) 50%, transparent 100%);
 }
 
+/* Journal post hero variant — 100vh, centered text bottom */
+.hero--journal {
+  min-height: 100vh;
+  padding-top: 0;
+  display: flex;
+  align-items: flex-end;
+}
+.journal-hero-content {
+  text-align: left;
+  padding-bottom: 100px;
+}
+.journal-hero-title {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(3rem, 6vw, 5.4rem);
+  line-height: 1.08;
+  color: var(--off-white);
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp .9s ease .5s both;
+}
+.journal-hero-subtitle {
+  font-family: 'Bodoni Moda', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  color: rgba(250, 250, 248, 0.75);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp .9s ease .65s both;
+}
+.journal-hero-meta {
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 248, 0.5);
+  opacity: 0;
+  animation: fadeUp .8s ease .8s both;
+}
+.journal-hero-meta-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(250, 250, 248, 0.25);
+  padding-bottom: 1px;
+  transition: border-color .25s;
+}
+.journal-hero-meta-link:hover {
+  border-color: rgba(250, 250, 248, 0.6);
+}
+
+/* Dark text override for journal (bright hero images) */
+.hero--dark-text .journal-hero-title {
+  color: var(--ink);
+}
+.hero--dark-text .journal-hero-subtitle {
+  color: var(--charcoal);
+}
+.hero--dark-text .journal-hero-meta {
+  color: var(--mid);
+}
+.hero--dark-text .journal-hero-meta-link {
+  color: var(--mid);
+  border-bottom-color: var(--rule);
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
@@ -2791,44 +2857,7 @@ footer {
 
 /* --- JOURNAL POST --- */
 
-/* Section 1: Title (typographic opening) */
-.journal-title-section {
-  padding: 60px 64px 48px;
-  text-align: center;
-}
-.journal-post-title {
-  font-family: 'Bodoni Moda', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(2.4rem, 5vw, 4.2rem);
-  line-height: 1.1;
-  color: var(--ink);
-  margin-bottom: 16px;
-}
-.journal-post-subtitle {
-  font-family: 'Bodoni Moda', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
-  color: var(--charcoal);
-  text-align: center;
-}
-.journal-post-meta {
-  font-size: .62rem;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--mid);
-}
-
-/* Section 2: Hero image — native proportions, max 85vh */
-.journal-hero {
-  width: 100%;
-  overflow: hidden;
-  background: var(--grey-bg);
-  line-height: 0;
-}
-
-/* Section 4 & 6: Adaptive Gallery */
+/* Adaptive Gallery */
 .journal-gallery-section {
   padding: 48px 0;
 }
@@ -2860,12 +2889,12 @@ footer {
   margin: 0 auto;
 }
 
-/* Pair items — align tops, let heights differ naturally */
+/* Pair items */
 .journal-gallery-pair-item {
   overflow: hidden;
 }
 
-/* Section 5: Pull-quote */
+/* Pull-quote */
 .journal-pullquote {
   font-family: 'Bodoni Moda', serif;
   font-style: italic;
@@ -2876,7 +2905,7 @@ footer {
   text-align: center;
 }
 
-/* Section 7: Body text (SEO content) */
+/* Body text (SEO content) */
 .journal-body {
   font-size: .9rem;
   line-height: 1.9;
@@ -2891,7 +2920,7 @@ footer {
   text-underline-offset: 3px;
 }
 
-/* Section 8: Vendor credits */
+/* Vendor credits */
 .journal-credits {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2915,7 +2944,7 @@ a.journal-credit-name:hover {
   color: var(--ink);
 }
 
-/* Section 9: Related stories — 2 large cards */
+/* Related stories — 2 large cards */
 .journal-related {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2956,8 +2985,14 @@ a.journal-credit-name:hover {
 
 /* === JOURNAL POST — Mobile === */
 @media (max-width: 768px) {
-  .journal-title-section {
-    padding: 40px 24px 32px;
+  .hero--journal {
+    min-height: 100svh;
+  }
+  .journal-hero-content {
+    padding: 0 24px 60px;
+  }
+  .journal-hero-title {
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
   }
   .journal-gallery-section {
     padding: 32px 0;
@@ -2975,6 +3010,9 @@ a.journal-credit-name:hover {
   }
   .journal-gallery-row.centered {
     max-width: 100%;
+  }
+  .journal-pullquote {
+    font-size: clamp(1.4rem, 6vw, 2rem);
   }
   .journal-credits {
     grid-template-columns: 1fr;
@@ -3033,12 +3071,6 @@ a.journal-credit-name:hover {
   .journal-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px 14px;
-  }
-  .journal-title-section {
-    padding: 40px 24px 56px;
-  }
-  .journal-hero {
-    max-height: 50vh;
   }
 
 
