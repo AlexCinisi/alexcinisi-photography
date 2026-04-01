@@ -2791,9 +2791,9 @@ footer {
 
 /* --- JOURNAL POST --- */
 
-/* Section 1: Title (D&S-inspired typographic opening) */
+/* Section 1: Title (typographic opening) */
 .journal-title-section {
-  padding: 60px 64px 72px;
+  padding: 60px 64px 48px;
   text-align: center;
 }
 .journal-post-title {
@@ -2811,7 +2811,7 @@ footer {
   font-weight: 300;
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   color: var(--charcoal);
-  margin-bottom: 20px;
+  text-align: center;
 }
 .journal-post-meta {
   font-size: .62rem;
@@ -2820,29 +2820,52 @@ footer {
   color: var(--mid);
 }
 
-/* Section 2: Hero image (full-bleed, clean) */
+/* Section 2: Hero image — native proportions, max 85vh */
 .journal-hero {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 75vh;
   overflow: hidden;
   background: var(--grey-bg);
+  line-height: 0;
 }
 
-/* Section 3: Gallery stagger — 3 columns with offset (D&S-inspired) */
-.journal-gallery-stagger {
-  columns: 3;
-  column-gap: 16px;
+/* Section 4 & 6: Adaptive Gallery */
+.journal-gallery-section {
+  padding: 48px 0;
 }
-.journal-gallery-stagger > div:nth-child(3n+2) {
-  padding-top: 40px;
-}
-.journal-gallery-item {
-  break-inside: avoid;
-  margin-bottom: 16px;
+.journal-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 3vw, 32px);
+  padding: 0 clamp(24px, 5vw, 64px);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Section 4: Pull-quote (D&S editorial break) */
+/* Row types */
+.journal-gallery-row.full {
+  width: 100%;
+}
+.journal-gallery-row.full-portrait {
+  max-width: 70%;
+  margin: 0 auto;
+}
+.journal-gallery-row.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 2vw, 20px);
+  align-items: start;
+}
+.journal-gallery-row.centered {
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+/* Pair items — align tops, let heights differ naturally */
+.journal-gallery-pair-item {
+  overflow: hidden;
+}
+
+/* Section 5: Pull-quote */
 .journal-pullquote {
   font-family: 'Bodoni Moda', serif;
   font-style: italic;
@@ -2853,17 +2876,7 @@ footer {
   text-align: center;
 }
 
-/* Section 5: Gallery rhythm — 1 wide + 2 half (GF-inspired) */
-.journal-gallery-rhythm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.journal-rhythm-item.wide {
-  grid-column: 1 / -1;
-}
-
-/* Section 6: Body text (SEO content) */
+/* Section 7: Body text (SEO content) */
 .journal-body {
   font-size: .9rem;
   line-height: 1.9;
@@ -2878,7 +2891,7 @@ footer {
   text-underline-offset: 3px;
 }
 
-/* Section 7: Vendor credits */
+/* Section 8: Vendor credits */
 .journal-credits {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2902,7 +2915,7 @@ a.journal-credit-name:hover {
   color: var(--ink);
 }
 
-/* Section 8: Related stories — 2 large cards */
+/* Section 9: Related stories — 2 large cards */
 .journal-related {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2941,6 +2954,35 @@ a.journal-credit-name:hover {
   color: var(--mid);
 }
 
+/* === JOURNAL POST — Mobile === */
+@media (max-width: 768px) {
+  .journal-title-section {
+    padding: 40px 24px 32px;
+  }
+  .journal-gallery-section {
+    padding: 32px 0;
+  }
+  .journal-gallery {
+    padding: 0 16px;
+    gap: 14px;
+  }
+  .journal-gallery-row.pair {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .journal-gallery-row.full-portrait {
+    max-width: 100%;
+  }
+  .journal-gallery-row.centered {
+    max-width: 100%;
+  }
+  .journal-credits {
+    grid-template-columns: 1fr;
+  }
+  .journal-related {
+    grid-template-columns: 1fr;
+  }
+}
 /* --- LOCATIONS HUB --- */
 .locations-hub-grid {
   display: grid;
@@ -2996,32 +3038,7 @@ a.journal-credit-name:hover {
     padding: 40px 24px 56px;
   }
   .journal-hero {
-    aspect-ratio: 4 / 3;
     max-height: 50vh;
-  }
-  .journal-gallery-stagger {
-    columns: 2;
-    column-gap: 12px;
-  }
-  .journal-gallery-stagger > div:nth-child(3n+2) {
-    padding-top: 24px;
-  }
-  .journal-gallery-rhythm {
-    grid-template-columns: 1fr;
-  }
-  .journal-rhythm-item.wide,
-  .journal-rhythm-item.half {
-    grid-column: 1 / -1;
-  }
-  .journal-gallery-item {
-    margin-bottom: 12px;
-  }
-  .journal-credits {
-    grid-template-columns: 1fr;
-  }
-  .journal-related {
-    grid-template-columns: 1fr;
-    gap: 32px;
   }
 
 

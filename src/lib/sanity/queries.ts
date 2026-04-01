@@ -142,18 +142,20 @@ export const journalPostsByCategoryQuery = `*[_type == "journalPost" && category
 // Single journal post by slug
 export const journalPostBySlugQuery = `*[_type == "journalPost" && slug.current == $slug][0] {
   ...,
-  heroImage {
-    ...,
-    "alt": alt
-  },
-  portfolioImage {
-    ...,
-    "alt": alt
-  },
+  heroImage { ..., "alt": alt, asset-> { _id, url, metadata { dimensions { width, height, aspectRatio }, lqip } } },
+  portfolioImage { ..., "alt": alt },
   gallery[] {
     ...,
     "alt": alt,
-    "caption": caption
+    "caption": caption,
+    "fullWidth": fullWidth,
+    asset-> {
+      _id, url,
+      metadata {
+        dimensions { width, height, aspectRatio },
+        lqip
+      }
+    }
   },
   locationRef-> {
     title,

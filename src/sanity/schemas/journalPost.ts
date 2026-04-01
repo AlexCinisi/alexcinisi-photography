@@ -44,6 +44,12 @@ export default defineType({
       description: 'e.g. "A Midsummer Celebration at Villa Valguarnera"',
     }),
     defineField({
+      name: 'pullQuote',
+      title: 'Pull Quote',
+      type: 'string',
+      description: 'Optional editorial quote displayed mid-gallery. Leave empty to skip. Do NOT repeat the subtitle here.'
+    }),
+    defineField({
       name: 'location',
       title: 'Location / Venue',
       type: 'string',
@@ -157,6 +163,13 @@ export default defineType({
             title: 'Caption',
             type: 'string',
           }),
+          defineField({
+            name: 'fullWidth',
+            title: 'Full Width',
+            type: 'boolean',
+            description: 'Show this image at full width (recommended for key vertical shots)',
+            initialValue: false
+          })
         ],
       }],
       description: 'All photos for this story. Upload in the order you want them displayed.',
