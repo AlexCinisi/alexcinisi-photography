@@ -190,6 +190,9 @@ export default defineType({
       title: 'Gallery Images',
       type: 'array',
       fieldset: 'gallery',
+      options: {
+        layout: 'grid',
+      },
       of: [{
         type: 'object',
         fields: [

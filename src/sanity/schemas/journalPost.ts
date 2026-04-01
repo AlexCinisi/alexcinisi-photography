@@ -139,13 +139,36 @@ export default defineType({
       title: 'Photo Gallery',
       type: 'array',
       fieldset: 'media',
+      options: {
+        layout: 'grid',
+      },
       of: [{
         type: 'image',
         options: { hotspot: true },
         fields: [
-          defineField({ name: 'alt', title: 'Alt Text', type: 'string', description: '⚠️ Alt text is critical for SEO.' }),
-          defineField({ name: 'caption', title: 'Caption', type: 'string' }),
+          defineField({
+            name: 'alt',
+            title: 'Alt Text',
+            type: 'string',
+            description: 'Descrivi cosa si vede nella foto. Es: "Bride and groom first dance at Villa Igiea ballroom"',
+          }),
+          defineField({
+            name: 'caption',
+            title: 'Caption',
+            type: 'string',
+          }),
         ],
+        preview: {
+          select: {
+            imageUrl: 'asset.url',
+            title: 'alt',
+          },
+          prepare({ title }) {
+            return {
+              title: title || 'No alt text',
+            };
+          },
+        },
       }],
       description: 'All photos for this story. Upload in the order you want them displayed.',
     }),
