@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity'
-import { GalleryInput } from '../components/GalleryInput'
 
 export default defineType({
   name: 'journalPost',
@@ -153,9 +152,6 @@ export default defineType({
       title: 'Photo Gallery',
       type: 'array',
       fieldset: 'media',
-      components: {
-        input: GalleryInput,
-      },
       of: [{
         type: 'image',
         options: { hotspot: true },
@@ -198,7 +194,7 @@ export default defineType({
           },
         },
       }],
-      description: 'Upload photos in display order. Use ☐ Select for bulk operations. ✅ = has alt text, ⚠️ = missing.',
+      description: 'Upload photos in display order. Switch between grid and list view with the toggle in the top-right corner.',
     }),
 
     // === STORY CONTENT ===
