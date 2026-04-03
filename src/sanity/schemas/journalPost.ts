@@ -185,13 +185,15 @@ export default defineType({
             caption: 'caption',
             fullWidth: 'fullWidth',
             filename: 'asset.originalFilename',
+            media: 'asset',
           },
-          prepare({ alt, caption, fullWidth, filename }) {
+          prepare({ alt, caption, fullWidth, filename, media }) {
             const status = alt ? '✅' : '⚠️ NO ALT'
-            const fw = fullWidth ? ' 🔳 Full' : ''
+            const fw = fullWidth ? ' · 🔳 Full' : ''
             return {
               title: `${status} ${alt || filename || 'Untitled image'}`,
-              subtitle: `${caption || ''}${fw}`,
+              subtitle: `${caption || '—'}${fw}`,
+              media,
             }
           },
         },
