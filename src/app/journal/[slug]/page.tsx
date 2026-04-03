@@ -56,7 +56,7 @@ export async function generateMetadata({
             url: urlFor(post.heroImage)
               .width(1200)
               .height(630)
-              .quality(85)
+              .quality(90)
               .auto('format')
               .url(),
           },
@@ -170,25 +170,42 @@ function buildGalleryRows(images: GalleryImage[]): GalleryRow[] {
 
 /* ──────────────────────────────────────
    Image URL builder — native proportions
+   
+   quality(90) + auto('format') = WebP/AVIF
+   at near-lossless quality. WebP at q90
+   is SMALLER than JPEG at q85, with
+   visually superior results. Best of
+   both worlds: maximum quality, smaller
+   file size.
    ────────────────────────────────────── */
-function galleryImageUrl(img: GalleryImage, maxWidth: number = 1600) {
+function galleryImageUrl(img: GalleryImage, maxWidth: number = 2400) {
   return urlFor(img)
     .width(maxWidth)
-    .quality(85)
+    .quality(90)
     .auto('format')
     .fit('max')
     .url();
 }
 
-function getImageDimensions(img: GalleryImage) {
+function getImageDimensions(img: GalleryImage, targetWidth: number = 2400) {
   const dims = img.asset?.metadata?.dimensions;
-  if (!dims) return { width: 1600, height: 1200 };
-  const scale = 1600 / dims.width;
+  if (!dims) return { width: targetWidth, height: Math.round(targetWidth * 0.75) };
+  const scale = targetWidth / dims.width;
   return {
     width: Math.round(dims.width * scale),
     height: Math.round(dims.height * scale),
   };
 }
+
+/* Get LQIP blur placeholder from Sanity metadata */
+function getBlurData(img: GalleryImage): string | undefined {
+  return img.asset?.metadata?.lqip || undefined;
+}
+
+/* ──────────────────────────────────────
+   Import hotspot helper (same used in HeroLocation)
+   ────────────────────────────────────── */
+// Using getHotspotPosition imported from '@/lib/sanity/image'
 
 /* ──────────────────────────────────────
    Page Component
@@ -247,7 +264,7 @@ export default async function JournalPostPage({
     image: post.heroImage
       ? urlFor(post.heroImage)
           .width(1200)
-          .quality(85)
+          .quality(90)
           .auto('format')
           .url()
       : undefined,
@@ -291,20 +308,23 @@ export default async function JournalPostPage({
   function renderRow(row: GalleryRow, index: number) {
     switch (row.type) {
       case 'full': {
-        const dims = getImageDimensions(row.img);
+        const dims = getImageDimensions(row.img, 2400);
+        const blur = getBlurData(row.img);
         return (
           <RevealOnScroll key={`row-${index}`}>
             <div className="journal-gallery-row full">
               <Image
-                src={galleryImageUrl(row.img)}
+                src={galleryImageUrl(row.img, 2400)}
                 alt={row.img.alt || `${post.coupleName} photo`}
                 width={dims.width}
                 height={dims.height}
+                sizes="(max-width: 768px) 100vw, 1400px"
                 style={{
                   width: '100%',
                   height: 'auto',
                   display: 'block',
                 }}
+                {...(blur ? { placeholder: 'blur' as const, blurDataURL: blur } : {})}
                 loading="lazy"
               />
             </div>
@@ -312,20 +332,23 @@ export default async function JournalPostPage({
         );
       }
       case 'full-portrait': {
-        const dims = getImageDimensions(row.img);
+        const dims = getImageDimensions(row.img, 1800);
+        const blur = getBlurData(row.img);
         return (
           <RevealOnScroll key={`row-${index}`}>
             <div className="journal-gallery-row full-portrait">
               <Image
-                src={galleryImageUrl(row.img)}
+                src={galleryImageUrl(row.img, 1800)}
                 alt={row.img.alt || `${post.coupleName} photo`}
                 width={dims.width}
                 height={dims.height}
+                sizes="(max-width: 768px) 100vw, 980px"
                 style={{
                   width: '100%',
                   height: 'auto',
                   display: 'block',
                 }}
+                {...(blur ? { placeholder: 'blur' as const, blurDataURL: blur } : {})}
                 loading="lazy"
               />
             </div>
@@ -333,40 +356,46 @@ export default async function JournalPostPage({
         );
       }
       case 'pair': {
-        const dims0 = getImageDimensions(row.imgs[0]);
-        const dims1 = getImageDimensions(row.imgs[1]);
+        const dims0 = getImageDimensions(row.imgs[0], 1400);
+        const dims1 = getImageDimensions(row.imgs[1], 1400);
+        const blur0 = getBlurData(row.imgs[0]);
+        const blur1 = getBlurData(row.imgs[1]);
         return (
           <RevealOnScroll key={`row-${index}`}>
             <div className="journal-gallery-row pair">
               <div className="journal-gallery-pair-item">
                 <Image
-                  src={galleryImageUrl(row.imgs[0], 900)}
+                  src={galleryImageUrl(row.imgs[0], 1400)}
                   alt={
                     row.imgs[0].alt || `${post.coupleName} photo`
                   }
                   width={dims0.width}
                   height={dims0.height}
+                  sizes="(max-width: 768px) 100vw, 680px"
                   style={{
                     width: '100%',
                     height: 'auto',
                     display: 'block',
                   }}
+                  {...(blur0 ? { placeholder: 'blur' as const, blurDataURL: blur0 } : {})}
                   loading="lazy"
                 />
               </div>
               <div className="journal-gallery-pair-item">
                 <Image
-                  src={galleryImageUrl(row.imgs[1], 900)}
+                  src={galleryImageUrl(row.imgs[1], 1400)}
                   alt={
                     row.imgs[1].alt || `${post.coupleName} photo`
                   }
                   width={dims1.width}
                   height={dims1.height}
+                  sizes="(max-width: 768px) 100vw, 680px"
                   style={{
                     width: '100%',
                     height: 'auto',
                     display: 'block',
                   }}
+                  {...(blur1 ? { placeholder: 'blur' as const, blurDataURL: blur1 } : {})}
                   loading="lazy"
                 />
               </div>
@@ -375,20 +404,23 @@ export default async function JournalPostPage({
         );
       }
       case 'centered': {
-        const dims = getImageDimensions(row.img);
+        const dims = getImageDimensions(row.img, 1400);
+        const blur = getBlurData(row.img);
         return (
           <RevealOnScroll key={`row-${index}`}>
             <div className="journal-gallery-row centered">
               <Image
-                src={galleryImageUrl(row.img)}
+                src={galleryImageUrl(row.img, 1400)}
                 alt={row.img.alt || `${post.coupleName} photo`}
                 width={dims.width}
                 height={dims.height}
+                sizes="(max-width: 768px) 100vw, 840px"
                 style={{
                   width: '100%',
                   height: 'auto',
                   display: 'block',
                 }}
+                {...(blur ? { placeholder: 'blur' as const, blurDataURL: blur } : {})}
                 loading="lazy"
               />
             </div>
@@ -662,7 +694,7 @@ export default async function JournalPostPage({
                             src={urlFor(related.heroImage)
                               .width(900)
                               .height(600)
-                              .quality(85)
+                              .quality(90)
                               .auto('format')
                               .url()}
                             alt={

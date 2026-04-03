@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { client } from '@/lib/sanity/client';
 import { urlFor } from '@/lib/sanity/image';
-import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery } from '@/lib/sanity/queries';
+import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery, featuredJournalPostsQuery } from '@/lib/sanity/queries';
 
 // ISR: rigenera la pagina ogni 60 secondi per riflettere i contenuti Sanity
 export const revalidate = 60;
@@ -92,10 +92,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-    const [homePage, portfolio, testimonials] = await Promise.all([
+    const [homePage, portfolio, testimonials, featuredStories] = await Promise.all([
         client.fetch(homePageQuery).catch(() => null),
         client.fetch(featuredPortfolioQuery).catch(() => null),
         client.fetch(featuredTestimonialsQuery).catch(() => null),
+        client.fetch(featuredJournalPostsQuery).catch(() => null),
     ]);
 
     return (
@@ -243,7 +244,7 @@ export default async function Home() {
             />
             <Manifesto image={homePage?.manifestoImage} alt={homePage?.manifestoImage?.alt} />
             <Pillars />
-            <FeaturedStories />
+            <FeaturedStories stories={featuredStories} />
             <PortfolioGrid items={portfolio} />
             <AboutSection image={homePage?.aboutImage} alt={homePage?.aboutImage?.alt} />
             <FilmSection image={homePage?.filmSectionImage} alt={homePage?.filmSectionImage?.alt} />

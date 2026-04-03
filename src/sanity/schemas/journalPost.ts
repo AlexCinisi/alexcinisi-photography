@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity'
+import { GalleryInput } from '../components/GalleryInput'
 
 export default defineType({
   name: 'journalPost',
@@ -152,8 +153,8 @@ export default defineType({
       title: 'Photo Gallery',
       type: 'array',
       fieldset: 'media',
-      options: {
-        layout: 'grid',
+      components: {
+        input: GalleryInput,
       },
       of: [{
         type: 'image',
@@ -178,8 +179,24 @@ export default defineType({
             initialValue: false
           })
         ],
+        preview: {
+          select: {
+            alt: 'alt',
+            caption: 'caption',
+            fullWidth: 'fullWidth',
+            filename: 'asset.originalFilename',
+          },
+          prepare({ alt, caption, fullWidth, filename }) {
+            const status = alt ? '✅' : '⚠️ NO ALT'
+            const fw = fullWidth ? ' 🔳 Full' : ''
+            return {
+              title: `${status} ${alt || filename || 'Untitled image'}`,
+              subtitle: `${caption || ''}${fw}`,
+            }
+          },
+        },
       }],
-      description: 'All photos for this story. Upload in the order you want them displayed.',
+      description: 'Upload photos in display order. Use ☐ Select for bulk operations. ✅ = has alt text, ⚠️ = missing.',
     }),
 
     // === STORY CONTENT ===

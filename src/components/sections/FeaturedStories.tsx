@@ -2,41 +2,42 @@
 
 import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { urlFor } from '@/lib/sanity/image';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-interface StoryItem {
-    couple: string;
-    location: string;
-    badge: string;
-    slug?: string;
-    imageGradient: string;
+/* Types for Sanity journal post data */
+interface SanityStory {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  coupleName: string;
+  location: string;
+  tags?: string[];
+  heroImage?: any;
+  portfolioImage?: any;
 }
 
-const FALLBACK_STORIES: StoryItem[] = [
-    {
-        couple: 'Marina & James',
-        location: 'Villa Valguarnera · Bagheria',
-        badge: 'Film + Digital',
-        slug: 'marina-james',
-        imageGradient: 'linear-gradient(155deg, #EDE9E3, #E2DDD6, #D8D2C9)'
-    },
-    {
-        couple: 'Sophie & David',
-        location: 'Taormina · Full Day',
-        badge: 'Destination',
-        slug: 'sophie-david',
-        imageGradient: 'linear-gradient(148deg, #E8E4DE, #DDD8D1, #D2CCC4)'
-    },
-    {
-        couple: 'Lucia & Marco',
-        location: 'Tonnara di Scopello',
-        badge: 'Editorial',
-        slug: 'lucia-marco',
-        imageGradient: 'linear-gradient(162deg, #F0ECE6, #E5E0D9, #DAD4CC)'
-    }
+interface FeaturedStoriesProps {
+  stories?: SanityStory[] | null;
+}
+
+/* Fallback gradients for cards without images */
+const GRADIENTS = [
+  'linear-gradient(155deg, #EDE9E3, #E2DDD6, #D8D2C9)',
+  'linear-gradient(148deg, #E8E4DE, #DDD8D1, #D2CCC4)',
+  'linear-gradient(162deg, #F0ECE6, #E5E0D9, #DAD4CC)',
 ];
 
-export default function FeaturedStories() {
+function getBadge(story: SanityStory): string {
+  if (story.tags && story.tags.length > 0) return story.tags[0];
+  return 'Wedding';
+}
+
+export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
+    // Non mostrare la sezione se non ci sono stories da Sanity
+    if (!stories || stories.length === 0) return null;
+
     const introSectionRef = useRef<HTMLElement>(null);
     const hScrollSectionRef = useRef<HTMLDivElement>(null);
     const hScrollStickyRef = useRef<HTMLDivElement>(null);
@@ -194,38 +195,46 @@ export default function FeaturedStories() {
             <div
                 className="stories-hscroll-section"
                 ref={hScrollSectionRef}
-                style={{ height: `${FALLBACK_STORIES.length * 100}vh` }}
+                style={{ height: `${stories.length * 100}vh` }}
             >
                 <div className="stories-hscroll-sticky" ref={hScrollStickyRef}>
                     <div
                         className="stories-hscroll-frame"
                         ref={hScrollFrameRef}
-                        style={{ width: `${FALLBACK_STORIES.length * 100}vw` }}
+                        style={{ width: `${stories.length * 100}vw` }}
                     >
-                        {FALLBACK_STORIES.map((story, i) => (
-                            <div key={i} className="story-card-h">
-                                <div className="story-card-h-img">
-                                    <div
-                                        className="story-card-img-ph"
-                                        style={{
-                                            background: [
-                                                'linear-gradient(155deg, #EDE9E3, #E2DDD6, #D8D2C9)',
-                                                'linear-gradient(148deg, #E8E4DE, #DDD8D1, #D2CCC4)',
-                                                'linear-gradient(162deg, #F0ECE6, #E5E0D9, #DAD4CC)',
-                                            ][i] || '#E8E5E0'
-                                        }}
-                                    />
+                        {stories.map((story, i) => {
+                            const image = story.portfolioImage || story.heroImage;
+                            const slug = story.slug?.current || '';
+                            return (
+                                <div key={story._id || i} className="story-card-h">
+                                    <div className="story-card-h-img">
+                                        {image ? (
+                                            <Image
+                                                src={urlFor(image).width(1200).quality(90).auto('format').url()}
+                                                alt={image.alt || `${story.coupleName} wedding`}
+                                                fill
+                                                sizes="100vw"
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <div
+                                                className="story-card-img-ph"
+                                                style={{ background: GRADIENTS[i % GRADIENTS.length] }}
+                                            />
+                                        )}
+                                    </div>
+                                    <div className="story-card-h-copy">
+                                        <span className="story-card-badge">{getBadge(story)}</span>
+                                        <h3 className="story-card-couple">{story.coupleName}</h3>
+                                        <span className="story-card-venue">{story.location}</span>
+                                        <Link href={`/journal/${slug}`} className="story-card-cta">
+                                            Explore This Story &rarr;
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div className="story-card-h-copy">
-                                    <span className="story-card-badge">{story.badge}</span>
-                                    <h3 className="story-card-couple">{story.couple}</h3>
-                                    <span className="story-card-venue">{story.location}</span>
-                                    <Link href={`/journal/${story.slug || story.couple.toLowerCase().replace(/\s&\s/g, '-').replace(/\s/g, '-')}`} className="story-card-cta">
-                                        Explore This Story &rarr;
-                                    </Link>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </div>
