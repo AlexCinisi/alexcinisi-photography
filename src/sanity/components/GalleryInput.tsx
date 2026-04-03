@@ -366,16 +366,16 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
                     ;(e.target as HTMLImageElement).style.display = 'none'
                   }}
                 />
-                <div style={textWrap}>
-                  <div style={altLine}>
+                <div style={S.textWrap}>
+                  <div style={S.altLine}>
                     {alt ? `✅ ${alt}` : '⚠️ NO ALT TEXT'}
                   </div>
-                  <div style={metaLine}>
+                  <div style={S.metaLine}>
                     {item.caption ? `"${item.caption}" ` : ''}
                     {fw ? '🔳 Full Width' : ''}
                   </div>
                 </div>
-                <span style={numStyle}>#{i + 1}</span>
+                <span style={S.num}>#{i + 1}</span>
               </div>
             )
           })}
