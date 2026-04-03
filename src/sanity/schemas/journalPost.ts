@@ -152,6 +152,9 @@ export default defineType({
       title: 'Photo Gallery',
       type: 'array',
       fieldset: 'media',
+      options: {
+        layout: 'grid',
+      },
       of: [{
         type: 'image',
         options: { hotspot: true },
