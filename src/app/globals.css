@@ -1445,34 +1445,33 @@ nav.scrolled .nav-logo img {
   color: var(--charcoal);
 }
 
-.stories-intro-description p {
-  color: var(--ink);
+/* Stories Intro — 2-column grid layout */
+.stories-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: end;
 }
-
-/* Stories intro bottom layout (2-zone: CTA left + description right) */
-.stories-intro-bottom {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 48px;
-}
-
-
-
-.stories-intro-description {
-  max-width: 380px;
+.stories-intro-left {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
-
-.stories-intro-description p {
+.stories-intro-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 20px;
+  padding-bottom: 8px;
+}
+.stories-intro-right p {
   font-size: 0.82rem;
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   line-height: 1.65;
-  color: inherit;
   margin: 0;
+  color: inherit;
 }
 
 .stories-intro-cta-link {
@@ -1535,6 +1534,8 @@ nav.scrolled .nav-logo img {
   height: 100%;
   position: relative;
   overflow: hidden;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
 }
 
 .story-card-h-img .story-card-img-ph {
@@ -3401,8 +3402,9 @@ a.journal-credit-name:hover {
     display: block;
   }
 
-  .stories-intro-bottom {
-    margin-top: 32px;
+  .stories-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 
   .stories-intro-cta-link {
@@ -3410,14 +3412,9 @@ a.journal-credit-name:hover {
     padding-bottom: 10px;
   }
 
-  .stories-intro-description {
-    max-width: 100%;
-    gap: 16px;
-  }
-
-  .stories-intro-description p {
+  .stories-intro-right p {
     font-size: 0.72rem;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.28em;
   }
 }
 

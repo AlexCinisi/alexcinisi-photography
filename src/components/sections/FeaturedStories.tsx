@@ -155,6 +155,19 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
             const translateX = progress * (totalWidth - window.innerWidth);
             frame!.style.transform = `translate3d(-${translateX}px, 0, 0)`;
 
+            // Zoom-out effect: images start at scale(1.12) and zoom to scale(1) when centered
+            const cards = frame!.children;
+            const viewCenter = window.innerWidth / 2;
+            for (let c = 0; c < cards.length; c++) {
+                const card = cards[c] as HTMLElement;
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const dist = Math.abs(cardCenter - viewCenter) / window.innerWidth;
+                const scale = 1 + 0.12 * Math.min(dist, 1);
+                const imgEl = card.querySelector('.story-card-h-img') as HTMLElement;
+                if (imgEl) imgEl.style.transform = `scale(${scale.toFixed(4)})`;
+            }
+
             ticking = false;
         }
 
@@ -166,6 +179,14 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
         }
 
         window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Set initial zoom on all card images
+        const initCards = frame!.children;
+        for (let c = 0; c < initCards.length; c++) {
+            const imgEl = (initCards[c] as HTMLElement).querySelector('.story-card-h-img') as HTMLElement;
+            if (imgEl) imgEl.style.transform = 'scale(1.12)';
+        }
+
         updateScroll(); // initial position
 
         return () => window.removeEventListener('scroll', onScroll);
@@ -174,21 +195,23 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
     return (
         <>
             <section ref={introSectionRef} className="stories-intro-section s-pearl pad-lg">
-                <div className="stories-intro">
+                <div className="max">
                     <RevealOnScroll>
-                        <div className="f-label">Real Weddings</div>
-                        <h2 className="h2-lg">
-                            Every Wedding Story Is<br />
-                            <em>Unique</em>
-                        </h2>
-                        <div className="stories-intro-bottom">
-                            <div className="stories-intro-description">
+                        <div className="stories-intro-grid">
+                            <div className="stories-intro-left">
+                                <div className="f-label">Real Weddings</div>
+                                <h2 className="h2-lg">
+                                    Every Wedding Story Is<br />
+                                    <em>Unique</em>
+                                </h2>
+                                <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
+                            </div>
+                            <div className="stories-intro-right">
                                 <p>The way he looked at you<br />before anyone else noticed.</p>
                                 <p>A detail you chose with care.<br />A moment you almost missed.</p>
                                 <p>Preserved with the intention<br />it deserves.</p>
                             </div>
                         </div>
-                        <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
                     </RevealOnScroll>
                 </div>
             </section>
