@@ -1450,7 +1450,7 @@ nav.scrolled .nav-logo img {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  align-items: center;
+  align-items: end;
   margin-bottom: 64px;
 }
 
@@ -1485,7 +1485,7 @@ nav.scrolled .nav-logo img {
 }
 
 .stories-intro-cta-line {
-  flex: 1;
+  width: 40%;
   height: 1px;
   background: currentColor;
   opacity: 0.3;
