@@ -211,9 +211,9 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
             <section ref={introSectionRef} className="stories-intro-section s-pearl pad-lg">
                 <div className="max">
                     <RevealOnScroll>
+                        <div className="f-label" style={{ marginBottom: 32 }}>Real Weddings</div>
                         <div className="stories-intro-grid">
                             <div className="stories-intro-left">
-                                <div className="f-label">Real Weddings</div>
                                 <h2 className="h2-lg">
                                     Every Wedding Story Is<br />
                                     <em>Unique</em>
@@ -225,7 +225,10 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
                                 <p>Preserved with the intention<br />it deserves.</p>
                             </div>
                         </div>
-                        <Link href="/journal" className="btn-text stories-intro-cta">See All Stories</Link>
+                        <div className="stories-intro-cta-row">
+                            <Link href="/journal" className="btn-text stories-intro-cta">See All Stories</Link>
+                            <span className="stories-intro-cta-line" />
+                        </div>
                     </RevealOnScroll>
                 </div>
             </section>
