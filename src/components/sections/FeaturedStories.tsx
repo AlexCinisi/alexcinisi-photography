@@ -96,7 +96,7 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
             }
 
             // CTA changes color to stay visible
-            const cta = section!.querySelector('.stories-intro-cta');
+            const cta = section!.querySelector('.stories-intro-cta-link');
             if (cta) {
                 const tr = lerp(TEXT_FROM.r, TEXT_TO.r, progress);
                 const tg = lerp(TEXT_FROM.g, TEXT_TO.g, progress);
@@ -209,26 +209,21 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
     return (
         <>
             <section ref={introSectionRef} className="stories-intro-section s-pearl pad-lg">
-                <div className="max">
+                <div className="stories-intro">
                     <RevealOnScroll>
-                        <div className="f-label" style={{ marginBottom: 32 }}>Real Weddings</div>
-                        <div className="stories-intro-grid">
-                            <div className="stories-intro-left">
-                                <h2 className="h2-lg">
-                                    Every Wedding Story Is<br />
-                                    <em>Unique</em>
-                                </h2>
-                            </div>
-                            <div className="stories-intro-right">
+                        <div className="f-label">Real Weddings</div>
+                        <h2 className="h2-lg">
+                            Every Wedding Story Is<br />
+                            <em>Unique</em>
+                        </h2>
+                        <div className="stories-intro-bottom">
+                            <div className="stories-intro-description">
                                 <p>The way he looked at you<br />before anyone else noticed.</p>
                                 <p>A detail you chose with care.<br />A moment you almost missed.</p>
                                 <p>Preserved with the intention<br />it deserves.</p>
                             </div>
                         </div>
-                        <div className="stories-intro-cta-row">
-                            <Link href="/journal" className="btn-text stories-intro-cta">See All Stories</Link>
-                            <span className="stories-intro-cta-line" />
-                        </div>
+                        <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
                     </RevealOnScroll>
                 </div>
             </section>

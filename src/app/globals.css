@@ -1444,51 +1444,45 @@ nav.scrolled .nav-logo img {
 .stories-intro-section .f-label {
   color: var(--charcoal);
 }
-
-/* Stories Intro — Layout */
-.stories-intro-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: end;
-  margin-bottom: 64px;
+.stories-intro-bottom {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 48px;
 }
 
-.stories-intro-right {
+.stories-intro-description {
+  max-width: 380px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
-.stories-intro-right p {
-  font-size: 0.9rem;
-  font-weight: 300;
-  line-height: 1.9;
-  letter-spacing: normal;
-  text-transform: none;
+.stories-intro-description p {
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  line-height: 1.65;
   margin: 0;
   color: inherit;
-  max-width: 420px;
 }
 
-/* Stories Intro — CTA row with extending line */
-.stories-intro-cta-row {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.stories-intro-cta {
+.stories-intro-cta-link {
+  display: inline-block;
+  margin-top: 48px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: inherit;
-  border-bottom-color: currentColor;
-  flex-shrink: 0;
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid currentColor;
+  transition: color 0.25s, border-color 0.25s;
 }
 
-.stories-intro-cta-line {
-  width: 40%;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.3;
+.stories-intro-cta-link:hover {
+  opacity: 0.6;
 }
 
 .stories-cards-section {
@@ -3405,15 +3399,23 @@ a.journal-credit-name:hover {
     display: block;
   }
 
-  .stories-intro-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-bottom: 48px;
+  .stories-intro-bottom {
+    margin-top: 32px;
   }
 
-  .stories-intro-right p {
-    font-size: 0.85rem;
+  .stories-intro-cta-link {
+    margin-top: 32px;
+    padding-bottom: 10px;
+  }
+
+  .stories-intro-description {
     max-width: 100%;
+    gap: 16px;
+  }
+
+  .stories-intro-description p {
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
   }
 }
 
