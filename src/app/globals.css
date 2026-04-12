@@ -1455,7 +1455,7 @@ nav.scrolled .nav-logo img {
 .stories-intro-left {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
 }
 .stories-intro-right {
   display: flex;
@@ -1476,7 +1476,7 @@ nav.scrolled .nav-logo img {
 
 .stories-intro-cta-link {
   display: inline-block;
-  margin-top: 48px;
+  margin-top: 56px;
   font-size: 0.78rem;
   font-weight: 400;
   letter-spacing: 0.2em;
@@ -1534,8 +1534,6 @@ nav.scrolled .nav-logo img {
   height: 100%;
   position: relative;
   overflow: hidden;
-  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
 }
 
 .story-card-h-img .story-card-img-ph {
@@ -3407,14 +3405,23 @@ a.journal-credit-name:hover {
     gap: 32px;
   }
 
+  .stories-intro-left {
+    gap: 16px;
+  }
+
   .stories-intro-cta-link {
-    margin-top: 32px;
+    margin-top: 40px;
     padding-bottom: 10px;
   }
 
   .stories-intro-right p {
     font-size: 0.72rem;
     letter-spacing: 0.28em;
+  }
+
+  .story-card-h-img {
+    transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
   }
 }
 

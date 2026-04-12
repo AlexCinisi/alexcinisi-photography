@@ -155,19 +155,6 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
             const translateX = progress * (totalWidth - window.innerWidth);
             frame!.style.transform = `translate3d(-${translateX}px, 0, 0)`;
 
-            // Zoom-out effect: images start at scale(1.12) and zoom to scale(1) when centered
-            const cards = frame!.children;
-            const viewCenter = window.innerWidth / 2;
-            for (let c = 0; c < cards.length; c++) {
-                const card = cards[c] as HTMLElement;
-                const cardRect = card.getBoundingClientRect();
-                const cardCenter = cardRect.left + cardRect.width / 2;
-                const dist = Math.abs(cardCenter - viewCenter) / window.innerWidth;
-                const scale = 1 + 0.12 * Math.min(dist, 1);
-                const imgEl = card.querySelector('.story-card-h-img') as HTMLElement;
-                if (imgEl) imgEl.style.transform = `scale(${scale.toFixed(4)})`;
-            }
-
             ticking = false;
         }
 
@@ -179,17 +166,44 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
         }
 
         window.addEventListener('scroll', onScroll, { passive: true });
-
-        // Set initial zoom on all card images
-        const initCards = frame!.children;
-        for (let c = 0; c < initCards.length; c++) {
-            const imgEl = (initCards[c] as HTMLElement).querySelector('.story-card-h-img') as HTMLElement;
-            if (imgEl) imgEl.style.transform = 'scale(1.12)';
-        }
-
         updateScroll(); // initial position
 
         return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    // Zoom-out effect on mobile story cards (IntersectionObserver)
+    useEffect(() => {
+        // Only on mobile — desktop h-scroll handles its own thing
+        if (typeof window === 'undefined' || window.innerWidth > 960) return;
+
+        const cards = document.querySelectorAll('.story-card-h-img');
+        if (cards.length === 0) return;
+
+        // Start all images slightly zoomed
+        cards.forEach(card => {
+            (card as HTMLElement).style.transform = 'scale(1.08)';
+        });
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    const el = entry.target as HTMLElement;
+                    if (entry.isIntersecting) {
+                        el.style.transform = 'scale(1)';
+                    } else {
+                        el.style.transform = 'scale(1.08)';
+                    }
+                });
+            },
+            {
+                threshold: 0.3,
+                rootMargin: '0px',
+            }
+        );
+
+        cards.forEach(card => observer.observe(card));
+
+        return () => observer.disconnect();
     }, []);
 
     return (
@@ -204,7 +218,6 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
                                     Every Wedding Story Is<br />
                                     <em>Unique</em>
                                 </h2>
-                                <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
                             </div>
                             <div className="stories-intro-right">
                                 <p>The way he looked at you<br />before anyone else noticed.</p>
@@ -212,6 +225,7 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
                                 <p>Preserved with the intention<br />it deserves.</p>
                             </div>
                         </div>
+                        <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
                     </RevealOnScroll>
                 </div>
             </section>
