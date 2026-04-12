@@ -96,7 +96,7 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
             }
 
             // CTA changes color to stay visible
-            const cta = section!.querySelector('.stories-intro-cta-link');
+            const cta = section!.querySelector('.stories-intro-cta');
             if (cta) {
                 const tr = lerp(TEXT_FROM.r, TEXT_TO.r, progress);
                 const tg = lerp(TEXT_FROM.g, TEXT_TO.g, progress);
@@ -173,35 +173,35 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
 
     // Zoom-out effect on mobile story cards (IntersectionObserver)
     useEffect(() => {
-        // Only on mobile — desktop h-scroll handles its own thing
         if (typeof window === 'undefined' || window.innerWidth > 960) return;
 
-        const cards = document.querySelectorAll('.story-card-h-img');
-        if (cards.length === 0) return;
+        const containers = document.querySelectorAll('.story-card-h-img');
+        if (containers.length === 0) return;
 
-        // Start all images slightly zoomed
-        cards.forEach(card => {
-            (card as HTMLElement).style.transform = 'scale(1.08)';
+        // Target the child element (img or placeholder div) inside each container
+        containers.forEach(container => {
+            const child = container.querySelector('img, .story-card-img-ph') as HTMLElement;
+            if (child) child.style.transform = 'scale(1.08)';
         });
 
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
-                    const el = entry.target as HTMLElement;
+                    const child = entry.target.querySelector('img, .story-card-img-ph') as HTMLElement;
+                    if (!child) return;
                     if (entry.isIntersecting) {
-                        el.style.transform = 'scale(1)';
+                        child.style.transform = 'scale(1)';
                     } else {
-                        el.style.transform = 'scale(1.08)';
+                        child.style.transform = 'scale(1.08)';
                     }
                 });
             },
             {
                 threshold: 0.3,
-                rootMargin: '0px',
             }
         );
 
-        cards.forEach(card => observer.observe(card));
+        containers.forEach(container => observer.observe(container));
 
         return () => observer.disconnect();
     }, []);
@@ -225,7 +225,7 @@ export default function FeaturedStories({ stories }: FeaturedStoriesProps) {
                                 <p>Preserved with the intention<br />it deserves.</p>
                             </div>
                         </div>
-                        <Link href="/journal" className="stories-intro-cta-link">See All Stories</Link>
+                        <Link href="/journal" className="btn-text stories-intro-cta">See All Stories</Link>
                     </RevealOnScroll>
                 </div>
             </section>
