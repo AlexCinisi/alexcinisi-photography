@@ -82,7 +82,13 @@ export default defineType({
       fieldset: 'hero',
       options: { hotspot: true },
       fields: [
-        defineField({ name: 'alt', title: 'Alt Text (SEO)', type: 'string', description: '⚠️ Required for SEO.' }),
+        defineField({
+          name: 'alt',
+          title: 'Alt Text (SEO)',
+          type: 'string',
+          description: '120-150 characters. Describe the image for Google and screen readers.',
+          validation: (Rule) => Rule.max(160).warning('Keep under 150 characters for optimal SEO.'),
+        }),
       ],
     }),
     defineField({
@@ -136,7 +142,8 @@ export default defineType({
           name: 'alt',
           title: 'Alt Text (SEO)',
           type: 'string',
-          description: 'Descrizione per accessibilità e SEO',
+          description: '120-150 characters.',
+          validation: (Rule) => Rule.max(160).warning('Keep under 150 characters for optimal SEO.'),
         }),
       ],
     }),
@@ -196,13 +203,31 @@ export default defineType({
       of: [{
         type: 'object',
         fields: [
-          defineField({ name: 'image', title: 'Image', type: 'image', options: { hotspot: true } }),
+          defineField({
+            name: 'image',
+            title: 'Image',
+            type: 'image',
+            options: { hotspot: true },
+            fields: [
+              defineField({
+                name: 'alt',
+                title: 'Alt Text (SEO)',
+                type: 'string',
+                description: '120-150 characters. Be specific: describe what you see.',
+                validation: (Rule) => Rule.max(160).warning('Keep under 150 characters for optimal SEO.'),
+              }),
+            ],
+          }),
           defineField({ name: 'title', title: 'Caption Title', type: 'string' }),
           defineField({ name: 'subtitle', title: 'Caption Subtitle', type: 'string' }),
           defineField({ name: 'badge', title: 'Badge', type: 'string' }),
         ],
         preview: {
-          select: { title: 'title', subtitle: 'subtitle', media: 'image' },
+          select: {
+            title: 'title',
+            subtitle: 'subtitle',
+            media: 'image',
+          },
         },
       }],
     }),
@@ -250,7 +275,13 @@ export default defineType({
       fieldset: 'callout',
       options: { hotspot: true },
       fields: [
-        defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
+        defineField({
+          name: 'alt',
+          title: 'Alt Text (SEO)',
+          type: 'string',
+          description: '120-150 characters.',
+          validation: (Rule) => Rule.max(160).warning('Keep under 150 characters for optimal SEO.'),
+        }),
       ],
     }),
 

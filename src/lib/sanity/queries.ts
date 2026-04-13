@@ -240,6 +240,7 @@ export const locationPageBySlugQuery = `*[_type == "locationPage" && slug.curren
   galleryImages[] {
     image {
       ...,
+      "alt": alt
     },
     title,
     subtitle,
