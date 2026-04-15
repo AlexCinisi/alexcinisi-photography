@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 
 const redhat = Red_Hat_Display({
@@ -237,6 +238,9 @@ export default async function RootLayout({
                 <Footer logo={siteLogo} logoFooter={siteLogoFooter} />
                 <StickyMobileCTA />
             </body>
+            {process.env.NEXT_PUBLIC_GTM_ID && (
+                <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+            )}
         </html>
     );
 }
