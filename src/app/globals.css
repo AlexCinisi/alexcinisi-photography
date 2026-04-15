@@ -3577,3 +3577,269 @@ a.journal-credit-name:hover {
     gap: 32px;
   }
 }
+
+/* ============================================
+   COOKIE CONSENT BANNER
+   ============================================ */
+
+.cc-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150; /* sopra sticky-mob (99), sotto menu-overlay (201) */
+  display: flex;
+  justify-content: center;
+  padding: 0 24px 24px;
+  pointer-events: none;
+  animation: ccSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes ccSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cc-banner {
+  position: relative;
+  pointer-events: auto;
+  max-width: 560px;
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  padding: 32px 36px 28px;
+}
+
+.cc-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  font-size: 1.15rem;
+  color: var(--mid);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s;
+  line-height: 1;
+}
+.cc-close:hover {
+  color: var(--ink);
+}
+
+.cc-text {
+  margin-bottom: 24px;
+}
+
+.cc-title {
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.cc-body {
+  font-size: 0.78rem;
+  line-height: 1.75;
+  color: var(--charcoal);
+  font-weight: 300;
+}
+
+.cc-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.25s;
+}
+.cc-link:hover {
+  color: var(--accent-dk);
+}
+
+/* ---------- Bottoni principali ---------- */
+.cc-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cc-btn {
+  flex: 1;
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+  border: 1px solid;
+}
+
+/* ACCEPT e REJECT stessa dimensione, colore, prominenza — REQUISITO GARANTE */
+.cc-btn--accept {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+.cc-btn--accept:hover {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+}
+
+.cc-btn--reject {
+  background: var(--white);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.cc-btn--reject:hover {
+  background: var(--off-white);
+}
+
+.cc-customise {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  cursor: pointer;
+  padding: 8px 0 0;
+  transition: color 0.25s;
+}
+.cc-customise:hover {
+  color: var(--ink);
+}
+
+/* ---------- Pannello Preferenze ---------- */
+.cc-prefs {
+  margin-bottom: 20px;
+}
+
+.cc-pref-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.cc-pref-row:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.cc-pref-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cc-pref-name {
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.cc-pref-desc {
+  font-size: 0.65rem;
+  color: var(--mid);
+  font-weight: 300;
+}
+
+/* "Always on" label */
+.cc-toggle--locked {
+  display: flex;
+  align-items: center;
+}
+.cc-toggle-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-dk);
+  font-weight: 400;
+}
+
+/* Toggle switch */
+.cc-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.cc-toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.cc-toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--rule);
+  transition: background 0.25s;
+  border-radius: 20px;
+}
+.cc-toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background: var(--white);
+  transition: transform 0.25s;
+  border-radius: 50%;
+}
+.cc-toggle-switch input:checked + .cc-toggle-slider {
+  background: var(--ink);
+}
+.cc-toggle-switch input:checked + .cc-toggle-slider::before {
+  transform: translateX(18px);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 960px) {
+  .cc-overlay {
+    padding: 0 12px 80px; /* sopra sticky-mob CTA */
+  }
+  .cc-banner {
+    padding: 26px 24px 22px;
+  }
+  .cc-actions {
+    flex-direction: column;
+  }
+}
+
+.footer-cookie-btn {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 248, 0.32);
+  text-decoration: none;
+  transition: color 0.25s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+.footer-cookie-btn:hover {
+  color: var(--off-white);
+}

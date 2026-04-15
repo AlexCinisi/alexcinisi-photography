@@ -5,6 +5,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import { GoogleTagManager } from '@next/third-parties/google'
+import CookieConsent from '@/components/CookieConsent'
 
 
 const redhat = Red_Hat_Display({
@@ -237,6 +238,7 @@ export default async function RootLayout({
                 {children}
                 <Footer logo={siteLogo} logoFooter={siteLogoFooter} />
                 <StickyMobileCTA />
+                <CookieConsent />
             </body>
             {process.env.NEXT_PUBLIC_GTM_ID && (
                 <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
