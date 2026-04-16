@@ -49,6 +49,7 @@ export default function CookieConsent() {
     if (typeof window !== 'undefined') {
       window.dataLayer = window.dataLayer || []
       window.gtag = function () {
+        // @ts-expect-error gtag uses arguments object — standard Google GTM pattern
         // eslint-disable-next-line prefer-rest-params
         window.dataLayer.push(arguments)
       }
