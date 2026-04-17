@@ -71,7 +71,7 @@ export default function Nav({ logo }: NavProps) {
                 <div className="menu-footer">
                     <a href="https://www.instagram.com/alexcinisi" target="_blank" rel="noopener noreferrer">Instagram</a>
                     <a href="mailto:info@alexcinisiphotography.com">Email</a>
-                    <a href="/policies/Privacy_Policy_Alex_Cinisi_Photography.pdf">Privacy</a>
+                    <Link href="/privacy">Privacy</Link>
                 </div>
             </div>
         </>

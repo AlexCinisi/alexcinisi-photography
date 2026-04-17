@@ -3843,3 +3843,169 @@ a.journal-credit-name:hover {
 .footer-cookie-btn:hover {
   color: var(--off-white);
 }
+
+/* ============================================
+   LEGAL PAGES (Privacy Policy, Cookie Policy)
+   ============================================ */
+
+.legal-page {
+  padding: 60px 64px 120px;
+  background: var(--white);
+}
+
+.legal-max {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.legal-title {
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.legal-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.legal-body h2 {
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 48px;
+  margin-bottom: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.legal-body h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.legal-body h3 {
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 400;
+  font-size: 0.88rem;
+  color: var(--ink);
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+
+.legal-body p {
+  font-size: 0.84rem;
+  line-height: 1.85;
+  color: var(--charcoal);
+  margin-bottom: 14px;
+}
+
+.legal-body ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.legal-body ul li {
+  font-size: 0.84rem;
+  line-height: 1.85;
+  color: var(--charcoal);
+  padding: 4px 0 4px 20px;
+  position: relative;
+}
+
+.legal-body ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+.legal-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.25s;
+}
+
+.legal-body a:hover {
+  color: var(--accent-dk);
+}
+
+.legal-body strong {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+/* Tables */
+.legal-table-wrap {
+  overflow-x: auto;
+  margin: 16px 0 24px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.legal-table th {
+  text-align: left;
+  font-family: var(--font-redhat), "Red Hat Display", sans-serif;
+  font-weight: 400;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--ink);
+  white-space: nowrap;
+}
+
+.legal-table td {
+  padding: 10px 14px;
+  color: var(--charcoal);
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.legal-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Mobile */
+@media (max-width: 960px) {
+  .legal-page {
+    padding: 40px 24px 80px;
+  }
+
+  .legal-body h2 {
+    margin-top: 36px;
+    padding-top: 18px;
+  }
+
+  .legal-table {
+    font-size: 0.72rem;
+  }
+
+  .legal-table th,
+  .legal-table td {
+    padding: 8px 10px;
+  }
+}

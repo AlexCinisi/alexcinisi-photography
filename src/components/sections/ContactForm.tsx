@@ -385,7 +385,7 @@ export default function ContactForm({
                     </span>
                 </label>
                 <span style={{ fontSize: '0.78rem', lineHeight: '1.5', cursor: 'pointer', color: 'var(--mid)' }} onClick={() => handlePrivacyChange({ target: { checked: !formData.privacyConsent } } as any)}>
-                    I have read and agree to the <a href="/policies/Privacy_Policy_Alex_Cinisi_Photography.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy Policy</a> and consent to the processing of my personal data (GDPR compliant).
+                    I have read and agree to the <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy Policy</a> and consent to the processing of my personal data (GDPR compliant).
                 </span>
             </div>
             <div style={{ gridColumn: '1 / -1' }}><ErrorMsg field="privacyConsent" /></div>
