@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent, useRef, useEffect } from 'react';
+import Turnstile from 'react-turnstile';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 import Image from 'next/image';
@@ -64,6 +65,9 @@ export default function ContactForm({
         });
     }, []);
 
+    // Security: honeypot (anti-spam) + Turnstile token (anti-bot)
+    const [honeypot, setHoneypot] = useState('');
+    const [turnstileToken, setTurnstileToken] = useState('');
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
     const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -177,7 +181,9 @@ export default function ContactForm({
                 body: JSON.stringify({
                     ...formData,
                     ...trackingData,
-                    timeOnPage: Math.round((Date.now() - trackingData.formStartTime) / 1000)
+                    timeOnPage: Math.round((Date.now() - trackingData.formStartTime) / 1000),
+                    website: honeypot,
+                    turnstileToken,
                 }),
             });
 
@@ -342,6 +348,20 @@ export default function ContactForm({
                 ))}
             </div>
 
+            {/* Honeypot — campo invisibile per catturare bot */}
+            <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                />
+            </div>
+
             <div className="priv-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', gridColumn: '1 / -1', marginTop: 12 }}>
                 <label className="custom-checkbox" style={{
                     position: 'relative',
@@ -390,14 +410,25 @@ export default function ContactForm({
             </div>
             <div style={{ gridColumn: '1 / -1' }}><ErrorMsg field="privacyConsent" /></div>
 
+            {/* Cloudflare Turnstile — verifica anti-bot */}
+            <div style={{ gridColumn: '1 / -1', marginTop: '8px' }}>
+                <Turnstile
+                    sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
+                    onVerify={(token) => setTurnstileToken(token)}
+                    onExpire={() => setTurnstileToken('')}
+                    theme="light"
+                    size="compact"
+                />
+            </div>
+
             <button
                 type="submit"
                 className="btn-sub"
-                disabled={status === 'submitting' || !formData.privacyConsent}
+                disabled={status === 'submitting' || !formData.privacyConsent || !turnstileToken}
                 style={{
-                    opacity: (status === 'submitting' || !formData.privacyConsent) ? 0.5 : 1,
+                    opacity: (status === 'submitting' || !formData.privacyConsent || !turnstileToken) ? 0.5 : 1,
                     marginTop: '1.5rem',
-                    cursor: (status === 'submitting' || !formData.privacyConsent) ? 'not-allowed' : 'pointer',
+                    cursor: (status === 'submitting' || !formData.privacyConsent || !turnstileToken) ? 'not-allowed' : 'pointer',
                     gridColumn: '1 / -1'
                 }}
             >

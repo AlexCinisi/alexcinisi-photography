@@ -12,18 +12,22 @@
     "@portabletext/react": "^6.0.3",
     "@sanity/client": "^6.24.0",
     "@sanity/image-url": "^1.1.0",
-    "next": "^15.1.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.37.0",
+    "next": "^16.2.4",
     "next-sanity": "^9.12.3",
-    "react": "^19.0.0-rc-66855b96-20241106",
-    "react-dom": "^19.0.0-rc-66855b96-20241106",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-turnstile": "^1.1.5",
     "resend": "^4.0.0",
     "sanity": "^3.99.0",
-    "styled-components": "^6.3.11"
+    "styled-components": "^6.3.11",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "typescript": "^5.7.0"
   },
   "overrides": {
