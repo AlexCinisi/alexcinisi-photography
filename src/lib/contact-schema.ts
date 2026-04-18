@@ -16,8 +16,8 @@ export const contactSchema = z.object({
   budget: z.string().max(50).optional().default(''),
   vision: z.string().min(1, 'Please tell us about your story').max(5000).trim(),
   interests: z.array(z.string().max(50)).max(10).optional().default([]),
-  privacyConsent: z.literal(true, {
-    errorMap: () => ({ message: 'You must accept the Privacy Policy' }),
+  privacyConsent: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the Privacy Policy',
   }),
 
   // Honeypot — DEVE essere vuoto

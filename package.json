@@ -8,13 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
-    "@next/third-parties": "^16.2.3",
+    "@next/third-parties": "^15.5.15",
     "@portabletext/react": "^6.0.3",
     "@sanity/client": "^6.24.0",
     "@sanity/image-url": "^1.1.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
-    "next": "^16.2.4",
+    "next": "^15.5.15",
     "next-sanity": "^9.12.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
@@ -29,9 +29,5 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.7.0"
-  },
-  "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom"
   }
 }
