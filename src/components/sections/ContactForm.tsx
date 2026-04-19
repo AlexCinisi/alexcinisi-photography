@@ -417,7 +417,7 @@ export default function ContactForm({
                     onVerify={(token) => setTurnstileToken(token)}
                     onExpire={() => setTurnstileToken('')}
                     theme="light"
-                    size="compact"
+                    size="flexible"
                 />
             </div>
 
