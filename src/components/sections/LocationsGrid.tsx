@@ -95,21 +95,14 @@ export default function LocationsGrid({ locations }: LocationsGridProps) {
                     <div className="loc-card-overlay" />
                   </div>
                 )}
-                <div className="loc-card-city"
-                  style={loc.heroImage ? { color: 'var(--off-white)', position: 'relative', zIndex: 2 } : undefined}
-                >
-                  {loc.venueName}
-                </div>
-                <div className="loc-card-venues"
-                  style={loc.heroImage ? { color: 'rgba(250,250,248,.7)', position: 'relative', zIndex: 2 } : undefined}
-                >
+                <div className="loc-card-city">{loc.venueName}</div>
+                <div className="loc-card-venues">
                   {loc.homepageDescription || `${loc.city}, Sicily`}
                 </div>
-                <div className="loc-card-link"
-                  style={loc.heroImage ? { color: 'var(--off-white)', position: 'relative', zIndex: 2 } : undefined}
-                >
+                <div className="loc-card-link">
                   Explore {loc.venueName} Weddings
                 </div>
+
               </Link>
             ))}
 
