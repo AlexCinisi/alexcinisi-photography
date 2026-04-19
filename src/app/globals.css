@@ -1900,10 +1900,30 @@ nav.scrolled .nav-logo img {
 .loc-card {
   background: var(--white);
   padding: 44px 36px;
-  transition: background .3s;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 280px;
+  border: 1px solid var(--rule);
+  position: relative;
+  overflow: hidden;
 }
+
+.loc-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.loc-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 9, 0.15) 0%, rgba(10, 10, 9, 0.65) 100%);
+  z-index: 1;
+}
+
 
 .loc-card:hover {
   background: var(--off-white);

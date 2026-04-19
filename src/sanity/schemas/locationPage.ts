@@ -67,6 +67,23 @@ export default defineType({
       fieldset: 'info',
       description: 'Order on the /locations hub page. Lower number = higher position.',
     }),
+    defineField({
+      name: 'showOnHomepage',
+      title: 'Show on Homepage',
+      type: 'boolean',
+      fieldset: 'info',
+      description: 'Attiva per mostrare questa venue nella sezione "Wedding Venues" della homepage.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'homepageDescription',
+      title: 'Homepage Card Description',
+      type: 'text',
+      fieldset: 'info',
+      rows: 2,
+      description: 'Breve descrizione per la card in homepage. Es: "Rocco Forte\'s iconic Art Nouveau palazzo on the Gulf of Palermo."',
+    }),
+
 
     // === HERO ===
     defineField({ name: 'heroEyebrow', title: 'Hero Eyebrow', type: 'string', fieldset: 'hero', description: 'e.g. "Villa Igiea · Palermo, Sicily"' }),

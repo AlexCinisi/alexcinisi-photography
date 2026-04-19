@@ -90,6 +90,20 @@ export const featuredTestimonialsQuery = `*[_type == "testimonial" && featured =
   coupleName, country, countryFlag, location, quote, rating
 }`
 
+// Location pages to show on homepage grid
+export const homepageLocationsQuery = `*[_type == "locationPage" && showOnHomepage == true] | order(priority asc) {
+  _id,
+  venueName,
+  city,
+  slug,
+  homepageDescription,
+  heroImage {
+    ...,
+    "alt": alt
+  }
+}`;
+
+
 // Fetch site logo for layout
 export const siteLogoQuery = `*[_type == "homePage"][0] {
   siteLogo { asset-> { url } },
