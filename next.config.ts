@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
             { source: '/discover-the-wedding-at-villa-alliata-cardillo', destination: '/journal/villa-alliata-cardillo-wedding', permanent: true },
             { source: '/explore-the-enchanting-wedding-journey-of-gaetano-e-kim', destination: '/journal/gaetano-kim-wedding', permanent: true },
             { source: '/the-winter-wedding-of-annamaria-fabrizio', destination: '/journal/annamaria-fabrizio-winter-wedding', permanent: true },
+            {
+              source: '/marta-e-roberto',
+              destination: '/journal/marta-roberto-wedding',
+              permanent: true
+            },
             // WordPress pages → new structure
             { source: '/stories-2', destination: '/journal', permanent: true },
             { source: '/stories', destination: '/journal', permanent: true },

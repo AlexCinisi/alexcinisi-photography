@@ -4,6 +4,10 @@ import { client as sanityClient } from './client'
 const builder = imageUrlBuilder(sanityClient)
 
 export function urlFor(source: any) {
+  if (!source?.asset) {
+    // Return a dummy image if asset is missing to prevent crashes
+    return builder.image('image-0000000000000000000000000000000000000000-200x200-png');
+  }
   return builder.image(source)
 }
 
