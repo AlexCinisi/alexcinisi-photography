@@ -40,8 +40,7 @@ export default defineType({
     },
     {
       name: 'branding',
-      title: '✦ Loghi e Branding',
-      description: 'Logo principale, monogramma footer, e loghi "As Featured In".',
+      title: '🎨 Branding & Favicon',
       options: { collapsible: true, collapsed: true },
     },
     {
@@ -263,6 +262,30 @@ export default defineType({
       fieldset: 'branding',
       description: 'Monogramma SVG per il footer.',
       options: { accept: '.svg' },
+    }),
+    defineField({
+      name: 'favicon',
+      title: 'Favicon',
+      type: 'image',
+      fieldset: 'branding',
+      description: 'Favicon del sito — visibile nel tab del browser. Formato: PNG quadrato, minimo 32x32px. Consigliato: 512x512px (Sanity lo ridimensiona).',
+      options: { accept: 'image/png,image/svg+xml,image/x-icon' },
+    }),
+    defineField({
+      name: 'appleTouchIcon',
+      title: 'Apple Touch Icon',
+      type: 'image',
+      fieldset: 'branding',
+      description: 'Icona per iOS quando il sito viene aggiunto alla home screen. PNG 180x180px. Se vuoto, usa la favicon.',
+      options: { accept: 'image/png' },
+    }),
+    defineField({
+      name: 'webManifestIcon',
+      title: 'Web Manifest Icon (Android/PWA)',
+      type: 'image',
+      fieldset: 'branding',
+      description: 'Icona per Android e Progressive Web App. PNG 512x512px. Se vuoto, usa la favicon.',
+      options: { accept: 'image/png' },
     }),
 
     defineField({

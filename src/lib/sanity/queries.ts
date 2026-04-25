@@ -107,7 +107,10 @@ export const homepageLocationsQuery = `*[_type == "locationPage" && showOnHomepa
 // Fetch site logo for layout
 export const siteLogoQuery = `*[_type == "homePage"][0] {
   siteLogo { asset-> { url } },
-  siteLogoFooter { asset-> { url } }
+  siteLogoFooter { asset-> { url } },
+  favicon { asset-> { url } },
+  appleTouchIcon { asset-> { url } },
+  webManifestIcon { asset-> { url } }
 }`
 
 // ============================

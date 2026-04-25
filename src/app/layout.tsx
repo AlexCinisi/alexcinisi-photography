@@ -31,44 +31,53 @@ const jost = Jost({
     display: "swap",
 });
 
-export const metadata: Metadata = {
-    metadataBase: new URL('https://www.alexcinisiphotography.com'),
-    title: {
-        default: 'Alex Cinisi Photography | Luxury Wedding Photographer in Sicily',
-        template: '%s | Alex Cinisi Photography',
-    },
-    description:
-        "Luxury destination wedding photographer based in Sicily. Editorial film & digital photography for refined couples worldwide.",
-    keywords:
-        "wedding photographer Sicily, luxury wedding photographer Italy, destination wedding photographer Sicily, wedding photographer Palermo, wedding photographer Taormina, editorial wedding photography Italy, Sicily wedding photographer",
-    icons: {
-        icon: '/favicon.ico',
-        apple: '/apple-touch-icon.png',
-    },
-    openGraph: {
-        title: "Alex Cinisi Photography — Luxury Wedding Photographer in Sicily",
+export async function generateMetadata(): Promise<Metadata> {
+    const data = await sanityClient.fetch(siteLogoQuery).catch(() => null);
+
+    return {
+        metadataBase: new URL('https://www.alexcinisiphotography.com'),
+        title: {
+            default: 'Alex Cinisi Photography | Luxury Wedding Photographer in Sicily',
+            template: '%s | Alex Cinisi Photography',
+        },
         description:
-            "Timeless editorial wedding photography for destination weddings in Sicily & Italy. For couples who believe their love story deserves artistry.",
-        type: "website",
-        url: "https://www.alexcinisiphotography.com/",
-        images: [
-            {
-                url: "https://www.alexcinisiphotography.com/wp-content/uploads/og-homepage.webp",
-            },
-        ],
-        locale: "en_US",
-        siteName: "Alex Cinisi Photography",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Alex Cinisi Photography — Luxury Wedding Photographer Sicily",
-        description:
-            "Editorial destination wedding photography in Sicily. 30+ international weddings captured with timeless artistry.",
-    },
-    alternates: {
-        canonical: "https://www.alexcinisiphotography.com/",
-    },
-};
+            "Luxury destination wedding photographer based in Sicily. Editorial film & digital photography for refined couples worldwide.",
+        keywords:
+            "wedding photographer Sicily, luxury wedding photographer Italy, destination wedding photographer Sicily, wedding photographer Palermo, wedding photographer Taormina, editorial wedding photography Italy, Sicily wedding photographer",
+        icons: {
+            icon: data?.favicon?.asset?.url
+                ? [
+                    { url: data.favicon.asset.url, sizes: '32x32', type: 'image/png' },
+                    { url: data.favicon.asset.url, sizes: '16x16', type: 'image/png' },
+                ]
+                : '/favicon.ico',
+            apple: data?.appleTouchIcon?.asset?.url || data?.favicon?.asset?.url || '/apple-icon.png',
+        },
+        openGraph: {
+            title: "Alex Cinisi Photography — Luxury Wedding Photographer in Sicily",
+            description:
+                "Timeless editorial wedding photography for destination weddings in Sicily & Italy. For couples who believe their love story deserves artistry.",
+            type: "website",
+            url: "https://www.alexcinisiphotography.com/",
+            images: [
+                {
+                    url: "https://www.alexcinisiphotography.com/wp-content/uploads/og-homepage.webp",
+                },
+            ],
+            locale: "en_US",
+            siteName: "Alex Cinisi Photography",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Alex Cinisi Photography — Luxury Wedding Photographer Sicily",
+            description:
+                "Editorial destination wedding photography in Sicily. 30+ international weddings captured with timeless artistry.",
+        },
+        alternates: {
+            canonical: "https://www.alexcinisiphotography.com/",
+        },
+    };
+}
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
