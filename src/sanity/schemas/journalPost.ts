@@ -155,28 +155,15 @@ export default defineType({
       options: {
         layout: 'grid',
       },
-      // Validation a livello ARRAY — solo per alt text mancanti (warning, non blocca)
-      validation: (Rule) =>
-        Rule.custom((gallery: any[] | undefined) => {
-          if (!gallery || gallery.length === 0) return true;
-          const withAsset = gallery.filter((img: any) => img?.asset?._ref);
-          const noAlt = withAsset.filter((img: any) => !img?.alt || img.alt.trim() === '');
-          if (noAlt.length > 0) {
-            return {
-              message: `⚠️ ${noAlt.length} di ${withAsset.length} immagini senza alt text — completa per migliorare la SEO.`,
-              level: 'warning' as const,
-            };
-          }
-          return true;
-        }),
+      // NESSUNA validation a livello array
       of: [{
         type: 'image',
         options: { hotspot: true },
-        // Validation a livello ITEM — SOLO per asset mancante (errore, blocca)
+        // UNICA validation: asset mancante
         validation: (Rule) =>
           Rule.custom((value: any) => {
             if (!value?.asset?._ref) {
-              return '🔴 ASSET MANCANTE — Ricarica questa immagine o rimuovila dalla gallery.';
+              return '🔴 ASSET MANCANTE — Ricarica o rimuovi questa immagine.';
             }
             return true;
           }),
@@ -186,6 +173,7 @@ export default defineType({
             title: 'Alt Text',
             type: 'string',
             description: 'Descrivi cosa si vede nella foto. Es: "Bride and groom first dance at Villa Igiea ballroom"',
+            // NESSUNA validation
           }),
           defineField({
             name: 'caption',
@@ -210,14 +198,12 @@ export default defineType({
             hasAsset: 'asset._ref',
           },
           prepare({ alt, caption, fullWidth, filename, media, hasAsset }) {
-            // Broken image — very visible red alert
             if (!hasAsset && !media) {
               return {
                 title: '🔴 ASSET MANCANTE — Ricarica o rimuovi',
                 subtitle: 'Questa immagine non ha un file associato',
               };
             }
-            // Working image — show alt text status in title
             const status = alt ? '✅' : '⚠️';
             const fw = fullWidth ? ' · 🔳 Full' : '';
             return {
