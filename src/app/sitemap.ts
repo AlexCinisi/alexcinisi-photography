@@ -4,7 +4,7 @@ import { client } from '@/lib/sanity/client'
 export const revalidate = 3600 // rigenera ogni ora
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.alexcinisiphotography.com'
+  const baseUrl = 'https://alexcinisiphotography.com'
 
   // Pagine statiche
   const staticPages: MetadataRoute.Sitemap = [

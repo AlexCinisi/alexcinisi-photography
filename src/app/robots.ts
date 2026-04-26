@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/studio', '/api/'],
       },
     ],
-    sitemap: 'https://www.alexcinisiphotography.com/sitemap.xml',
+    sitemap: 'https://alexcinisiphotography.com/sitemap.xml',
   }
 }
