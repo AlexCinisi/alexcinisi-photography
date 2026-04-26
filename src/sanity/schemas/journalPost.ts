@@ -155,35 +155,34 @@ export default defineType({
       options: {
         layout: 'grid',
       },
-      validation: (Rule) =>
-        Rule.custom((gallery: any[] | undefined) => {
-          if (!gallery || gallery.length === 0) return true;
-          const broken = gallery.filter(
-            (img: any) => !img?.asset?._ref && !img?.asset?._id
-          );
-          if (broken.length > 0) {
-            return `⚠️ ${broken.length} immagine/i con asset mancante — ricarica o rimuovi dall'elenco.`;
-          }
-          const noAlt = gallery.filter(
-            (img: any) => img?.asset?._ref && (!img?.alt || img.alt.trim() === '')
-          );
-          if (noAlt.length > 0) {
-            return {
-              message: `${noAlt.length} immagine/i senza alt text — penalizza la SEO delle immagini.`,
-              level: 'warning' as const,
-            };
-          }
-          return true;
-        }),
       of: [{
         type: 'image',
         options: { hotspot: true },
+        validation: (Rule) =>
+          Rule.custom((value: any) => {
+            if (!value?.asset?._ref) {
+              return '🔴 ASSET MANCANTE — Ricarica questa immagine o rimuovila dalla gallery.';
+            }
+            return true;
+          }),
         fields: [
           defineField({
             name: 'alt',
             title: 'Alt Text',
             type: 'string',
-            description: 'Descrivi cosa si vede nella foto. Es: "Bride and groom first dance at Villa Igiea ballroom"',
+            description:
+              'Descrivi cosa si vede nella foto. Es: "Bride and groom first dance at Villa Igiea ballroom"',
+            validation: (Rule) =>
+              Rule.custom((alt: string | undefined, context: any) => {
+                const parent = context?.parent;
+                if (parent?.asset?._ref && (!alt || alt.trim() === '')) {
+                  return {
+                    message: '⚠️ Alt text mancante — penalizza la SEO di questa immagine.',
+                    level: 'warning' as const,
+                  };
+                }
+                return true;
+              }),
           }),
           defineField({
             name: 'caption',
@@ -194,9 +193,10 @@ export default defineType({
             name: 'fullWidth',
             title: 'Full Width',
             type: 'boolean',
-            description: 'Show this image at full width (recommended for key vertical shots)',
-            initialValue: false
-          })
+            description:
+              'Show this image at full width (recommended for key vertical shots)',
+            initialValue: false,
+          }),
         ],
         preview: {
           select: {
@@ -205,15 +205,24 @@ export default defineType({
             fullWidth: 'fullWidth',
             filename: 'asset.originalFilename',
             media: 'asset',
+            hasAsset: 'asset._ref',
           },
-          prepare({ alt, caption, fullWidth, filename, media }) {
-            const status = alt ? '✅' : '⚠️ NO ALT'
-            const fw = fullWidth ? ' · 🔳 Full' : ''
+          prepare({ alt, caption, fullWidth, filename, media, hasAsset }) {
+            // Broken image — red alert
+            if (!hasAsset && !media) {
+              return {
+                title: '🔴 ASSET MANCANTE — Ricarica o rimuovi',
+                subtitle: 'Questa immagine non ha un file associato',
+              };
+            }
+            // Working image
+            const status = alt ? '✅' : '⚠️ NO ALT';
+            const fw = fullWidth ? ' · 🔳 Full' : '';
             return {
               title: `${status} ${alt || filename || 'Untitled image'}`,
               subtitle: `${caption || '—'}${fw}`,
               media,
-            }
+            };
           },
         },
       }],
