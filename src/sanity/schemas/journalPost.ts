@@ -155,6 +155,26 @@ export default defineType({
       options: {
         layout: 'grid',
       },
+      validation: (Rule) =>
+        Rule.custom((gallery: any[] | undefined) => {
+          if (!gallery || gallery.length === 0) return true;
+          const broken = gallery.filter(
+            (img: any) => !img?.asset?._ref && !img?.asset?._id
+          );
+          if (broken.length > 0) {
+            return `⚠️ ${broken.length} immagine/i con asset mancante — ricarica o rimuovi dall'elenco.`;
+          }
+          const noAlt = gallery.filter(
+            (img: any) => img?.asset?._ref && (!img?.alt || img.alt.trim() === '')
+          );
+          if (noAlt.length > 0) {
+            return {
+              message: `${noAlt.length} immagine/i senza alt text — penalizza la SEO delle immagini.`,
+              level: 'warning' as const,
+            };
+          }
+          return true;
+        }),
       of: [{
         type: 'image',
         options: { hotspot: true },
