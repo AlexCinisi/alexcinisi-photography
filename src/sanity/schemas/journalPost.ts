@@ -155,9 +155,24 @@ export default defineType({
       options: {
         layout: 'grid',
       },
+      // Validation a livello ARRAY — solo per alt text mancanti (warning, non blocca)
+      validation: (Rule) =>
+        Rule.custom((gallery: any[] | undefined) => {
+          if (!gallery || gallery.length === 0) return true;
+          const withAsset = gallery.filter((img: any) => img?.asset?._ref);
+          const noAlt = withAsset.filter((img: any) => !img?.alt || img.alt.trim() === '');
+          if (noAlt.length > 0) {
+            return {
+              message: `⚠️ ${noAlt.length} di ${withAsset.length} immagini senza alt text — completa per migliorare la SEO.`,
+              level: 'warning' as const,
+            };
+          }
+          return true;
+        }),
       of: [{
         type: 'image',
         options: { hotspot: true },
+        // Validation a livello ITEM — SOLO per asset mancante (errore, blocca)
         validation: (Rule) =>
           Rule.custom((value: any) => {
             if (!value?.asset?._ref) {
@@ -170,19 +185,7 @@ export default defineType({
             name: 'alt',
             title: 'Alt Text',
             type: 'string',
-            description:
-              'Descrivi cosa si vede nella foto. Es: "Bride and groom first dance at Villa Igiea ballroom"',
-            validation: (Rule) =>
-              Rule.custom((alt: string | undefined, context: any) => {
-                const parent = context?.parent;
-                if (parent?.asset?._ref && (!alt || alt.trim() === '')) {
-                  return {
-                    message: '⚠️ Alt text mancante — penalizza la SEO di questa immagine.',
-                    level: 'warning' as const,
-                  };
-                }
-                return true;
-              }),
+            description: 'Descrivi cosa si vede nella foto. Es: "Bride and groom first dance at Villa Igiea ballroom"',
           }),
           defineField({
             name: 'caption',
@@ -193,8 +196,7 @@ export default defineType({
             name: 'fullWidth',
             title: 'Full Width',
             type: 'boolean',
-            description:
-              'Show this image at full width (recommended for key vertical shots)',
+            description: 'Show this image at full width (recommended for key vertical shots)',
             initialValue: false,
           }),
         ],
@@ -208,18 +210,18 @@ export default defineType({
             hasAsset: 'asset._ref',
           },
           prepare({ alt, caption, fullWidth, filename, media, hasAsset }) {
-            // Broken image — red alert
+            // Broken image — very visible red alert
             if (!hasAsset && !media) {
               return {
                 title: '🔴 ASSET MANCANTE — Ricarica o rimuovi',
                 subtitle: 'Questa immagine non ha un file associato',
               };
             }
-            // Working image
-            const status = alt ? '✅' : '⚠️ NO ALT';
+            // Working image — show alt text status in title
+            const status = alt ? '✅' : '⚠️';
             const fw = fullWidth ? ' · 🔳 Full' : '';
             return {
-              title: `${status} ${alt || filename || 'Untitled image'}`,
+              title: `${status} ${alt || filename || 'No alt text'}`,
               subtitle: `${caption || '—'}${fw}`,
               media,
             };
