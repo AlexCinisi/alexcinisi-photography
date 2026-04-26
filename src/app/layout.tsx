@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import { GoogleTagManager } from '@next/third-parties/google'
 import CookieConsent from '@/components/CookieConsent'
+import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 
@@ -249,6 +250,7 @@ export default async function RootLayout({
                 <Footer logo={siteLogo} logoFooter={siteLogoFooter} />
                 <StickyMobileCTA />
                 <CookieConsent />
+                <Analytics />
                 <SpeedInsights />
             </body>
             {process.env.NEXT_PUBLIC_GTM_ID && (
