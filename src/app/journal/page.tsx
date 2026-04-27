@@ -6,7 +6,7 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import FinalCTA from '@/components/sections/FinalCTA';
 import JournalGrid from '@/components/sections/JournalGrid';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Journal — Wedding Stories & Editorials | Alex Cinisi Photography',

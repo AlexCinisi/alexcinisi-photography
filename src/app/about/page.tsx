@@ -10,7 +10,7 @@ import FAQ from '@/components/sections/FAQ';
 import FinalCTA from '@/components/sections/FinalCTA';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'About Alex Cinisi — Wedding Photographer in Sicily | Film & Digital',

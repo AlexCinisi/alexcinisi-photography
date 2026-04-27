@@ -8,7 +8,7 @@ import Breadcrumb from '@/components/sections/Breadcrumb';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import FinalCTA from '@/components/sections/FinalCTA';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Wedding Venues in Sicily — Destination Wedding Photography | Alex Cinisi',

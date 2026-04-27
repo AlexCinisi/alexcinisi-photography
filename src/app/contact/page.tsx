@@ -8,7 +8,7 @@ import ContactForm from '@/components/sections/ContactForm';
 import FinalCTA from '@/components/sections/FinalCTA';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 /* ── Default values ── */
 const DEFAULTS = {

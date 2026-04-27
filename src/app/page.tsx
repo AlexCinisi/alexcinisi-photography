@@ -4,7 +4,7 @@ import { urlFor } from '@/lib/sanity/image';
 import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery, featuredJournalPostsQuery, homepageLocationsQuery } from '@/lib/sanity/queries';
 
 // ISR: rigenera la pagina ogni 60 secondi per riflettere i contenuti Sanity
-export const revalidate = 60;
+export const revalidate = 3600;
 
 import Hero from "@/components/sections/Hero";
 import TrustBar from "@/components/sections/TrustBar";
