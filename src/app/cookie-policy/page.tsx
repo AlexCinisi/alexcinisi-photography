@@ -26,7 +26,7 @@ export default function CookiePolicyPage() {
 
             <h2>1. What Are Cookies</h2>
             <p>Cookies are small text files that websites place on your device (computer, tablet, or smartphone) when you visit them. They are widely used to make websites work efficiently, provide information to website owners, and enhance the user experience.</p>
-            <p>This Cookie Policy explains which cookies are used on <strong>www.alexcinisiphotography.com</strong>, their purpose, and how you can manage your preferences. This policy is provided in accordance with the EU General Data Protection Regulation (GDPR), the ePrivacy Directive (2002/58/EC), and the guidelines issued by the Italian Data Protection Authority (Garante per la protezione dei dati personali) on 10 June 2021.</p>
+            <p>This Cookie Policy explains which cookies are used on <strong>alexcinisiphotography.com</strong>, their purpose, and how you can manage your preferences. This policy is provided in accordance with the EU General Data Protection Regulation (GDPR), the ePrivacy Directive (2002/58/EC), and the guidelines issued by the Italian Data Protection Authority (Garante per la protezione dei dati personali) on 10 June 2021.</p>
 
             <h2>2. Types of Cookies We Use</h2>
 

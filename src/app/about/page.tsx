@@ -17,13 +17,13 @@ export const metadata: Metadata = {
   description:
     "Meet Alex Cinisi, a Sicilian wedding photographer blending editorial photography and analog film. Published in Vogue Italia, Le Point, Marie Claire, L'Officiel, and La Cucina Italiana. Available for destination weddings worldwide.",
   alternates: {
-    canonical: 'https://www.alexcinisiphotography.com/about',
+    canonical: 'https://alexcinisiphotography.com/about',
   },
   openGraph: {
     title: 'About Alex Cinisi — Wedding Photographer in Sicily',
     description:
       "Sicilian wedding photographer with editorial credits in Vogue Italia, Le Point, Marie Claire, L'Officiel. Film & digital, 15 weddings per year.",
-    url: 'https://www.alexcinisiphotography.com/about',
+    url: 'https://alexcinisiphotography.com/about',
     type: 'profile',
   },
 };
@@ -80,7 +80,7 @@ function buildSchemas(faqItems: { q: string; a: string }[]) {
       jobTitle: 'Wedding Photographer',
       description:
         "Sicilian wedding photographer specializing in editorial and analog film photography. Published in Vogue Italia, Le Point, Marie Claire, L'Officiel.",
-      url: 'https://www.alexcinisiphotography.com/about',
+      url: 'https://alexcinisiphotography.com/about',
       sameAs: [
         'https://www.instagram.com/alexcinisi/',
         'https://www.facebook.com/alexcinisiphotography/',
@@ -88,7 +88,7 @@ function buildSchemas(faqItems: { q: string; a: string }[]) {
       worksFor: {
         '@type': 'Organization',
         name: 'Alex Cinisi Photography',
-        url: 'https://www.alexcinisiphotography.com',
+        url: 'https://alexcinisiphotography.com',
       },
       knowsAbout: [
         'Wedding Photography',
@@ -114,13 +114,13 @@ function buildSchemas(faqItems: { q: string; a: string }[]) {
           '@type': 'ListItem',
           position: 1,
           name: 'Home',
-          item: 'https://www.alexcinisiphotography.com',
+          item: 'https://alexcinisiphotography.com',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'About',
-          item: 'https://www.alexcinisiphotography.com/about',
+          item: 'https://alexcinisiphotography.com/about',
         },
       ],
     },

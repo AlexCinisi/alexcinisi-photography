@@ -29,8 +29,8 @@ import FinalCTA from "@/components/sections/FinalCTA";
 const DEFAULT_TITLE = 'Alex Cinisi Photography | Luxury Wedding Photographer in Sicily';
 const DEFAULT_DESCRIPTION =
   "Luxury destination wedding photographer based in Sicily. Editorial film & digital photography for refined couples. Published in Vogue Italia, Marie Claire, L'Officiel. Available worldwide — 15 weddings per year.";
-const DEFAULT_OG_IMAGE = 'https://www.alexcinisiphotography.com/og-image.jpg';
-const SITE_URL = 'https://www.alexcinisiphotography.com';
+const DEFAULT_OG_IMAGE = 'https://alexcinisiphotography.com/og-image.jpg';
+const SITE_URL = 'https://alexcinisiphotography.com';
 
 export async function generateMetadata(): Promise<Metadata> {
   // Fetch SEO fields from Sanity (solo i campi SEO, non tutto il documento)
@@ -110,15 +110,15 @@ export default async function Home() {
                   {
                     '@context': 'https://schema.org',
                     '@type': 'LocalBusiness',
-                    '@id': 'https://www.alexcinisiphotography.com/#business',
+                    '@id': 'https://alexcinisiphotography.com/#business',
                     name: 'Alex Cinisi Photography',
                     description:
                       'Luxury destination wedding photographer based in Sicily, Italy. Editorial film and digital photography for refined couples worldwide.',
-                    url: 'https://www.alexcinisiphotography.com',
+                    url: 'https://alexcinisiphotography.com',
                     telephone: '+39 XXX XXX XXXX',
                     email: 'info@alexcinisiphotography.com',
-                    image: 'https://www.alexcinisiphotography.com/og-image.jpg',
-                    logo: 'https://www.alexcinisiphotography.com/logo.svg',
+                    image: 'https://alexcinisiphotography.com/og-image.jpg',
+                    logo: 'https://alexcinisiphotography.com/logo.svg',
                     address: {
                       '@type': 'PostalAddress',
                       addressLocality: 'Palermo',
@@ -159,7 +159,7 @@ export default async function Home() {
                   {
                     '@context': 'https://schema.org',
                     '@type': 'ProfessionalService',
-                    '@id': 'https://www.alexcinisiphotography.com/#service',
+                    '@id': 'https://alexcinisiphotography.com/#service',
                     name: 'Alex Cinisi Wedding Photography',
                     description:
                       "Editorial wedding photography blending analog film (Canon AE-1 Program, Kodak Portra 400) with digital. Published in Vogue Italia, L'Officiel, Marie Claire. Available for luxury destination weddings in Sicily, Italy, and worldwide.",
@@ -167,7 +167,7 @@ export default async function Home() {
                       '@type': 'Person',
                       name: 'Alex Cinisi',
                       jobTitle: 'Wedding Photographer',
-                      image: 'https://www.alexcinisiphotography.com/og-image.jpg',
+                      image: 'https://alexcinisiphotography.com/og-image.jpg',
                     },
                     serviceType: [
                       'Wedding Photography',
@@ -195,7 +195,7 @@ export default async function Home() {
                       { '@type': 'Place', name: 'Puglia' },
                       { '@type': 'Country', name: 'Italy' },
                     ],
-                    url: 'https://www.alexcinisiphotography.com',
+                    url: 'https://alexcinisiphotography.com',
                     telephone: '+39 XXX XXX XXXX',
                     priceRange: '€€€',
                     hasOfferCatalog: {
@@ -217,9 +217,9 @@ export default async function Home() {
                   {
                     '@context': 'https://schema.org',
                     '@type': 'WebSite',
-                    '@id': 'https://www.alexcinisiphotography.com/#website',
+                    '@id': 'https://alexcinisiphotography.com/#website',
                     name: 'Alex Cinisi Photography',
-                    url: 'https://www.alexcinisiphotography.com',
+                    url: 'https://alexcinisiphotography.com',
                     description:
                       'Luxury destination wedding photographer in Sicily. Editorial film & digital photography.',
                     publisher: {
@@ -227,7 +227,7 @@ export default async function Home() {
                       name: 'Alex Cinisi Photography',
                       logo: {
                         '@type': 'ImageObject',
-                        url: 'https://www.alexcinisiphotography.com/logo.svg',
+                        url: 'https://alexcinisiphotography.com/logo.svg',
                       },
                     },
                     inLanguage: ['en', 'it'],

@@ -72,7 +72,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
     "@type": "ProfessionalService",
     "name": `Alex Cinisi Photography — ${data.venueName} Weddings`,
     "description": data.metaDescription || `Editorial wedding photographer specialising in luxury weddings at ${data.venueName}, ${data.city}, Sicily.`,
-    "url": `https://www.alexcinisiphotography.com/locations/${slug}`,
+    "url": `https://alexcinisiphotography.com/locations/${slug}`,
     ...(data.heroImage && { "image": urlFor(data.heroImage).width(1200).height(800).url() }),
     "telephone": "",
     "email": "info@alexcinisiphotography.com",
@@ -123,9 +123,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.alexcinisiphotography.com" },
-      { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://www.alexcinisiphotography.com/locations" },
-      { "@type": "ListItem", "position": 3, "name": data.venueName, "item": `https://www.alexcinisiphotography.com/locations/${slug}` }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://alexcinisiphotography.com" },
+      { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://alexcinisiphotography.com/locations" },
+      { "@type": "ListItem", "position": 3, "name": data.venueName, "item": `https://alexcinisiphotography.com/locations/${slug}` }
     ]
   };
 

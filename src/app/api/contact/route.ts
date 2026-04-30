@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   // ─── LAYER 1: CSRF — Verifica Origin ───
   const origin = request.headers.get('origin');
   const allowedOrigins = [
-    'https://www.alexcinisiphotography.com',
+    'https://alexcinisiphotography.com',
     'https://alexcinisiphotography.com',
     'https://alexcinisi-photography.vercel.app',
     process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '',

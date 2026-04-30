@@ -34,7 +34,7 @@ export default function PrivacyPage() {
               P.IVA: IT06799650822<br />
               Email: <a href="mailto:info@alexcinisiphotography.com">info@alexcinisiphotography.com</a><br />
               PEC: alexcinisi@pec.it<br />
-              Website: www.alexcinisiphotography.com
+              Website: alexcinisiphotography.com
             </p>
             <p>(Hereinafter referred to as &quot;we&quot;, &quot;us&quot;, &quot;our&quot;, or &quot;the Data Controller&quot;)</p>
 

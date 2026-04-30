@@ -23,8 +23,8 @@ export default async function LocationsHubPage() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.alexcinisiphotography.com" },
-      { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://www.alexcinisiphotography.com/locations" }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://alexcinisiphotography.com" },
+      { "@type": "ListItem", "position": 2, "name": "Locations", "item": "https://alexcinisiphotography.com/locations" }
     ]
   };
 

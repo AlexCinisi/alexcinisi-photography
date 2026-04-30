@@ -37,12 +37,12 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     alternates: {
-      canonical: 'https://www.alexcinisiphotography.com/contact',
+      canonical: 'https://alexcinisiphotography.com/contact',
     },
     openGraph: {
       title: title + ' | Alex Cinisi Photography',
       description,
-      url: 'https://www.alexcinisiphotography.com/contact',
+      url: 'https://alexcinisiphotography.com/contact',
       type: 'website',
     },
   };
@@ -63,7 +63,7 @@ export default async function ContactPage() {
     '@type': 'ContactPage',
     name: 'Contact Alex Cinisi Photography',
     description: 'Get in touch for luxury destination wedding photography in Sicily and worldwide.',
-    url: 'https://www.alexcinisiphotography.com/contact',
+    url: 'https://alexcinisiphotography.com/contact',
     mainEntity: {
       '@type': 'ProfessionalService',
       name: 'Alex Cinisi Photography',
@@ -83,8 +83,8 @@ export default async function ContactPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.alexcinisiphotography.com' },
-      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://www.alexcinisiphotography.com/contact' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alexcinisiphotography.com' },
+      { '@type': 'ListItem', position: 2, name: 'Contact', item: 'https://alexcinisiphotography.com/contact' },
     ],
   };
 

@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const data = await sanityClient.fetch(siteLogoQuery).catch(() => null);
 
     return {
-        metadataBase: new URL('https://www.alexcinisiphotography.com'),
+        metadataBase: new URL('https://alexcinisiphotography.com'),
         title: {
             default: 'Alex Cinisi Photography | Luxury Wedding Photographer in Sicily',
             template: '%s | Alex Cinisi Photography',
@@ -60,10 +60,10 @@ export async function generateMetadata(): Promise<Metadata> {
             description:
                 "Timeless editorial wedding photography for destination weddings in Sicily & Italy. For couples who believe their love story deserves artistry.",
             type: "website",
-            url: "https://www.alexcinisiphotography.com/",
+            url: "https://alexcinisiphotography.com/",
             images: [
                 {
-                    url: "https://www.alexcinisiphotography.com/wp-content/uploads/og-homepage.webp",
+                    url: "https://alexcinisiphotography.com/wp-content/uploads/og-homepage.webp",
                 },
             ],
             locale: "en_US",
@@ -76,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
                 "Editorial destination wedding photography in Sicily. 30+ international weddings captured with timeless artistry.",
         },
         alternates: {
-            canonical: "https://www.alexcinisiphotography.com/",
+            canonical: "https://alexcinisiphotography.com/",
         },
     };
 }
@@ -87,8 +87,8 @@ const localBusinessSchema = {
     name: "Alex Cinisi Photography",
     description:
         "Luxury editorial wedding photographer specialising in destination weddings across Sicily and Italy. Capturing timeless imagery for refined international couples.",
-    url: "https://www.alexcinisiphotography.com",
-    image: "https://www.alexcinisiphotography.com/wp-content/uploads/alex-cinisi-photographer.webp",
+    url: "https://alexcinisiphotography.com",
+    image: "https://alexcinisiphotography.com/wp-content/uploads/alex-cinisi-photographer.webp",
     telephone: "+39 327 12 49 998",
     email: "info@alexcinisiphotography.com",
     address: {
@@ -204,7 +204,7 @@ const breadcrumbSchema = {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://www.alexcinisiphotography.com/",
+            item: "https://alexcinisiphotography.com/",
         },
     ],
 };

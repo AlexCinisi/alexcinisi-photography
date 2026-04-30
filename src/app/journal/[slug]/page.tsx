@@ -236,19 +236,19 @@ export default async function JournalPostPage({
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.alexcinisiphotography.com',
+        item: 'https://alexcinisiphotography.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Journal',
-        item: 'https://www.alexcinisiphotography.com/journal',
+        item: 'https://alexcinisiphotography.com/journal',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: post.coupleName,
-        item: `https://www.alexcinisiphotography.com/journal/${slug}`,
+        item: `https://alexcinisiphotography.com/journal/${slug}`,
       },
     ],
   };
@@ -272,14 +272,14 @@ export default async function JournalPostPage({
     author: {
       '@type': 'Person',
       name: 'Alex Cinisi',
-      url: 'https://www.alexcinisiphotography.com/about',
+      url: 'https://alexcinisiphotography.com/about',
     },
     publisher: {
       '@type': 'Organization',
       name: 'Alex Cinisi Photography',
-      url: 'https://www.alexcinisiphotography.com',
+      url: 'https://alexcinisiphotography.com',
     },
-    mainEntityOfPage: `https://www.alexcinisiphotography.com/journal/${slug}`,
+    mainEntityOfPage: `https://alexcinisiphotography.com/journal/${slug}`,
   };
 
   const gallerySchema =
