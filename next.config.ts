@@ -28,6 +28,20 @@ const nextConfig: NextConfig = {
               destination: '/journal/marta-roberto-wedding',
               permanent: true
             },
+            // WordPress locale prefixes → homepage
+            { source: '/it', destination: '/', permanent: true },
+            { source: '/it/:path*', destination: '/:path*', permanent: true },
+            { source: '/en', destination: '/', permanent: true },
+            { source: '/en/:path*', destination: '/:path*', permanent: true },
+            // WordPress category pages → journal
+            { source: '/category/:slug*', destination: '/journal', permanent: true },
+            // WordPress privacy & legal pages
+            { source: '/privacypolicyfull', destination: '/privacy', permanent: true },
+            { source: '/privacy-policy', destination: '/privacy', permanent: true },
+            // WordPress FAQ → contact
+            { source: '/faq', destination: '/contact', permanent: true },
+            // WordPress Ads landing (campaign inactive) → contact
+            { source: '/luxury-destination-wedding-photography-in-sicily', destination: '/contact', permanent: true },
             // WordPress pages → new structure
             { source: '/stories-2', destination: '/journal', permanent: true },
             { source: '/stories', destination: '/journal', permanent: true },
