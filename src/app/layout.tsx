@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Red_Hat_Display, Bodoni_Moda, Jost } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/layout/Nav";
-import Footer from "@/components/layout/Footer";
-import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
+import LayoutShell from "@/components/layout/LayoutShell";
 import { GoogleTagManager } from '@next/third-parties/google'
 import CookieConsent from '@/components/CookieConsent'
 import { Analytics } from '@vercel/analytics/next';
@@ -245,10 +243,9 @@ export default async function RootLayout({
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
                 />
-                <Nav logo={siteLogo} />
-                {children}
-                <Footer logo={siteLogo} logoFooter={siteLogoFooter} />
-                <StickyMobileCTA />
+                <LayoutShell logo={siteLogo} logoFooter={siteLogoFooter}>
+                    {children}
+                </LayoutShell>
                 <CookieConsent />
                 <Analytics />
                 <SpeedInsights />
