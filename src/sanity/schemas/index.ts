@@ -5,5 +5,17 @@ import journalPost from './journalPost';
 import locationPage from './locationPage';
 import aboutPage from './aboutPage';
 import contactPage from './contactPage';
+import adsLuxuryPage from './adsLuxuryPage';
+import adsProposalPage from './adsProposalPage';
 
-export const schemaTypes = [homePage, portfolioItem, testimonial, journalPost, locationPage, aboutPage, contactPage];
+export const schemaTypes = [
+  homePage,
+  portfolioItem,
+  testimonial,
+  journalPost,
+  locationPage,
+  aboutPage,
+  contactPage,
+  adsLuxuryPage,
+  adsProposalPage
+];

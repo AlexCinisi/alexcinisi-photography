@@ -351,3 +351,15 @@ export const contactPageQuery = `*[_type == "contactPage"][0] {
   metaTitle,
   metaDescription
 }`;
+
+// Ads Landing Pages
+export const adsLuxuryPageQuery = `*[_type == "adsLuxuryPage"][0] {
+  heroImage { asset->, alt, hotspot, crop },
+  selectedWork[] { asset->, alt, caption, hotspot, crop },
+  filmImages[] { asset->, alt, hotspot, crop }
+}`
+
+export const adsProposalPageQuery = `*[_type == "adsProposalPage"][0] {
+  heroImage { asset->, alt, hotspot, crop },
+  locationImages[] { asset->, alt, hotspot, crop }
+}`

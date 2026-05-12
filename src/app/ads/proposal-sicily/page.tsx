@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import AdsHeader from '@/components/ads/AdsHeader'
 import AdsHero from '@/components/ads/AdsHero'
 import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
+import { client } from '@/lib/sanity/client'
+import { adsProposalPageQuery } from '@/lib/sanity/queries'
+import { urlFor } from '@/lib/sanity/image'
 import {
   ADS_TRUST_BAR_PROPOSAL,
   ADS_INVESTMENT_PROPOSAL,
@@ -19,7 +23,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function ProposalAdsPage() {
+export default async function ProposalAdsPage() {
+  const data = await client.fetch(adsProposalPageQuery).catch(() => null)
+
   return (
     <>
       <AdsHeader ctaText="Plan Your Proposal" />
@@ -30,18 +36,31 @@ export default function ProposalAdsPage() {
         subtitle="Intimate, cinematic proposal and elopement photography across Sicily's most iconic locations."
         ctaText="Plan Your Proposal"
         microText="Every session is tailored to your story."
+        image={data?.heroImage}
       />
 
       <AdsTrustBar items={ADS_TRUST_BAR_PROPOSAL} />
 
-      {/* Sicily Locations — 3 cards */}
+      {/* Sicily Locations */}
       <section className="ads-section" style={{ textAlign: 'center' }}>
         <div className="ads-eyebrow"><span>Sicily Locations</span></div>
         <h2 className="ads-h2">Where Will You Ask <em>the Question?</em></h2>
         <div className="ads-location-cards">
           {ADS_LOCATIONS_PROPOSAL.map((loc, i) => (
             <div key={i} className="ads-location-card">
-              <div className="ads-location-card-image">{loc.name}</div>
+              <div className="ads-location-card-image" style={{ position: 'relative' }}>
+                {data?.locationImages?.[i]?.asset ? (
+                  <Image
+                    src={urlFor(data.locationImages[i]).width(600).height(750).auto('format').quality(80).url()}
+                    alt={data.locationImages[i].alt || `${loc.name}, ${loc.city}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: 'cover' }}
+                  />
+                ) : (
+                  loc.name
+                )}
+              </div>
               <h3>{loc.name}, {loc.city}</h3>
               <p>{loc.description}</p>
             </div>

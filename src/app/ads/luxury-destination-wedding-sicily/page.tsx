@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import AdsHeader from '@/components/ads/AdsHeader'
 import AdsHero from '@/components/ads/AdsHero'
 import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
+import { client } from '@/lib/sanity/client'
+import { adsLuxuryPageQuery } from '@/lib/sanity/queries'
+import { urlFor } from '@/lib/sanity/image'
 import {
   ADS_TRUST_BAR_WEDDING,
   ADS_TESTIMONIALS,
@@ -17,7 +21,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function LuxuryWeddingAdsPage() {
+export default async function LuxuryWeddingAdsPage() {
+  const data = await client.fetch(adsLuxuryPageQuery).catch(() => null)
+
   return (
     <>
       <AdsHeader ctaText="Request Your Bespoke Proposal" />
@@ -28,27 +34,51 @@ export default function LuxuryWeddingAdsPage() {
         subtitle="An editorial and timeless approach for refined couples planning an extraordinary destination wedding."
         ctaText="Request Your Bespoke Proposal"
         microText="I accept only 15 destination weddings per year."
+        image={data?.heroImage}
       />
 
       <AdsTrustBar items={ADS_TRUST_BAR_WEDDING} />
 
-      {/* Selected Work — 3 placeholder images */}
+      {/* Selected Work */}
       <section className="ads-section" style={{ textAlign: 'center' }}>
         <div className="ads-eyebrow"><span>Selected Work</span></div>
         <h2 className="ads-h2">A Curated Selection of <em>Destination Weddings</em></h2>
         <div className="ads-images-row">
-          <div>
-            <div className="ads-image-placeholder">Photo 1</div>
-            <p className="ads-image-caption">Marina &amp; James · Villa Valguarnera, Bagheria</p>
-          </div>
-          <div>
-            <div className="ads-image-placeholder">Photo 2</div>
-            <p className="ads-image-caption">Sophie &amp; David · Taormina, Full Day</p>
-          </div>
-          <div>
-            <div className="ads-image-placeholder">Photo 3</div>
-            <p className="ads-image-caption">Lucia &amp; Marco · Tonnara di Scopello</p>
-          </div>
+          {(data?.selectedWork && data.selectedWork.length > 0)
+            ? data.selectedWork.map((img: any, i: number) => (
+                <div key={i}>
+                  <div className="ads-image-placeholder" style={{ position: 'relative' }}>
+                    <Image
+                      src={urlFor(img).width(600).height(800).auto('format').quality(80).url()}
+                      alt={img.alt || `Wedding photo ${i + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: img.hotspot
+                          ? `${img.hotspot.x * 100}% ${img.hotspot.y * 100}%`
+                          : '50% 50%',
+                      }}
+                    />
+                  </div>
+                  {img.caption && <p className="ads-image-caption">{img.caption}</p>}
+                </div>
+              ))
+            : <>
+                <div>
+                  <div className="ads-image-placeholder">Photo 1</div>
+                  <p className="ads-image-caption">Marina &amp; James · Villa Valguarnera, Bagheria</p>
+                </div>
+                <div>
+                  <div className="ads-image-placeholder">Photo 2</div>
+                  <p className="ads-image-caption">Sophie &amp; David · Taormina, Full Day</p>
+                </div>
+                <div>
+                  <div className="ads-image-placeholder">Photo 3</div>
+                  <p className="ads-image-caption">Lucia &amp; Marco · Tonnara di Scopello</p>
+                </div>
+              </>
+          }
         </div>
       </section>
 
@@ -79,9 +109,29 @@ export default function LuxuryWeddingAdsPage() {
             Organic grain, timeless tones, and cinematic texture. Film frames that breathe heritage into your wedding&apos;s visual narrative.
           </p>
           <div className="ads-images-row">
-            <div className="ads-image-placeholder film-tone">Film 1</div>
-            <div className="ads-image-placeholder film-tone">Film 2</div>
-            <div className="ads-image-placeholder film-tone">Film 3</div>
+            {(data?.filmImages && data.filmImages.length > 0)
+              ? data.filmImages.map((img: any, i: number) => (
+                  <div key={i} className="ads-image-placeholder film-tone" style={{ position: 'relative' }}>
+                    <Image
+                      src={urlFor(img).width(600).height(750).auto('format').quality(80).url()}
+                      alt={img.alt || `Film photo ${i + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: img.hotspot
+                          ? `${img.hotspot.x * 100}% ${img.hotspot.y * 100}%`
+                          : '50% 50%',
+                      }}
+                    />
+                  </div>
+                ))
+              : <>
+                  <div className="ads-image-placeholder film-tone">Film 1</div>
+                  <div className="ads-image-placeholder film-tone">Film 2</div>
+                  <div className="ads-image-placeholder film-tone">Film 3</div>
+                </>
+            }
           </div>
           <p style={{ fontWeight: 300, fontSize: '.8rem', color: 'var(--mid)', marginTop: 20 }}>
             Film frames can be included within your bespoke proposal.
