@@ -4057,3 +4057,356 @@ a.journal-credit-name:hover {
     padding: 8px 10px;
   }
 }
+
+/* ============================================
+   ADS LANDING PAGES
+   ============================================ */
+
+/* --- Ads Header --- */
+.ads-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 48px;
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+  transition: transform .35s ease;
+}
+.ads-header.hidden { transform: translateY(-100%); }
+.ads-header-logo {
+  font-weight: 400; font-size: .8rem;
+  letter-spacing: .32em; text-transform: uppercase;
+  color: var(--ink); pointer-events: none;
+}
+.ads-header-cta {
+  font-size: .68rem; font-weight: 400;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--white); background: var(--ink);
+  padding: 12px 28px; border: none; cursor: pointer;
+  transition: background .25s;
+}
+.ads-header-cta:hover { background: var(--charcoal); }
+
+/* --- Ads Hero --- */
+.ads-hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+}
+.ads-hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--charcoal);
+}
+.ads-hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(30,29,27,.6);
+}
+.ads-hero-content {
+  position: relative; z-index: 1;
+  max-width: 720px; padding: 120px 24px 80px;
+}
+.ads-hero-eyebrow {
+  font-size: .7rem; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 28px;
+}
+.ads-hero h1 {
+  font-size: 3.8rem; font-weight: 300;
+  line-height: 1.1; color: var(--white);
+  margin-bottom: 24px;
+}
+.ads-hero-subtitle {
+  font-weight: 300; font-size: 1.1rem;
+  color: rgba(255,255,255,.8); max-width: 520px;
+  margin: 0 auto 36px; line-height: 1.65;
+}
+.ads-hero-cta {
+  display: inline-block;
+  font-size: .68rem; font-weight: 400;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink); background: var(--white);
+  padding: 18px 42px; border: none; cursor: pointer;
+  transition: background .25s;
+}
+.ads-hero-cta:hover { background: var(--grey-bg); }
+.ads-hero-micro {
+  font-weight: 300; font-size: .8rem;
+  color: rgba(255,255,255,.6); margin-top: 16px;
+}
+@media (max-width: 768px) {
+  .ads-header { padding: 14px 20px; }
+  .ads-hero h1 { font-size: 2.4rem; }
+  .ads-hero-subtitle { font-size: 1rem; }
+}
+
+/* --- Ads Trust Bar --- */
+.ads-trust-bar {
+  background: var(--grey-bg);
+  padding: 32px 48px;
+  display: flex; justify-content: center;
+  align-items: center; gap: 40px; flex-wrap: wrap;
+}
+.ads-trust-item {
+  text-align: center; padding: 0 20px;
+  border-right: 1px solid var(--rule);
+}
+.ads-trust-item:last-child { border-right: none; }
+.ads-trust-number {
+  font-weight: 500; font-size: 1.4rem;
+  color: var(--ink); line-height: 1.2;
+}
+.ads-trust-label {
+  font-weight: 300; font-size: .75rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mid); margin-top: 4px;
+}
+@media (max-width: 768px) {
+  .ads-trust-bar { gap: 12px; padding: 24px 20px; }
+  .ads-trust-item {
+    flex: 0 0 calc(50% - 12px);
+    border-right: none; padding: 12px 0;
+  }
+}
+
+/* --- Ads Section Common --- */
+.ads-section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+.ads-section-dark { background: var(--ink); color: var(--white); padding: 100px 48px; }
+.ads-section-grey { background: var(--grey-bg); padding: 100px 48px; }
+.ads-section-offwhite { background: var(--off-white); padding: 100px 48px; }
+.ads-eyebrow {
+  font-weight: 400; font-size: .7rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--accent); display: flex;
+  align-items: center; margin-bottom: 20px;
+  justify-content: center;
+}
+.ads-eyebrow::before {
+  content: ''; display: inline-block;
+  width: 40px; height: 1px;
+  background: var(--accent); margin-right: 14px;
+}
+.ads-h2 {
+  font-size: 2.4rem; font-weight: 300;
+  line-height: 1.2; color: var(--ink);
+  text-align: center; margin-bottom: 16px;
+}
+.ads-h2 em {
+  font-style: italic;
+  font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+}
+.ads-section-dark .ads-h2 { color: var(--white); }
+.ads-section-subtitle {
+  font-weight: 300; font-size: 1.05rem;
+  color: var(--mid); text-align: center;
+  max-width: 560px; margin: 0 auto 48px; line-height: 1.65;
+}
+.ads-section-dark .ads-section-subtitle { color: rgba(255,255,255,.75); }
+@media (max-width: 768px) {
+  .ads-section, .ads-section-dark, .ads-section-grey, .ads-section-offwhite {
+    padding: 64px 20px;
+  }
+  .ads-h2 { font-size: 1.8rem; }
+}
+
+/* --- Ads Pillars --- */
+.ads-pillars {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 40px; max-width: 960px; margin: 0 auto;
+}
+.ads-pillar { border-left: 1px solid var(--accent); padding-left: 24px; }
+.ads-pillar h3 { font-size: 1.1rem; font-weight: 400; margin-bottom: 12px; }
+.ads-pillar p { font-weight: 300; font-size: .95rem; line-height: 1.65; opacity: .85; }
+@media (max-width: 768px) {
+  .ads-pillars { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* --- Ads Image Placeholders --- */
+.ads-images-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; max-width: 960px; margin: 40px auto 0;
+}
+.ads-image-placeholder {
+  aspect-ratio: 3 / 4; background: var(--grey-bg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--mid); font-size: .8rem; font-weight: 300;
+}
+.ads-image-placeholder.film-tone { background: #D4CFCA; }
+.ads-image-caption {
+  font-weight: 300; font-size: .8rem;
+  color: var(--mid); text-align: center; margin-top: 12px;
+}
+@media (max-width: 768px) {
+  .ads-images-row { grid-template-columns: 1fr; }
+}
+
+/* --- Ads Investment --- */
+.ads-investment-price {
+  font-weight: 500; font-size: 3rem;
+  color: var(--ink); text-align: center; margin-bottom: 8px;
+}
+.ads-investment-range {
+  font-weight: 300; font-size: 1.05rem;
+  color: var(--mid); text-align: center; margin-bottom: 32px;
+}
+.ads-investment-divider {
+  width: 60px; height: 1px;
+  background: var(--rule); margin: 0 auto 32px;
+}
+.ads-investment-list {
+  list-style: none; max-width: 520px;
+  margin: 0 auto 40px; padding: 0;
+}
+.ads-investment-list li {
+  font-weight: 300; font-size: 1rem;
+  color: var(--ink); padding: 8px 0;
+  padding-left: 28px; position: relative;
+}
+.ads-investment-list li::before {
+  content: '✓'; position: absolute; left: 0;
+  color: var(--accent); font-weight: 500;
+}
+.ads-investment-dual {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; max-width: 600px; margin: 0 auto 40px;
+  text-align: center;
+}
+.ads-investment-dual-item h3 {
+  font-weight: 300; font-size: .85rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 8px;
+}
+.ads-investment-dual-item .price {
+  font-weight: 500; font-size: 2.4rem; color: var(--ink);
+}
+@media (max-width: 768px) {
+  .ads-investment-price { font-size: 2.4rem; }
+  .ads-investment-dual { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* --- Ads Testimonials --- */
+.ads-testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; max-width: 960px; margin: 0 auto;
+}
+.ads-testimonial-card {
+  background: var(--white); padding: 32px;
+  box-shadow: 0 2px 20px rgba(0,0,0,.06);
+}
+.ads-testimonial-stars { color: var(--accent); font-size: 1rem; margin-bottom: 16px; letter-spacing: 2px; }
+.ads-testimonial-quote {
+  font-weight: 300; font-size: .95rem; line-height: 1.7;
+  color: var(--ink); font-style: italic; margin-bottom: 20px;
+}
+.ads-testimonial-author { font-weight: 400; font-size: .85rem; color: var(--ink); }
+.ads-testimonial-location { font-weight: 300; font-size: .78rem; color: var(--mid); margin-top: 2px; }
+@media (max-width: 768px) {
+  .ads-testimonials-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Ads Form Section --- */
+.ads-form-section { background: var(--ink); padding: 100px 48px; }
+.ads-form-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; max-width: 1000px; margin: 0 auto; align-items: start;
+}
+.ads-form-text h2 {
+  font-size: 2.2rem; font-weight: 300;
+  color: var(--white); margin-bottom: 20px; line-height: 1.2;
+}
+.ads-form-text p {
+  font-weight: 300; font-size: 1rem;
+  color: rgba(255,255,255,.8); line-height: 1.7; margin-bottom: 20px;
+}
+.ads-form-urgency { font-weight: 500; font-size: 1rem; color: var(--accent); margin-bottom: 24px; }
+.ads-form-reassurance { list-style: none; padding: 0; }
+.ads-form-reassurance li {
+  font-weight: 300; font-size: .85rem;
+  color: rgba(255,255,255,.6); padding: 4px 0;
+}
+.ads-form-card { background: var(--white); padding: 40px; }
+.ads-form-card label {
+  display: block; font-weight: 300; font-size: .75rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 6px; margin-top: 20px;
+}
+.ads-form-card label:first-of-type { margin-top: 0; }
+.ads-form-card input[type="text"],
+.ads-form-card input[type="email"],
+.ads-form-card input[type="date"],
+.ads-form-card textarea {
+  width: 100%; border: none; border-bottom: 1px solid var(--rule);
+  padding: 12px 0; font-weight: 300; font-size: 1rem;
+  color: var(--ink); background: transparent;
+  outline: none; transition: border-color .25s; font-family: inherit;
+}
+.ads-form-card input:focus,
+.ads-form-card textarea:focus { border-bottom-color: var(--accent); }
+.ads-form-card textarea { resize: vertical; min-height: 80px; }
+.ads-form-privacy {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 20px; font-weight: 300; font-size: .8rem; color: var(--mid);
+}
+.ads-form-privacy input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); }
+.ads-form-submit {
+  width: 100%; margin-top: 24px;
+  font-size: .68rem; font-weight: 400;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--white); background: var(--accent);
+  padding: 18px; border: none; cursor: pointer; transition: background .25s;
+}
+.ads-form-submit:hover { background: var(--accent-dk); }
+.ads-form-submit:disabled { opacity: .5; cursor: not-allowed; }
+.ads-form-success { text-align: center; padding: 60px 20px; }
+.ads-form-success h3 { font-size: 1.4rem; font-weight: 300; color: var(--ink); margin-bottom: 12px; }
+.ads-form-success p { font-weight: 300; font-size: 1rem; color: var(--mid); }
+@media (max-width: 768px) {
+  .ads-form-section { padding: 64px 20px; }
+  .ads-form-grid { grid-template-columns: 1fr; gap: 40px; }
+  .ads-form-card { padding: 28px 20px; }
+}
+
+/* --- Ads Closing --- */
+.ads-closing { padding: 80px 48px; text-align: center; background: var(--white); }
+.ads-closing-quote {
+  font-size: 2.2rem; font-weight: 300;
+  color: var(--ink); max-width: 600px;
+  margin: 0 auto 32px; line-height: 1.3;
+}
+.ads-closing-cta {
+  display: inline-block; font-size: .68rem; font-weight: 400;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--white); background: var(--ink);
+  padding: 16px 36px; border: none; cursor: pointer;
+  text-decoration: none; transition: background .25s;
+}
+.ads-closing-cta:hover { background: var(--charcoal); }
+.ads-closing-copyright { font-weight: 300; font-size: .75rem; color: var(--mid); margin-top: 40px; }
+
+/* --- Ads Location Cards (Proposal) --- */
+.ads-location-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; max-width: 960px; margin: 40px auto 0;
+}
+.ads-location-card { text-align: center; }
+.ads-location-card-image {
+  aspect-ratio: 4 / 5; background: var(--grey-bg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--mid); font-size: .8rem; margin-bottom: 16px;
+}
+.ads-location-card h3 { font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 4px; }
+.ads-location-card p { font-weight: 300; font-size: .85rem; color: var(--mid); font-style: italic; }
+@media (max-width: 768px) {
+  .ads-location-cards { grid-template-columns: 1fr; }
+}
+
+/* --- Ads Steps (Proposal) --- */
+.ads-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 48px; max-width: 800px; margin: 0 auto; text-align: center;
+}
+.ads-step-number { font-weight: 300; font-size: 2.4rem; color: var(--accent); margin-bottom: 12px; }
+.ads-step h3 { font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 8px; }
+.ads-step p { font-weight: 300; font-size: .9rem; color: var(--mid); line-height: 1.6; }
+@media (max-width: 768px) {
+  .ads-steps { grid-template-columns: 1fr; gap: 36px; }
+}
