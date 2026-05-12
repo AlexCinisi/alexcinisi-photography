@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
     },
     async redirects() {
         return [
+            // Ads redirects — preserve old WordPress URLs
+            {
+              source: '/luxury-destination-wedding-photography-in-sicily',
+              destination: '/ads/luxury-destination-wedding-sicily',
+              permanent: true,
+            },
+            {
+              source: '/proposal-in-sicily',
+              destination: '/ads/proposal-sicily',
+              permanent: true,
+            },
             // WordPress stories → journal
             { source: '/villa-igiea-wedding-a-luxury-love-story', destination: '/journal/villa-igiea-wedding', permanent: true },
             { source: '/sea-club-terrasini-wedding-a-timeless-pastel-sunset-celebration', destination: '/journal/sea-club-terrasini-wedding', permanent: true },
