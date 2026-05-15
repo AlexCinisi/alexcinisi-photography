@@ -22,22 +22,33 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  // ─── LAYER 2: Rate Limiting ───
+  // ─── LAYER 2: Rate Limiting (con fail-open graceful) ───
   if (ratelimit) {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'anonymous';
-    const { success, limit, remaining } = await ratelimit.limit(ip);
-
-    if (!success) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again in one hour.' },
-        {
-          status: 429,
-          headers: {
-            'X-RateLimit-Limit': String(limit),
-            'X-RateLimit-Remaining': String(remaining),
-          },
-        }
+    try {
+      // Timeout 1500ms: se Upstash non risponde, fail-open e procedi senza rate limit
+      const rateLimitPromise = ratelimit.limit(ip);
+      const timeoutPromise = new Promise<null>((resolve) =>
+        setTimeout(() => resolve(null), 1500)
       );
+      const result = await Promise.race([rateLimitPromise, timeoutPromise]);
+
+      if (result && !result.success) {
+        return NextResponse.json(
+          { error: 'Too many requests. Please try again in one hour.' },
+          {
+            status: 429,
+            headers: {
+              'X-RateLimit-Limit': String(result.limit),
+              'X-RateLimit-Remaining': String(result.remaining),
+            },
+          }
+        );
+      }
+      // Se result è null (timeout) o success=true, procediamo
+    } catch (error) {
+      // Upstash giù: log e fail-open. Meglio accettare la richiesta che rompere il form.
+      console.error('Rate limit check failed (fail-open):', error);
     }
   }
 
