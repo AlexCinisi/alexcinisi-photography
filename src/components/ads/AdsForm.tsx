@@ -69,6 +69,24 @@ export default function AdsForm({
           privacyConsent: formData.privacyConsent,
         }),
       })
+
+      // Analytics: push dataLayer event for GTM (Meta Pixel Lead + GA4 + Google Ads conversion)
+      if (res.ok && typeof window !== 'undefined') {
+        const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
+        ;(window as any).dataLayer = (window as any).dataLayer || []
+        ;(window as any).dataLayer.push({
+          event: 'form_submit_success',
+          event_id: eventId,
+          form_name: 'ads_form',
+          form_variant: 'ads',
+          form_location: source, // proposal-sicily, luxury-destination-wedding-sicily, etc
+          user_email: formData.email || undefined,
+          user_first_name: formData.firstName || undefined,
+          venue: formData.location || undefined,
+          wedding_date: formData.weddingDate || undefined,
+        })
+      }
+
       setStatus(res.ok ? 'success' : 'error')
     } catch {
       setStatus('error')

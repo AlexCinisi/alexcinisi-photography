@@ -191,6 +191,36 @@ export default function ContactForm({
                 throw new Error('Failed to send message');
             }
 
+            // Analytics: push dataLayer event for GTM
+            // Triggers Meta Pixel Lead, GA4 form_submit_contact, Google Ads conversion
+            if (typeof window !== 'undefined') {
+                const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
+                const formLocation = (() => {
+                    const path = window.location.pathname;
+                    if (path === '/' || path === '') return 'homepage';
+                    if (path.startsWith('/contact')) return 'contact';
+                    if (path.startsWith('/locations/')) return 'location';
+                    if (path.startsWith('/journal/')) return 'journal';
+                    return 'other';
+                })();
+
+                (window as any).dataLayer = (window as any).dataLayer || [];
+                (window as any).dataLayer.push({
+                    event: 'form_submit_success',
+                    event_id: eventId,
+                    form_name: 'contact_form',
+                    form_variant: variant,
+                    form_location: formLocation,
+                    // Enhanced Conversions / Advanced Matching data (hashed server-side by GTM/Meta)
+                    user_email: formData.email || undefined,
+                    user_phone: formData.phone || undefined,
+                    user_first_name: formData.name || undefined,
+                    // Wedding context
+                    venue: formData.location || undefined,
+                    wedding_date: formData.weddingDate || undefined,
+                });
+            }
+
             setStatus('success');
             setFormData({
                 name: '',
