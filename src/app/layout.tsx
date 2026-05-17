@@ -250,7 +250,7 @@ export default async function RootLayout({
                 <Analytics />
                 <SpeedInsights />
             </body>
-            {process.env.NEXT_PUBLIC_GTM_ID && (
+            {process.env.NEXT_PUBLIC_GTM_ID && process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
                 <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
             )}
         </html>
