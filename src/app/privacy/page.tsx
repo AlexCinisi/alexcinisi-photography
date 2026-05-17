@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       <section className="legal-page">
         <div className="legal-max">
           <h1 className="legal-title">Privacy Policy</h1>
-          <p className="legal-meta">Last updated: 17 April 2026 · Policy version: 1.0</p>
+          <p className="legal-meta">Last updated: 15 May 2026 &middot; Policy version: 1.1</p>
 
           <div className="legal-body">
 
@@ -65,6 +65,7 @@ export default function PrivacyPage() {
               <li>Referring URL</li>
               <li>Approximate geographic location (city-level, derived from IP)</li>
               <li>Click, scroll, and interaction patterns (via Microsoft Clarity session recordings)</li>
+              <li>Advertising-related data: clicks on our Meta advertisements, browsing actions on our website following an ad click, and engagement events such as form submissions or contact actions (via Meta Pixel, only with marketing cookie consent)</li>
             </ul>
 
             <h3>3c. Data we do NOT collect</h3>
@@ -102,8 +103,13 @@ export default function PrivacyPage() {
                     <td>Art. 6(1)(f) — Legitimate interest</td>
                   </tr>
                   <tr>
-                    <td>Future marketing communications (if enabled)</td>
-                    <td>Email, name</td>
+                    <td>Measuring effectiveness of our advertising on Meta platforms (Facebook, Instagram)</td>
+                    <td>Browsing data, advertising click data, form interaction events</td>
+                    <td>Art. 6(1)(a) — Your explicit consent</td>
+                  </tr>
+                  <tr>
+                    <td>Building remarketing audiences for Meta advertising campaigns</td>
+                    <td>Browsing behaviour, advertising identifiers</td>
                     <td>Art. 6(1)(a) — Your explicit consent</td>
                   </tr>
                   <tr>
@@ -170,6 +176,12 @@ export default function PrivacyPage() {
                     <td>Norway (EEA)</td>
                     <td>Adequate protection (EEA member)</td>
                   </tr>
+                  <tr>
+                    <td>Meta Platforms Ireland Ltd.</td>
+                    <td>Advertising measurement, remarketing audiences, ad optimisation (Meta Pixel)</td>
+                    <td>Ireland (EU); data may be transferred to United States</td>
+                    <td>EU-US Data Privacy Framework</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -208,6 +220,10 @@ export default function PrivacyPage() {
                   <tr>
                     <td>Cookie consent preferences</td>
                     <td>180 days (6 months, per Italian Data Protection Authority guidelines)</td>
+                  </tr>
+                  <tr>
+                    <td>Meta Pixel data (advertising measurement, remarketing)</td>
+                    <td>180 days for browsing data; up to 2 years for aggregated advertising metrics (Meta default retention)</td>
                   </tr>
                 </tbody>
               </table>

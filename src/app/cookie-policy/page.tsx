@@ -20,7 +20,7 @@ export default function CookiePolicyPage() {
       <section className="legal-page">
         <div className="legal-max">
           <h1 className="legal-title">Cookie Policy</h1>
-          <p className="legal-meta">Last updated: 17 April 2026 · Policy version: 1.0</p>
+          <p className="legal-meta">Last updated: 15 May 2026 &middot; Policy version: 1.1</p>
 
           <div className="legal-body">
 
@@ -76,14 +76,30 @@ export default function CookiePolicyPage() {
             </div>
 
             <h3>2d. Marketing Cookies</h3>
-            <p>We do not currently use marketing or advertising cookies. If we introduce them in the future (for example, Meta Pixel or Google Ads remarketing), this policy will be updated and your consent will be requested separately through our cookie banner.</p>
+            <p>These cookies enable us to measure the effectiveness of our advertising on Meta platforms (Facebook and Instagram), build remarketing audiences, and optimise our ad campaigns. They are set <strong>only after you provide consent</strong> through the Marketing category in our cookie banner.</p>
+            <div className="legal-table-wrap">
+              <table className="legal-table">
+                <thead>
+                  <tr><th>Cookie name</th><th>Provider</th><th>Purpose</th><th>Duration</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>_fbp</td><td>Meta Platforms Ireland Ltd. (Facebook)</td><td>Identifies the browser for advertising measurement and audience building</td><td>90 days</td></tr>
+                  <tr><td>_fbc</td><td>Meta Platforms Ireland Ltd. (Facebook)</td><td>Stores the click ID of a Meta advertisement that brought you to the website</td><td>90 days</td></tr>
+                  <tr><td>fr</td><td>Meta Platforms Ireland Ltd. (Facebook)</td><td>Encrypted user identifier used for ad personalisation (only set if you are logged into Facebook)</td><td>90 days</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Meta Pixel collects information about your browsing on our website (pages visited, actions taken, device information, IP address) and transmits it to Meta for advertising measurement, remarketing, and ad optimisation purposes. Data is processed by Meta Platforms Ireland Ltd. (data controller for EU users) and may be transferred to Meta Platforms Inc. in the United States under the EU-US Data Privacy Framework.</p>
+            <p>For detailed information on how Meta uses this data, please refer to Meta&apos;s <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookie Policy</a>.</p>
 
             <h2>3. Third-Party Cookies</h2>
-            <p>Some cookies listed above are set by third-party services (Google and Microsoft). These services may also set additional cookies not listed here, governed by their own privacy policies:</p>
+            <p>Some cookies listed above are set by third-party services (Google, Microsoft, and Meta). These services may also set additional cookies not listed here, governed by their own privacy policies:</p>
             <ul>
               <li><strong>Google Privacy Policy:</strong> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a></li>
               <li><strong>Microsoft Privacy Statement:</strong> <a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank" rel="noopener noreferrer">privacy.microsoft.com</a></li>
               <li><strong>Microsoft Clarity Documentation:</strong> <a href="https://learn.microsoft.com/en-us/clarity/" target="_blank" rel="noopener noreferrer">learn.microsoft.com/clarity</a></li>
+              <li><strong>Meta Privacy Policy:</strong> <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">facebook.com/privacy/policy</a></li>
+              <li><strong>Meta Cookie Policy:</strong> <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">facebook.com/policies/cookies</a></li>
             </ul>
 
             <h2>4. How to Manage Your Cookie Preferences</h2>
