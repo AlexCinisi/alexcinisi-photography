@@ -173,6 +173,8 @@ export default function ContactForm({
         setFormErrors({});
 
         try {
+            const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
+
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
@@ -184,6 +186,7 @@ export default function ContactForm({
                     timeOnPage: Math.round((Date.now() - trackingData.formStartTime) / 1000),
                     website: honeypot,
                     turnstileToken,
+                    eventId,
                 }),
             });
 
@@ -194,7 +197,6 @@ export default function ContactForm({
             // Analytics: push dataLayer event for GTM
             // Triggers Meta Pixel Lead, GA4 form_submit_contact, Google Ads conversion
             if (typeof window !== 'undefined') {
-                const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
                 const formLocation = (() => {
                     const path = window.location.pathname;
                     if (path === '/' || path === '') return 'homepage';

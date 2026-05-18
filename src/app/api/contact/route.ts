@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import { contactSchema } from '@/lib/contact-schema';
 import { ratelimit } from '@/lib/rate-limit';
 import { verifyTurnstile } from '@/lib/turnstile';
+import { sendMetaLeadEvent, extractMetaCookies } from '@/lib/meta-capi';
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -175,6 +176,39 @@ export async function POST(request: Request) {
 
     // Execute both in parallel
     await Promise.all([ownerEmailPromise, clientEmailPromise]);
+
+    // ─── META CAPI: server-side Lead event (GDPR-gated) ───
+    // Invia evento a Meta SOLO SE l'utente ha accettato cookie Marketing.
+    // Proxy implicito: presenza di _fbp = consenso Marketing dato (set da Pixel browser).
+    // Fire-and-forget: non blocca la risposta al client, non causa errore form se fallisce.
+    const { fbp, fbc } = extractMetaCookies(request.headers.get('cookie'));
+    
+    if (fbp && data.eventId) {
+      // Consenso Marketing presente + event_id disponibile → invia a CAPI
+      const clientIp =
+        request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+        request.headers.get('x-real-ip') ||
+        '0.0.0.0';
+      
+      sendMetaLeadEvent({
+        email: data.email,
+        phone: data.phone,
+        firstName: data.name,
+        eventId: data.eventId,
+        eventSourceUrl: data.pageUrl || 'https://alexcinisiphotography.com/contact',
+        clientIpAddress: clientIp,
+        clientUserAgent: data.userAgent || request.headers.get('user-agent') || '',
+        fbp,
+        fbc,
+      }).catch((error) => {
+        // Fire-and-forget: log l'errore ma non bloccare la risposta
+        console.error('[Meta CAPI] Lead event failed (non-blocking):', error);
+      });
+    } else if (!fbp) {
+      console.log('[Meta CAPI] Skipped: user did not consent to Marketing cookies');
+    } else if (!data.eventId) {
+      console.warn('[Meta CAPI] Skipped: missing eventId from client (deduplication impossible)');
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

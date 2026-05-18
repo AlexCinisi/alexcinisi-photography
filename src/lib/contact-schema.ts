@@ -32,6 +32,9 @@ export const contactSchema = z.object({
   userAgent: z.string().max(500).optional().default(''),
   browserLang: z.string().max(20).optional().default(''),
   timeOnPage: z.number().optional().default(0),
+  
+  // Meta CAPI — event_id per deduplicazione browser/server (generato lato client)
+  eventId: z.string().max(100).optional().default(''),
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;

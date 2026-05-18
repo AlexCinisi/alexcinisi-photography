@@ -54,6 +54,8 @@ export default function AdsForm({
     setStatus('submitting')
 
     try {
+      const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
+
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,12 +69,12 @@ export default function AdsForm({
           website: honeypot,
           turnstileToken,
           privacyConsent: formData.privacyConsent,
+          eventId,
         }),
       })
 
       // Analytics: push dataLayer event for GTM (Meta Pixel Lead + GA4 + Google Ads conversion)
       if (res.ok && typeof window !== 'undefined') {
-        const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11);
         ;(window as any).dataLayer = (window as any).dataLayer || []
         ;(window as any).dataLayer.push({
           event: 'form_submit_success',
