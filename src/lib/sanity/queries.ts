@@ -355,11 +355,55 @@ export const contactPageQuery = `*[_type == "contactPage"][0] {
 // Ads Landing Pages
 export const adsLuxuryPageQuery = `*[_type == "adsLuxuryPage"][0] {
   heroImage { asset->, alt, hotspot, crop },
+  heroEyebrow,
+  heroTitle,
+  heroSubtitle,
+  heroCtaText,
+  heroMicroText,
+  trustBarItems,
   selectedWork[] { asset->, alt, caption, hotspot, crop },
-  filmImages[] { asset->, alt, hotspot, crop }
+  experienceTitle,
+  experienceSubtitle,
+  experiencePillars,
+  filmImages[] { asset->, alt, hotspot, crop },
+  investmentStartingPrice,
+  investmentRange,
+  investmentIncludes,
+  testimonials,
+  formHeading,
+  formDescription,
+  formUrgency,
+  closingQuote,
+  socialProofBadges[] { name, image { asset->, alt, hotspot, crop } },
+  metaTitle,
+  metaDescription,
+  ogImage { asset->, alt, hotspot, crop }
 }`
 
 export const adsProposalPageQuery = `*[_type == "adsProposalPage"][0] {
   heroImage { asset->, alt, hotspot, crop },
-  locationImages[] { asset->, alt, hotspot, crop }
+  heroEyebrow,
+  heroTitle,
+  heroSubtitle,
+  heroCtaText,
+  heroMicroText,
+  trustBarItems,
+  locationCards[] { image { asset->, alt, hotspot, crop }, name, city, description },
+  experienceTitle,
+  experienceSubtitle,
+  experiencePillars,
+  howItWorks,
+  proposalPrice,
+  elopementPrice,
+  investmentIncludes,
+  investmentOptionals,
+  testimonials,
+  formHeading,
+  formDescription,
+  formUrgency,
+  closingQuote,
+  socialProofBadges[] { name, image { asset->, alt, hotspot, crop } },
+  metaTitle,
+  metaDescription,
+  ogImage { asset->, alt, hotspot, crop }
 }`

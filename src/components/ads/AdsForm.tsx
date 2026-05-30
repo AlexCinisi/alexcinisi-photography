@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import Turnstile from 'react-turnstile'
 
 interface AdsFormProps {
@@ -39,6 +39,7 @@ export default function AdsForm({
   const [formData, setFormData] = useState({
     firstName: '',
     email: '',
+    phone: '',
     weddingDate: '',
     location: '',
     vision: '',
@@ -47,6 +48,13 @@ export default function AdsForm({
   const [honeypot, setHoneypot] = useState('')
   const [turnstileToken, setTurnstileToken] = useState('')
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [urlSource, setUrlSource] = useState('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const utmSource = params.get('utm_source')
+    if (utmSource) setUrlSource(utmSource)
+  }, [])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -62,10 +70,11 @@ export default function AdsForm({
         body: JSON.stringify({
           firstName: formData.firstName,
           email: formData.email,
+          phone: formData.phone,
           weddingDate: formData.weddingDate,
           location: formData.location,
           message: formData.vision,
-          source,
+          source: urlSource ? `${source}-${urlSource}` : source,
           website: honeypot,
           turnstileToken,
           privacyConsent: formData.privacyConsent,
@@ -147,6 +156,14 @@ export default function AdsForm({
               onChange={e => updateField('email', e.target.value)}
             />
 
+            <label htmlFor="ads-phone">Phone (optional)</label>
+            <input
+              type="tel" id="ads-phone"
+              placeholder="+1 (555) 000-0000"
+              value={formData.phone}
+              onChange={e => updateField('phone', e.target.value)}
+            />
+
             <label htmlFor="ads-date">{dateLabel}</label>
             <input
               type={datePlaceholder ? 'text' : 'date'}
@@ -190,7 +207,10 @@ export default function AdsForm({
                 onChange={e => updateField('privacyConsent', e.target.checked)}
               />
               <label htmlFor="ads-privacy" style={{ margin: 0, textTransform: 'none', letterSpacing: 0 }}>
-                I agree to the privacy policy.
+                I agree to the{' '}
+                <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
+                  privacy policy
+                </a>.
               </label>
             </div>
 

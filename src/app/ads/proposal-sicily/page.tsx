@@ -17,39 +17,95 @@ import {
   ADS_TESTIMONIALS,
 } from '@/lib/constants'
 
-export const metadata: Metadata = {
-  title: 'Proposal & Elopement Photography Sicily | Alex Cinisi',
-  description: 'Intimate proposal and elopement photography in Sicily. Valley of the Temples, Scopello, Taormina. Film & digital. Every moment captured naturally.',
-  robots: { index: false, follow: false },
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(adsProposalPageQuery).catch(() => null)
+
+  const title = data?.metaTitle || 'Proposal & Elopement Photography Sicily | Alex Cinisi'
+  const description = data?.metaDescription || 'Intimate proposal and elopement photography in Sicily. Valley of the Temples, Scopello, Taormina. Film & digital. Every moment captured naturally.'
+  
+  return {
+    title: {
+      absolute: title,
+    },
+    description: description,
+    robots: { index: false, follow: false },
+    alternates: {
+      canonical: null,
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: 'https://alexcinisiphotography.com/ads/proposal-sicily',
+      siteName: 'Alex Cinisi Photography',
+      locale: 'en_US',
+      type: 'website',
+      images: data?.ogImage?.asset
+        ? [{ url: urlFor(data.ogImage).width(1200).height(630).auto('format').url() }]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: data?.ogImage?.asset
+        ? [urlFor(data.ogImage).width(1200).height(630).auto('format').url()]
+        : undefined,
+    },
+  }
 }
 
 export default async function ProposalAdsPage() {
   const data = await client.fetch(adsProposalPageQuery).catch(() => null)
 
+  const heroTitle = (data?.heroTitle || "The Most Important Question<br />Deserves the Most<br />Beautiful Setting").replace(/\|/g, '<br />')
+
   return (
     <>
-      <AdsHeader ctaText="Plan Your Proposal" />
+      <AdsHeader ctaText={data?.heroCtaText || "Plan Your Proposal"} />
 
       <AdsHero
-        eyebrow="Proposal & Elopement Photography · Sicily"
-        title="The Most Important Question<br />Deserves the Most<br />Beautiful Setting"
-        subtitle="Intimate, cinematic proposal and elopement photography across Sicily's most iconic locations."
-        ctaText="Plan Your Proposal"
-        microText="Every session is tailored to your story."
+        eyebrow={data?.heroEyebrow || "Proposal & Elopement Photography · Sicily"}
+        title={heroTitle}
+        subtitle={data?.heroSubtitle || "Intimate, cinematic proposal and elopement photography across Sicily's most iconic locations."}
+        ctaText={data?.heroCtaText || "Plan Your Proposal"}
+        microText={data?.heroMicroText || "Every session is tailored to your story."}
         image={data?.heroImage}
       />
 
-      <AdsTrustBar items={ADS_TRUST_BAR_PROPOSAL} />
+      <AdsTrustBar items={data?.trustBarItems || ADS_TRUST_BAR_PROPOSAL} />
+
+      {data?.socialProofBadges && data.socialProofBadges.length > 0 && (
+        <section className="ads-section-offwhite" style={{ padding: '24px 0', textAlign: 'center' }}>
+          <div style={{ display: 'flex', gap: '32px', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', opacity: 0.7 }}>
+            {data.socialProofBadges.map((badge: any, i: number) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {badge.image?.asset && (
+                   <Image src={urlFor(badge.image).height(40).auto('format').url()} alt={badge.name} width={120} height={40} style={{ objectFit: 'contain' }} />
+                )}
+                {!badge.image?.asset && <span style={{ fontSize: '0.9rem', fontWeight: 500, letterSpacing: '1px', textTransform: 'uppercase' }}>{badge.name}</span>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Sicily Locations */}
       <section className="ads-section" style={{ textAlign: 'center' }}>
         <div className="ads-eyebrow"><span>Sicily Locations</span></div>
         <h2 className="ads-h2">Where Will You Ask <em>the Question?</em></h2>
         <div className="ads-location-cards">
-          {ADS_LOCATIONS_PROPOSAL.map((loc, i) => (
+          {(data?.locationCards || ADS_LOCATIONS_PROPOSAL).map((loc: any, i: number) => (
             <div key={i} className="ads-location-card">
               <div className="ads-location-card-image" style={{ position: 'relative' }}>
-                {data?.locationImages?.[i]?.asset ? (
+                {loc?.image?.asset ? (
+                  <Image
+                    src={urlFor(loc.image).width(600).height(750).auto('format').quality(80).url()}
+                    alt={loc.image.alt || `${loc.name}, ${loc.city}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: 'cover' }}
+                  />
+                ) : data?.locationImages?.[i]?.asset ? (
                   <Image
                     src={urlFor(data.locationImages[i]).width(600).height(750).auto('format').quality(80).url()}
                     alt={data.locationImages[i].alt || `${loc.name}, ${loc.city}`}
@@ -71,12 +127,12 @@ export default async function ProposalAdsPage() {
       {/* The Experience — dark section with 3 pillars */}
       <section className="ads-section-dark">
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <h2 className="ads-h2">An Intimate, <em>Natural</em> Approach</h2>
+          <h2 className="ads-h2" dangerouslySetInnerHTML={{ __html: (data?.experienceTitle || "An Intimate, <em>Natural</em> Approach").replace(/\|/g, '<br />') }} />
           <p className="ads-section-subtitle">
-            No scripts, no awkward posing. Just real emotion, captured with cinematic sensitivity.
+            {data?.experienceSubtitle || "No scripts, no awkward posing. Just real emotion, captured with cinematic sensitivity."}
           </p>
           <div className="ads-pillars">
-            {ADS_PILLARS_PROPOSAL.map((p, i) => (
+            {(data?.experiencePillars || ADS_PILLARS_PROPOSAL).map((p: any, i: number) => (
               <div key={i} className="ads-pillar">
                 <h3>{p.title}</h3>
                 <p>{p.description}</p>
@@ -91,7 +147,7 @@ export default async function ProposalAdsPage() {
         <div className="ads-eyebrow"><span>How It Works</span></div>
         <h2 className="ads-h2">Three Simple <em>Steps</em></h2>
         <div className="ads-steps" style={{ marginTop: 48 }}>
-          {ADS_HOW_IT_WORKS.map((s, i) => (
+          {(data?.howItWorks || ADS_HOW_IT_WORKS).map((s: any, i: number) => (
             <div key={i} className="ads-step">
               <div className="ads-step-number">{s.step}</div>
               <h3>{s.title}</h3>
@@ -109,24 +165,24 @@ export default async function ProposalAdsPage() {
           <div className="ads-investment-dual" style={{ marginTop: 40 }}>
             <div className="ads-investment-dual-item">
               <h3>Proposals</h3>
-              <p className="price">From {ADS_INVESTMENT_PROPOSAL.proposalPrice}</p>
+              <p className="price">From {data?.proposalPrice || ADS_INVESTMENT_PROPOSAL.proposalPrice}</p>
             </div>
             <div className="ads-investment-dual-item">
               <h3>Elopements</h3>
-              <p className="price">From {ADS_INVESTMENT_PROPOSAL.elopementPrice}</p>
+              <p className="price">From {data?.elopementPrice || ADS_INVESTMENT_PROPOSAL.elopementPrice}</p>
             </div>
           </div>
           <div className="ads-investment-divider" />
           <ul className="ads-investment-list">
-            {ADS_INVESTMENT_PROPOSAL.includes.map((item, i) => (
+            {(data?.investmentIncludes || ADS_INVESTMENT_PROPOSAL.includes).map((item: string, i: number) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
           <p style={{ fontWeight: 300, fontSize: '.9rem', color: 'var(--mid)', marginTop: 24 }}>
-            Optional: {ADS_INVESTMENT_PROPOSAL.optionals.join(' · ')}
+            Optional: {(data?.investmentOptionals || ADS_INVESTMENT_PROPOSAL.optionals).join(' · ')}
           </p>
           <div style={{ marginTop: 32 }}>
-            <a href="#book" className="ads-closing-cta">Plan Your Proposal</a>
+            <a href="#book" className="ads-closing-cta">{data?.heroCtaText || "Plan Your Proposal"}</a>
           </div>
         </div>
       </section>
@@ -136,7 +192,7 @@ export default async function ProposalAdsPage() {
         <div style={{ maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
           <h2 className="ads-h2">Words From <em>Happy Couples</em></h2>
           <div className="ads-testimonials-grid" style={{ marginTop: 48 }}>
-            {ADS_TESTIMONIALS.map((t, i) => (
+            {(data?.testimonials || ADS_TESTIMONIALS).map((t: any, i: number) => (
               <div key={i} className="ads-testimonial-card">
                 <div className="ads-testimonial-stars">★★★★★</div>
                 <p className="ads-testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
@@ -151,16 +207,16 @@ export default async function ProposalAdsPage() {
       {/* Form — customized for proposals */}
       <AdsForm
         source="google-ads-proposal"
-        ctaText="Plan Your Proposal"
+        ctaText={data?.heroCtaText || "Plan Your Proposal"}
         dateLabel="Proposed Date"
         datePlaceholder="Month 2026 · or 'Flexible'"
         locationLabel="Preferred Location"
         locationPlaceholder="e.g. Valley of the Temples, or 'Help me choose'"
         visionLabel="Tell me about your vision"
         visionPlaceholder="Is it a surprise? What's the story?"
-        headingText="Plan Your Perfect Moment"
-        descriptionText="Every proposal and elopement I photograph is unique. Share your vision and I'll help you create an unforgettable experience."
-        urgencyText="Summer & Autumn 2026 — limited dates available."
+        headingText={data?.formHeading || "Plan Your Perfect Moment"}
+        descriptionText={data?.formDescription || "Every proposal and elopement I photograph is unique. Share your vision and I'll help you create an unforgettable experience."}
+        urgencyText={data?.formUrgency || "Summer & Autumn 2026 — limited dates available."}
         reassuranceItems={[
           '✓ Personal response within 24 hours',
           '✓ No obligation',
@@ -170,8 +226,8 @@ export default async function ProposalAdsPage() {
 
       {/* Closing */}
       <AdsClosing
-        quote="She Said Yes — And You'll Have the Photographs to Prove It."
-        ctaText="Plan Your Proposal"
+        quote={data?.closingQuote || "She Said Yes — And You'll Have the Photographs to Prove It."}
+        ctaText={data?.heroCtaText || "Plan Your Proposal"}
       />
     </>
   )

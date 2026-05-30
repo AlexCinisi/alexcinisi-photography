@@ -15,29 +15,77 @@ import {
   ADS_PILLARS_WEDDING,
 } from '@/lib/constants'
 
-export const metadata: Metadata = {
-  title: 'Luxury Destination Wedding Photography Sicily | Alex Cinisi',
-  description: 'Editorial wedding photography for refined couples. Film & digital. Only 15 weddings per year. Based in Sicily, available worldwide.',
-  robots: { index: false, follow: false },
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(adsLuxuryPageQuery).catch(() => null)
+
+  const title = data?.metaTitle || 'Luxury Destination Wedding Photography Sicily | Alex Cinisi'
+  const description = data?.metaDescription || 'Editorial wedding photography for refined couples. Film & digital. Only 15 weddings per year. Based in Sicily, available worldwide.'
+  
+  return {
+    title: {
+      absolute: title,
+    },
+    description: description,
+    robots: { index: false, follow: false },
+    alternates: {
+      canonical: null,
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: 'https://alexcinisiphotography.com/ads/luxury-destination-wedding-sicily',
+      siteName: 'Alex Cinisi Photography',
+      locale: 'en_US',
+      type: 'website',
+      images: data?.ogImage?.asset
+        ? [{ url: urlFor(data.ogImage).width(1200).height(630).auto('format').url() }]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: data?.ogImage?.asset
+        ? [urlFor(data.ogImage).width(1200).height(630).auto('format').url()]
+        : undefined,
+    },
+  }
 }
 
 export default async function LuxuryWeddingAdsPage() {
   const data = await client.fetch(adsLuxuryPageQuery).catch(() => null)
 
+  const heroTitle = (data?.heroTitle || "Your Sicily Wedding,<br />Told Like a Film<br />You'll Never Forget").replace(/\|/g, '<br />')
+
   return (
     <>
-      <AdsHeader ctaText="Request Your Bespoke Proposal" />
+      <AdsHeader ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"} />
 
       <AdsHero
-        eyebrow="Luxury Destination Wedding Photography · Sicily"
-        title="Your Sicily Wedding,<br />Told Like a Film<br />You'll Never Forget"
-        subtitle="An editorial and timeless approach for refined couples planning an extraordinary destination wedding."
-        ctaText="Request Your Bespoke Proposal"
-        microText="I accept only 15 destination weddings per year."
+        eyebrow={data?.heroEyebrow || "Luxury Destination Wedding Photography · Sicily"}
+        title={heroTitle}
+        subtitle={data?.heroSubtitle || "An editorial and timeless approach for refined couples planning an extraordinary destination wedding."}
+        ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"}
+        microText={data?.heroMicroText || "I accept only 15 destination weddings per year."}
         image={data?.heroImage}
       />
 
-      <AdsTrustBar items={ADS_TRUST_BAR_WEDDING} />
+      <AdsTrustBar items={data?.trustBarItems || ADS_TRUST_BAR_WEDDING} />
+
+      {data?.socialProofBadges && data.socialProofBadges.length > 0 && (
+        <section className="ads-section-offwhite" style={{ padding: '24px 0', textAlign: 'center' }}>
+          <div style={{ display: 'flex', gap: '32px', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', opacity: 0.7 }}>
+            {data.socialProofBadges.map((badge: any, i: number) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {badge.image?.asset && (
+                   <Image src={urlFor(badge.image).height(40).auto('format').url()} alt={badge.name} width={120} height={40} style={{ objectFit: 'contain' }} />
+                )}
+                {!badge.image?.asset && <span style={{ fontSize: '0.9rem', fontWeight: 500, letterSpacing: '1px', textTransform: 'uppercase' }}>{badge.name}</span>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Selected Work */}
       <section className="ads-section" style={{ textAlign: 'center' }}>
@@ -85,12 +133,12 @@ export default async function LuxuryWeddingAdsPage() {
       {/* The Experience — dark section with 3 pillars */}
       <section className="ads-section-dark">
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <h2 className="ads-h2">A Calm, Refined &amp; <em>Intentional</em> Approach</h2>
+          <h2 className="ads-h2" dangerouslySetInnerHTML={{ __html: (data?.experienceTitle || "A Calm, Refined &amp; <em>Intentional</em> Approach").replace(/\|/g, '<br />') }} />
           <p className="ads-section-subtitle">
-            I believe the most meaningful images are created when couples feel comfortable, present and truly themselves.
+            {data?.experienceSubtitle || "I believe the most meaningful images are created when couples feel comfortable, present and truly themselves."}
           </p>
           <div className="ads-pillars">
-            {ADS_PILLARS_WEDDING.map((p, i) => (
+            {(data?.experiencePillars || ADS_PILLARS_WEDDING).map((p: any, i: number) => (
               <div key={i} className="ads-pillar">
                 <h3>{p.title}</h3>
                 <p>{p.description}</p>
@@ -143,15 +191,15 @@ export default async function LuxuryWeddingAdsPage() {
       <section className="ads-section" style={{ textAlign: 'center' }}>
         <div className="ads-eyebrow"><span>Your Investment</span></div>
         <h2 className="ads-h2">Transparent Pricing for <em>Refined Couples</em></h2>
-        <p className="ads-investment-price">From {ADS_INVESTMENT_WEDDING.startingPrice}</p>
-        <p className="ads-investment-range">{ADS_INVESTMENT_WEDDING.range}</p>
+        <p className="ads-investment-price">From {data?.investmentStartingPrice || ADS_INVESTMENT_WEDDING.startingPrice}</p>
+        <p className="ads-investment-range">{data?.investmentRange || ADS_INVESTMENT_WEDDING.range}</p>
         <div className="ads-investment-divider" />
         <ul className="ads-investment-list">
-          {ADS_INVESTMENT_WEDDING.includes.map((item, i) => (
+          {(data?.investmentIncludes || ADS_INVESTMENT_WEDDING.includes).map((item: string, i: number) => (
             <li key={i}>{item}</li>
           ))}
         </ul>
-        <a href="#book" className="ads-closing-cta">Request Your Bespoke Proposal</a>
+        <a href="#book" className="ads-closing-cta">{data?.heroCtaText || "Request Your Bespoke Proposal"}</a>
       </section>
 
       {/* Testimonials */}
@@ -159,7 +207,7 @@ export default async function LuxuryWeddingAdsPage() {
         <div style={{ maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
           <h2 className="ads-h2">Words From <em>International Couples</em></h2>
           <div className="ads-testimonials-grid" style={{ marginTop: 48 }}>
-            {ADS_TESTIMONIALS.map((t, i) => (
+            {(data?.testimonials || ADS_TESTIMONIALS).map((t: any, i: number) => (
               <div key={i} className="ads-testimonial-card">
                 <div className="ads-testimonial-stars">★★★★★</div>
                 <p className="ads-testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
@@ -174,13 +222,16 @@ export default async function LuxuryWeddingAdsPage() {
       {/* Form */}
       <AdsForm
         source="google-ads-luxury"
-        ctaText="Request Your Bespoke Proposal"
+        ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"}
+        headingText={data?.formHeading || "Begin Your Story"}
+        descriptionText={data?.formDescription || "I accept a limited number of destination weddings each year to ensure every couple receives my full creative focus."}
+        urgencyText={data?.formUrgency || "Only 4 dates remaining for Autumn 2026."}
       />
 
       {/* Closing */}
       <AdsClosing
-        quote="Every 'Yes' Deserves To Be Remembered."
-        ctaText="Request Your Bespoke Proposal"
+        quote={data?.closingQuote || "Every 'Yes' Deserves To Be Remembered."}
+        ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"}
       />
     </>
   )
