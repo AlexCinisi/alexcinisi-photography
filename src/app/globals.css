@@ -4399,6 +4399,59 @@ a.journal-credit-name:hover {
   .ads-form-card { padding: 28px 20px; }
 }
 
+/* --- Ads WhatsApp CTA --- */
+.ads-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .68rem;
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 32px;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .25s, color .25s;
+}
+.ads-wa-btn:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+.ads-wa-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+/* Hero variant — light on dark */
+.ads-hero .ads-wa-btn {
+  color: var(--white);
+  border-color: rgba(255,255,255,.4);
+}
+.ads-hero .ads-wa-btn:hover {
+  background: var(--white);
+  color: var(--ink);
+}
+/* Form section variant — light on dark */
+.ads-form-section .ads-wa-btn {
+  color: var(--white);
+  border-color: rgba(255,255,255,.4);
+  margin-top: 20px;
+}
+.ads-form-section .ads-wa-btn:hover {
+  background: var(--white);
+  color: var(--ink);
+}
+.ads-hero-ctas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 /* --- Ads Closing --- */
 .ads-closing { padding: 80px 48px; text-align: center; background: var(--white); }
 .ads-closing-quote {

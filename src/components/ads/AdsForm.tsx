@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from 'react'
 import Turnstile from 'react-turnstile'
+import AdsWhatsApp from './AdsWhatsApp'
 
 interface AdsFormProps {
   source: string
@@ -16,6 +17,7 @@ interface AdsFormProps {
   urgencyText?: string
   headingText?: string
   descriptionText?: string
+  showWhatsApp?: boolean
 }
 
 export default function AdsForm({
@@ -35,6 +37,7 @@ export default function AdsForm({
   urgencyText = 'Only 4 dates remaining for Autumn 2026.',
   headingText = 'Begin Your Story',
   descriptionText = 'I accept a limited number of destination weddings each year to ensure every couple receives my full creative focus.',
+  showWhatsApp = false,
 }: AdsFormProps) {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -116,6 +119,19 @@ export default function AdsForm({
             <div className="ads-form-success">
               <h3>Thank you.</h3>
               <p>I&apos;ll be in touch personally within 24 hours.</p>
+              {showWhatsApp && (
+                <p style={{ marginTop: 20, fontSize: '.85rem', color: 'var(--mid)' }}>
+                  In a hurry?{' '}
+                  <a
+                    href="https://wa.me/393271249998?text=Hi%20Alex%2C%20I%20just%20sent%20a%20form%20about%20a%20proposal%20session%20in%20Sicily."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                  >
+                    Message me on WhatsApp →
+                  </a>
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -138,6 +154,14 @@ export default function AdsForm({
               <li key={i}>{item}</li>
             ))}
           </ul>
+          {showWhatsApp && (
+            <>
+              <p style={{ marginTop: 20, fontSize: '.85rem', color: 'rgba(255,255,255,.6)' }}>
+                Prefer to message?
+              </p>
+              <AdsWhatsApp label="WhatsApp Me Directly" />
+            </>
+          )}
         </div>
 
         <div className="ads-form-card">

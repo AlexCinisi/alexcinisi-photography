@@ -5,6 +5,7 @@ import AdsHero from '@/components/ads/AdsHero'
 import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
+import AdsWhatsApp from '@/components/ads/AdsWhatsApp'
 import { client } from '@/lib/sanity/client'
 import { adsProposalPageQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
@@ -70,6 +71,7 @@ export default async function ProposalAdsPage() {
         ctaText={data?.heroCtaText || "Plan Your Proposal"}
         microText={data?.heroMicroText || "Every session is tailored to your story."}
         image={data?.heroImage}
+        secondaryCta={<AdsWhatsApp label="WhatsApp Me" />}
       />
 
       <AdsTrustBar items={data?.trustBarItems || ADS_TRUST_BAR_PROPOSAL} />
@@ -255,11 +257,12 @@ export default async function ProposalAdsPage() {
           '✓ No obligation',
           '✓ I help with location scouting',
         ]}
+        showWhatsApp={true}
       />
 
       {/* Closing */}
       <AdsClosing
-        quote={data?.closingQuote || "She Said Yes — And You'll Have the Photographs to Prove It."}
+        quote={data?.closingQuote || "They Said Yes — And You'll Have the Photographs to Prove It."}
         ctaText={data?.heroCtaText || "Plan Your Proposal"}
       />
     </>

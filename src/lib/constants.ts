@@ -75,12 +75,13 @@ export const ADS_INVESTMENT_WEDDING = {
 }
 
 export const ADS_INVESTMENT_PROPOSAL = {
-  proposalPrice: '€800',
-  elopementPrice: '€1,500',
+  proposalPrice: '€350',
+  elopementPrice: '€1,200',
   includes: [
     'Pre-session planning & location scouting',
     '1–2 hours of coverage',
-    'Edited gallery delivered within 3 weeks',
+    'Sneak peek within 48 hours',
+    'Edited gallery delivered within 5–7 days',
   ],
   optionals: [
     'Film photography add-on',
@@ -151,6 +152,6 @@ export const ADS_HOW_IT_WORKS = [
   {
     step: '03',
     title: 'The Moment',
-    description: 'I hide, you ask the question, the magic happens.',
+    description: 'I hide, you ask the question, I capture every second.',
   },
 ]

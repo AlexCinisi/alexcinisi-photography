@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect } from 'react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity/image'
 
@@ -8,9 +11,29 @@ interface AdsHeroProps {
   ctaText: string
   microText: string
   image?: any // Sanity image object
+  secondaryCta?: React.ReactNode
 }
 
-export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, image }: AdsHeroProps) {
+export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, image, secondaryCta }: AdsHeroProps) {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting && (window as any).dataLayer) {
+          (window as any).dataLayer.push({
+            event: 'view_content',
+            event_category: 'Engagement',
+            event_label: 'Scrolled past hero — Proposal Landing',
+          })
+          observer.disconnect()
+        }
+      },
+      { threshold: 0 }
+    )
+    const hero = document.querySelector('.ads-hero')
+    if (hero) observer.observe(hero)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section className="ads-hero">
       <div className="ads-hero-bg">
@@ -34,7 +57,10 @@ export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, 
         <p className="ads-hero-eyebrow">{eyebrow}</p>
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         <p className="ads-hero-subtitle">{subtitle}</p>
-        <a href="#book" className="ads-hero-cta">{ctaText}</a>
+        <div className="ads-hero-ctas">
+          <a href="#book" className="ads-hero-cta">{ctaText}</a>
+          {secondaryCta}
+        </div>
         <p className="ads-hero-micro">{microText}</p>
       </div>
     </section>
