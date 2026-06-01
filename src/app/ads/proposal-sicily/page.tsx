@@ -157,6 +157,39 @@ export default async function ProposalAdsPage() {
         </div>
       </section>
 
+      {/* Gallery */}
+      {data?.galleryImages && data.galleryImages.length > 0 && (
+        <section className="ads-gallery" style={{ textAlign: 'center' }}>
+          <div className="ads-eyebrow"><span>Portfolio</span></div>
+          <h2 className="ads-h2">
+            {data.galleryTitle
+              ? data.galleryTitle.split('_').map((part: string, i: number) =>
+                  i % 2 === 1 ? <em key={i}>{part}</em> : part
+                )
+              : <>Every Proposal Tells a <em>Story</em></>
+            }
+          </h2>
+          <div className="ads-gallery-grid">
+            {data.galleryImages.map((img: any, i: number) => (
+              <div key={i} className="ads-gallery-item">
+                <Image
+                  src={urlFor(img).width(800).height(1067).fit('crop').crop('focalpoint').auto('format').quality(80).url()}
+                  alt={img.alt || `Proposal photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: img.hotspot
+                      ? `${img.hotspot.x * 100}% ${img.hotspot.y * 100}%`
+                      : 'center 30%',
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Investment — dual pricing */}
       <section className="ads-section-grey" style={{ textAlign: 'center' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>

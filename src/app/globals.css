@@ -4220,6 +4220,40 @@ a.journal-credit-name:hover {
   .ads-pillars { grid-template-columns: 1fr; gap: 32px; }
 }
 
+/* --- Ads Gallery (conforme Design System v2) --- */
+.ads-gallery {
+  padding: 100px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.ads-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 3vw, 48px);
+  margin-top: 48px;
+}
+.ads-gallery-item {
+  position: relative;
+  overflow: hidden;
+  height: 480px;
+}
+.ads-gallery-item img {
+  transition: opacity .3s ease;
+}
+.ads-gallery-item:hover img {
+  opacity: .88;
+}
+@media (max-width: 768px) {
+  .ads-gallery { padding: 64px 20px; }
+  .ads-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .ads-gallery-item {
+    height: 280px;
+  }
+}
+
 /* --- Ads Image Placeholders --- */
 .ads-images-row {
   display: grid; grid-template-columns: repeat(3, 1fr);

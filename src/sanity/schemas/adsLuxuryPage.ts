@@ -15,6 +15,11 @@ export default defineType({
     { name: 'trustBar', title: '🟡 Trust Bar', options: { collapsible: true, collapsed: true } },
     { name: 'selectedWork', title: '🟢 Selected Work', options: { collapsible: true, collapsed: true } },
     { name: 'experience', title: '🟡 The Experience', options: { collapsible: true, collapsed: true } },
+    {
+      name: 'gallery',
+      title: '🟢 Gallery — Portfolio 6-9 immagini',
+      options: { collapsible: true, collapsed: true },
+    },
     { name: 'film', title: '🟢 Film Photography', options: { collapsible: true, collapsed: true } },
     { name: 'investment', title: '🟡 Investment', options: { collapsible: true, collapsed: true } },
     { name: 'testimonials', title: '🟡 Testimonials', options: { collapsible: true, collapsed: true } },
@@ -155,6 +160,37 @@ export default defineType({
       ],
       validation: Rule => Rule.max(3),
       initialValue: ADS_PILLARS_WEDDING,
+    }),
+
+    defineField({
+      name: 'galleryTitle',
+      title: 'Titolo sezione Gallery',
+      type: 'string',
+      fieldset: 'gallery',
+      initialValue: 'Moments That Speak for Themselves',
+      description: 'Usa _ per corsivo Bodoni. Es: "Moments That _Speak_ for Themselves"',
+    }),
+    defineField({
+      name: 'galleryImages',
+      title: 'Gallery — 6-9 foto',
+      type: 'array',
+      fieldset: 'gallery',
+      description: 'Formato consigliato: 3:4 portrait (1200×1600px). Usa hotspot per il focal point. Ordine = ordine visualizzazione. TUTTE le foto appaiono anche su mobile.',
+      of: [{
+        type: 'image',
+        options: { hotspot: true },
+        fields: [
+          defineField({
+            name: 'alt',
+            title: 'Alt Text',
+            type: 'string',
+            description: '⚠️ SEO: Descrivi scena, coppia, venue. 120-150 char.',
+            validation: (Rule) => Rule.required().warning('Alt text mancante — penalizza SEO.'),
+          }),
+        ],
+      }],
+      validation: (Rule) => Rule.min(6).max(12),
+      options: { layout: 'grid' },
     }),
 
     // FILM PHOTOGRAPHY

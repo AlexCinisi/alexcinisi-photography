@@ -18,6 +18,11 @@ export default defineType({
     { name: 'sicilyLocations', title: '🟢 Sicily Locations', options: { collapsible: true, collapsed: true } },
     { name: 'experience', title: '🟡 The Experience', options: { collapsible: true, collapsed: true } },
     { name: 'howItWorks', title: '🟡 How It Works', options: { collapsible: true, collapsed: true } },
+    {
+      name: 'gallery',
+      title: '🟢 Gallery — Portfolio 6-9 immagini',
+      options: { collapsible: true, collapsed: true },
+    },
     { name: 'investment', title: '🟡 Investment', options: { collapsible: true, collapsed: true } },
     { name: 'testimonials', title: '🟡 Testimonials', options: { collapsible: true, collapsed: true } },
     { name: 'form', title: '🟡 Form', options: { collapsible: true, collapsed: true } },
@@ -184,6 +189,37 @@ export default defineType({
       ],
       validation: Rule => Rule.max(3),
       initialValue: ADS_HOW_IT_WORKS,
+    }),
+
+    defineField({
+      name: 'galleryTitle',
+      title: 'Titolo sezione Gallery',
+      type: 'string',
+      fieldset: 'gallery',
+      initialValue: 'Every Proposal Tells a Story',
+      description: 'Usa _ per corsivo Bodoni. Es: "Every Proposal Tells a _Story_"',
+    }),
+    defineField({
+      name: 'galleryImages',
+      title: 'Gallery — 6-9 foto',
+      type: 'array',
+      fieldset: 'gallery',
+      description: 'Formato consigliato: 3:4 portrait (1200×1600px). Usa hotspot per il focal point. Ordine = ordine visualizzazione. TUTTE le foto appaiono anche su mobile.',
+      of: [{
+        type: 'image',
+        options: { hotspot: true },
+        fields: [
+          defineField({
+            name: 'alt',
+            title: 'Alt Text',
+            type: 'string',
+            description: '⚠️ SEO: Descrivi scena, coppia, venue. 120-150 char.',
+            validation: (Rule) => Rule.required().warning('Alt text mancante — penalizza SEO.'),
+          }),
+        ],
+      }],
+      validation: (Rule) => Rule.min(6).max(12),
+      options: { layout: 'grid' },
     }),
 
     // INVESTMENT
