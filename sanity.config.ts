@@ -17,4 +17,28 @@ export default defineConfig({
     schema: {
         types: schemaTypes,
     },
+
+    document: {
+        productionUrl: async (prev, context) => {
+            const { document } = context
+            const baseUrl = 'https://alexcinisiphotography.com'
+
+            // Map document types to frontend URLs
+            const urlMap: Record<string, string | ((doc: any) => string)> = {
+                homePage: '/',
+                aboutPage: '/about',
+                contactPage: '/contact',
+                adsLuxuryPage: '/ads/luxury-destination-wedding-sicily',
+                adsProposalPage: '/ads/proposal-sicily',
+                journalPost: (doc: any) => `/journal/${doc.slug?.current || ''}`,
+                locationPage: (doc: any) => `/locations/${doc.slug?.current || ''}`,
+            }
+
+            const resolver = urlMap[document._type]
+            if (!resolver) return prev
+
+            const path = typeof resolver === 'function' ? resolver(document) : resolver
+            return `${baseUrl}${path}`
+        },
+    },
 })
