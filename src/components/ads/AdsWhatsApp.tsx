@@ -17,25 +17,12 @@ interface AdsWhatsAppProps {
 }
 
 export default function AdsWhatsApp({ label = 'Message on WhatsApp', className = '' }: AdsWhatsAppProps) {
-  const handleClick = () => {
-    // DataLayer push for Meta Contact event tracking
-    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
-        event: 'whatsapp_click',
-        event_category: 'Contact',
-        event_label: 'WhatsApp CTA — Proposal Landing',
-        event_id: `wa_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,
-      })
-    }
-  }
-
   return (
     <a
       href={WA_URL}
       target="_blank"
       rel="noopener noreferrer"
       className={`ads-wa-btn ${className}`}
-      onClick={handleClick}
     >
       <WhatsAppIcon />
       {label}

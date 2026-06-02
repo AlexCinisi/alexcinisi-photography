@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity/image'
 
@@ -15,25 +14,6 @@ interface AdsHeroProps {
 }
 
 export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, image, secondaryCta }: AdsHeroProps) {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting && (window as any).dataLayer) {
-          (window as any).dataLayer.push({
-            event: 'view_content',
-            event_category: 'Engagement',
-            event_label: 'Scrolled past hero — Proposal Landing',
-          })
-          observer.disconnect()
-        }
-      },
-      { threshold: 0 }
-    )
-    const hero = document.querySelector('.ads-hero')
-    if (hero) observer.observe(hero)
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section className="ads-hero">
       <div className="ads-hero-bg">
