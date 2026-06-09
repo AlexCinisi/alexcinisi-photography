@@ -18,7 +18,12 @@ const CANONICAL = 'https://alexcinisiphotography.com/proposal-photography-sicily
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(proposalPageQuery).catch(() => null)
-  if (!data) return {}
+  if (!data) {
+    return {
+      alternates: { canonical: CANONICAL },
+      robots: { index: false, follow: true },
+    }
+  }
 
   const ogUrl = data.ogImage?.asset?.url || data.heroImage?.asset?.url
 
