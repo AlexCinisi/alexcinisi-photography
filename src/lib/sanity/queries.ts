@@ -409,3 +409,46 @@ export const adsProposalPageQuery = `*[_type == "adsProposalPage"][0] {
   metaDescription,
   ogImage { asset->, alt, hotspot, crop }
 }`
+
+// ============================
+// SERVICE PAGE — PROPOSAL
+// ============================
+export const proposalPageQuery = `*[_type == "proposalPage"][0] {
+  title,
+  heroImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  heroEyebrow, heroHeading, heroSubtitle, heroTextDark,
+  introHeading, introBody,
+  galleryImages[] {
+    ...,
+    alt, caption,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  approachHeading,
+  approachPillars[] { title, description },
+  locationsHeading, locationsIntro,
+  locationCards[] {
+    image { ..., alt, asset-> { _id, url, metadata { dimensions, lqip } } },
+    name, city, description,
+    locationPageRef-> { "slug": slug.current, title, venueName }
+  },
+  processHeading,
+  processSteps[] { step, title, description },
+  investmentHeading,
+  investmentPackages[] { name, price, includes },
+  testimonials[]-> { coupleName, country, countryFlag, location, quote, rating },
+  faqs[] { question, answer },
+  seoContent[] {
+    ...,
+    _type == "image" => { ..., alt, caption, asset-> { _id, url, metadata { dimensions, lqip } } }
+  },
+  relatedJournalPosts[]-> {
+    title, "slug": slug.current, coupleName, location, category,
+    heroImage { ..., alt, asset-> { _id, url, metadata { dimensions, lqip } } }
+  },
+  metaTitle, metaDescription,
+  ogImage { asset-> { url } }
+}`
