@@ -32,6 +32,7 @@ export default defineConfig({
                 adsProposalPage: '/ads/proposal-sicily',
                 journalPost: (doc: any) => `/journal/${doc.slug?.current || ''}`,
                 locationPage: (doc: any) => `/locations/${doc.slug?.current || ''}`,
+                proposalPage: '/proposal-photography-sicily',
             }
 
             const resolver = urlMap[document._type]
