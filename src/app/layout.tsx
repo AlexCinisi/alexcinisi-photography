@@ -61,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
             url: "https://alexcinisiphotography.com/",
             images: [
                 {
-                    url: "https://alexcinisiphotography.com/wp-content/uploads/og-homepage.webp",
+                    url: "https://alexcinisiphotography.com/og-default.jpg",
                 },
             ],
             locale: "en_US",
