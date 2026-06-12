@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogUrl = data.ogImage?.asset?.url || data.heroImage?.asset?.url
 
   return {
-    title: data.metaTitle || `${data.title} | Alex Cinisi Photography`,
+    title: data.metaTitle || data.title,
     description: data.metaDescription,
     alternates: { canonical: CANONICAL },
     openGraph: {

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy | Alex Cinisi Photography',
+  title: 'Cookie Policy',
   description: 'Cookie Policy for Alex Cinisi Photography. Details about cookies used, their purpose, duration, and how to manage your preferences.',
   robots: 'noindex, follow',
 }

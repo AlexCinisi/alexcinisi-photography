@@ -37,7 +37,7 @@ export async function generateMetadata({
 
   const title =
     post.metaTitle ||
-    `${post.coupleName} — ${post.location} | Alex Cinisi Photography`;
+    `${post.coupleName} — ${post.location}`;
   const description =
     post.metaDescription ||
     `${post.coupleName}'s wedding at ${post.location}. Luxury destination wedding photography by Alex Cinisi.`;

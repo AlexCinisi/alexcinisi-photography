@@ -9,7 +9,7 @@ import JournalGrid from '@/components/sections/JournalGrid';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Journal — Wedding Stories & Editorials | Alex Cinisi Photography',
+  title: 'Journal — Wedding Stories & Editorials',
   description: 'Explore destination wedding stories from Sicily — Villa Igiea, Taormina, Scopello, Noto. Editorial and film photography by Alex Cinisi.',
   alternates: { canonical: '/journal' },
 };

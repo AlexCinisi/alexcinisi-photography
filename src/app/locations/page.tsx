@@ -11,7 +11,7 @@ import FinalCTA from '@/components/sections/FinalCTA';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Wedding Venues in Sicily — Destination Wedding Photography | Alex Cinisi',
+  title: 'Wedding Venues in Sicily — Destination Wedding Photography',
   description: 'Discover Sicily\'s most stunning wedding venues — Villa Igiea, Taormina, Scopello, Noto. Editorial photography for refined destination weddings.',
   alternates: { canonical: '/locations' },
 };

@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const data = await client.fetch(locationPageBySlugQuery, { slug });
   if (!data) return { title: 'Location Not Found' };
 
-  const title = data.metaTitle || `${data.venueName} Wedding Photographer | Alex Cinisi — ${data.city}, Sicily`;
+  const title = data.metaTitle || `${data.venueName} Wedding Photographer — ${data.city}, Sicily`;
   const description = data.metaDescription || `Editorial wedding photographer at ${data.venueName}, ${data.city}. Timeless, refined imagery for discerning couples at Sicily's most iconic venues.`;
 
   return {

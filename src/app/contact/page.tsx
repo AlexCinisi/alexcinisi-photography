@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: 'https://alexcinisiphotography.com/contact',
     },
     openGraph: {
-      title: title + ' | Alex Cinisi Photography',
+      title: title,
       description,
       url: 'https://alexcinisiphotography.com/contact',
       type: 'website',
