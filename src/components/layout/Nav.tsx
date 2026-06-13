@@ -64,7 +64,6 @@ export default function Nav({ logo }: NavProps) {
                     <ul className="menu-links">
                         <li><Link href="/journal" onClick={closeMenu}>Journal</Link></li>
                         <li><Link href="/locations" onClick={closeMenu}>Locations</Link></li>
-                        <li><Link href="/proposal-photography-sicily" onClick={closeMenu}>Proposals</Link></li>
                         <li><Link href="/about" onClick={closeMenu}>About</Link></li>
                         <li><Link href="/contact" onClick={closeMenu}>Contact</Link></li>
                     </ul>

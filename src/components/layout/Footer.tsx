@@ -28,7 +28,6 @@ export default function Footer({ logo, logoFooter }: FooterProps) {
             <div className="footer-links">
                 <Link href="/journal">Journal</Link>
                 <Link href="/locations">Locations</Link>
-                <Link href="/proposal-photography-sicily">Proposals</Link>
                 <Link href="/about">About</Link>
                 <Link href="/contact">Contact</Link>
                 <a href="https://www.instagram.com/alexcinisi" target="_blank" rel="noopener noreferrer">Instagram</a>
