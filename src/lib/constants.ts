@@ -75,18 +75,31 @@ export const ADS_INVESTMENT_WEDDING = {
 }
 
 export const ADS_INVESTMENT_PROPOSAL = {
-  proposalPrice: '€350',
-  elopementPrice: '€1,200',
-  includes: [
-    'Pre-session planning & location scouting',
-    '1–2 hours of coverage',
-    'Sneak peek within 48 hours',
-    'Edited gallery delivered within 5–7 days',
-  ],
-  optionals: [
-    'Film photography add-on',
-    'Second location',
-    'Extended coverage',
+  packages: [
+    {
+      name: 'Proposal Session',
+      price: '€350',
+      tagline: 'Digital',
+      includes: [
+        'Pre-session planning & location scouting',
+        '1–2 hours of coverage',
+        'Sneak peek within 48 hours',
+        'Edited digital gallery within 5–7 days',
+      ],
+      featured: false,
+    },
+    {
+      name: 'Film + Digital Combo',
+      price: '€700',
+      tagline: 'Digital + one roll of Kodak Portra 400',
+      includes: [
+        'Everything in the Proposal Session',
+        'One roll of Kodak Portra 400 film',
+        'Hand-selected film frames alongside your digital gallery',
+        'The grain and tones digital cannot replicate',
+      ],
+      featured: true,
+    },
   ],
 }
 

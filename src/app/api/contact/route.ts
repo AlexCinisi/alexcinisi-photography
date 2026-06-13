@@ -118,6 +118,7 @@ export async function POST(request: Request) {
     // 1. Notification email to Owner
     const adminEmailContent = `
       <h2>New Wedding Enquiry</h2>
+      ${data.serviceType ? `<p><strong>Service Type:</strong> ${data.serviceType}</p>` : ''}
       <p><strong>Name:</strong> ${data.name}</p>
       <p><strong>Partner's Name:</strong> ${data.partnerName || 'Not provided'}</p>
       <p><strong>Email:</strong> ${data.email}</p>

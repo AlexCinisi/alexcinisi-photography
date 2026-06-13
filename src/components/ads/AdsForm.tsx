@@ -18,6 +18,7 @@ interface AdsFormProps {
   headingText?: string
   descriptionText?: string
   showWhatsApp?: boolean
+  serviceOptions?: string[]
 }
 
 export default function AdsForm({
@@ -38,8 +39,10 @@ export default function AdsForm({
   headingText = 'Begin Your Story',
   descriptionText = 'I accept a limited number of destination weddings each year to ensure every couple receives my full creative focus.',
   showWhatsApp = false,
+  serviceOptions,
 }: AdsFormProps) {
   const [formData, setFormData] = useState({
+    serviceType: '',
     firstName: '',
     email: '',
     phone: '',
@@ -71,7 +74,9 @@ export default function AdsForm({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: formData.firstName,
+          serviceType: formData.serviceType,
+          name: formData.firstName,
+          partnerName: 'N/A',
           email: formData.email,
           phone: formData.phone,
           weddingDate: formData.weddingDate,
@@ -166,6 +171,24 @@ export default function AdsForm({
 
         <div className="ads-form-card">
           <form onSubmit={handleSubmit}>
+            {serviceOptions && serviceOptions.length > 0 && (
+              <div className="ads-form-service-selector">
+                <label>What are you planning?</label>
+                <div className="ads-service-pills">
+                  {serviceOptions.map((service) => (
+                    <button
+                      key={service}
+                      type="button"
+                      className={`ads-service-pill ${formData.serviceType === service ? 'active' : ''}`}
+                      onClick={() => updateField('serviceType', service)}
+                    >
+                      {service}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <label htmlFor="ads-name">Your Name *</label>
             <input
               type="text" id="ads-name" required

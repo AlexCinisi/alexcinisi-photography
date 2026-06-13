@@ -6,7 +6,7 @@ import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
 import { client } from '@/lib/sanity/client'
-import { adsLuxuryPageQuery } from '@/lib/sanity/queries'
+import { adsLuxuryPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
 import {
   ADS_TRUST_BAR_WEDDING,
@@ -53,13 +53,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function LuxuryWeddingAdsPage() {
-  const data = await client.fetch(adsLuxuryPageQuery).catch(() => null)
+  const [data, siteData] = await Promise.all([
+    client.fetch(adsLuxuryPageQuery).catch(() => null),
+    client.fetch(siteLogoQuery).catch(() => null),
+  ])
+
+  const logoUrl = siteData?.siteLogo?.asset?.url || ''
 
   const heroTitle = (data?.heroTitle || "Your Sicily Wedding,<br />Told Like a Film<br />You'll Never Forget").replace(/\|/g, '<br />')
 
   return (
     <>
-      <AdsHeader ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"} />
+      <AdsHeader ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"} logoUrl={logoUrl} />
 
       <AdsHero
         eyebrow={data?.heroEyebrow || "Luxury Destination Wedding Photography · Sicily"}

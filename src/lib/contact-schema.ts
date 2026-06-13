@@ -11,6 +11,7 @@ export const contactSchema = z.object({
   planner: z.string().max(100).trim().optional().default(''),
   weddingDate: z.string().min(1, 'Wedding date is required').max(50).trim(),
   location: z.string().max(200).trim().optional().default(''),
+  serviceType: z.string().max(100).optional().default(''),
   guestCount: z.string().max(20).optional().default(''),
   howFound: z.string().max(200).optional().default(''),
   budget: z.string().max(50).optional().default(''),

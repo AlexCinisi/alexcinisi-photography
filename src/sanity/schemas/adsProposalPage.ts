@@ -224,34 +224,24 @@ export default defineType({
 
     // INVESTMENT
     defineField({
-      name: 'proposalPrice',
-      title: 'Proposal Price',
-      type: 'string',
-      fieldset: 'investment',
-      initialValue: ADS_INVESTMENT_PROPOSAL.proposalPrice,
-    }),
-    defineField({
-      name: 'elopementPrice',
-      title: 'Elopement Price',
-      type: 'string',
-      fieldset: 'investment',
-      initialValue: ADS_INVESTMENT_PROPOSAL.elopementPrice,
-    }),
-    defineField({
-      name: 'investmentIncludes',
-      title: 'What is Included',
+      name: 'investmentPackages',
+      title: 'Pacchetti',
       type: 'array',
       fieldset: 'investment',
-      of: [{ type: 'string' }],
-      initialValue: ADS_INVESTMENT_PROPOSAL.includes,
-    }),
-    defineField({
-      name: 'investmentOptionals',
-      title: 'Optionals',
-      type: 'array',
-      fieldset: 'investment',
-      of: [{ type: 'string' }],
-      initialValue: ADS_INVESTMENT_PROPOSAL.optionals,
+      description: 'I pacchetti offerti. Ordina dal più economico al più costoso. Il pacchetto "featured" viene evidenziato.',
+      of: [{
+        type: 'object',
+        name: 'package',
+        fields: [
+          defineField({ name: 'name', title: 'Nome pacchetto', type: 'string', validation: (Rule) => Rule.required() }),
+          defineField({ name: 'price', title: 'Prezzo', type: 'string', description: 'Es: "€350", "From €700"', validation: (Rule) => Rule.required() }),
+          defineField({ name: 'tagline', title: 'Sottotitolo', type: 'string', description: 'Es: "Digital only", "Film + Digital Combo"' }),
+          defineField({ name: 'includes', title: 'Cosa include', type: 'array', of: [{ type: 'string' }] }),
+          defineField({ name: 'featured', title: 'Evidenziato?', type: 'boolean', initialValue: false, description: 'Evidenzia questo pacchetto (es. il combo film come upsell).' }),
+        ],
+        preview: { select: { title: 'name', subtitle: 'price' } },
+      }],
+      validation: (Rule) => Rule.max(4),
     }),
 
     // TESTIMONIALS

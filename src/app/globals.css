@@ -4078,6 +4078,16 @@ a.journal-credit-name:hover {
   letter-spacing: .32em; text-transform: uppercase;
   color: var(--ink); pointer-events: none;
 }
+.ads-header-logo-svg {
+  height: 32px;
+  width: auto;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .ads-header-logo-svg {
+    height: 26px;
+  }
+}
 .ads-header-cta {
   font-size: .68rem; font-weight: 400;
   letter-spacing: .22em; text-transform: uppercase;
@@ -4317,6 +4327,79 @@ a.journal-credit-name:hover {
   .ads-investment-dual { grid-template-columns: 1fr; gap: 24px; }
 }
 
+/* --- Ads Packages (multi-card) --- */
+.ads-packages {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 800px;
+  margin: 48px auto 0;
+}
+.ads-package-card {
+  position: relative;
+  background: var(--white);
+  padding: 40px 32px;
+  text-align: left;
+  border: 1px solid var(--rule);
+}
+.ads-package-card.featured {
+  border-color: var(--accent);
+  border-width: 1.5px;
+}
+.ads-package-badge {
+  position: absolute;
+  top: -12px;
+  left: 32px;
+  background: var(--accent);
+  color: var(--white);
+  font-size: .62rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+}
+.ads-package-name {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.ads-package-tagline {
+  font-weight: 300;
+  font-size: .82rem;
+  color: var(--mid);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.ads-package-price {
+  font-weight: 500;
+  font-size: 2.4rem;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.ads-package-list {
+  list-style: none;
+  padding: 0;
+}
+.ads-package-list li {
+  font-weight: 300;
+  font-size: .92rem;
+  color: var(--ink);
+  padding: 6px 0 6px 24px;
+  position: relative;
+}
+.ads-package-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+@media (max-width: 768px) {
+  .ads-packages {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 /* --- Ads Testimonials --- */
 .ads-testimonials-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -4357,21 +4440,72 @@ a.journal-credit-name:hover {
   font-weight: 300; font-size: .85rem;
   color: rgba(255,255,255,.6); padding: 4px 0;
 }
-.ads-form-card { background: var(--white); padding: 40px; }
+/* --- Ads Form Service Selector --- */
+.ads-form-service-selector {
+  margin-bottom: 32px;
+}
+.ads-service-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.ads-service-pill {
+  flex: 1;
+  min-width: 90px;
+  padding: 12px 16px;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--mid);
+  background: transparent;
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  transition: all .25s ease;
+  font-family: inherit;
+}
+.ads-service-pill:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.ads-service-pill.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+
+.ads-form-card {
+  background: var(--white);
+  padding: 48px 44px;
+}
 .ads-form-card label {
-  display: block; font-weight: 300; font-size: .75rem;
-  letter-spacing: .15em; text-transform: uppercase;
-  color: var(--mid); margin-bottom: 6px; margin-top: 20px;
+  display: block;
+  font-weight: 400;
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 8px;
+  margin-top: 26px;
 }
 .ads-form-card label:first-of-type { margin-top: 0; }
 .ads-form-card input[type="text"],
 .ads-form-card input[type="email"],
+.ads-form-card input[type="tel"],
 .ads-form-card input[type="date"],
 .ads-form-card textarea {
-  width: 100%; border: none; border-bottom: 1px solid var(--rule);
-  padding: 12px 0; font-weight: 300; font-size: 1rem;
-  color: var(--ink); background: transparent;
-  outline: none; transition: border-color .25s; font-family: inherit;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 0;
+  font-weight: 300;
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  outline: none;
+  transition: border-color .3s ease;
+  font-family: inherit;
 }
 .ads-form-card input:focus,
 .ads-form-card textarea:focus { border-bottom-color: var(--accent); }
@@ -4396,7 +4530,7 @@ a.journal-credit-name:hover {
 @media (max-width: 768px) {
   .ads-form-section { padding: 64px 20px; }
   .ads-form-grid { grid-template-columns: 1fr; gap: 40px; }
-  .ads-form-card { padding: 28px 20px; }
+  .ads-form-card { padding: 32px 24px; }
 }
 
 /* --- Ads WhatsApp CTA --- */

@@ -7,7 +7,7 @@ import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
 import AdsWhatsApp from '@/components/ads/AdsWhatsApp'
 import { client } from '@/lib/sanity/client'
-import { adsProposalPageQuery } from '@/lib/sanity/queries'
+import { adsProposalPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
 import {
   ADS_TRUST_BAR_PROPOSAL,
@@ -56,13 +56,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProposalAdsPage() {
-  const data = await client.fetch(adsProposalPageQuery).catch(() => null)
+  const [data, siteData] = await Promise.all([
+    client.fetch(adsProposalPageQuery).catch(() => null),
+    client.fetch(siteLogoQuery).catch(() => null),
+  ])
+
+  const logoUrl = siteData?.siteLogo?.asset?.url || ''
 
   const heroTitle = (data?.heroTitle || "The Most Important Question<br />Deserves the Most<br />Beautiful Setting").replace(/\|/g, '<br />')
 
   return (
     <>
-      <AdsHeader ctaText={data?.heroCtaText || "Plan Your Proposal"} />
+      <AdsHeader ctaText={data?.heroCtaText || "Plan Your Proposal"} logoUrl={logoUrl} />
 
       <AdsHero
         eyebrow={data?.heroEyebrow || "Proposal & Elopement Photography · Sicily"}
@@ -192,32 +197,28 @@ export default async function ProposalAdsPage() {
         </section>
       )}
 
-      {/* Investment — dual pricing */}
+      {/* Investment */}
       <section className="ads-section-grey" style={{ textAlign: 'center' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="ads-eyebrow"><span>Your Investment</span></div>
           <h2 className="ads-h2">Transparent Pricing for <em>Your Moment</em></h2>
-          <div className="ads-investment-dual" style={{ marginTop: 40 }}>
-            <div className="ads-investment-dual-item">
-              <h3>Proposals</h3>
-              <p className="price">From {data?.proposalPrice || ADS_INVESTMENT_PROPOSAL.proposalPrice}</p>
-            </div>
-            <div className="ads-investment-dual-item">
-              <h3>Elopements</h3>
-              <p className="price">From {data?.elopementPrice || ADS_INVESTMENT_PROPOSAL.elopementPrice}</p>
-            </div>
-          </div>
-          <div className="ads-investment-divider" />
-          <ul className="ads-investment-list">
-            {(data?.investmentIncludes || ADS_INVESTMENT_PROPOSAL.includes).map((item: string, i: number) => (
-              <li key={i}>{item}</li>
+          <div className="ads-packages">
+            {(data?.investmentPackages || ADS_INVESTMENT_PROPOSAL.packages).map((pkg: any, i: number) => (
+              <div key={i} className={`ads-package-card ${pkg.featured ? 'featured' : ''}`}>
+                {pkg.featured && <div className="ads-package-badge">Most Popular</div>}
+                <h3 className="ads-package-name">{pkg.name}</h3>
+                {pkg.tagline && <p className="ads-package-tagline">{pkg.tagline}</p>}
+                <p className="ads-package-price">{pkg.price}</p>
+                <ul className="ads-package-list">
+                  {pkg.includes?.map((item: string, j: number) => (
+                    <li key={j}>{item}</li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
-          <p style={{ fontWeight: 300, fontSize: '.9rem', color: 'var(--mid)', marginTop: 24 }}>
-            Optional: {(data?.investmentOptionals || ADS_INVESTMENT_PROPOSAL.optionals).join(' · ')}
-          </p>
-          <div style={{ marginTop: 32 }}>
-            <a href="#book" className="ads-closing-cta">{data?.heroCtaText || "Plan Your Proposal"}</a>
+          </div>
+          <div style={{ marginTop: 40 }}>
+            <a href="#book" className="ads-closing-cta">Plan Your Proposal</a>
           </div>
         </div>
       </section>
@@ -241,6 +242,7 @@ export default async function ProposalAdsPage() {
 
       {/* Form — customized for proposals */}
       <AdsForm
+        serviceOptions={['Proposal', 'Elopement', 'Couple Session']}
         source="google-ads-proposal"
         ctaText={data?.heroCtaText || "Plan Your Proposal"}
         dateLabel="Proposed Date"
