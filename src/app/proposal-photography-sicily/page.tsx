@@ -6,14 +6,18 @@ import { client } from '@/lib/sanity/client'
 import { proposalPageQuery } from '@/lib/sanity/queries'
 import { urlFor, getHotspotPosition } from '@/lib/sanity/image'
 
-// Componenti di sezione REALI del sito (stessi usati da location/home pages).
-import HeroLocation from '@/components/sections/HeroLocation'
+// Componenti di sezione MODULARI (riutilizzabili su tutte le service page).
+import ServiceHero from '@/components/sections/ServiceHero'
+import ServiceGallery from '@/components/sections/ServiceGallery'
+import ServiceLocations from '@/components/sections/ServiceLocations'
+import ServiceInvestment from '@/components/sections/ServiceInvestment'
+import ServiceFAQ from '@/components/sections/ServiceFAQ'
+// Componenti esistenti del sito con contenuto via props (già modulari).
 import Pillars from '@/components/sections/Pillars'
-import FAQ from '@/components/sections/FAQ'
 import Testimonials from '@/components/sections/Testimonials'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
 
-// ⚠️ NON importare Nav/Footer: iniettati dal root layout via <LayoutShell> per ogni route non-/ads.
+// ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell> (route non-/ads).
 
 export const revalidate = 3600
 
@@ -62,12 +66,8 @@ export default async function ProposalPhotographySicily() {
     )
   }
 
-  // ── Hero: split del titolo su '|' in 3 righe per HeroLocation ──
-  const heroLines = (data.heroHeading || '').split('|').map((l: string) => l.trim())
+  const heroLines = (data.heroHeading || '').split('|').map((l: string) => l.trim()).filter(Boolean)
 
-  // ── Pillars: mappa i pillar schema (title/description) sul formato del componente
-  //    (number/title/description/quote/quoteAuthor). number generato, quote vuota → il
-  //    componente regge campi vuoti. ──
   const pillarItems = (data.approachPillars || []).map((p: any, i: number) => ({
     number: String(i + 1).padStart(2, '0'),
     title: p.title,
@@ -76,31 +76,25 @@ export default async function ProposalPhotographySicily() {
     quoteAuthor: '',
   }))
 
-  // ── FAQ: question/answer → q/a ──
-  const faqItems = (data.faqs || []).map((f: any) => ({ q: f.question, a: f.answer }))
-
-  // ── Testimonials: i campi del content type combaciano già (coupleName/countryFlag/location/quote) ──
-  const testimonialItems = data.testimonials || []
-
   return (
     <main>
-      {/* ─────────── HERO ─────────── */}
-      <HeroLocation
+      {/* HERO */}
+      <ServiceHero
         image={data.heroImage}
         eyebrow={data.heroEyebrow || 'Proposal Photography · Sicily'}
-        titleL1={heroLines[0] || 'Proposal Photography'}
-        titleL2={heroLines[1] || 'in Sicily'}
-        titleL3={heroLines[2] || ''}
-        subtitle={data.heroSubtitle || ''}
+        titleLines={heroLines.length ? heroLines : ['Proposal Photography', 'in Sicily']}
+        subtitle={data.heroSubtitle}
+        ctaText="Plan Your Proposal"
+        ctaHref="/contact"
         darkText={data.heroTextDark || false}
       />
 
-      {/* ─────────── INTRO (rich text, stile s-white pad) ─────────── */}
+      {/* INTRO (rich text) */}
       {data.introBody && (
         <section className="s-white pad">
           <div className="max">
             <RevealOnScroll className="sec-head">
-              {data.introHeading && <div className="h2-lg">{data.introHeading}</div>}
+              {data.introHeading && <div className="h2">{data.introHeading}</div>}
             </RevealOnScroll>
             <RevealOnScroll className="journal-body" style={{ maxWidth: '720px', margin: '0 auto' }}>
               <PortableText value={data.introBody} />
@@ -109,38 +103,15 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* ─────────── GALLERY (stile journal-gallery, ritmo a righe) ─────────── */}
-      {data.galleryImages?.length > 0 && (
-        <section className="s-pearl pad">
-          <div className="max">
-            <RevealOnScroll className="sec-head">
-              <div className="f-label">Portfolio</div>
-              <div className="h2-lg">Moments, <em>As They Happened</em></div>
-            </RevealOnScroll>
-            <RevealOnScroll className="service-gallery-grid">
-              {data.galleryImages.map((img: any, i: number) => (
-                img?.asset && (
-                  <figure key={i} className="service-gallery-item">
-                    <Image
-                      src={urlFor(img).width(1000).quality(85).auto('format').url()}
-                      alt={img.alt || ''}
-                      width={img.asset.metadata?.dimensions?.width || 1000}
-                      height={img.asset.metadata?.dimensions?.height || 1250}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
-                      blurDataURL={img.asset.metadata?.lqip}
-                      style={{ objectPosition: getHotspotPosition(img) }}
-                    />
-                    {img.caption && <figcaption>{img.caption}</figcaption>}
-                  </figure>
-                )
-              ))}
-            </RevealOnScroll>
-          </div>
-        </section>
-      )}
+      {/* GALLERY */}
+      <ServiceGallery
+        label="Portfolio"
+        heading={<>Moments, <em>As They Happened</em></>}
+        images={data.galleryImages || []}
+        background="pearl"
+      />
 
-      {/* ─────────── APPROACH (componente Pillars reale) ─────────── */}
+      {/* APPROACH (componente Pillars esistente, già modulare) */}
       {pillarItems.length > 0 && (
         <Pillars
           intro={{ label: 'How I Work', title: data.approachHeading || 'Three Things I Promise You' }}
@@ -148,50 +119,16 @@ export default async function ProposalPhotographySicily() {
         />
       )}
 
-      {/* ─────────── LOCATIONS (card stile sito, link a location page) ─────────── */}
-      {data.locationCards?.length > 0 && (
-        <section className="s-white pad">
-          <div className="max">
-            <RevealOnScroll className="sec-head">
-              <div className="f-label">Sicily Locations</div>
-              <div className="h2-lg">{data.locationsHeading || 'Where Will You Ask the Question?'}</div>
-              {data.locationsIntro && <p className="sec-intro-text">{data.locationsIntro}</p>}
-            </RevealOnScroll>
-            <RevealOnScroll className="service-location-grid">
-              {data.locationCards.map((loc: any, i: number) => {
-                const inner = (
-                  <>
-                    {loc.image?.asset && (
-                      <div className="service-location-img">
-                        <Image
-                          src={urlFor(loc.image).width(800).quality(85).auto('format').url()}
-                          alt={loc.image.alt || loc.name || ''}
-                          width={800}
-                          height={1000}
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          style={{ objectPosition: getHotspotPosition(loc.image) }}
-                        />
-                      </div>
-                    )}
-                    <h3>{loc.name}</h3>
-                    {loc.city && <span className="service-location-city">{loc.city}</span>}
-                    {loc.description && <p>{loc.description}</p>}
-                  </>
-                )
-                return loc.locationPageRef?.slug ? (
-                  <Link key={i} href={`/locations/${loc.locationPageRef.slug}`} className="service-location-card">
-                    {inner}
-                  </Link>
-                ) : (
-                  <div key={i} className="service-location-card">{inner}</div>
-                )
-              })}
-            </RevealOnScroll>
-          </div>
-        </section>
-      )}
+      {/* LOCATIONS */}
+      <ServiceLocations
+        label="Sicily Locations"
+        heading={data.locationsHeading || 'Where Will You Ask the Question?'}
+        intro={data.locationsIntro}
+        cards={data.locationCards || []}
+        background="white"
+      />
 
-      {/* ─────────── PROCESS (replica markup ProcessSteps, dati da Sanity) ─────────── */}
+      {/* PROCESS (inline: replica process-grid del sito, dati da Sanity) */}
       {data.processSteps?.length > 0 && (
         <section className="s-pearl pad">
           <div className="max">
@@ -212,38 +149,20 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* ─────────── INVESTMENT (2 colonne, stile sito coerente) ─────────── */}
-      {data.investmentPackages?.length > 0 && (
-        <section className="s-white pad">
-          <div className="max">
-            <RevealOnScroll className="sec-head">
-              <div className="f-label">Investment</div>
-              <div className="h2-lg">{data.investmentHeading || 'Simple and Transparent'}</div>
-            </RevealOnScroll>
-            <RevealOnScroll className="service-invest-grid">
-              {data.investmentPackages.map((pkg: any, i: number) => (
-                <div key={i} className="service-invest-card">
-                  {pkg.name && <h3>{pkg.name}</h3>}
-                  {pkg.price && <span className="service-invest-price">{pkg.price}</span>}
-                  {pkg.includes?.length > 0 && (
-                    <ul>
-                      {pkg.includes.map((inc: string, j: number) => <li key={j}>{inc}</li>)}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </RevealOnScroll>
-            <div style={{ textAlign: 'center', marginTop: '40px' }}>
-              <Link href="/contact" className="btn-fill">Start the conversation →</Link>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* INVESTMENT */}
+      <ServiceInvestment
+        label="Investment"
+        heading={data.investmentHeading || 'Simple and Transparent'}
+        packages={data.investmentPackages || []}
+        ctaText="Start the conversation →"
+        ctaHref="/contact"
+        background="white"
+      />
 
-      {/* ─────────── TESTIMONIALS (componente reale) ─────────── */}
-      {testimonialItems.length > 0 && <Testimonials items={testimonialItems} />}
+      {/* TESTIMONIALS (componente esistente) */}
+      {data.testimonials?.length > 0 && <Testimonials items={data.testimonials} />}
 
-      {/* ─────────── SEO CONTENT (rich text lungo, stile editoriale) ─────────── */}
+      {/* SEO CONTENT (rich text lungo) */}
       {data.seoContent && (
         <section className="s-white pad">
           <div className="max">
@@ -253,17 +172,17 @@ export default async function ProposalPhotographySicily() {
                 components={{
                   types: {
                     image: ({ value }: any) => value?.asset ? (
-                      <figure style={{ margin: '40px 0' }}>
+                      <figure className="service-seo-figure">
                         <Image
-                          src={urlFor(value).width(1200).quality(85).auto('format').url()}
+                          src={urlFor(value).width(1600).quality(85).auto('format').url()}
                           alt={value.alt || ''}
-                          width={value.asset.metadata?.dimensions?.width || 1200}
-                          height={value.asset.metadata?.dimensions?.height || 800}
+                          fill
                           sizes="(max-width: 768px) 100vw, 720px"
                           placeholder={value.asset.metadata?.lqip ? 'blur' : 'empty'}
                           blurDataURL={value.asset.metadata?.lqip}
+                          style={{ objectFit: 'cover' }}
                         />
-                        {value.caption && <figcaption>{value.caption}</figcaption>}
+                        {value.caption && <figcaption className="service-seo-caption">{value.caption}</figcaption>}
                       </figure>
                     ) : null,
                   },
@@ -274,10 +193,14 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* ─────────── FAQ (componente reale, schema FAQPage generato sotto) ─────────── */}
-      {faqItems.length > 0 && <FAQ label="Questions" items={faqItems} />}
+      {/* FAQ */}
+      <ServiceFAQ
+        label="Questions"
+        heading={<>Before You <em>Ask</em></>}
+        items={data.faqs || []}
+      />
 
-      {/* ─────────── RELATED STORIES (stile journal-related, come location page) ─────────── */}
+      {/* RELATED STORIES */}
       {data.relatedJournalPosts?.length > 0 && (
         <section className="s-pearl pad">
           <div className="max">
@@ -292,12 +215,11 @@ export default async function ProposalPhotographySicily() {
                     {post.heroImage?.asset && (
                       <div className="journal-related-img">
                         <Image
-                          src={urlFor(post.heroImage).width(800).quality(85).auto('format').url()}
+                          src={urlFor(post.heroImage).width(1200).quality(85).auto('format').url()}
                           alt={post.heroImage.alt || post.title || ''}
-                          width={800}
-                          height={600}
+                          fill
                           sizes="(max-width: 768px) 100vw, 33vw"
-                          style={{ objectPosition: getHotspotPosition(post.heroImage) }}
+                          style={{ objectFit: 'cover', objectPosition: getHotspotPosition(post.heroImage) }}
                         />
                       </div>
                     )}
@@ -311,7 +233,7 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* ─────────── FINAL CTA (replica final-cta-inner, testi proposal) ─────────── */}
+      {/* FINAL CTA */}
       <section className="s-ink pad">
         <RevealOnScroll className="final-cta-inner">
           <div className="f-label" style={{ justifyContent: 'center', marginBottom: '24px', color: 'rgba(250,250,248,.35)' }}>
@@ -327,7 +249,7 @@ export default async function ProposalPhotographySicily() {
         </RevealOnScroll>
       </section>
 
-      {/* ─────────── JSON-LD: ProfessionalService (script nativo) ─────────── */}
+      {/* JSON-LD: ProfessionalService (il FAQPage è generato dentro ServiceFAQ) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -338,29 +260,9 @@ export default async function ProposalPhotographySicily() {
           image: data.heroImage?.asset?.url,
           description: data.metaDescription,
           areaServed: { '@type': 'Place', name: 'Sicily, Italy' },
-          provider: {
-            '@type': 'Person',
-            name: 'Alex Cinisi',
-            url: 'https://alexcinisiphotography.com/about',
-          },
+          provider: { '@type': 'Person', name: 'Alex Cinisi', url: 'https://alexcinisiphotography.com/about' },
         }) }}
       />
-
-      {/* ─────────── JSON-LD: FAQPage ─────────── */}
-      {data.faqs?.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: data.faqs.map((f: any) => ({
-              '@type': 'Question',
-              name: f.question,
-              acceptedAnswer: { '@type': 'Answer', text: f.answer },
-            })),
-          }) }}
-        />
-      )}
     </main>
   )
 }
