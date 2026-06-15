@@ -253,7 +253,7 @@ export default function AdsForm({
                 checked={formData.privacyConsent}
                 onChange={e => updateField('privacyConsent', e.target.checked)}
               />
-              <label htmlFor="ads-privacy" style={{ margin: 0, textTransform: 'none', letterSpacing: 0 }}>
+              <label htmlFor="ads-privacy" style={{ margin: 0, textTransform: 'none', letterSpacing: 0, fontSize: '.72rem', color: 'var(--mid)' }}>
                 I agree to the{' '}
                 <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
                   privacy policy

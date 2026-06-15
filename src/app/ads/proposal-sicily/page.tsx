@@ -242,24 +242,24 @@ export default async function ProposalAdsPage() {
 
       {/* Form — customized for proposals */}
       <AdsForm
+        source="proposal-sicily"
+        ctaText="Plan Your Moment"
         serviceOptions={['Proposal', 'Elopement', 'Couple Session']}
-        source="google-ads-proposal"
-        ctaText={data?.heroCtaText || "Plan Your Proposal"}
-        dateLabel="Proposed Date"
-        datePlaceholder="Month 2026 · or 'Flexible'"
-        locationLabel="Preferred Location"
-        locationPlaceholder="e.g. Valley of the Temples, or 'Help me choose'"
-        visionLabel="Tell me about your vision"
-        visionPlaceholder="Is it a surprise? What's the story?"
-        headingText={data?.formHeading || "Plan Your Perfect Moment"}
-        descriptionText={data?.formDescription || "Every proposal and elopement I photograph is unique. Share your vision and I'll help you create an unforgettable experience."}
-        urgencyText={data?.formUrgency || "Summer & Autumn 2026 — limited dates available."}
-        reassuranceItems={[
-          '✓ Personal response within 24 hours',
-          '✓ No obligation',
-          '✓ I help with location scouting',
-        ]}
         showWhatsApp={true}
+        headingText="Let's Plan Your Moment in Sicily"
+        descriptionText="Whether it's a surprise proposal, an intimate elopement, or a couple session, every shoot is shaped around your story and the place you choose."
+        urgencyText={data?.formUrgency || "Summer & Autumn 2026 — limited dates available."}
+        dateLabel="Preferred Date"
+        datePlaceholder="Month 2026 · or 'Flexible'"
+        locationLabel="Where in Sicily?"
+        locationPlaceholder="e.g. Valley of the Temples, or 'Help me choose'"
+        visionLabel="Tell me about your moment"
+        visionPlaceholder="Is it a surprise? How did you meet? What are you imagining?"
+        reassuranceItems={[
+          '✓ Personal reply within 24 hours',
+          '✓ I help you choose the perfect location',
+          '✓ Sneak peek within 48 hours',
+        ]}
       />
 
       {/* Closing */}
