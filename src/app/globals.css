@@ -4631,3 +4631,154 @@ a.journal-credit-name:hover {
 @media (max-width: 768px) {
   .ads-steps { grid-template-columns: 1fr; gap: 36px; }
 }
+
+/* ============================================================
+   SERVICE PAGE — Proposal (/proposal-photography-sicily)
+   Classi specifiche per i blocchi senza componente dedicato.
+   Usa SOLO token esistenti. Aggiungere in fondo a globals.css.
+   ============================================================ */
+
+/* Intro sotto-testo nelle section head */
+.sec-intro-text {
+  max-width: 56ch;
+  margin: 18px auto 0;
+  color: var(--mid);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ── GALLERY a griglia (ritmo masonry-like, nessun aspect ratio forzato) ── */
+.service-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+.service-gallery-item {
+  overflow: hidden;
+  background: var(--pearl);
+}
+.service-gallery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+.service-gallery-item:hover img {
+  opacity: 0.88;
+}
+.service-gallery-item figcaption {
+  font-size: 0.8rem;
+  color: var(--mid);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── LOCATION CARDS ── */
+.service-location-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 48px;
+}
+.service-location-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--white);
+}
+a.service-location-card {
+  transition: transform 0.3s ease;
+}
+a.service-location-card:hover {
+  transform: translateY(-4px);
+}
+.service-location-img {
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--pearl);
+  margin-bottom: 20px;
+}
+.service-location-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+a.service-location-card:hover .service-location-img img {
+  opacity: 0.88;
+}
+.service-location-card h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.service-location-city {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 6px 0 10px;
+}
+.service-location-card p {
+  font-size: 0.92rem;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* ── INVESTMENT a 2 colonne ── */
+.service-invest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 820px;
+  margin: 48px auto 0;
+}
+.service-invest-card {
+  background: var(--off-white);
+  border: 1px solid var(--rule);
+  padding: 44px 36px;
+  text-align: center;
+}
+.service-invest-card h3 {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.service-invest-price {
+  display: block;
+  font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+  font-style: italic;
+  font-size: 2.4rem;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.service-invest-card ul {
+  list-style: none;
+  text-align: left;
+  display: inline-block;
+  padding: 0;
+}
+.service-invest-card li {
+  font-size: 0.92rem;
+  color: var(--charcoal);
+  padding: 7px 0 7px 22px;
+  position: relative;
+}
+.service-invest-card li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  .service-gallery-grid,
+  .service-location-grid,
+  .service-invest-grid {
+    grid-template-columns: 1fr;
+  }
+}
