@@ -142,6 +142,7 @@ interface LayoutShellProps {
 export default function LayoutShell({ children, logo, logoFooter }: LayoutShellProps) {
   const pathname = usePathname()
   const isAds = pathname?.startsWith('/ads')
+  const isServicePage = pathname === '/proposal-photography-sicily'
 
   return (
     <>
@@ -169,7 +170,7 @@ export default function LayoutShell({ children, logo, logoFooter }: LayoutShellP
       {!isAds && (
         <>
           <Footer logo={logo} logoFooter={logoFooter} />
-          <StickyMobileCTA />
+          {!isServicePage && <StickyMobileCTA />}
         </>
       )}
     </>
