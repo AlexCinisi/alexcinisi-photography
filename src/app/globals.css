@@ -4710,36 +4710,26 @@ a.journal-credit-name:hover {
 }
 .svc-h2 em { font-family: var(--font-bodoni), 'Bodoni Moda', serif; font-style: italic; font-weight: 400; }
 
-/* ── HERO 65vh ── */
+/* ── HERO 100vh Ads-Style ── */
 .svc-hero {
-  position: relative; height: 65vh; min-height: 480px;
-  display: flex; align-items: flex-end; overflow: hidden;
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
 }
 .svc-hero-bg { position: absolute; inset: 0; z-index: 0; }
 .svc-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
-.svc-hero-bg::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(10,10,9,0.05) 0%, rgba(10,10,9,0.55) 100%);
-}
-.svc-hero-content {
-  position: relative; z-index: 1;
-  padding: 0 24px 56px; max-width: 1180px; margin: 0 auto; width: 100%; color: #fff;
-}
-.svc-hero .svc-eyebrow { color: rgba(255,255,255,0.82); }
+.svc-hero-bg::after { content: ""; position: absolute; inset: 0; background: rgba(30,29,27,0.55); }
+.svc-hero-content { position: relative; z-index: 1; max-width: 760px; padding: 120px 24px 80px; color: #fff; }
+.svc-hero .svc-eyebrow { color: var(--accent); margin-bottom: 28px; }
 .svc-hero h1 {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
-  font-weight: 300; font-size: clamp(2.4rem, 5.4vw, 4.1rem);
-  line-height: 1.04; letter-spacing: -0.02em; color: #fff;
+  font-weight: 300; font-size: clamp(2.6rem, 5vw, 3.8rem);
+  line-height: 1.1; letter-spacing: -0.01em; color: #fff; margin-bottom: 24px;
 }
 .svc-hero h1 span { display: block; }
-.svc-hero h1 em, .svc-hero h1 .svc-serif {
-  font-family: var(--font-bodoni), 'Bodoni Moda', serif; font-style: italic; font-weight: 400;
-}
-.svc-hero-sub {
-  font-size: 1.05rem; max-width: 48ch; margin-top: 24px;
-  color: rgba(255,255,255,0.9); line-height: 1.7;
-}
-.svc-hero-actions { margin-top: 32px; }
+.svc-hero h1 .svc-serif { font-family: var(--font-bodoni), 'Bodoni Moda', serif; font-style: italic; font-weight: 400; }
+.svc-hero-sub { font-weight: 300; font-size: 1.1rem; color: rgba(255,255,255,0.85); max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
+.svc-hero-actions { margin-top: 0; }
 
 /* ── INTRO ── */
 .svc-intro { background: var(--off-white); }
@@ -4747,19 +4737,6 @@ a.journal-credit-name:hover {
 .svc-intro .svc-body { max-width: 64ch; margin-top: 24px; }
 .svc-intro .svc-body p { font-size: 1.08rem; color: var(--charcoal); line-height: 1.85; margin-bottom: 1.2rem; }
 
-/* ── GALLERY (3 colonne, ritratto dominante) ── */
-.svc-gallery { background: var(--white); }
-.svc-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
-.svc-gallery-item {
-  position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--pearl); margin: 0;
-}
-.svc-gallery-item img { transition: opacity 0.3s ease; }
-.svc-gallery-item:hover img { opacity: 0.85; }
-.svc-gallery-item figcaption {
-  position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px;
-  font-size: 0.78rem; color: var(--off-white); font-style: italic;
-  background: linear-gradient(transparent, rgba(10,10,9,0.55));
-}
 
 /* ── APPROACH (fondo INK) ── */
 .svc-approach { background: var(--ink); color: var(--off-white); }
@@ -4868,6 +4845,25 @@ a.svc-loc-card:hover .svc-loc-img img { opacity: 0.85; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
-  .svc-gallery-grid, .svc-loc-grid, .svc-inv-grid, .svc-rel-grid, .svc-pillars { grid-template-columns: 1fr; gap: 24px; }
+  .svc-loc-grid, .svc-inv-grid, .svc-rel-grid, .svc-pillars { grid-template-columns: 1fr; gap: 24px; }
   .svc-proc-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
 }
+
+/* ── RELATED SLIDER ── */
+.svc-rel-slider {
+  display: flex; gap: 24px; margin-top: 48px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 12px; -webkit-overflow-scrolling: touch;
+}
+.svc-rel-slider::-webkit-scrollbar { height: 6px; }
+.svc-rel-slider::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+.svc-rel-slider .svc-rel-card {
+  flex: 0 0 clamp(280px, 32vw, 380px); scroll-snap-align: start;
+}
+
+/* ── FAQ DETAILS SUPPORT ── */
+details.faq-item summary { list-style: none; cursor: pointer; }
+details.faq-item summary::-webkit-details-marker { display: none; }
+details.faq-item .faq-a { display: none; }
+details.faq-item[open] .faq-a { display: block; }
+details.faq-item[open] .faq-ico { transform: rotate(45deg); }
