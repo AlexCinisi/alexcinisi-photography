@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Cookie Policy',
   description: 'Cookie Policy for Alex Cinisi Photography. Details about cookies used, their purpose, duration, and how to manage your preferences.',
   robots: 'noindex, follow',
+  alternates: { canonical: 'https://alexcinisiphotography.com/cookie-policy' },
 }
 
 export default function CookiePolicyPage() {

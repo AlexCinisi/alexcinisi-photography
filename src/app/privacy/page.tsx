@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Privacy Policy for Alex Cinisi Photography. Information about data collection, cookies, and your rights under GDPR.',
   robots: 'noindex, follow',
+  alternates: { canonical: 'https://alexcinisiphotography.com/privacy' },
 }
 
 export default function PrivacyPage() {

@@ -51,8 +51,6 @@ const nextConfig: NextConfig = {
             { source: '/privacy-policy', destination: '/privacy', permanent: true },
             // WordPress FAQ → contact
             { source: '/faq', destination: '/contact', permanent: true },
-            // WordPress Ads landing (campaign inactive) → contact
-            { source: '/luxury-destination-wedding-photography-in-sicily', destination: '/contact', permanent: true },
             // WordPress pages → new structure
             { source: '/stories-2', destination: '/journal', permanent: true },
             { source: '/stories', destination: '/journal', permanent: true },
