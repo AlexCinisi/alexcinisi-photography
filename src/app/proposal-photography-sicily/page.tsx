@@ -5,19 +5,11 @@ import { PortableText } from '@portabletext/react'
 import { client } from '@/lib/sanity/client'
 import { proposalPageQuery } from '@/lib/sanity/queries'
 import { urlFor, getHotspotPosition } from '@/lib/sanity/image'
-
-// Componenti di sezione MODULARI (riutilizzabili su tutte le service page).
-import ServiceHero from '@/components/sections/ServiceHero'
-import ServiceGallery from '@/components/sections/ServiceGallery'
-import ServiceLocations from '@/components/sections/ServiceLocations'
-import ServiceInvestment from '@/components/sections/ServiceInvestment'
-import ServiceFAQ from '@/components/sections/ServiceFAQ'
-// Componenti esistenti del sito con contenuto via props (già modulari).
-import Pillars from '@/components/sections/Pillars'
-import Testimonials from '@/components/sections/Testimonials'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
 
-// ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell> (route non-/ads).
+// ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell>.
+// Design autonomo namespace .svc-* (vedi blocco CSS in globals.css): fedele al mockup,
+// indipendente dalle classi del sito per evitare sovrascritture.
 
 export const revalidate = 3600
 
@@ -26,15 +18,10 @@ const CANONICAL = 'https://alexcinisiphotography.com/proposal-photography-sicily
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(proposalPageQuery).catch(() => null)
   if (!data) {
-    return {
-      alternates: { canonical: CANONICAL },
-      robots: { index: false, follow: true },
-    }
+    return { alternates: { canonical: CANONICAL }, robots: { index: false, follow: true } }
   }
-
   const ogUrl = data.ogImage?.asset?.url || data.heroImage?.asset?.url
   const ogAlt = data.ogImage?.alt || data.heroImage?.alt || data.heroHeading || data.title
-
   return {
     title: data.metaTitle || data.title,
     description: data.metaDescription,
@@ -57,7 +44,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ProposalPhotographySicily() {
   const data = await client.fetch(proposalPageQuery).catch(() => null)
-
   if (!data) {
     return (
       <main style={{ minHeight: '60vh', display: 'grid', placeItems: 'center' }}>
@@ -68,78 +54,151 @@ export default async function ProposalPhotographySicily() {
 
   const heroLines = (data.heroHeading || '').split('|').map((l: string) => l.trim()).filter(Boolean)
 
-  const pillarItems = (data.approachPillars || []).map((p: any, i: number) => ({
-    number: String(i + 1).padStart(2, '0'),
-    title: p.title,
-    description: p.description,
-    quote: '',
-    quoteAuthor: '',
-  }))
-
   return (
-    <main>
-      {/* HERO */}
-      <ServiceHero
-        image={data.heroImage}
-        eyebrow={data.heroEyebrow || 'Proposal Photography · Sicily'}
-        titleLines={heroLines.length ? heroLines : ['Proposal Photography', 'in Sicily']}
-        subtitle={data.heroSubtitle}
-        ctaText="Plan Your Proposal"
-        ctaHref="/contact"
-        darkText={data.heroTextDark || false}
-      />
+    <main className="svc-page">
+      {/* ─── HERO 65vh ─── */}
+      <section className="svc-hero">
+        <div className="svc-hero-bg">
+          {data.heroImage?.asset && (
+            <Image
+              src={urlFor(data.heroImage).fit('crop').crop('focalpoint').width(2400).auto('format').quality(90).url()}
+              alt={data.heroImage.alt || heroLines.join(' ') || ''}
+              fill priority quality={90} sizes="100vw"
+              style={{ objectFit: 'cover', objectPosition: getHotspotPosition(data.heroImage) }}
+            />
+          )}
+        </div>
+        <div className="svc-hero-content">
+          <div className="svc-eyebrow">{data.heroEyebrow || 'Proposal Photography · Sicily'}</div>
+          <h1>
+            {(heroLines.length ? heroLines : ['Proposal Photography', 'in Sicily']).map((line: string, i: number) => (
+              <span key={i} className={i > 0 ? 'svc-serif' : ''}>{line}</span>
+            ))}
+          </h1>
+          {data.heroSubtitle && <p className="svc-hero-sub">{data.heroSubtitle}</p>}
+          <div className="svc-hero-actions">
+            <Link href="/contact" className="svc-btn">Plan Your Proposal</Link>
+          </div>
+        </div>
+      </section>
 
-      {/* INTRO (rich text) */}
+      {/* ─── INTRO ─── */}
       {data.introBody && (
-        <section className="s-white pad">
-          <div className="max">
-            <RevealOnScroll className="sec-head">
-              {data.introHeading && <div className="h2">{data.introHeading}</div>}
-            </RevealOnScroll>
-            <RevealOnScroll className="journal-body" style={{ maxWidth: '720px', margin: '0 auto' }}>
-              <PortableText value={data.introBody} />
+        <section className="svc-intro">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              {data.introHeading && <div className="svc-h2">{data.introHeading}</div>}
+              <div className="svc-body">
+                <PortableText value={data.introBody} />
+              </div>
             </RevealOnScroll>
           </div>
         </section>
       )}
 
-      {/* GALLERY */}
-      <ServiceGallery
-        label="Portfolio"
-        heading={<>Moments, <em>As They Happened</em></>}
-        images={data.galleryImages || []}
-        background="pearl"
-      />
-
-      {/* APPROACH (componente Pillars esistente, già modulare) */}
-      {pillarItems.length > 0 && (
-        <Pillars
-          intro={{ label: 'How I Work', title: data.approachHeading || 'Three Things I Promise You' }}
-          items={pillarItems}
-        />
+      {/* ─── GALLERY ─── */}
+      {data.galleryImages?.length > 0 && (
+        <section className="svc-gallery">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow">Portfolio</div>
+              <div className="svc-h2">Moments, <em>As They Happened</em></div>
+            </RevealOnScroll>
+            <RevealOnScroll className="svc-gallery-grid">
+              {data.galleryImages.map((img: any, i: number) => (
+                img?.asset && (
+                  <figure key={i} className="svc-gallery-item">
+                    <Image
+                      src={urlFor(img).width(1400).auto('format').quality(85).url()}
+                      alt={img.alt || ''}
+                      fill sizes="(max-width: 860px) 100vw, 33vw"
+                      placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
+                      blurDataURL={img.asset.metadata?.lqip}
+                      style={{ objectFit: 'cover', objectPosition: getHotspotPosition(img) }}
+                    />
+                    {img.caption && <figcaption>{img.caption}</figcaption>}
+                  </figure>
+                )
+              ))}
+            </RevealOnScroll>
+          </div>
+        </section>
       )}
 
-      {/* LOCATIONS */}
-      <ServiceLocations
-        label="Sicily Locations"
-        heading={data.locationsHeading || 'Where Will You Ask the Question?'}
-        intro={data.locationsIntro}
-        cards={data.locationCards || []}
-        background="white"
-      />
-
-      {/* PROCESS (inline: replica process-grid del sito, dati da Sanity) */}
-      {data.processSteps?.length > 0 && (
-        <section className="s-pearl pad">
-          <div className="max">
-            <RevealOnScroll className="sec-head">
-              <div className="f-label">How It Works</div>
-              <div className="h2-lg">{data.processHeading || 'From First Message to Final Gallery'}</div>
+      {/* ─── APPROACH (fondo ink) ─── */}
+      {data.approachPillars?.length > 0 && (
+        <section className="svc-approach">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow">How I Work</div>
+              <div className="svc-h2">{data.approachHeading || 'Three Things I Promise You'}</div>
             </RevealOnScroll>
-            <RevealOnScroll className="process-grid d1">
+            <RevealOnScroll className="svc-pillars">
+              {data.approachPillars.map((p: any, i: number) => (
+                <div key={i} className="svc-pillar">
+                  <div className="svc-pillar-n">{['i.', 'ii.', 'iii.', 'iv.'][i] || `${i + 1}.`}</div>
+                  <h3>{p.title}</h3>
+                  <p>{p.description}</p>
+                </div>
+              ))}
+            </RevealOnScroll>
+          </div>
+        </section>
+      )}
+
+      {/* ─── LOCATIONS ─── */}
+      {data.locationCards?.length > 0 && (
+        <section className="svc-locations">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow" style={{ textAlign: 'center' }}>Sicily Locations</div>
+              <div className="svc-h2" style={{ textAlign: 'center' }}>{data.locationsHeading || 'Where Will You Ask the Question?'}</div>
+              {data.locationsIntro && <p className="svc-loc-intro">{data.locationsIntro}</p>}
+            </RevealOnScroll>
+            <RevealOnScroll className="svc-loc-grid">
+              {data.locationCards.map((loc: any, i: number) => {
+                const inner = (
+                  <>
+                    {loc.image?.asset && (
+                      <div className="svc-loc-img">
+                        <Image
+                          src={urlFor(loc.image).width(1000).auto('format').quality(85).url()}
+                          alt={loc.image.alt || loc.name || ''}
+                          fill sizes="(max-width: 860px) 100vw, 33vw"
+                          style={{ objectFit: 'cover', objectPosition: getHotspotPosition(loc.image) }}
+                        />
+                      </div>
+                    )}
+                    <div className="svc-loc-body">
+                      <h3>{loc.name}</h3>
+                      {loc.city && <span className="svc-loc-city">{loc.city}</span>}
+                      {loc.description && <p>{loc.description}</p>}
+                    </div>
+                  </>
+                )
+                return loc.locationPageRef?.slug ? (
+                  <Link key={i} href={`/locations/${loc.locationPageRef.slug}`} className="svc-loc-card">{inner}</Link>
+                ) : (
+                  <div key={i} className="svc-loc-card">{inner}</div>
+                )
+              })}
+            </RevealOnScroll>
+          </div>
+        </section>
+      )}
+
+      {/* ─── PROCESS ─── */}
+      {data.processSteps?.length > 0 && (
+        <section className="svc-process">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow">How It Works</div>
+              <div className="svc-h2">{data.processHeading || 'From First Message to Final Gallery'}</div>
+            </RevealOnScroll>
+            <RevealOnScroll className="svc-proc-grid">
               {data.processSteps.map((s: any, i: number) => (
-                <div key={i} className="step">
-                  <span className="step-n">{s.step || String(i + 1).padStart(2, '0')}</span>
+                <div key={i} className="svc-proc-step">
+                  <div className="svc-proc-n">{s.step || String(i + 1).padStart(2, '0')}</div>
                   <h3>{s.title}</h3>
                   <p>{s.description}</p>
                 </div>
@@ -149,40 +208,68 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* INVESTMENT */}
-      <ServiceInvestment
-        label="Investment"
-        heading={data.investmentHeading || 'Simple and Transparent'}
-        packages={data.investmentPackages || []}
-        ctaText="Start the conversation →"
-        ctaHref="/contact"
-        background="white"
-      />
+      {/* ─── INVESTMENT ─── */}
+      {data.investmentPackages?.length > 0 && (
+        <section className="svc-invest">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow" style={{ textAlign: 'center' }}>Investment</div>
+              <div className="svc-h2" style={{ textAlign: 'center' }}>{data.investmentHeading || 'Simple and Transparent'}</div>
+            </RevealOnScroll>
+            <RevealOnScroll className="svc-inv-grid">
+              {data.investmentPackages.map((pkg: any, i: number) => (
+                <div key={i} className="svc-inv-card">
+                  {pkg.name && <h3>{pkg.name}</h3>}
+                  {pkg.price && <span className="svc-inv-price">{pkg.price}</span>}
+                  {pkg.includes?.length > 0 && (
+                    <ul>{pkg.includes.map((inc: string, j: number) => <li key={j}>{inc}</li>)}</ul>
+                  )}
+                </div>
+              ))}
+            </RevealOnScroll>
+            <div className="svc-invest-cta">
+              <Link href="/contact" className="svc-btn">Start the conversation →</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
-      {/* TESTIMONIALS (componente esistente) */}
-      {data.testimonials?.length > 0 && <Testimonials items={data.testimonials} />}
+      {/* ─── TESTIMONIALS ─── */}
+      {data.testimonials?.length > 0 && (
+        <section className="svc-testi">
+          <div className="svc-wrap">
+            {data.testimonials.map((t: any, i: number) => (
+              <RevealOnScroll key={i}>
+                <blockquote>
+                  <q>{t.quote}</q>
+                  <cite>{t.countryFlag} {t.coupleName}{t.location ? ` · ${t.location}` : ''}</cite>
+                </blockquote>
+              </RevealOnScroll>
+            ))}
+          </div>
+        </section>
+      )}
 
-      {/* SEO CONTENT (rich text lungo) */}
+      {/* ─── SEO CONTENT ─── */}
       {data.seoContent && (
-        <section className="s-white pad">
-          <div className="max">
-            <RevealOnScroll className="journal-body service-seo-content" style={{ maxWidth: '720px', margin: '0 auto' }}>
+        <section className="svc-seo">
+          <div className="svc-wrap--narrow">
+            <RevealOnScroll className="svc-body">
               <PortableText
                 value={data.seoContent}
                 components={{
                   types: {
                     image: ({ value }: any) => value?.asset ? (
-                      <figure className="service-seo-figure">
+                      <figure className="svc-seo-figure">
                         <Image
-                          src={urlFor(value).width(1600).quality(85).auto('format').url()}
+                          src={urlFor(value).width(1600).auto('format').quality(85).url()}
                           alt={value.alt || ''}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 720px"
+                          fill sizes="(max-width: 860px) 100vw, 740px"
                           placeholder={value.asset.metadata?.lqip ? 'blur' : 'empty'}
                           blurDataURL={value.asset.metadata?.lqip}
                           style={{ objectFit: 'cover' }}
                         />
-                        {value.caption && <figcaption className="service-seo-caption">{value.caption}</figcaption>}
+                        {value.caption && <figcaption className="svc-seo-caption">{value.caption}</figcaption>}
                       </figure>
                     ) : null,
                   },
@@ -193,63 +280,72 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* FAQ */}
-      <ServiceFAQ
-        label="Questions"
-        heading={<>Before You <em>Ask</em></>}
-        items={data.faqs || []}
-      />
-
-      {/* RELATED STORIES */}
-      {data.relatedJournalPosts?.length > 0 && (
-        <section className="s-pearl pad">
-          <div className="max">
-            <RevealOnScroll className="sec-head">
-              <div className="f-label">Real Stories</div>
-              <div className="h2-lg">Proposals I&apos;ve <em>Witnessed</em></div>
+      {/* ─── FAQ ─── */}
+      {data.faqs?.length > 0 && (
+        <section className="svc-faq">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow" style={{ textAlign: 'center' }}>Questions</div>
+              <div className="svc-h2" style={{ textAlign: 'center' }}>Before You <em>Ask</em></div>
             </RevealOnScroll>
-            <div className="journal-related">
-              {data.relatedJournalPosts.map((post: any, i: number) => (
-                post?.slug && (
-                  <Link key={i} href={`/journal/${post.slug}`} className="journal-related-card">
-                    {post.heroImage?.asset && (
-                      <div className="journal-related-img">
-                        <Image
-                          src={urlFor(post.heroImage).width(1200).quality(85).auto('format').url()}
-                          alt={post.heroImage.alt || post.title || ''}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          style={{ objectFit: 'cover', objectPosition: getHotspotPosition(post.heroImage) }}
-                        />
-                      </div>
-                    )}
-                    <div className="journal-related-title">{post.coupleName || post.title}</div>
-                    {post.location && <div className="journal-related-location">{post.location}</div>}
-                  </Link>
-                )
+            <RevealOnScroll className="svc-faq-wrap">
+              {data.faqs.map((f: any, i: number) => (
+                <details key={i} className="svc-faq-item">
+                  <summary className="svc-faq-q">
+                    <span>{f.question}</span>
+                    <span className="svc-faq-ico">+</span>
+                  </summary>
+                  <div className="svc-faq-a"><p>{f.answer}</p></div>
+                </details>
               ))}
-            </div>
+            </RevealOnScroll>
           </div>
         </section>
       )}
 
-      {/* FINAL CTA */}
-      <section className="s-ink pad">
-        <RevealOnScroll className="final-cta-inner">
-          <div className="f-label" style={{ justifyContent: 'center', marginBottom: '24px', color: 'rgba(250,250,248,.35)' }}>
-            Your Moment Awaits
+      {/* ─── RELATED ─── */}
+      {data.relatedJournalPosts?.length > 0 && (
+        <section className="svc-related">
+          <div className="svc-wrap">
+            <RevealOnScroll>
+              <div className="svc-eyebrow">Real Stories</div>
+              <div className="svc-h2">Proposals I&apos;ve <em>Witnessed</em></div>
+            </RevealOnScroll>
+            <RevealOnScroll className="svc-rel-grid">
+              {data.relatedJournalPosts.map((post: any, i: number) => (
+                post?.slug && (
+                  <Link key={i} href={`/journal/${post.slug}`} className="svc-rel-card">
+                    {post.heroImage?.asset && (
+                      <div className="svc-rel-img">
+                        <Image
+                          src={urlFor(post.heroImage).width(1000).auto('format').quality(85).url()}
+                          alt={post.heroImage.alt || post.title || ''}
+                          fill sizes="(max-width: 860px) 100vw, 50vw"
+                          style={{ objectFit: 'cover', objectPosition: getHotspotPosition(post.heroImage) }}
+                        />
+                      </div>
+                    )}
+                    <div className="svc-rel-title">{post.coupleName || post.title}</div>
+                    {post.location && <div className="svc-rel-loc">{post.location}</div>}
+                  </Link>
+                )
+              ))}
+            </RevealOnScroll>
           </div>
-          <div className="h2-lg" style={{ color: 'var(--off-white)', marginBottom: '20px' }}>
-            Let&apos;s Plan Your<br /><em>Moment in Sicily</em>
-          </div>
+        </section>
+      )}
+
+      {/* ─── FINAL CTA ─── */}
+      <section className="svc-cta">
+        <RevealOnScroll>
+          <div className="svc-eyebrow" style={{ color: 'var(--accent)', textAlign: 'center' }}>Your Moment Awaits</div>
+          <div className="svc-h2">Let&apos;s Plan Your <em>Moment in Sicily</em></div>
           <p>Tell me the location you picture, or ask me to suggest one. I reply within 24 hours, and we start building the moment together.</p>
-          <Link href="/contact" className="btn-fill" style={{ background: 'var(--off-white)', color: 'var(--ink)' }}>
-            Start the conversation →
-          </Link>
+          <Link href="/contact" className="svc-cta-btn">Start the conversation</Link>
         </RevealOnScroll>
       </section>
 
-      {/* JSON-LD: ProfessionalService (il FAQPage è generato dentro ServiceFAQ) */}
+      {/* ─── JSON-LD ─── */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -263,6 +359,20 @@ export default async function ProposalPhotographySicily() {
           provider: { '@type': 'Person', name: 'Alex Cinisi', url: 'https://alexcinisiphotography.com/about' },
         }) }}
       />
+      {data.faqs?.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: data.faqs.map((f: any) => ({
+              '@type': 'Question',
+              name: f.question,
+              acceptedAnswer: { '@type': 'Answer', text: f.answer },
+            })),
+          }) }}
+        />
+      )}
     </main>
   )
 }
