@@ -447,5 +447,5 @@ export const proposalPageQuery = `*[_type == "proposalPage"][0] {
     heroImage { ..., alt, asset-> { _id, url, metadata { dimensions, lqip } } }
   },
   metaTitle, metaDescription,
-  ogImage { asset-> { url } }
+  ogImage { asset-> { url }, alt }
 }`

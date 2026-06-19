@@ -246,7 +246,21 @@ export default defineType({
     // ──── SEO ────
     defineField({ name: 'metaTitle', title: 'Meta Title', type: 'string', fieldset: 'seo', validation: (Rule) => Rule.max(70) }),
     defineField({ name: 'metaDescription', title: 'Meta Description', type: 'text', rows: 2, fieldset: 'seo', validation: (Rule) => Rule.max(160) }),
-    defineField({ name: 'ogImage', title: 'OG Image (1200×630)', type: 'image', fieldset: 'seo', description: 'Se vuota, usa hero image.' }),
+    defineField({
+      name: 'ogImage',
+      title: 'OG Image (1200×630)',
+      type: 'image',
+      fieldset: 'seo',
+      description: 'Se vuota, usa hero image.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text (og:image:alt)',
+          type: 'string',
+          description: 'Testo alternativo per l\'anteprima social. Se vuoto, usa l\'alt della hero.',
+        }),
+      ],
+    }),
   ],
 
   preview: {
