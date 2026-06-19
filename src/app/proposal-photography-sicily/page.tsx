@@ -6,6 +6,7 @@ import { client } from '@/lib/sanity/client'
 import { proposalPageQuery } from '@/lib/sanity/queries'
 import { urlFor, getHotspotPosition } from '@/lib/sanity/image'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import PortfolioGrid from '@/components/sections/PortfolioGrid'
 
 // ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell>.
 // Design autonomo namespace .svc-* (vedi blocco CSS in globals.css): fedele al mockup,
@@ -56,7 +57,7 @@ export default async function ProposalPhotographySicily() {
 
   return (
     <main className="svc-page">
-      {/* ─── HERO 65vh ─── */}
+      {/* HERO — stile ads: 100vh, centrato, overlay scuro */}
       <section className="svc-hero">
         <div className="svc-hero-bg">
           {data.heroImage?.asset && (
@@ -96,33 +97,18 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* ─── GALLERY ─── */}
+      {/* GALLERY — masonry vero riusando PortfolioGrid (coerenza col sito) */}
       {data.galleryImages?.length > 0 && (
-        <section className="svc-gallery">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow">Portfolio</div>
-              <div className="svc-h2">Moments, <em>As They Happened</em></div>
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-gallery-grid">
-              {data.galleryImages.map((img: any, i: number) => (
-                img?.asset && (
-                  <figure key={i} className="svc-gallery-item">
-                    <Image
-                      src={urlFor(img).width(1400).auto('format').quality(85).url()}
-                      alt={img.alt || ''}
-                      fill sizes="(max-width: 860px) 100vw, 33vw"
-                      placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
-                      blurDataURL={img.asset.metadata?.lqip}
-                      style={{ objectFit: 'cover', objectPosition: getHotspotPosition(img) }}
-                    />
-                    {img.caption && <figcaption>{img.caption}</figcaption>}
-                  </figure>
-                )
-              ))}
-            </RevealOnScroll>
-          </div>
-        </section>
+        <PortfolioGrid
+          intro={{ label: 'Portfolio', title: <>Moments, <em>As They Happened</em></> }}
+          items={data.galleryImages.map((img: any) => ({
+            image: img,
+            coupleName: img.caption || '',
+            location: '',
+          }))}
+          ctaText=""
+          ctaLink="/contact"
+        />
       )}
 
       {/* ─── APPROACH (fondo ink) ─── */}
@@ -280,38 +266,36 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* ─── FAQ ─── */}
+      {/* FAQ — classi standard del sito */}
       {data.faqs?.length > 0 && (
-        <section className="svc-faq">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow" style={{ textAlign: 'center' }}>Questions</div>
-              <div className="svc-h2" style={{ textAlign: 'center' }}>Before You <em>Ask</em></div>
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-faq-wrap">
+        <section className="s-pearl pad">
+          <div className="max">
+            <div className="sec-head center">
+              <div className="f-label">Questions</div>
+              <div className="h2-lg">Before You <em>Ask</em></div>
+            </div>
+            <div className="faq-wrap d1">
               {data.faqs.map((f: any, i: number) => (
-                <details key={i} className="svc-faq-item">
-                  <summary className="svc-faq-q">
-                    <span>{f.question}</span>
-                    <span className="svc-faq-ico">+</span>
+                <details key={i} className="faq-item">
+                  <summary className="faq-q" style={{ listStyle: 'none' }}>
+                    <span className="faq-q-t">{f.question}</span>
+                    <span className="faq-ico">+</span>
                   </summary>
-                  <div className="svc-faq-a"><p>{f.answer}</p></div>
+                  <div className="faq-a"><p>{f.answer}</p></div>
                 </details>
               ))}
-            </RevealOnScroll>
+            </div>
           </div>
         </section>
       )}
 
-      {/* ─── RELATED ─── */}
+      {/* RELATED — slider orizzontale (scroll-snap) se > 2, altrimenti grid */}
       {data.relatedJournalPosts?.length > 0 && (
         <section className="svc-related">
           <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow">Real Stories</div>
-              <div className="svc-h2">Proposals I&apos;ve <em>Witnessed</em></div>
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-rel-grid">
+            <div className="svc-eyebrow">Real Stories</div>
+            <div className="svc-h2">Proposals I&apos;ve <em>Witnessed</em></div>
+            <div className={data.relatedJournalPosts.length > 2 ? 'svc-rel-slider' : 'svc-rel-grid'}>
               {data.relatedJournalPosts.map((post: any, i: number) => (
                 post?.slug && (
                   <Link key={i} href={`/journal/${post.slug}`} className="svc-rel-card">
@@ -320,7 +304,7 @@ export default async function ProposalPhotographySicily() {
                         <Image
                           src={urlFor(post.heroImage).width(1000).auto('format').quality(85).url()}
                           alt={post.heroImage.alt || post.title || ''}
-                          fill sizes="(max-width: 860px) 100vw, 50vw"
+                          fill sizes="(max-width: 860px) 80vw, 33vw"
                           style={{ objectFit: 'cover', objectPosition: getHotspotPosition(post.heroImage) }}
                         />
                       </div>
@@ -330,7 +314,7 @@ export default async function ProposalPhotographySicily() {
                   </Link>
                 )
               ))}
-            </RevealOnScroll>
+            </div>
           </div>
         </section>
       )}
