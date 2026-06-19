@@ -4135,10 +4135,16 @@ a.journal-credit-name:hover {
   font-size: .68rem; font-weight: 400;
   letter-spacing: .2em; text-transform: uppercase;
   color: var(--ink); background: var(--white);
-  padding: 18px 42px; border: none; cursor: pointer;
-  transition: background .25s;
+  padding: 18px 42px;
+  border: 1px solid var(--white);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .3s ease, color .3s ease;
 }
-.ads-hero-cta:hover { background: var(--grey-bg); }
+.ads-hero-cta:hover {
+  background: transparent;
+  color: var(--white);
+}
 .ads-hero-micro {
   font-weight: 300; font-size: .8rem;
   color: rgba(255,255,255,.6); margin-top: 16px;
@@ -4423,22 +4429,48 @@ a.journal-credit-name:hover {
 /* --- Ads Form Section --- */
 .ads-form-section { background: var(--ink); padding: 100px 48px; }
 .ads-form-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; max-width: 1000px; margin: 0 auto; align-items: start;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 72px;
+  max-width: 1040px;
+  margin: 0 auto;
+  align-items: center;
 }
 .ads-form-text h2 {
-  font-size: 2.2rem; font-weight: 300;
-  color: var(--white); margin-bottom: 20px; line-height: 1.2;
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.ads-form-text > .ads-eyebrow {
+  margin-bottom: 18px;
 }
 .ads-form-text p {
-  font-weight: 300; font-size: 1rem;
-  color: rgba(255,255,255,.8); line-height: 1.7; margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 1rem;
+  color: rgba(255,255,255,.78);
+  line-height: 1.75;
+  margin-bottom: 20px;
 }
-.ads-form-urgency { font-weight: 500; font-size: 1rem; color: var(--accent); margin-bottom: 24px; }
-.ads-form-reassurance { list-style: none; padding: 0; }
+.ads-form-urgency {
+  font-weight: 400;
+  font-size: .95rem;
+  color: var(--accent);
+  margin-bottom: 28px;
+  letter-spacing: .01em;
+}
+.ads-form-reassurance {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 .ads-form-reassurance li {
-  font-weight: 300; font-size: .85rem;
-  color: rgba(255,255,255,.6); padding: 4px 0;
+  font-weight: 300;
+  font-size: .88rem;
+  color: rgba(255,255,255,.65);
+  padding: 6px 0;
+  line-height: 1.5;
 }
 /* --- Ads Form Service Selector (stile .check-lbl del sito) --- */
 .ads-form-service-selector {
@@ -4492,7 +4524,7 @@ a.journal-credit-name:hover {
 /* --- Ads Form Card (stile boxed del sito) --- */
 .ads-form-card {
   background: var(--white);
-  padding: 48px 44px;
+  padding: 52px 48px;
 }
 .ads-form-card form {
   display: flex;
@@ -4552,11 +4584,15 @@ a.journal-credit-name:hover {
 }
 .ads-form-privacy input[type="checkbox"] {
   display: block;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   margin-top: 1px;
+  cursor: pointer;
   accent-color: var(--ink);
+  border: 1px solid var(--rule);
+  appearance: auto;
+  -webkit-appearance: checkbox;
 }
 .ads-form-privacy a {
   color: var(--charcoal);
@@ -4583,8 +4619,11 @@ a.journal-credit-name:hover {
 .ads-form-success p { font-weight: 300; font-size: 1rem; color: var(--mid); }
 @media (max-width: 768px) {
   .ads-form-section { padding: 64px 20px; }
-  .ads-form-grid { grid-template-columns: 1fr; gap: 40px; }
-  .ads-form-card { padding: 32px 24px; }
+  .ads-form-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .ads-form-card { padding: 36px 26px; }
 }
 
 /* --- Ads WhatsApp CTA --- */
@@ -4626,7 +4665,7 @@ a.journal-credit-name:hover {
 .ads-form-section .ads-wa-btn {
   color: var(--white);
   border-color: rgba(255,255,255,.4);
-  margin-top: 20px;
+  margin-top: 16px;
 }
 .ads-form-section .ads-wa-btn:hover {
   background: var(--white);
