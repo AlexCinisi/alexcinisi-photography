@@ -5,6 +5,7 @@ import AdsHero from '@/components/ads/AdsHero'
 import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
+import PortfolioGrid from '@/components/sections/PortfolioGrid'
 import { client } from '@/lib/sanity/client'
 import { adsLuxuryPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
@@ -155,35 +156,17 @@ export default async function LuxuryWeddingAdsPage() {
 
       {/* Gallery */}
       {data?.galleryImages && data.galleryImages.length > 0 && (
-        <section className="ads-gallery" style={{ textAlign: 'center' }}>
-          <div className="ads-eyebrow"><span>Portfolio</span></div>
-          <h2 className="ads-h2">
-            {data.galleryTitle
-              ? data.galleryTitle.split('_').map((part: string, i: number) =>
-                  i % 2 === 1 ? <em key={i}>{part}</em> : part
-                )
-              : <>Moments That <em>Speak</em> for Themselves</>
-            }
-          </h2>
-          <div className="ads-gallery-grid">
-            {data.galleryImages.map((img: any, i: number) => (
-              <div key={i} className="ads-gallery-item">
-                <Image
-                  src={urlFor(img).width(800).height(1067).fit('crop').crop('focalpoint').auto('format').quality(80).url()}
-                  alt={img.alt || `Wedding photo ${i + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  style={{
-                    objectFit: 'cover',
-                    objectPosition: img.hotspot
-                      ? `${img.hotspot.x * 100}% ${img.hotspot.y * 100}%`
-                      : 'center 30%',
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
+        <PortfolioGrid
+          intro={{ label: 'Portfolio', title: data.galleryTitle
+            ? <>{data.galleryTitle.split('_').map((part: string, i: number) => i % 2 === 1 ? <em key={i}>{part}</em> : part)}</>
+            : <>Moments That <em>Speak</em> for Themselves</> }}
+          items={data.galleryImages.map((img: any) => ({
+            image: { ...img, asset: img.asset, alt: img.alt },
+            coupleName: img.caption || '',
+            location: '',
+          }))}
+          ctaText=""
+        />
       )}
 
       {/* Film Photography */}
