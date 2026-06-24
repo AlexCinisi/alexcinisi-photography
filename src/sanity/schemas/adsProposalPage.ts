@@ -27,6 +27,7 @@ export default defineType({
     { name: 'testimonials', title: '🟡 Testimonials', options: { collapsible: true, collapsed: true } },
     { name: 'form', title: '🟡 Form', options: { collapsible: true, collapsed: true } },
     { name: 'closing', title: '🟡 Closing', options: { collapsible: true, collapsed: true } },
+    { name: 'faq', title: '🟡 FAQ', options: { collapsible: true, collapsed: true } },
     { name: 'socialProof', title: '🟢 Social Proof', options: { collapsible: true, collapsed: true } },
     { name: 'seo', title: '🔵 SEO & Metadata', options: { collapsible: true, collapsed: true } },
   ],
@@ -296,6 +297,26 @@ export default defineType({
       type: 'string',
       fieldset: 'closing',
       initialValue: "She Said Yes — And You'll Have the Photographs to Prove It.",
+    }),
+
+    // FAQ
+    defineField({
+      name: 'faqs',
+      title: 'FAQ',
+      type: 'array',
+      fieldset: 'faq',
+      description: 'Domande frequenti mostrate come accordion prima del closing. Rispondono alle obiezioni pre-conversione.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({ name: 'question', title: 'Domanda', type: 'string', validation: (Rule) => Rule.required() }),
+            defineField({ name: 'answer', title: 'Risposta', type: 'text', rows: 4, validation: (Rule) => Rule.required() }),
+          ],
+          preview: { select: { title: 'question' } },
+        })
+      ],
+      validation: (Rule) => Rule.max(8),
     }),
 
     // SOCIAL PROOF

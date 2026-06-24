@@ -401,6 +401,7 @@ export const adsProposalPageQuery = `*[_type == "adsProposalPage"][0] {
   formDescription,
   formUrgency,
   closingQuote,
+  faqs[] { question, answer },
   socialProofBadges[] { name, image { asset->, alt, hotspot, crop } },
   metaTitle,
   metaDescription,

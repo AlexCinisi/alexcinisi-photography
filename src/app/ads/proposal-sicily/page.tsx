@@ -6,6 +6,7 @@ import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
 import AdsWhatsApp from '@/components/ads/AdsWhatsApp'
+import AdsFaq from '@/components/ads/AdsFaq'
 import PortfolioGrid from '@/components/sections/PortfolioGrid'
 import { client } from '@/lib/sanity/client'
 import { adsProposalPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
@@ -245,11 +246,30 @@ export default async function ProposalAdsPage() {
         ]}
       />
 
+      {data?.faqs && data.faqs.length > 0 && (
+        <AdsFaq faqs={data.faqs} />
+      )}
+
       {/* Closing */}
       <AdsClosing
         quote={data?.closingQuote || "They Said Yes — And You'll Have the Photographs to Prove It."}
         ctaText={data?.heroCtaText || "Plan Your Proposal"}
       />
+
+      {data?.faqs && data.faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: data.faqs.map((faq: any) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+            })),
+          })}}
+        />
+      )}
     </>
   )
 }
