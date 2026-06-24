@@ -25,14 +25,24 @@ function setCookie(name: string, value: string, days: number) {
   document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires};path=/;SameSite=Lax`
 }
 
-function updateGtagConsent(prefs: ConsentPrefs) {
-  // Google Consent Mode v2
+function updateConsent(prefs: ConsentPrefs) {
+  // 1. Google Consent Mode v2 (per GA4, Google Ads, Meta Pixel via GTM)
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
     window.gtag('consent', 'update', {
       analytics_storage: prefs.analytics ? 'granted' : 'denied',
       ad_storage: prefs.marketing ? 'granted' : 'denied',
       ad_user_data: prefs.marketing ? 'granted' : 'denied',
       ad_personalization: prefs.marketing ? 'granted' : 'denied',
+    })
+  }
+
+  // 2. Microsoft Clarity Consent API V2
+  // Required for EEA/UK/CH users from October 31, 2025
+  // Docs: https://learn.microsoft.com/en-us/clarity/setup-and-installation/consent-mode
+  if (typeof window !== 'undefined' && typeof (window as any).clarity === 'function') {
+    (window as any).clarity('consentv2', {
+      ad_Storage: prefs.marketing ? 'granted' : 'denied',
+      analytics_Storage: prefs.analytics ? 'granted' : 'denied',
     })
   }
 }
@@ -67,7 +77,7 @@ export default function CookieConsent() {
       try {
         const parsed = JSON.parse(saved)
         // Applica i consensi salvati senza mostrare il banner
-        updateGtagConsent({
+        updateConsent({
           analytics: parsed.analytics ?? false,
           marketing: parsed.marketing ?? false,
         })
@@ -90,7 +100,7 @@ export default function CookieConsent() {
       timestamp: new Date().toISOString(),
     })
     setCookie(COOKIE_NAME, value, COOKIE_DAYS)
-    updateGtagConsent(consentPrefs)
+    updateConsent(consentPrefs)
     setVisible(false)
     setShowPrefs(false)
   }, [])
