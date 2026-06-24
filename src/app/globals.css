@@ -4335,18 +4335,23 @@ a.journal-credit-name:hover {
 
 /* --- Ads Packages (multi-card) --- */
 .ads-packages {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  max-width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1040px;
   margin: 48px auto 0;
 }
 .ads-package-card {
   position: relative;
   background: var(--white);
-  padding: 40px 32px;
+  padding: 40px 30px;
   text-align: left;
   border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 280px;
+  max-width: 320px;
 }
 .ads-package-card.featured {
   border-color: var(--accent);
@@ -4399,10 +4404,15 @@ a.journal-credit-name:hover {
   left: 0;
   color: var(--accent);
 }
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   .ads-packages {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    max-width: 460px;
+    gap: 20px;
+  }
+  .ads-package-card {
+    width: 100%;
   }
 }
 
