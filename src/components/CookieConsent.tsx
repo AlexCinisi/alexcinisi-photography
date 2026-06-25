@@ -39,11 +39,25 @@ function updateConsent(prefs: ConsentPrefs) {
   // 2. Microsoft Clarity Consent API V2
   // Required for EEA/UK/CH users from October 31, 2025
   // Docs: https://learn.microsoft.com/en-us/clarity/setup-and-installation/consent-mode
-  if (typeof window !== 'undefined' && typeof (window as any).clarity === 'function') {
-    (window as any).clarity('consentv2', {
-      ad_Storage: prefs.marketing ? 'granted' : 'denied',
-      analytics_Storage: prefs.analytics ? 'granted' : 'denied',
+  // Lo script Clarity viene iniettato da GTM solo dopo il push consent_update,
+  // quindi window.clarity potrebbe non esistere ancora qui: applichiamo il
+  // consenso con un retry che attende la disponibilità dello script.
+  applyClarityConsent(prefs)
+}
+
+function applyClarityConsent(prefs: ConsentPrefs, attempt = 0) {
+  if (typeof window === 'undefined') return
+  const clarity = (window as any).clarity
+  if (typeof clarity === 'function') {
+    clarity('consentv2', {
+      ad_storage: prefs.marketing ? 'granted' : 'denied',
+      analytics_storage: prefs.analytics ? 'granted' : 'denied',
     })
+    return
+  }
+  // Lo script non è ancora in pagina: riprova fino a ~3s (20 x 150ms).
+  if (attempt < 20) {
+    setTimeout(() => applyClarityConsent(prefs, attempt + 1), 150)
   }
 }
 
