@@ -101,6 +101,16 @@ export default function CookieConsent() {
     })
     setCookie(COOKIE_NAME, value, COOKIE_DAYS)
     updateConsent(consentPrefs)
+    // Notifica GTM del cambio consenso per ri-attivare i Custom HTML tag
+    // (Clarity, Meta Pixel) che non si re-iniettano da soli al consent update.
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({
+        event: 'consent_update',
+        analytics_consent: consentPrefs.analytics ? 'granted' : 'denied',
+        marketing_consent: consentPrefs.marketing ? 'granted' : 'denied',
+      })
+    }
     setVisible(false)
     setShowPrefs(false)
   }, [])
