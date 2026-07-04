@@ -39,9 +39,9 @@ export default async function JournalPage() {
         <div className="max pad">
           <RevealOnScroll>
             <div className="f-label">Journal</div>
-            <div className="h2-lg" style={{ marginBottom: 16 }}>
+            <h1 className="h2-lg" style={{ marginBottom: 16 }}>
               Wedding Stories &amp;<br /><em>Editorials</em>
-            </div>
+            </h1>
             <p style={{ fontSize: '.88rem', color: 'var(--charcoal)', maxWidth: 480, lineHeight: 1.85 }}>
               Curated stories from Sicily and beyond — each one a real celebration, told through editorial photography.
             </p>
