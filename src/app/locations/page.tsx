@@ -41,9 +41,9 @@ export default async function LocationsHubPage() {
         <div className="max pad">
           <RevealOnScroll>
             <div className="f-label">Locations</div>
-            <div className="h2-lg" style={{ marginBottom: 16 }}>
+            <h1 className="h2-lg" style={{ marginBottom: 16 }}>
               Luxury Venues Across<br /><em>Sicily &amp; Italy</em>
-            </div>
+            </h1>
             <p style={{ fontSize: '.88rem', color: 'var(--charcoal)', maxWidth: 520, lineHeight: 1.85 }}>
               Every venue tells a different story. Explore the locations where I photograph most frequently — each with its own light, history, and possibilities.
             </p>
