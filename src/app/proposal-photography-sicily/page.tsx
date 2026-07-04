@@ -15,6 +15,7 @@ import SvcProcess from '@/components/sections/SvcProcess'
 import SvcInvestment from '@/components/sections/SvcInvestment'
 import SvcRelated from '@/components/sections/SvcRelated'
 import SvcCTA from '@/components/sections/SvcCTA'
+import SvcFaq from '@/components/sections/SvcFaq'
 
 // ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell>.
 // Design autonomo namespace .svc-* (vedi blocco CSS in globals.css): fedele al mockup,
@@ -146,27 +147,8 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* FAQ — classi standard del sito */}
       {data.faqs?.length > 0 && (
-        <section className="s-pearl pad">
-          <div className="max">
-            <div className="sec-head center">
-              <div className="f-label">Questions</div>
-              <div className="h2-lg">Before You <em>Ask</em></div>
-            </div>
-            <div className="faq-wrap d1">
-              {data.faqs.map((f: any, i: number) => (
-                <details key={i} className="faq-item">
-                  <summary className="faq-q" style={{ listStyle: 'none' }}>
-                    <span className="faq-q-t">{f.question}</span>
-                    <span className="faq-ico">+</span>
-                  </summary>
-                  <div className="faq-a"><p>{f.answer}</p></div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
+        <SvcFaq label="Questions" heading={<>Before You <em>Ask</em></>} items={data.faqs} />
       )}
 
       <SvcRelated eyebrow="Real Stories" heading={<>Proposals I&apos;ve <em>Witnessed</em></>} posts={data.relatedJournalPosts} />

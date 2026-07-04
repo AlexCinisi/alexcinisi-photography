@@ -4976,3 +4976,32 @@ details.faq-item summary::-webkit-details-marker { display: none; }
 details.faq-item .faq-a { display: none; }
 details.faq-item[open] .faq-a { display: block; }
 details.faq-item[open] .faq-ico { transform: rotate(45deg); }
+
+/* ── FAQ (native <details>, home aesthetic, no JS) ── */
+.faq-nat { border-bottom: 1px solid var(--rule); }
+.faq-nat-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0; cursor: pointer; gap: 16px; user-select: none;
+  list-style: none;
+}
+.faq-nat-q::-webkit-details-marker { display: none; }
+.faq-nat-q-t {
+  font-style: italic; font-weight: 300; font-size: 1rem;
+  line-height: 1.4; color: var(--ink); transition: color .25s;
+}
+.faq-nat-q:hover .faq-nat-q-t { color: var(--charcoal); }
+.faq-nat-ico {
+  width: 26px; height: 26px; border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: var(--ink); font-size: .95rem; line-height: 1;
+  transition: transform .3s, background .25s, border-color .25s, color .25s;
+}
+.faq-nat[open] .faq-nat-ico {
+  transform: rotate(45deg); background: var(--ink);
+  color: var(--white); border-color: var(--ink);
+}
+.faq-nat-a { overflow: hidden; }
+.faq-nat-a p {
+  padding-bottom: 26px; font-size: .86rem;
+  color: var(--charcoal); line-height: 1.9;
+}
