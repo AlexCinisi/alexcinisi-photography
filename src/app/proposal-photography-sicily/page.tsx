@@ -7,6 +7,14 @@ import { proposalPageQuery } from '@/lib/sanity/queries'
 import { urlFor, getHotspotPosition } from '@/lib/sanity/image'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
 import PortfolioGrid from '@/components/sections/PortfolioGrid'
+import SvcHero from '@/components/sections/SvcHero'
+import SvcIntro from '@/components/sections/SvcIntro'
+import SvcApproach from '@/components/sections/SvcApproach'
+import SvcLocations from '@/components/sections/SvcLocations'
+import SvcProcess from '@/components/sections/SvcProcess'
+import SvcInvestment from '@/components/sections/SvcInvestment'
+import SvcRelated from '@/components/sections/SvcRelated'
+import SvcCTA from '@/components/sections/SvcCTA'
 
 // ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell>.
 // Design autonomo namespace .svc-* (vedi blocco CSS in globals.css): fedele al mockup,
@@ -57,45 +65,18 @@ export default async function ProposalPhotographySicily() {
 
   return (
     <main className="svc-page">
-      {/* HERO — stile ads: 100vh, centrato, overlay scuro */}
-      <section className="svc-hero">
-        <div className="svc-hero-bg">
-          {data.heroImage?.asset && (
-            <Image
-              src={urlFor(data.heroImage).fit('crop').crop('focalpoint').width(2400).auto('format').quality(90).url()}
-              alt={data.heroImage.alt || heroLines.join(' ') || ''}
-              fill priority quality={90} sizes="100vw"
-              style={{ objectFit: 'cover', objectPosition: getHotspotPosition(data.heroImage) }}
-            />
-          )}
-        </div>
-        <div className="svc-hero-content">
-          <div className="svc-eyebrow">{data.heroEyebrow || 'Proposal Photography · Sicily'}</div>
-          <h1>
-            {(heroLines.length ? heroLines : ['Proposal Photography', 'in Sicily']).map((line: string, i: number) => (
-              <span key={i} className={i > 0 ? 'svc-serif' : ''}>{line}</span>
-            ))}
-          </h1>
-          {data.heroSubtitle && <p className="svc-hero-sub">{data.heroSubtitle}</p>}
-          <div className="svc-hero-actions">
-            <Link href="/contact" className="svc-btn">Plan Your Proposal</Link>
-          </div>
-        </div>
-      </section>
+      <SvcHero
+        image={data.heroImage}
+        eyebrow={data.heroEyebrow}
+        headingLines={heroLines}
+        subtitle={data.heroSubtitle}
+        ctaText="Plan Your Proposal"
+        ctaHref="/contact"
+        fallbackEyebrow="Proposal Photography · Sicily"
+        fallbackHeading={['Proposal Photography', 'in Sicily']}
+      />
 
-      {/* ─── INTRO ─── */}
-      {data.introBody && (
-        <section className="svc-intro">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              {data.introHeading && <div className="svc-h2">{data.introHeading}</div>}
-              <div className="svc-body">
-                <PortableText value={data.introBody} />
-              </div>
-            </RevealOnScroll>
-          </div>
-        </section>
-      )}
+      <SvcIntro heading={data.introHeading} body={data.introBody} />
 
       {/* GALLERY — masonry vero riusando PortfolioGrid (coerenza col sito) */}
       {data.galleryImages?.length > 0 && (
@@ -111,114 +92,13 @@ export default async function ProposalPhotographySicily() {
         />
       )}
 
-      {/* ─── APPROACH (fondo ink) ─── */}
-      {data.approachPillars?.length > 0 && (
-        <section className="svc-approach">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow">How I Work</div>
-              <div className="svc-h2">{data.approachHeading || 'Three Things I Promise You'}</div>
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-pillars">
-              {data.approachPillars.map((p: any, i: number) => (
-                <div key={i} className="svc-pillar">
-                  <div className="svc-pillar-n">{['i.', 'ii.', 'iii.', 'iv.'][i] || `${i + 1}.`}</div>
-                  <h3>{p.title}</h3>
-                  <p>{p.description}</p>
-                </div>
-              ))}
-            </RevealOnScroll>
-          </div>
-        </section>
-      )}
+      <SvcApproach eyebrow="How I Work" heading={data.approachHeading} pillars={data.approachPillars} />
 
-      {/* ─── LOCATIONS ─── */}
-      {data.locationCards?.length > 0 && (
-        <section className="svc-locations">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow" style={{ textAlign: 'center' }}>Sicily Locations</div>
-              <div className="svc-h2" style={{ textAlign: 'center' }}>{data.locationsHeading || 'Where Will You Ask the Question?'}</div>
-              {data.locationsIntro && <p className="svc-loc-intro">{data.locationsIntro}</p>}
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-loc-grid">
-              {data.locationCards.map((loc: any, i: number) => {
-                const inner = (
-                  <>
-                    {loc.image?.asset && (
-                      <div className="svc-loc-img">
-                        <Image
-                          src={urlFor(loc.image).width(1000).auto('format').quality(85).url()}
-                          alt={loc.image.alt || loc.name || ''}
-                          fill sizes="(max-width: 860px) 100vw, 33vw"
-                          style={{ objectFit: 'cover', objectPosition: getHotspotPosition(loc.image) }}
-                        />
-                      </div>
-                    )}
-                    <div className="svc-loc-body">
-                      <h3>{loc.name}</h3>
-                      {loc.city && <span className="svc-loc-city">{loc.city}</span>}
-                      {loc.description && <p>{loc.description}</p>}
-                    </div>
-                  </>
-                )
-                return loc.locationPageRef?.slug ? (
-                  <Link key={i} href={`/locations/${loc.locationPageRef.slug}`} className="svc-loc-card">{inner}</Link>
-                ) : (
-                  <div key={i} className="svc-loc-card">{inner}</div>
-                )
-              })}
-            </RevealOnScroll>
-          </div>
-        </section>
-      )}
+      <SvcLocations eyebrow="Sicily Locations" heading={data.locationsHeading} intro={data.locationsIntro} cards={data.locationCards} />
 
-      {/* ─── PROCESS ─── */}
-      {data.processSteps?.length > 0 && (
-        <section className="svc-process">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow">How It Works</div>
-              <div className="svc-h2">{data.processHeading || 'From First Message to Final Gallery'}</div>
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-proc-grid">
-              {data.processSteps.map((s: any, i: number) => (
-                <div key={i} className="svc-proc-step">
-                  <div className="svc-proc-n">{s.step || String(i + 1).padStart(2, '0')}</div>
-                  <h3>{s.title}</h3>
-                  <p>{s.description}</p>
-                </div>
-              ))}
-            </RevealOnScroll>
-          </div>
-        </section>
-      )}
+      <SvcProcess eyebrow="How It Works" heading={data.processHeading} steps={data.processSteps} />
 
-      {/* ─── INVESTMENT ─── */}
-      {data.investmentPackages?.length > 0 && (
-        <section className="svc-invest">
-          <div className="svc-wrap">
-            <RevealOnScroll>
-              <div className="svc-eyebrow" style={{ textAlign: 'center' }}>Investment</div>
-              <div className="svc-h2" style={{ textAlign: 'center' }}>{data.investmentHeading || 'Simple and Transparent'}</div>
-            </RevealOnScroll>
-            <RevealOnScroll className="svc-inv-grid">
-              {data.investmentPackages.map((pkg: any, i: number) => (
-                <div key={i} className="svc-inv-card">
-                  {pkg.name && <h3>{pkg.name}</h3>}
-                  {pkg.price && <span className="svc-inv-price">{pkg.price}</span>}
-                  {pkg.includes?.length > 0 && (
-                    <ul>{pkg.includes.map((inc: string, j: number) => <li key={j}>{inc}</li>)}</ul>
-                  )}
-                </div>
-              ))}
-            </RevealOnScroll>
-            <div className="svc-invest-cta">
-              <Link href="/contact" className="svc-btn">Start the conversation →</Link>
-            </div>
-          </div>
-        </section>
-      )}
+      <SvcInvestment eyebrow="Investment" heading={data.investmentHeading} packages={data.investmentPackages} ctaText="Start the conversation →" ctaHref="/contact" />
 
       {/* ─── TESTIMONIALS ─── */}
       {data.testimonials?.length > 0 && (
@@ -289,45 +169,15 @@ export default async function ProposalPhotographySicily() {
         </section>
       )}
 
-      {/* RELATED — slider orizzontale (scroll-snap) se > 2, altrimenti grid */}
-      {data.relatedJournalPosts?.length > 0 && (
-        <section className="svc-related">
-          <div className="svc-wrap">
-            <div className="svc-eyebrow">Real Stories</div>
-            <div className="svc-h2">Proposals I&apos;ve <em>Witnessed</em></div>
-            <div className={data.relatedJournalPosts.length > 2 ? 'svc-rel-slider' : 'svc-rel-grid'}>
-              {data.relatedJournalPosts.map((post: any, i: number) => (
-                post?.slug && (
-                  <Link key={i} href={`/journal/${post.slug}`} className="svc-rel-card">
-                    {post.heroImage?.asset && (
-                      <div className="svc-rel-img">
-                        <Image
-                          src={urlFor(post.heroImage).width(1000).auto('format').quality(85).url()}
-                          alt={post.heroImage.alt || post.title || ''}
-                          fill sizes="(max-width: 860px) 80vw, 33vw"
-                          style={{ objectFit: 'cover', objectPosition: getHotspotPosition(post.heroImage) }}
-                        />
-                      </div>
-                    )}
-                    <div className="svc-rel-title">{post.coupleName || post.title}</div>
-                    {post.location && <div className="svc-rel-loc">{post.location}</div>}
-                  </Link>
-                )
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <SvcRelated eyebrow="Real Stories" heading={<>Proposals I&apos;ve <em>Witnessed</em></>} posts={data.relatedJournalPosts} />
 
-      {/* ─── FINAL CTA ─── */}
-      <section className="svc-cta">
-        <RevealOnScroll>
-          <div className="svc-eyebrow" style={{ color: 'var(--accent)', textAlign: 'center' }}>Your Moment Awaits</div>
-          <div className="svc-h2">Let&apos;s Plan Your <em>Moment in Sicily</em></div>
-          <p>Tell me the location you picture, or ask me to suggest one. I reply within 24 hours, and we start building the moment together.</p>
-          <Link href="/contact" className="svc-cta-btn">Start the conversation</Link>
-        </RevealOnScroll>
-      </section>
+      <SvcCTA
+        eyebrow="Your Moment Awaits"
+        heading={<>Let&apos;s Plan Your <em>Moment in Sicily</em></>}
+        body="Tell me the location you picture, or ask me to suggest one. I reply within 24 hours, and we start building the moment together."
+        ctaText="Start the conversation"
+        ctaHref="/contact"
+      />
 
       {/* ─── JSON-LD ─── */}
       <script
