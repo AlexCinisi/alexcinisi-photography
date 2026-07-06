@@ -62,7 +62,7 @@ export default function Testimonials({ items }: TestimonialsProps) {
         <section className="testimonials-section s-pearl pad" id="reviews">
             <RevealOnScroll className="sec-head center" style={{ padding: '72px 64px 0' }}>
                 <div className="f-label">What Couples Say</div>
-                <div className="h2-lg">Straight From<br /><em>Their Hearts</em></div>
+                <h2 className="h2-lg">Straight From<br /><em>Their Hearts</em></h2>
             </RevealOnScroll>
             <div style={{ padding: '44px 0 0' }}>
                 <RevealOnScroll className="test-grid d1">

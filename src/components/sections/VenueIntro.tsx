@@ -16,7 +16,7 @@ export default function VenueIntro({ label, title, description, galleryLinkText 
     <div className="venue-grid">
       <RevealOnScroll className="venue-copy">
         <div className="f-label" style={{ marginBottom: '22px' }}>{label}</div>
-        <div className="h2-lg" style={{ marginBottom: '28px' }}>{title}</div>
+        <h2 className="h2-lg" style={{ marginBottom: '28px' }}>{title}</h2>
         {description}
         <div style={{ marginTop: '36px' }}>
           <Link href="#gallery" className="btn-text">{galleryLinkText}</Link>

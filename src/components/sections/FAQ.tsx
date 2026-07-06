@@ -58,7 +58,7 @@ export default function FAQ({ label, items }: FAQProps) {
             <div className="max">
                 <RevealOnScroll className="sec-head center">
                     <div className="f-label">{displayLabel}</div>
-                    <div className="h2-lg">Everything You<br /><em>Need to Know</em></div>
+                    <h2 className="h2-lg">Everything You<br /><em>Need to Know</em></h2>
                 </RevealOnScroll>
                 <RevealOnScroll className="faq-wrap d1">
                     {displayItems.map((item, index) => (

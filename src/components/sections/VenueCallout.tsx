@@ -15,7 +15,7 @@ export default function VenueCallout({ label, title, content, imageAlt = "Venue 
         <div className="venue-callout">
             <RevealOnScroll className="vc-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>{label}</div>
-                <div className="h2" style={{ marginBottom: '22px' }}>{title}</div>
+                <h2 className="h2" style={{ marginBottom: '22px' }}>{title}</h2>
                 {content}
             </RevealOnScroll>
       <div className="vc-media floating-frame-container --dark">

@@ -30,7 +30,7 @@ export default function Availability({ items, text }: AvailabilityProps) {
                 <RevealOnScroll className="avail-inner">
                     <div>
                         <div className="f-label" style={{ marginBottom: '22px' }}>Availability</div>
-                        <div className="h2" style={{ marginBottom: '16px' }}>Limited Dates<br /><em>Remaining</em></div>
+                        <h2 className="h2" style={{ marginBottom: '16px' }}>Limited Dates<br /><em>Remaining</em></h2>
                         <p>{displayText}</p>
                         <Link href="#contact" className="btn-fill" style={{ marginTop: '28px' }}>Check Your Date</Link>
                     </div>
