@@ -60,10 +60,10 @@ const nextConfig: NextConfig = {
             { source: '/blog/:slug', destination: '/journal/:slug', permanent: true },
             // WordPress location pages → new routes (same slugs, different path)
             { source: '/villa-igiea-wedding-photographer', destination: '/locations/villa-igiea-wedding-photographer', permanent: true },
-            { source: '/wedding-photographer-palermo', destination: '/locations/wedding-photographer-palermo', permanent: true },
-            { source: '/wedding-photographer-taormina', destination: '/locations/wedding-photographer-taormina', permanent: true },
+            { source: '/wedding-photographer-palermo', destination: '/locations', permanent: true }, // TEMP: retarget a hub finché la location page non esiste in Sanity
+            { source: '/wedding-photographer-taormina', destination: '/locations', permanent: true }, // TEMP: retarget a hub finché la location page non esiste in Sanity
             { source: '/tonnara-di-scopello-wedding', destination: '/locations/tonnara-di-scopello-wedding', permanent: true },
-            { source: '/wedding-photographer-noto', destination: '/locations/wedding-photographer-noto', permanent: true },
+            { source: '/wedding-photographer-noto', destination: '/locations', permanent: true }, // TEMP: retarget a hub finché la location page non esiste in Sanity
         ];
     },
 };
