@@ -1,4 +1,5 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import SectionHead from '@/components/ui/SectionHead'
 
 interface SvcPillar { title: string; description: string }
 interface SvcApproachProps {
@@ -12,10 +13,11 @@ export default function SvcApproach({ eyebrow = 'How I Work', heading, pillars }
   return (
     <section className="svc-approach">
       <div className="svc-wrap">
-        <RevealOnScroll>
-          <div className="svc-eyebrow">{eyebrow}</div>
-          <div className="svc-h2">{heading || 'Three Things I Promise You'}</div>
-        </RevealOnScroll>
+        <SectionHead
+          as="h2"
+          label={eyebrow}
+          title={heading || 'Three Things I Promise You'}
+        />
         <RevealOnScroll className="svc-pillars">
           {pillars.map((p, i) => (
             <div key={i} className="svc-pillar">
