@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import SectionHead from '@/components/ui/SectionHead'
 
 interface SvcPackage { name?: string; price?: string; includes?: string[] }
 interface SvcInvestmentProps { eyebrow?: string; heading?: string; packages?: SvcPackage[]; ctaText?: string; ctaHref?: string }
@@ -9,10 +10,12 @@ export default function SvcInvestment({ eyebrow = 'Investment', heading, package
   return (
     <section className="svc-invest">
       <div className="svc-wrap">
-        <RevealOnScroll>
-          <div className="svc-eyebrow" style={{ textAlign: 'center' }}>{eyebrow}</div>
-          <div className="svc-h2" style={{ textAlign: 'center' }}>{heading || 'Simple and Transparent'}</div>
-        </RevealOnScroll>
+        <SectionHead
+          as="h2"
+          label={eyebrow}
+          title={heading || 'Simple and Transparent'}
+          center
+        />
         <RevealOnScroll className="svc-inv-grid">
           {packages.map((pkg, i) => (
             <div key={i} className="svc-inv-card">
