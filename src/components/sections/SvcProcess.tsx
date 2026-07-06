@@ -1,4 +1,5 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import SectionHead from '@/components/ui/SectionHead'
 
 interface SvcProcessStep { step?: string; title?: string; description?: string }
 interface SvcProcessProps { eyebrow?: string; heading?: string; steps?: SvcProcessStep[] }
@@ -8,10 +9,11 @@ export default function SvcProcess({ eyebrow = 'How It Works', heading, steps }:
   return (
     <section className="svc-process">
       <div className="svc-wrap">
-        <RevealOnScroll>
-          <div className="svc-eyebrow">{eyebrow}</div>
-          <div className="svc-h2">{heading || 'From First Message to Final Gallery'}</div>
-        </RevealOnScroll>
+        <SectionHead
+          as="h2"
+          label={eyebrow}
+          title={heading || 'From First Message to Final Gallery'}
+        />
         <RevealOnScroll className="svc-proc-grid">
           {steps.map((s, i) => (
             <div key={i} className="svc-proc-step">
