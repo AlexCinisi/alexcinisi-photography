@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor, getHotspotPosition } from '@/lib/sanity/image'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import SectionHead from '@/components/ui/SectionHead'
 
 interface SvcLocationCard { image?: any; name?: string; city?: string; description?: string; locationPageRef?: { slug?: string } }
 interface SvcLocationsProps { eyebrow?: string; heading?: string; intro?: string; cards?: SvcLocationCard[] }
@@ -11,11 +12,17 @@ export default function SvcLocations({ eyebrow = 'Sicily Locations', heading, in
   return (
     <section className="svc-locations">
       <div className="svc-wrap">
-        <RevealOnScroll>
-          <div className="svc-eyebrow" style={{ textAlign: 'center' }}>{eyebrow}</div>
-          <div className="svc-h2" style={{ textAlign: 'center' }}>{heading || 'Where Will You Ask the Question?'}</div>
-          {intro && <p className="svc-loc-intro">{intro}</p>}
-        </RevealOnScroll>
+        <SectionHead
+          as="h2"
+          label={eyebrow}
+          title={heading || 'Where Will You Ask the Question?'}
+          center
+        />
+        {intro && (
+          <RevealOnScroll>
+            <p className="svc-loc-intro">{intro}</p>
+          </RevealOnScroll>
+        )}
         <RevealOnScroll className="svc-loc-grid">
           {cards.map((loc, i) => {
             const inner = (
