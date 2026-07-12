@@ -28,9 +28,9 @@ export default function Manifesto({ image, alt }: ManifestoProps) {
             </div>
             <RevealOnScroll className="manifesto-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>Our Philosophy</div>
-                <div className="h2-lg" style={{ marginBottom: '28px' }}>
+                <h2 className="h2-lg" style={{ marginBottom: '28px' }}>
                     This Is Not Just<br />Photography.<br /><em>This Is Your Legacy.</em>
-                </div>
+                </h2>
                 <p>I don&apos;t believe in perfect poses or forced smiles. I believe in <strong>real moments that take your breath away 50 years from now</strong>.</p>
                 <p>Your wedding in Sicily isn&apos;t a photoshoot — it&apos;s the beginning of your family&apos;s story. The nervous laughter before the ceremony. The father who can barely hold it together. The way <em>you two look at each other when nobody&apos;s watching</em>.</p>
                 <p>That&apos;s what I live to capture. As a <strong>luxury wedding photographer in Sicily</strong>, my approach blends photojournalistic instinct with editorial elegance — quiet, intuitive, and deeply human.</p>
