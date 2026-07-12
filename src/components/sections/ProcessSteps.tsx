@@ -1,13 +1,15 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import SectionHead from '@/components/ui/SectionHead';
 
 export default function ProcessSteps() {
     return (
         <section className="s-pearl pad">
             <div className="max">
-                <RevealOnScroll className="sec-head">
-                    <div className="f-label">How It Works</div>
-                    <div className="h2-lg">A Seamless Journey<br />From Hello to <em>&ldquo;I Do&rdquo;</em></div>
-                </RevealOnScroll>
+                <SectionHead
+                    as="h2"
+                    label="How It Works"
+                    title={<>A Seamless Journey<br />From Hello to <em>&ldquo;I Do&rdquo;</em></>}
+                />
                 <RevealOnScroll className="process-grid d1">
                     <div className="step">
                         <span className="step-n">01</span>
