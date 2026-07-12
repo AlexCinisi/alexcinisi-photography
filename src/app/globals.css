@@ -4854,7 +4854,8 @@ a.journal-credit-name:hover {
 
 /* ── INTRO ── */
 .svc-intro { background: var(--off-white); }
-.svc-intro .svc-h2 { max-width: 18ch; }
+.svc-intro .svc-h2,
+.svc-intro .sec-title { max-width: 18ch; }
 .svc-intro .svc-body { max-width: 64ch; margin-top: 24px; }
 .svc-intro .svc-body p { font-size: 1.08rem; color: var(--charcoal); line-height: 1.85; margin-bottom: 1.2rem; }
 

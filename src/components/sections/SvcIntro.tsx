@@ -1,5 +1,6 @@
 import { PortableText } from '@portabletext/react'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import SectionHead from '@/components/ui/SectionHead'
 
 interface SvcIntroProps {
   heading?: string
@@ -11,8 +12,8 @@ export default function SvcIntro({ heading, body }: SvcIntroProps) {
   return (
     <section className="svc-intro">
       <div className="svc-wrap">
+        {heading && <SectionHead as="h2" title={heading} />}
         <RevealOnScroll>
-          {heading && <div className="svc-h2">{heading}</div>}
           <div className="svc-body">
             <PortableText value={body} />
           </div>
