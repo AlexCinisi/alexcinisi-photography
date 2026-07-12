@@ -165,7 +165,7 @@ export default function PortfolioGrid({
                     }}
                 >
                     <div className="f-label">{headerLabel}</div>
-                    <div className="h2-lg">{headerTitle}</div>
+                    <h2 className="h2-lg">{headerTitle}</h2>
                     {headerNote && (
                         <p style={{ fontSize: '.82rem', color: 'var(--mid)', maxWidth: 260, lineHeight: 1.7, margin: '0 auto' }}>
                             {headerNote}
