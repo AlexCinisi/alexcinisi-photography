@@ -1,4 +1,5 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import SectionHead from '@/components/ui/SectionHead';
 
 interface DetailItem {
     icon: string;
@@ -16,10 +17,7 @@ export default function VenueDetails({ label, title, items }: VenueDetailsProps)
     return (
         <section className="s-pearl pad">
             <div className="max">
-                <RevealOnScroll className="sec-head">
-                    <div className="f-label">{label}</div>
-                    <div className="h2-lg">{title}</div>
-                </RevealOnScroll>
+                <SectionHead as="h2" label={label} title={title} />
                 <RevealOnScroll className="venue-details d1">
                     {items.map((item, i) => (
                         <div className="vd-item" key={i}>
