@@ -1,4 +1,5 @@
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
+import SectionHead from '@/components/ui/SectionHead'
 import type { ReactNode } from 'react'
 
 interface FaqEntry { question: string; answer: string }
@@ -14,10 +15,7 @@ export default function SvcFaq({ label = 'Questions', heading, items, background
   return (
     <section className={background === 'pearl' ? 's-pearl pad' : 's-white pad'}>
       <div className="max">
-        <RevealOnScroll className="sec-head center">
-          {label && <div className="f-label">{label}</div>}
-          {heading && <div className="h2-lg">{heading}</div>}
-        </RevealOnScroll>
+        {heading && <SectionHead as="h2" label={label} title={heading} center />}
         <RevealOnScroll className="faq-wrap d1">
           {items.map((f, i) => (
             <details key={i} className="faq-nat">
