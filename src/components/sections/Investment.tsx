@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import SectionHead from '@/components/ui/SectionHead';
 
 interface InvestmentProps {
     price?: string;
@@ -34,10 +35,11 @@ export default function Investment({
     return (
         <section className="s-offwh pad" id="invest">
             <div className="max">
-                <RevealOnScroll className="sec-head">
-                    <div className="f-label">Your Investment</div>
-                    <div className="h2-lg">Complete Transparency,<br /><em>No Surprises</em></div>
-                </RevealOnScroll>
+                <SectionHead
+                    as="h2"
+                    label="Your Investment"
+                    title={<>Complete Transparency,<br /><em>No Surprises</em></>}
+                />
                 <div className="invest-grid">
                     <RevealOnScroll>
                         <div className="invest-price-block">
