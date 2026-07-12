@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor, getHotspotPosition } from '@/lib/sanity/image'
+import SectionHead from '@/components/ui/SectionHead'
 import type { ReactNode } from 'react'
 
 interface SvcRelatedPost { slug?: string; heroImage?: any; coupleName?: string; title?: string; location?: string }
@@ -11,8 +12,7 @@ export default function SvcRelated({ eyebrow = 'Real Stories', heading, posts }:
   return (
     <section className="svc-related">
       <div className="svc-wrap">
-        <div className="svc-eyebrow">{eyebrow}</div>
-        <div className="svc-h2">{heading}</div>
+        <SectionHead as="h2" label={eyebrow} title={heading} />
         <div className={posts.length > 2 ? 'svc-rel-slider' : 'svc-rel-grid'}>
           {posts.map((post, i) => (
             post?.slug && (
