@@ -58,7 +58,7 @@ export default function LocationsGrid({ locations }: LocationsGridProps) {
       <div className="max">
         <RevealOnScroll className="sec-head center">
           <div className="f-label">Wedding Venues</div>
-          <div className="h2-lg">Luxury Venues Across<br /><em>Sicily &amp; Italy</em></div>
+          <h2 className="h2-lg">Luxury Venues Across<br /><em>Sicily &amp; Italy</em></h2>
           <p style={{ fontSize: '.88rem', color: 'var(--charcoal)', lineHeight: 1.85, maxWidth: 560, margin: '8px auto 0' }}>
             From Palermo&apos;s Art Nouveau palazzi to Taormina&apos;s cliffside terraces and Noto&apos;s baroque splendour — I know every corner of this island intimately.
           </p>
