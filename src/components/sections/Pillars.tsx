@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import SectionHead from '@/components/ui/SectionHead';
 
 interface PillarItem {
     number: string;
@@ -51,10 +52,7 @@ export default function Pillars({ intro, items }: PillarsProps) {
     return (
         <section className="s-pearl pad" id="approach">
             <div className="max">
-                <RevealOnScroll className="sec-head center">
-                    <div className="f-label">{label}</div>
-                    <div className="h2-lg">{title}</div>
-                </RevealOnScroll>
+                <SectionHead as="h2" label={label} title={title} center />
                 <div className="pillars">
                     {displayItems.map((item, i) => {
                         const delays = ["", "d1", "d2"];
