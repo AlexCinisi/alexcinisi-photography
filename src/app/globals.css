@@ -4943,7 +4943,9 @@ a.svc-loc-card:hover .svc-loc-img img { opacity: 0.85; }
 
 /* ── FINAL CTA (ink) ── */
 .svc-cta { background: var(--ink); color: #fff; text-align: center; }
-.svc-cta .svc-h2 { color: #fff; max-width: 20ch; margin: 0 auto; }
+.svc-cta .svc-h2,
+.svc-cta .sec-title { color: #fff; max-width: 20ch; margin: 0 auto; }
+.svc-cta .f-label { color: var(--accent); }
 .svc-cta p { color: rgba(250,250,248,0.7); max-width: 52ch; margin: 20px auto 0; line-height: 1.7; }
 .svc-cta-btn {
   display: inline-block; margin-top: 36px; padding: 17px 44px;
