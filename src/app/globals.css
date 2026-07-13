@@ -4817,13 +4817,6 @@ a.journal-credit-name:hover {
   font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase;
   color: var(--accent-dk, #8C7D65); margin-bottom: 22px;
 }
-.svc-h2 {
-  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
-  font-size: clamp(1.9rem, 4vw, 2.9rem); font-weight: 400;
-  letter-spacing: -0.025em; line-height: 1.12; color: var(--ink);
-}
-.svc-h2 em { font-family: var(--font-bodoni), 'Bodoni Moda', serif; font-style: italic; font-weight: 400; }
-
 /* ── HERO 100vh Ads-Style ── */
 .svc-hero {
   position: relative; min-height: 100vh;
@@ -4847,7 +4840,6 @@ a.journal-credit-name:hover {
 
 /* ── INTRO ── */
 .svc-intro { background: var(--off-white); }
-.svc-intro .svc-h2,
 .svc-intro .sec-title { max-width: 18ch; }
 .svc-intro .svc-body { max-width: 64ch; margin-top: 24px; }
 .svc-intro .svc-body p { font-size: 1.08rem; color: var(--charcoal); line-height: 1.85; margin-bottom: 1.2rem; }
@@ -4856,7 +4848,6 @@ a.journal-credit-name:hover {
 /* ── APPROACH (fondo INK) ── */
 .svc-approach { background: var(--ink); color: var(--off-white); }
 .svc-approach .svc-eyebrow { color: var(--accent); }
-.svc-approach .svc-h2 { color: #fff; }
 .svc-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 56px; }
 .svc-pillar-n {
   font-family: var(--font-bodoni), 'Bodoni Moda', serif; font-style: italic;
@@ -4936,7 +4927,6 @@ a.svc-loc-card:hover .svc-loc-img img { opacity: 0.85; }
 
 /* ── FINAL CTA (ink) ── */
 .svc-cta { background: var(--ink); color: #fff; text-align: center; }
-.svc-cta .svc-h2,
 .svc-cta .sec-title { color: #fff; max-width: 20ch; margin: 0 auto; }
 .svc-cta .f-label { color: var(--accent); }
 .svc-cta p { color: rgba(250,250,248,0.7); max-width: 52ch; margin: 20px auto 0; line-height: 1.7; }
