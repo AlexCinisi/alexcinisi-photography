@@ -991,12 +991,29 @@ nav.scrolled .nav-logo img {
   color: rgba(17, 17, 16, .15);
 }
 
-.pillar h3 {
+.pillar h3,
+.step h3,
+.vd-item h3,
+.enhancements-box h3 {
   font-weight: 400;
-  font-size: 1.1rem;
   letter-spacing: -.01em;
   color: var(--ink);
+}
+
+.pillar h3,
+.step h3 {
+  font-size: 1.1rem;
   margin-bottom: 12px;
+}
+
+.vd-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.enhancements-box h3 {
+  font-size: 1rem;
+  margin-bottom: 18px;
 }
 
 .pillar p {
@@ -1786,14 +1803,6 @@ nav.scrolled .nav-logo img {
   margin-bottom: 28px;
 }
 
-.enhancements-box h3 {
-  font-weight: 400;
-  font-size: 1rem;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  margin-bottom: 18px;
-}
-
 .enhancements-box p {
   font-size: .8rem;
   color: var(--charcoal);
@@ -1865,14 +1874,6 @@ nav.scrolled .nav-logo img {
 
 .step:hover .step-n {
   color: rgba(17, 17, 16, .18);
-}
-
-.step h3 {
-  font-weight: 400;
-  font-size: 1.1rem;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  margin-bottom: 12px;
 }
 
 .step p {
@@ -2611,14 +2612,6 @@ footer {
   margin-bottom: 14px;
   display: block;
   opacity: .7;
-}
-
-.vd-item h3 {
-  font-weight: 400;
-  font-size: 1.05rem;
-  letter-spacing: -.01em;
-  color: var(--ink);
-  margin-bottom: 10px;
 }
 
 .vd-item p {
