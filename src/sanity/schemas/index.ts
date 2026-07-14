@@ -8,6 +8,7 @@ import contactPage from './contactPage';
 import adsLuxuryPage from './adsLuxuryPage';
 import adsProposalPage from './adsProposalPage';
 import proposalPage from './proposalPage';
+import guidePage from './guidePage';
 
 export const schemaTypes = [
   homePage,
@@ -19,5 +20,6 @@ export const schemaTypes = [
   contactPage,
   adsLuxuryPage,
   adsProposalPage,
-  proposalPage
+  proposalPage,
+  guidePage
 ];
