@@ -450,3 +450,44 @@ export const proposalPageQuery = `*[_type == "proposalPage"][0] {
   metaTitle, metaDescription,
   ogImage { asset-> { url }, alt }
 }`
+
+export const guidePageQuery = `*[_type == "guidePage"][0] {
+  title,
+  heroImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  heroEyebrow, heroHeading, heroSubtitle, heroTextDark,
+  lastReviewed, introBody,
+  decisionHeading, decisionIntro,
+  decisionPaths[] { label, title, description },
+  legalHeading,
+  legalRows[] { nationality, requirements },
+  legalDisclaimer,
+  lightEyebrow, lightHeading,
+  lightImage {
+    ...,
+    alt,
+    asset-> { _id, url, metadata { dimensions, lqip } }
+  },
+  lightBody, lightPullquote,
+  regionsHeading, regionsIntro,
+  regionCards[] {
+    name, description, airport,
+    locationPageRef-> { "slug": slug.current, title, venueName }
+  },
+  timelineHeading,
+  timelineSteps[] { when, what },
+  faqs[] { question, answer },
+  seoContent[] {
+    ...,
+    _type == "image" => { ..., alt, caption, asset-> { _id, url, metadata { dimensions, lqip } } }
+  },
+  relatedJournalPosts[]-> {
+    title, "slug": slug.current, coupleName, location, category,
+    heroImage { ..., alt, asset-> { _id, url, metadata { dimensions, lqip } } }
+  },
+  metaTitle, metaDescription,
+  ogImage { asset-> { url } }
+}`
