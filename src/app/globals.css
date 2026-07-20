@@ -5042,7 +5042,7 @@ details.faq-item[open] .faq-ico { transform: rotate(45deg); }
 /* ── REGIONS ── */
 .guide-regions-intro { max-width: 56ch; margin: 18px auto 0; color: var(--mid); font-size: 1rem; line-height: 1.7; text-align: center; }
 .region-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; margin-top: 48px; }
-.region-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--rule); padding: 32px 34px; text-decoration: none; color: inherit; transition: transform 0.3s ease; }
+.region-card { display: flex; flex-direction: column; min-height: 254px; background: var(--white); border: 1px solid var(--rule); padding: 32px 34px; text-decoration: none; color: inherit; transition: transform 0.3s ease; }
 a.region-card:hover { transform: translateY(-4px); }
 .region-card h3 { font-size: 1.2rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 10px; }
 .region-card p { font-size: 0.92rem; color: var(--mid); line-height: 1.65; margin-bottom: 14px; }
@@ -5060,4 +5060,7 @@ a.region-card:hover { transform: translateY(-4px); }
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .decision-grid, .light-split, .region-cards { grid-template-columns: 1fr; gap: 24px; }
+  .legal-row { grid-template-columns: 1fr; }
+  .legal-nat { border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+  .legal-req { padding-top: 16px; }
 }
