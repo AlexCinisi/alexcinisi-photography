@@ -279,7 +279,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
           <div className="max">
             <RevealOnScroll className="sec-head" style={{ marginBottom: 48 }}>
               <div className="f-label">Stories from {data.venueName}</div>
-              <div className="h2">Real Weddings<br /><em>At This Venue</em></div>
+              <h2 className="h2">Real Weddings<br /><em>At This Venue</em></h2>
             </RevealOnScroll>
             <div className="journal-related">
               {data.relatedStories.slice(0, 2).map((story: any) => (
