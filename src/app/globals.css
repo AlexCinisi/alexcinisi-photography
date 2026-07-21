@@ -4984,6 +4984,11 @@ details.faq-item[open] .faq-ico { transform: rotate(45deg); }
 }
 .faq-nat-q::-webkit-details-marker { display: none; }
 .faq-nat-q-t {
+  /* font-family esplicito: la domanda è un <h3> (gerarchia heading), che
+     erediterebbe Red Hat Display dalla regola base h3. Il testo domanda è
+     sempre stato Jost (ereditato da body) — lo dichiariamo per preservarlo.
+     No-op per gli <span> di SvcFaq, che già ereditano Jost. */
+  font-family: var(--font-jost), sans-serif;
   font-style: italic; font-weight: 300; font-size: 1rem;
   line-height: 1.4; color: var(--ink); transition: color .25s;
 }

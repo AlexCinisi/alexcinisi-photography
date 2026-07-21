@@ -1,6 +1,3 @@
-'use client';
-
-import { useState } from 'react';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 interface FAQItemData {
@@ -45,13 +42,8 @@ const defaultItems: FAQItemData[] = [
 ];
 
 export default function FAQ({ label, items }: FAQProps) {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
     const displayItems = items || defaultItems;
     const displayLabel = label || 'Common Questions';
-
-    const toggleFAQ = (index: number) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
 
     return (
         <section className="s-pearl pad">
@@ -62,15 +54,13 @@ export default function FAQ({ label, items }: FAQProps) {
                 </RevealOnScroll>
                 <RevealOnScroll className="faq-wrap d1">
                     {displayItems.map((item, index) => (
-                        <div key={index} className={`faq-item${openIndex === index ? ' open' : ''}`}>
-                            <div className="faq-q" onClick={() => toggleFAQ(index)}>
-                                <span className="faq-q-t">{item.q}</span>
-                                <span className="faq-ico">+</span>
-                            </div>
-                            <div className="faq-a">
-                                <p>{item.a}</p>
-                            </div>
-                        </div>
+                        <details key={index} className="faq-nat">
+                            <summary className="faq-nat-q">
+                                <h3 className="faq-nat-q-t">{item.q}</h3>
+                                <span className="faq-nat-ico" aria-hidden="true">+</span>
+                            </summary>
+                            <div className="faq-nat-a"><p>{item.a}</p></div>
+                        </details>
                     ))}
                 </RevealOnScroll>
             </div>
