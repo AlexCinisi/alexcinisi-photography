@@ -482,7 +482,7 @@ export default function ContactForm({
                     {/* Sidebar SX — identico sempre */}
                     <RevealOnScroll className="contact-left">
                         <div className="f-label">Inquiries</div>
-                        <div className="h2">Let&apos;s Start<br />The Conversation.</div>
+                        <h2 className="h2">Let&apos;s Start<br />The Conversation.</h2>
                         <p>Please use the form to check availability for your date. I respond to all inquiries within 24 hours.</p>
                         <div className="contact-details">
                             <div className="cd">
