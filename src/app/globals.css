@@ -4997,16 +4997,44 @@ details.faq-item[open] .faq-ico { transform: rotate(45deg); }
   width: 26px; height: 26px; border: 1px solid var(--rule);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   color: var(--ink); font-size: .95rem; line-height: 1;
-  transition: transform .3s, background .25s, border-color .25s, color .25s;
+  transition: transform .5s cubic-bezier(.22, .61, .36, 1),
+              background .25s, border-color .25s, color .25s;
 }
 .faq-nat[open] .faq-nat-ico {
   transform: rotate(45deg); background: var(--ink);
   color: var(--white); border-color: var(--ink);
 }
 .faq-nat-a { overflow: hidden; }
+/* Slide in apertura (0.4s), come l'accordion JS pre-refactor. Animato via
+   grid-template-rows 0fr→1fr invece di max-height: nessun tetto fisso, quindi
+   nessuna risposta lunga viene tagliata. La chiusura resta istantanea: <details>
+   nativo nasconde il contenuto appena perde [open], ritardarlo richiederebbe JS. */
+.faq-nat[open] .faq-nat-a {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation: faq-nat-open .5s cubic-bezier(.22, .61, .36, 1);
+}
+@keyframes faq-nat-open {
+  from { grid-template-rows: 0fr; }
+}
+.faq-nat-a > * { min-height: 0; }
+/* Il testo entra con fade + micro-slide: transform e opacity sono le uniche
+   proprietà gestite dal compositor (GPU). L'occhio segue questo movimento
+   fluido invece del bordo di clipping, che dipende dal layout e non può
+   essere altrettanto liscio. Stessa curva e durata dell'altezza per coerenza. */
+.faq-nat[open] .faq-nat-a p {
+  animation: faq-nat-reveal .5s cubic-bezier(.22, .61, .36, 1);
+}
+@keyframes faq-nat-reveal {
+  from { opacity: 0; transform: translateY(-8px); }
+}
 .faq-nat-a p {
   padding-bottom: 26px; font-size: .86rem;
   color: var(--charcoal); line-height: 1.9;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-nat[open] .faq-nat-a,
+  .faq-nat[open] .faq-nat-a p { animation: none; }
 }
 
 /* ============================================================
