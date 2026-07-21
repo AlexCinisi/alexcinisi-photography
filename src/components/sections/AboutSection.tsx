@@ -43,7 +43,7 @@ export default function AboutSection({ image, alt }: AboutSectionProps) {
             </div>
             <RevealOnScroll className="about-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>About Alex</div>
-                <div className="h2" style={{ marginBottom: '26px' }}>Why I Do<br /><em>This Work</em></div>
+                <h2 className="h2" style={{ marginBottom: '26px' }}>Why I Do<br /><em>This Work</em></h2>
                 <p>Hi, I&apos;m Alex. I fell in love with wedding photography not because of cameras or compositions — but because of <em>people</em>.</p>
                 <p>There&apos;s something sacred about being invited into someone&apos;s most important day. The nervousness before the ceremony. The father&apos;s eyes when he sees his daughter. The way <strong>you two look at each other when no one&apos;s watching</strong>.</p>
                 <p>That&apos;s what makes me feel alive.</p>

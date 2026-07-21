@@ -89,7 +89,7 @@ export default function FilmSection({ image, alt }: FilmSectionProps) {
             </div>
             <RevealOnScroll className="film-copy">
                 <div className="f-label" style={{ marginBottom: '22px' }}>Film &amp; Digital</div>
-                <div className="h2" style={{ color: 'var(--off-white)', marginBottom: '22px' }}>The Best of<br /><em>Both Worlds</em></div>
+                <h2 className="h2" style={{ color: 'var(--off-white)', marginBottom: '22px' }}>The Best of<br /><em>Both Worlds</em></h2>
                 <p>Every wedding receives the richness of digital mastery — vibrant colours, flawless detail, fast turnaround. For those who want something even more special, medium-format film adds an unmistakable warmth, grain, and timelessness that digital cannot replicate.</p>
                 <p>Film photography is available as a bespoke enhancement to any package. The two mediums complement each other beautifully — giving you a gallery that feels both contemporary and eternal.</p>
                 <Link href="#invest" className="btn-fill" style={{ background: 'var(--off-white)', color: 'var(--ink)', marginTop: '22px' }}>See Investment Details</Link>
