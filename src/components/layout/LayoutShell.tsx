@@ -73,53 +73,6 @@ const localBusinessSchema = {
     },
 };
 
-const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-        {
-            "@type": "Question",
-            name: "How much does a luxury wedding photographer in Sicily cost?",
-            acceptedAnswer: {
-                "@type": "Answer",
-                text: "Alex Cinisi Photography's wedding coverage starts from €2,500, which includes full-day coverage, drone aerial photography, edited images, and a private online gallery. Most couples invest between €2,500 and €5,000.",
-            },
-        },
-        {
-            "@type": "Question",
-            name: "How far in advance should we book a wedding photographer in Sicily?",
-            acceptedAnswer: {
-                "@type": "Answer",
-                text: "Most couples book 12-18 months ahead, especially for peak season (May–October). Sicily's most popular venues fill quickly, and having your photographer confirmed early helps with timeline planning.",
-            },
-        },
-        {
-            "@type": "Question",
-            name: "Do you travel for destination weddings outside Sicily?",
-            acceptedAnswer: {
-                "@type": "Answer",
-                text: "Absolutely. While Sicily is home base, Alex Cinisi Photography has covered weddings across 15+ countries. Travel costs for destination weddings outside Sicily are included in a bespoke proposal.",
-            },
-        },
-        {
-            "@type": "Question",
-            name: "What is the best time of year to get married in Sicily?",
-            acceptedAnswer: {
-                "@type": "Answer",
-                text: "Late spring (May-June) and early autumn (September-October) offer the most beautiful light and comfortable temperatures. These months are ideal for outdoor ceremonies and golden hour portraits at Sicily's iconic venues.",
-            },
-        },
-        {
-            "@type": "Question",
-            name: "What wedding venues in Sicily does Alex Cinisi photograph at?",
-            acceptedAnswer: {
-                "@type": "Answer",
-                text: "Alex Cinisi has extensive experience at Sicily's finest venues including Villa Igiea in Palermo, Tonnara di Scopello, Villa Valguarnera in Bagheria, venues throughout Taormina, Noto's baroque palazzi, and many more across the island.",
-            },
-        },
-    ],
-};
-
 const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -152,11 +105,6 @@ export default function LayoutShell({ children, logo, logoFooter }: LayoutShellP
               id="schema-local-business"
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-          />
-          <script
-              id="schema-faq"
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
           />
           <script
               id="schema-breadcrumb"
