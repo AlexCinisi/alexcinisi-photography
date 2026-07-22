@@ -4968,13 +4968,6 @@ a.svc-loc-card:hover .svc-loc-img img { opacity: 0.85; }
   flex: 0 0 clamp(280px, 32vw, 380px); scroll-snap-align: start;
 }
 
-/* ── FAQ DETAILS SUPPORT ── */
-details.faq-item summary { list-style: none; cursor: pointer; }
-details.faq-item summary::-webkit-details-marker { display: none; }
-details.faq-item .faq-a { display: none; }
-details.faq-item[open] .faq-a { display: block; }
-details.faq-item[open] .faq-ico { transform: rotate(45deg); }
-
 /* ── FAQ (native <details>, home aesthetic, no JS) ── */
 .faq-nat { border-bottom: 1px solid var(--rule); }
 .faq-nat-q {
