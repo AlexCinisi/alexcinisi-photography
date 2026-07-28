@@ -4,6 +4,7 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import SectionHead from '@/components/ui/SectionHead';
 
 interface InvestmentProps {
+    heading?: string;
     price?: string;
     priceRange?: string;
     includes?: string[];
@@ -24,6 +25,7 @@ const defaultIncludes = [
 ];
 
 export default function Investment({
+    heading,
     price = '€ 2,500',
     priceRange = 'Most couples invest between €2,500 – €5,000',
     includes = defaultIncludes,
@@ -31,6 +33,7 @@ export default function Investment({
     signatureQuote,
 }: InvestmentProps) {
     const quote = signatureQuote || <>&ldquo;No packages.<br />No templates.<br />Just your story, your way.&rdquo;</>;
+    const title = heading || <>Complete Transparency,<br /><em>No Surprises</em></>;
 
     return (
         <section className="s-offwh pad" id="invest">
@@ -38,7 +41,7 @@ export default function Investment({
                 <SectionHead
                     as="h2"
                     label="Your Investment"
-                    title={<>Complete Transparency,<br /><em>No Surprises</em></>}
+                    title={title}
                 />
                 <div className="invest-grid">
                     <RevealOnScroll>

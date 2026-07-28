@@ -6,6 +6,7 @@ interface FAQItemData {
 }
 
 interface FAQProps {
+    heading?: string;
     label?: string;
     items?: FAQItemData[];
 }
@@ -41,16 +42,19 @@ const defaultItems: FAQItemData[] = [
     },
 ];
 
-export default function FAQ({ label, items }: FAQProps) {
+export default function FAQ({ heading, label, items }: FAQProps) {
     const displayItems = items || defaultItems;
     const displayLabel = label || 'Common Questions';
+    const displayHeading = heading
+        ? <h2 className="h2-lg">{heading}</h2>
+        : <h2 className="h2-lg">Everything You<br /><em>Need to Know</em></h2>;
 
     return (
         <section className="s-pearl pad">
             <div className="max">
                 <RevealOnScroll className="sec-head center">
                     <div className="f-label">{displayLabel}</div>
-                    <h2 className="h2-lg">Everything You<br /><em>Need to Know</em></h2>
+                    {displayHeading}
                 </RevealOnScroll>
                 <RevealOnScroll className="faq-wrap d1">
                     {displayItems.map((item, index) => (

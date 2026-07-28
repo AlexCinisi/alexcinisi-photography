@@ -303,6 +303,7 @@ export default defineType({
     }),
 
     // === INVESTMENT ===
+    defineField({ name: 'investmentHeading', title: 'Section Heading (H2)', type: 'string', fieldset: 'investment', description: 'e.g. "Villa Igiea Luxury Wedding — Investment". Leave empty to use the default heading.' }),
     defineField({ name: 'investmentPrice', title: 'Starting Price', type: 'string', fieldset: 'investment', description: 'e.g. "€ 2,500"' }),
     defineField({ name: 'investmentRange', title: 'Price Range Text', type: 'string', fieldset: 'investment', description: 'e.g. "Most couples invest between €2,500 – €3,500"' }),
     defineField({
@@ -316,6 +317,7 @@ export default defineType({
     defineField({ name: 'investmentCTAText', title: 'CTA Text', type: 'string', fieldset: 'investment', description: 'e.g. "Request Your Villa Igiea Proposal"' }),
 
     // === FAQ ===
+    defineField({ name: 'faqHeading', title: 'Section Heading (H2)', type: 'string', fieldset: 'faq', description: 'e.g. "Questions About Your Villa Igiea Luxury Wedding". Leave empty to use the default heading.' }),
     defineField({ name: 'faqLabel', title: 'FAQ Section Label', type: 'string', fieldset: 'faq', description: 'e.g. "Questions About Villa Igiea"' }),
     defineField({
       name: 'faqs',

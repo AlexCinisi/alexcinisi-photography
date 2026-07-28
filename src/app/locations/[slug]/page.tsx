@@ -231,6 +231,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       {/* Investment */}
       {data.investmentPrice && (
         <Investment
+          heading={data.investmentHeading || undefined}
           price={data.investmentPrice}
           priceRange={data.investmentRange || ''}
           includes={data.investmentIncludes || []}
@@ -260,6 +261,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       {/* FAQ */}
       {data.faqs?.length > 0 && (
         <FAQ
+          heading={data.faqHeading || undefined}
           label={data.faqLabel || `Questions About ${data.venueName}`}
           items={data.faqs.map((faq: any) => ({
             q: faq.question,
