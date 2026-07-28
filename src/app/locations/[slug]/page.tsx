@@ -66,16 +66,10 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
   // Fetch homepage data for shared components (About image)
   const homeData = await client.fetch(homePageQuery);
 
-  // === SCHEMA MARKUP — ProfessionalService ===
-  const schemaMarkup = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": `Alex Cinisi Photography — ${data.venueName} Weddings`,
-    "description": data.metaDescription || `Editorial wedding photographer specialising in luxury weddings at ${data.venueName}, ${data.city}, Sicily.`,
-    "url": `https://alexcinisiphotography.com/locations/${slug}`,
-    ...(data.heroImage && { "image": urlFor(data.heroImage).width(1200).height(800).url() }),
-    "telephone": "",
-    "email": "info@alexcinisiphotography.com",
+  // === SCHEMA MARKUP — Place (the venue, not the studio) ===
+  const venueLocation = {
+    "@type": "Place",
+    "name": data.venueName,
     "address": {
       "@type": "PostalAddress",
       "addressLocality": data.city || "Palermo",
@@ -88,13 +82,21 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
         "latitude": data.schemaGeoLat,
         "longitude": data.schemaGeoLng
       }
-    }),
-    "priceRange": "€€€",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": data.testimonials?.length || 5
+    })
+  };
+  const placeSchema = { "@context": "https://schema.org", ...venueLocation };
+
+  // === SCHEMA MARKUP — Service (photography service at this venue, provider = the studio) ===
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": `Wedding Photography at ${data.venueName}`,
+    "description": data.metaDescription || `Editorial wedding photography at ${data.venueName}, ${data.city}, Sicily.`,
+    "url": `https://alexcinisiphotography.com/locations/${slug}`,
+    "provider": {
+      "@id": "https://alexcinisiphotography.com/#business"
     },
+    "location": venueLocation,
     ...(data.investmentPrice && {
       "offers": {
         "@type": "Offer",
@@ -132,7 +134,8 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
   return (
     <main>
       {/* Schema Markup */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(placeSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 

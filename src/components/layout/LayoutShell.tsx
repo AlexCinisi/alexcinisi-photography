@@ -7,6 +7,7 @@ import StickyMobileCTA from './StickyMobileCTA'
 
 const localBusinessSchema = {
     "@context": "https://schema.org",
+    "@id": "https://alexcinisiphotography.com/#business",
     "@type": ["ProfessionalService", "Photographer"],
     name: "Alex Cinisi Photography",
     description:
@@ -64,12 +65,6 @@ const localBusinessSchema = {
                 },
             },
         ],
-    },
-    aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "5",
-        reviewCount: "30",
-        bestRating: "5",
     },
 };
 
