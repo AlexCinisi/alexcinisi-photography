@@ -100,8 +100,11 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
     ...(data.investmentPrice && {
       "offers": {
         "@type": "Offer",
-        "priceCurrency": "EUR",
-        "minPrice": data.investmentPrice.replace(/[^0-9]/g, '')
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "EUR",
+          "minPrice": data.investmentPrice.replace(/[^0-9]/g, '')
+        }
       }
     })
   };

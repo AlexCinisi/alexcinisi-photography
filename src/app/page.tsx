@@ -139,7 +139,6 @@ export default async function Home() {
                       { '@type': 'Place', name: 'Noto' },
                       { '@type': 'Place', name: 'Scopello' },
                       { '@type': 'Place', name: 'Lake Como' },
-                      { '@type': 'Place', name: 'Amalfi Coast' },
                       { '@type': 'Place', name: 'Puglia' },
                       { '@type': 'Place', name: 'Santorini' },
                       { '@type': 'Country', name: 'Italy' },
