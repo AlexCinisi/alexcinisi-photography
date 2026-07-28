@@ -109,65 +109,13 @@ export default async function Home() {
                 __html: JSON.stringify([
                   {
                     '@context': 'https://schema.org',
-                    '@type': 'LocalBusiness',
-                    '@id': 'https://alexcinisiphotography.com/#business',
-                    name: 'Alex Cinisi Photography',
-                    description:
-                      'Luxury destination wedding photographer based in Sicily, Italy. Editorial film and digital photography for refined couples worldwide.',
-                    url: 'https://alexcinisiphotography.com',
-                    telephone: '+39 XXX XXX XXXX',
-                    email: 'info@alexcinisiphotography.com',
-                    image: 'https://alexcinisiphotography.com/og-image.jpg',
-                    logo: 'https://alexcinisiphotography.com/logo.svg',
-                    address: {
-                      '@type': 'PostalAddress',
-                      addressLocality: 'Palermo',
-                      addressRegion: 'Sicily',
-                      addressCountry: 'IT',
-                    },
-                    geo: {
-                      '@type': 'GeoCoordinates',
-                      latitude: 38.1157,
-                      longitude: 13.3615,
-                    },
-                    areaServed: [
-                      { '@type': 'Place', name: 'Sicily, Italy' },
-                      { '@type': 'Place', name: 'Italy' },
-                      { '@type': 'Country', name: 'Worldwide' },
-                    ],
-                    priceRange: '€€€',
-                    openingHoursSpecification: {
-                      '@type': 'OpeningHoursSpecification',
-                      dayOfWeek: [
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday',
-                      ],
-                      opens: '09:00',
-                      closes: '20:00',
-                    },
-                    sameAs: [
-                      'https://www.instagram.com/alexcinisi/',
-                      'https://www.facebook.com/alexcinisiphotography/',
-                    ],
-                    knowsLanguage: ['Italian', 'English'],
-                  },
-                  {
-                    '@context': 'https://schema.org',
-                    '@type': 'ProfessionalService',
+                    '@type': 'Service',
                     '@id': 'https://alexcinisiphotography.com/#service',
-                    name: 'Alex Cinisi Wedding Photography',
+                    name: 'Wedding Photography Services',
                     description:
                       "Editorial wedding photography blending analog film (Canon AE-1 Program, Kodak Portra 400) with digital. Published in Vogue Italia, L'Officiel, Marie Claire. Available for luxury destination weddings in Sicily, Italy, and worldwide.",
                     provider: {
-                      '@type': 'Person',
-                      name: 'Alex Cinisi',
-                      jobTitle: 'Wedding Photographer',
-                      image: 'https://alexcinisiphotography.com/og-image.jpg',
+                      '@id': 'https://alexcinisiphotography.com/#business',
                     },
                     serviceType: [
                       'Wedding Photography',
@@ -193,10 +141,11 @@ export default async function Home() {
                       { '@type': 'Place', name: 'Lake Como' },
                       { '@type': 'Place', name: 'Amalfi Coast' },
                       { '@type': 'Place', name: 'Puglia' },
+                      { '@type': 'Place', name: 'Santorini' },
                       { '@type': 'Country', name: 'Italy' },
+                      { '@type': 'Country', name: 'Greece' },
                     ],
                     url: 'https://alexcinisiphotography.com',
-                    telephone: '+39 XXX XXX XXXX',
                     priceRange: '€€€',
                     hasOfferCatalog: {
                       '@type': 'OfferCatalog',
