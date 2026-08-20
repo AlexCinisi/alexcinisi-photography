@@ -7,7 +7,7 @@ export default defineConfig({
     title: 'Alex Cinisi Photography',
 
     // Ensure these are defined in your .env.local
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'yk3b8vqx',
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'th9rzv5a',
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
 
     basePath: '/studio',
