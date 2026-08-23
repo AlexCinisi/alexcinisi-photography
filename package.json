@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@next/third-parties": "^15.5.15",
+    "@next/third-parties": "^16.3.2",
     "@portabletext/react": "^6.0.3",
     "@sanity/client": "^6.24.0",
     "@sanity/image-url": "^1.1.0",
@@ -16,14 +16,14 @@
     "@upstash/redis": "^1.37.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "next": "^15.5.15",
-    "next-sanity": "^9.12.3",
+    "next": "^16.3.2",
+    "next-sanity": "^13.3.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-turnstile": "^1.1.5",
     "resend": "^4.0.0",
     "sanity": "^3.99.0",
-    "styled-components": "^6.3.11",
+    "styled-components": "^6.5.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
