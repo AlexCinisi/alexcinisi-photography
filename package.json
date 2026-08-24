@@ -18,7 +18,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "next": "^15.5.15",
     "next-sanity": "^9.12.3",
-    "react": "^19.2.5",
+    "react": "^19.2.8",
     "react-dom": "^19.2.5",
     "react-turnstile": "^1.1.5",
     "resend": "^4.0.0",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.7.0"
   }
