@@ -24,7 +24,7 @@
     "resend": "^4.0.0",
     "sanity": "^3.99.0",
     "styled-components": "^6.3.11",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
