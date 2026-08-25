@@ -12,17 +12,11 @@ updates:
     commit-message:
       prefix: "chore(deps):"
     ignore:
-      - dependency-name: "next"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "next-sanity"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "sanity"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@sanity/client"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@next/third-parties"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "react"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "react-dom"
+      # Direttiva di progetto: gli upgrade major si pianificano, mai automatici.
+      # La wildcard copre tutte le dipendenze, presenti e future — l'elenco a mano
+      # invecchia da solo (verificato 23/8: @sanity/image-url, @portabletext/react e
+      # @types/node erano scoperti). Minor e patch continuano ad arrivare.
+      # NON blocca i security update: quelli passano comunque e possono trascinare
+      # major come effetto collaterale — revisione umana obbligatoria (caso PR #39).
+      - dependency-name: "*"
         update-types: ["version-update:semver-major"]
