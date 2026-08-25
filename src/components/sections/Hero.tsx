@@ -14,7 +14,7 @@ export default function Hero({ image, alt, darkText }: HeroProps) {
             <div className="hero-bg">
                 {image ? (
                     <Image
-                        src={urlFor(image).fit('crop').crop('focalpoint').width(2400).auto('format').quality(90).url()}
+                        src={urlFor(image).fit('crop').crop('focalpoint').width(3840).auto('format').quality(90).url()}
                         alt={alt || 'Luxury destination wedding photography in Sicily by Alex Cinisi'}
                         fill
                         sizes="100vw"
