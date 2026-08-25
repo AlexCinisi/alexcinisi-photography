@@ -23,7 +23,7 @@ export default function Hero({ image, alt, darkText }: HeroProps) {
                             objectPosition: getHotspotPosition(image)
                         }}
                         priority={true}
-                        quality={90}
+                        quality={75}
                     />
                 ) : (
                     <div className="iph" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>
