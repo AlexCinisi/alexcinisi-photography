@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import { contactSchema } from '@/lib/contact-schema';
 import { ratelimit } from '@/lib/rate-limit';
 import { verifyTurnstile } from '@/lib/turnstile';
+import { isAllowedOrigin } from '@/lib/origin-guard';
 import { sendMetaLeadEvent, extractMetaCookies } from '@/lib/meta-capi';
 
 const resend = process.env.RESEND_API_KEY
@@ -11,15 +12,7 @@ const resend = process.env.RESEND_API_KEY
 
 export async function POST(request: Request) {
   // ─── LAYER 1: CSRF — Verifica Origin ───
-  const origin = request.headers.get('origin');
-  const allowedOrigins = [
-    'https://alexcinisiphotography.com',
-    'https://alexcinisiphotography.com',
-    'https://alexcinisi-photography.vercel.app',
-    process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '',
-  ].filter(Boolean);
-
-  if (!origin || !allowedOrigins.includes(origin)) {
+  if (!isAllowedOrigin(request)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
