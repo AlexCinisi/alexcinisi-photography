@@ -3,6 +3,10 @@ import { z } from 'zod';
 export const subscribeSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100).trim(),
   email: z.string().email('Invalid email address').max(254).trim(),
+  weddingYear: z
+    .enum(['', '2026', '2027', '2028', 'Not decided yet'])
+    .optional()
+    .default(''),
   privacyConsent: z.boolean().refine((val) => val === true, {
     message: 'You must accept the Privacy Policy',
   }),

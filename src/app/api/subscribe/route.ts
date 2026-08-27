@@ -126,7 +126,12 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         email: data.email,
-        fields: { name: data.name },
+        fields: {
+          name: data.name,
+          // MailerLite custom field key is `wedding_month`; it stores a year.
+          // Omitted entirely when unset, so we never write an empty string.
+          ...(data.weddingYear ? { wedding_month: data.weddingYear } : {}),
+        },
         groups: [groupId],
       }),
       signal: controller.signal,
