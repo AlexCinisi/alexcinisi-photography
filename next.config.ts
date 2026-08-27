@@ -64,6 +64,10 @@ const nextConfig: NextConfig = {
             { source: '/wedding-photographer-taormina', destination: '/locations', permanent: true }, // TEMP: retarget a hub finché la location page non esiste in Sanity
             { source: '/tonnara-di-scopello-wedding', destination: '/locations/tonnara-di-scopello-wedding', permanent: true },
             { source: '/wedding-photographer-noto', destination: '/locations', permanent: true }, // TEMP: retarget a hub finché la location page non esiste in Sanity
+
+            // Vanity URL campagna guida — temporanei di proposito (permanent: false)
+            { source: '/guide', destination: '/sicily-wedding-guide', permanent: false },
+            { source: '/guide-pdf', destination: '/downloads/The-Sicily-Wedding-Guide-Alex-Cinisi.pdf', permanent: false },
         ];
     },
 };
