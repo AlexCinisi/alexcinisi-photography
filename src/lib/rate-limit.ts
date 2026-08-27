@@ -14,4 +14,14 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
   });
 }
 
-export { ratelimit };
+let subscribeRatelimit: Ratelimit | null = null;
+
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  subscribeRatelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(10, '1 h'),
+    prefix: 'ratelimit:subscribe',
+  });
+}
+
+export { ratelimit, subscribeRatelimit };
