@@ -9,6 +9,7 @@ import adsLuxuryPage from './adsLuxuryPage';
 import adsProposalPage from './adsProposalPage';
 import proposalPage from './proposalPage';
 import guidePage from './guidePage';
+import guideLandingPage from './guideLandingPage';
 
 export const schemaTypes = [
   homePage,
@@ -21,5 +22,6 @@ export const schemaTypes = [
   adsLuxuryPage,
   adsProposalPage,
   proposalPage,
-  guidePage
+  guidePage,
+  guideLandingPage
 ];
