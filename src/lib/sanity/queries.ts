@@ -491,3 +491,8 @@ export const guidePageQuery = `*[_type == "guidePage"][0] {
   metaTitle, metaDescription,
   ogImage { asset-> { url } }
 }`
+
+export const guideConfirmedQuery = `*[_type == "guideLandingPage"][0] {
+  tyHeading, tyBody, tySoftCtaLabel,
+  tyVideo { asset-> { url } }
+}`
