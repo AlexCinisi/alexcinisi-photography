@@ -68,6 +68,7 @@ const nextConfig: NextConfig = {
             // Vanity URL campagna guida — temporanei di proposito (permanent: false)
             { source: '/guide', destination: '/sicily-wedding-guide', permanent: false },
             { source: '/guide-pdf', destination: '/downloads/The-Sicily-Wedding-Guide-Alex-Cinisi.pdf', permanent: false },
+            { source: '/call', destination: 'https://cal.com/alexcinisi/wedding-consultation', permanent: false },
         ];
     },
 };
