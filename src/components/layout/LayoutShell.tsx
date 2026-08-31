@@ -89,12 +89,17 @@ interface LayoutShellProps {
 
 export default function LayoutShell({ children, logo, logoFooter }: LayoutShellProps) {
   const pathname = usePathname()
-  const isAds = pathname?.startsWith('/ads')
+  // Guscio spoglio: niente Nav, Footer né JSON-LD LocalBusiness.
+  // Oltre alle ads, le due pagine del funnel guida — ogni link è un'uscita
+  // da una pagina il cui unico scopo è raccogliere un'email.
+  const isBareShell = pathname?.startsWith('/ads')
+    || pathname === '/sicily-wedding-guide'
+    || pathname === '/guide-confirmed'
   const isServicePage = pathname === '/proposal-photography-sicily'
 
   return (
     <>
-      {!isAds && (
+      {!isBareShell && (
         <>
           <script
               id="schema-local-business"
@@ -110,7 +115,7 @@ export default function LayoutShell({ children, logo, logoFooter }: LayoutShellP
         </>
       )}
       {children}
-      {!isAds && (
+      {!isBareShell && (
         <>
           <Footer logo={logo} logoFooter={logoFooter} />
           {!isServicePage && <StickyMobileCTA />}
