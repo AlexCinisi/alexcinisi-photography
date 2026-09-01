@@ -321,7 +321,7 @@ Schema: BreadcrumbList JSON-LD su tutte le inner pages.
 
 ### 4.5 Location Page `/locations/[slug]`
 
-**Già progettata.** Template completo: villa-igiea-wedding-photographer.html. Vedi PROJECT-ARCHITECTURE.md sezione 3.3 per lo schema Sanity `locationPage`.
+**Già progettata.** Template completo: `villa-igiea-wedding-photographer.html`, archiviato in `~/alexcinisi/vault/04-Archives/Migrazione-WordPress/`. Vedi PROJECT-ARCHITECTURE.md sezione 3.3 per lo schema Sanity `locationPage`.
 
 **Struttura confermata:** Hero → TrustBar → VenueIntro → VenueDetails (photo spots) → Gallery → Pillars (why me) → VenueCallout → Investment → Process → Testimonials → FAQ → Availability + Form → FinalCTA.
 
