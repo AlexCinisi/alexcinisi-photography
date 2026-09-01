@@ -27,29 +27,27 @@ export default async function GuideConfirmed() {
   const videoUrl = data?.tyVideo?.asset?.url || null
 
   return (
-    <main className="hero hero--contact">
-      <RevealOnScroll>
-        <section style={{ maxWidth: '640px', margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
-          <h1 className="h1">{heading}</h1>
+    <main className="pad-lg s-white">
+      <RevealOnScroll style={{ maxWidth: 520, margin: '0 auto', textAlign: 'center' }}>
+        <h1 className="h2-lg">{heading}</h1>
 
-          <p style={{ marginTop: '24px', lineHeight: '1.7', color: 'var(--mid)' }}>{body}</p>
+        <p style={{ marginTop: '24px', lineHeight: 1.7, color: 'var(--mid)' }}>{body}</p>
 
-          {videoUrl && (
-            <video
-              src={videoUrl}
-              controls
-              playsInline
-              preload="metadata"
-              style={{ width: '100%', marginTop: '32px', display: 'block' }}
-            />
-          )}
+        {videoUrl && (
+          <video
+            src={videoUrl}
+            controls
+            playsInline
+            preload="metadata"
+            style={{ width: '100%', marginTop: '32px', display: 'block' }}
+          />
+        )}
 
-          <p style={{ marginTop: '40px' }}>
-            <Link href="/call" style={{ color: 'var(--ink)', textDecoration: 'underline' }}>
-              {softCtaLabel}
-            </Link>
-          </p>
-        </section>
+        <p style={{ marginTop: '36px' }}>
+          <Link href="/call" className="btn-text">
+            {softCtaLabel}
+          </Link>
+        </p>
       </RevealOnScroll>
     </main>
   )
