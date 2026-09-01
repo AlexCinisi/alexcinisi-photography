@@ -2366,6 +2366,26 @@ textarea {
   background: var(--charcoal);
 }
 
+/* --- FORM ERROR STATES --- */
+.fg--error input,
+.fg--error select,
+.fg--error textarea {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--ink);
+}
+
+.fg-error {
+  font-size: .58rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  margin-top: 8px;
+}
+
+.fg .fg-error {
+  margin-top: 0;
+}
+
 /* ============================================
    FINAL CTA
    ============================================ */
