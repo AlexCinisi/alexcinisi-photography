@@ -45,18 +45,32 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
 
     const validateForm = () => {
         const errors: Record<string, string> = {};
-        if (!formData.name.trim()) errors.name = 'Please tell me your first name';
+        if (!formData.name.trim()) errors.name = 'Required';
         if (!formData.email.trim()) {
-            errors.email = 'Please enter your email address';
+            errors.email = 'Required';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-            errors.email = 'That email address does not look right';
+            errors.email = 'Check this address';
         }
-        if (!formData.privacyConsent) errors.privacyConsent = 'You must accept the Privacy Policy to continue';
+        if (!formData.privacyConsent) errors.privacyConsent = 'Consent required';
         return errors;
     };
 
+    // Regola 4 di form-behavior-rules.md: validazione in tempo reale.
+    // onBlur e non onChange: correggere mentre si digita interrompe chi scrive.
+    const handleBlur = (field: string) => {
+        const errors = validateForm();
+        setFormErrors((prev) => ({ ...prev, [field]: errors[field] || '' }));
+    };
+
+    // Un errore già visibile sparisce alla prima correzione, non al blur successivo.
+    const clearError = (field: string) => {
+        setFormErrors((prev) => (prev[field] ? { ...prev, [field]: '' } : prev));
+    };
+
+    const fieldClass = (field: string) => (formErrors[field] ? 'fg fg--error' : 'fg');
+
     const ErrorMsg = ({ field }: { field: string }) => (
-        formErrors[field] ? <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '4px' }}>{formErrors[field]}</div> : null
+        formErrors[field] ? <p className="fg-error">{formErrors[field]}</p> : null
     );
 
     const handleSubmit = async (e: FormEvent) => {
@@ -65,7 +79,6 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
         const errors = validateForm();
         if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
-            setErrorMessage('Please complete all required fields before submitting');
             setStatus('error');
             const firstErrorField = Object.keys(errors)[0];
             const element = formRef.current?.querySelector(`[name="${firstErrorField}"]`);
@@ -100,110 +113,98 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
             window.location.href = '/guide-confirmed';
         } catch {
             setStatus('error');
-            setErrorMessage('Something went wrong. Please try again in a moment.');
+            setErrorMessage('Something went wrong — please try again');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} ref={formRef} id="guide-form" style={{ display: 'grid', gap: '16px' }}>
-            <h2 className="h2">{heading}</h2>
+        <div className="ads-form-card">
+            <form onSubmit={handleSubmit} ref={formRef} id="guide-form">
+                <h3>{heading}</h3>
 
-            <div className="fg">
-                <label htmlFor="guide-form-name">First name</label>
-                <input
-                    type="text"
-                    id="guide-form-name"
-                    name="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    autoComplete="given-name"
-                />
-                <ErrorMsg field="name" />
-            </div>
-
-            <div className="fg">
-                <label htmlFor="guide-form-email">Email address</label>
-                <input
-                    type="email"
-                    id="guide-form-email"
-                    name="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    autoComplete="email"
-                />
-                <ErrorMsg field="email" />
-            </div>
-
-            <div className="fg">
-                <label htmlFor="guide-form-year">When are you getting married?</label>
-                <select
-                    id="guide-form-year"
-                    name="weddingYear"
-                    value={formData.weddingYear}
-                    onChange={(e) => setFormData({ ...formData, weddingYear: e.target.value })}
-                >
-                    <option value="">Choose one</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="Not decided yet">Not decided yet</option>
-                </select>
-            </div>
-
-            {/* Honeypot — campo invisibile per catturare bot */}
-            <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
-                <label htmlFor="guide-form-website">Website</label>
-                <input
-                    type="text"
-                    id="guide-form-website"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
-                />
-            </div>
-
-            <div className="priv-row" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: 4 }}>
-                <label className="custom-checkbox" style={{ position: 'relative', display: 'inline-block', width: '20px', height: '20px', flexShrink: 0, cursor: 'pointer' }}>
+                <div className={fieldClass('name')}>
+                    <label htmlFor="guide-form-name">First name</label>
                     <input
-                        type="checkbox"
-                        name="privacyConsent"
-                        checked={formData.privacyConsent}
-                        onChange={(e) => setFormData({ ...formData, privacyConsent: e.target.checked })}
-                        style={{ opacity: 0, width: 0, height: 0, position: 'absolute' }}
+                        type="text"
+                        id="guide-form-name"
+                        name="name"
+                        value={formData.name}
+                        onChange={(e) => { setFormData({ ...formData, name: e.target.value }); clearError('name'); }}
+                        onBlur={() => handleBlur('name')}
+                        autoComplete="given-name"
                     />
-                    <span style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        height: '20px',
-                        width: '20px',
-                        backgroundColor: formData.privacyConsent ? 'var(--ink, #1E1D1B)' : 'transparent',
-                        border: '1px solid var(--ink, #1E1D1B)',
-                        borderRadius: '2px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transition: 'all 0.2s ease'
-                    }}>
-                        {formData.privacyConsent && (
-                            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: '14px', height: '14px' }}>
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                        )}
-                    </span>
-                </label>
-                <span
-                    style={{ fontSize: '0.78rem', lineHeight: '1.5', cursor: 'pointer', color: 'var(--mid)' }}
-                    onClick={() => setFormData({ ...formData, privacyConsent: !formData.privacyConsent })}
-                >
-                    I have read and agree to the <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy Policy</a> and consent to the processing of my personal data (GDPR compliant).
-                </span>
-            </div>
-            <ErrorMsg field="privacyConsent" />
+                    <ErrorMsg field="name" />
+                </div>
 
-            <div style={{ marginTop: '8px' }}>
+                <div className={fieldClass('email')}>
+                    <label htmlFor="guide-form-email">Email address</label>
+                    <input
+                        type="email"
+                        id="guide-form-email"
+                        name="email"
+                        value={formData.email}
+                        onChange={(e) => { setFormData({ ...formData, email: e.target.value }); clearError('email'); }}
+                        onBlur={() => handleBlur('email')}
+                        autoComplete="email"
+                    />
+                    <ErrorMsg field="email" />
+                </div>
+
+                <div className="fg">
+                    <label htmlFor="guide-form-year">When are you getting married?</label>
+                    <select
+                        id="guide-form-year"
+                        name="weddingYear"
+                        value={formData.weddingYear}
+                        onChange={(e) => setFormData({ ...formData, weddingYear: e.target.value })}
+                    >
+                        <option value="">Choose one</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="Not decided yet">Not decided yet</option>
+                    </select>
+                </div>
+
+                {/* Honeypot — campo invisibile per catturare bot */}
+                <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                    <label htmlFor="guide-form-website">Website</label>
+                    <input
+                        type="text"
+                        id="guide-form-website"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                </div>
+
+                <div>
+                    <label className="ads-form-privacy">
+                        <input
+                            type="checkbox"
+                            name="privacyConsent"
+                            checked={formData.privacyConsent}
+                            onChange={(e) => { setFormData({ ...formData, privacyConsent: e.target.checked }); clearError('privacyConsent'); }}
+                            onBlur={() => handleBlur('privacyConsent')}
+                        />
+                        <span>
+                            I have read and agree to the{' '}
+                            <a
+                                href="/privacy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                Privacy Policy
+                            </a>
+                            {' '}and consent to the processing of my personal data (GDPR compliant).
+                        </span>
+                    </label>
+                    <ErrorMsg field="privacyConsent" />
+                </div>
+
                 <Turnstile
                     sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
                     onVerify={(token) => setTurnstileToken(token)}
@@ -211,21 +212,19 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
                     theme="light"
                     size="flexible"
                 />
-            </div>
 
-            <button type="submit" className="btn-sub" disabled={status === 'submitting' || !turnstileToken}>
-                {status === 'submitting' ? 'Sending…' : ctaLabel}
-            </button>
+                <button type="submit" className="ads-form-submit" disabled={status === 'submitting' || !turnstileToken}>
+                    {status === 'submitting' ? 'Sending…' : ctaLabel}
+                </button>
 
-            <p style={{ fontSize: '0.72rem', lineHeight: '1.6', color: 'var(--mid)', margin: 0 }}>
-                {gdprMicrocopy}
-            </p>
+                <p style={{ fontSize: '.72rem', lineHeight: 1.6, color: 'var(--mid)', margin: 0 }}>
+                    {gdprMicrocopy}
+                </p>
 
-            {status === 'error' && errorMessage && (
-                <div style={{ color: '#C53030', background: '#FFF0F0', border: '1px solid #FED7D7', padding: '12px', fontSize: '0.8rem' }}>
-                    {errorMessage}
-                </div>
-            )}
-        </form>
+                {status === 'error' && errorMessage && (
+                    <p className="fg-error">{errorMessage}</p>
+                )}
+            </form>
+        </div>
     );
 }

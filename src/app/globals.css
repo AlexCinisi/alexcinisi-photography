@@ -4574,6 +4574,7 @@ a.journal-credit-name:hover {
   color: var(--mid);
   margin-bottom: 8px;
 }
+.ads-form-card .fg label { margin-bottom: 0; }
 .ads-form-card input[type="text"],
 .ads-form-card input[type="email"],
 .ads-form-card input[type="tel"],
@@ -4651,6 +4652,7 @@ a.journal-credit-name:hover {
 .ads-form-submit:disabled { opacity: .5; cursor: not-allowed; }
 .ads-form-success { text-align: center; padding: 60px 20px; }
 .ads-form-success h3 { font-size: 1.4rem; font-weight: 300; color: var(--ink); margin-bottom: 12px; }
+.ads-form-card form h3 { font-size: 1.4rem; font-weight: 300; color: var(--ink); }
 .ads-form-success p { font-weight: 300; font-size: 1rem; color: var(--mid); }
 @media (max-width: 768px) {
   .ads-form-section { padding: 64px 20px; }
