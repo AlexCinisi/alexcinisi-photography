@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "ds:check": "node scripts/ds-check.mjs",
+    "ds:check:strict": "node scripts/ds-check.mjs --strict",
+    "ds:selftest": "node scripts/ds-check.mjs --self-test"
   },
   "dependencies": {
     "@next/third-parties": "^15.5.15",
