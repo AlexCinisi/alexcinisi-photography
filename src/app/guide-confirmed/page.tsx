@@ -12,7 +12,7 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll'
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Thank you — Alex Cinisi Photography',
+  title: { absolute: 'Thank you — Alex Cinisi Photography' },
   description: 'Your Sicily Wedding Guide is on its way.',
   robots: { index: false, follow: false },
   alternates: { canonical: null },
