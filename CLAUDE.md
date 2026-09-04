@@ -15,7 +15,9 @@ Sito luxury wedding photography, pubblico USA/UK/AU. Stack: Next.js 15.x + Sanit
 10. Check NEXT_PUBLIC_VERCEL_ENV === 'production' per non caricare GTM su preview.
 
 ## Design system
-Palette: white, pearl, smoke, ink. Font: Red Hat Display 300 (heading), Bodoni Moda italic 300 (em), Jost (.f-label). Mai aspect ratio forzato; hover solo opacity 0.3s; 3:4 dominante; focalpoint via .fit('crop').crop('focalpoint'); .floating-frame --light/--dark; heroTextDark per hero chiari; hero 65vh solo con immagine Sanity reale. Titoli sezione: SectionHead/.sec-title (ads-* e svc-h2 DEPRECATE — ripulire ogni file toccato).
+Palette **chiusa a 11 token** in `:root`: `--white --off-white --pearl --rule --mid --charcoal --ink --black --warm-black --accent --accent-dk`. Non esiste un rosso: il segnale d'errore è il peso del bordo. Font: **Jost 300 = testo corrente** (è il font del `body`, impostato inline in `layout.tsx`); **Red Hat Display = display a 300** (`.h2`, `.h2-lg`) **e 400 su occhielli, bottoni e nav** (`.f-label`, `.btn-*`, `.nav-logo`); **Bodoni Moda italic = la faccia da display corsiva** — l'`em` dentro un titolo, ma anche accenti autonomi (`.svc-inv-price`, `.svc-proc-n`, `.svc-testi q`, `.decision-letter`, `.light-pullquote`). Caricato **solo al peso 400**: dove il CSS dichiara 300 (`.h2 em`) non risolve a una faccia reale. Mai aspect ratio forzato; hover solo opacity 0.3s; 3:4 dominante; focalpoint via .fit('crop').crop('focalpoint'); `.floating-frame-container` `--light`/`--dark`; heroTextDark per hero chiari; `.hero` è `min-height: 100vh` (65vh solo su `--contact`/`--about`) e vuole un'immagine Sanity reale. Titoli sezione: SectionHead/.sec-title (ads-* e svc-h2 DEPRECATE — ripulire ogni file toccato).
+
+> I fatti sul CSS non si leggono qui: `npm run ds:check` li interroga, e questa riga è solo un orientamento. Se le due cose divergono, vince il CSS.
 
 ## Copy
 Silent luxury: specificità, non aggettivi. Bandite: beautiful, stunning, gorgeous, lovely, perfect, breathtaking, amazing. Bride-first; ads gender-inclusive. Alt text: EN, 120–150 char (hero 100–130), no "A photo of", zero duplicati, mai speculativi.
