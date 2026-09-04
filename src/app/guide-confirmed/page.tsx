@@ -4,7 +4,9 @@ import { client } from '@/lib/sanity/client'
 import { guideConfirmedQuery } from '@/lib/sanity/queries'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
 
-// ⚠️ Nav/Footer iniettati dal root layout via <LayoutShell>.
+// ⚠️ Guscio spoglio: LayoutShell NON monta Nav, Footer, StickyMobileCTA né i
+// due JSON-LD su questa route (isBareShell). La pagina è la finestra intera —
+// non c'è chrome che chiuda il fondo.
 // Pagina di ringraziamento: raggiungibile solo via redirect da GuideForm.
 // L'evento CompleteRegistration è cablato in GTM sul page view di questa
 // route — nessun dataLayer.push nel form, per non contare due volte.
