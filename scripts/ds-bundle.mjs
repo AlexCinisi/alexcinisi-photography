@@ -165,6 +165,70 @@ ${colorTokens.map(swatch).join('\n')}
 <p style="margin-top:20px;max-width:600px;line-height:1.7;color:var(--mid)">È l'unico movimento del sito, insieme agli hover in opacity 0.25–0.3s. Nessun parallasse, nessuna entrata elaborata.</p>`),
 ];
 
+// ------------------------------------------------------------------ README
+// Questo testo finisce nel prompt di sistema dell'agente di design: nomina
+// vocabolario che deve esistere, o l'agente scriverà classi che non risolvono
+// e produrrà pagine senza stile senza accorgersene. Passa dallo stesso
+// cancello di verifica delle schede: ogni classe citata qui sotto con cls().
+
+const README = `# Alex Cinisi Photography — design system
+
+Fotografia di matrimoni destination, pubblico USA/UK/AU. Il registro è **silent luxury**: specificità, non aggettivi.
+
+## Come si costruisce con questo sistema
+
+**Non è una libreria di componenti React.** Non ci sono componenti da importare: si costruisce con HTML semantico e le classi di \`ds.css\`, esattamente come fa il sito.
+
+Un design riceve solo la chiusura degli \`@import\` di \`styles.css\`, che tira dentro i font, i token e il foglio reale. Non serve altro setup — nessun provider, nessun wrapper obbligatorio.
+
+⚠️ **Tailwind non è installato.** Non esiste \`flex\`, \`gap-4\`, \`text-4xl\`, \`uppercase\`. Se scrivi utility di quel genere non renderizzano niente. Per la tua impaginazione usa CSS esplicito (\`display:flex\` in uno \`<style>\`), per il vestito usa le classi qui sotto.
+
+## Il vocabolario reale
+
+**Fondi di sezione** — \`${cls('s-white')}\` · \`${cls('s-pearl')}\` (il colore di stacco del sito) · \`${cls('s-offwh')}\` · \`${cls('s-ink')}\` (testo off-white) · \`${cls('s-warm')}\`
+
+**Respiro e contenitore** — \`${cls('pad')}\` (120/64px, 80/24 sotto i 960px) · \`${cls('pad-lg')}\` (160/64px, 100/24) · \`${cls('pad-sm')}\` · \`${cls('max')}\` (centra a 1200px)
+
+**Titoli** — \`${cls('h2-lg')}\` il display grande · \`${cls('h2')}\` il titolo di sezione (uguale a un \`<h2>\` nudo) · \`${cls('sec-title--h1')}\` \`${cls('sec-title--h2')}\` \`${cls('sec-title--h3')}\` la scala guidata dai token
+
+**Occhiello** — \`${cls('f-label')}\`: maiuscolo, spaziato, con un trattino oro generato da \`::before\`. È il modo canonico di introdurre un blocco.
+
+**Azioni** — \`${cls('btn-fill')}\` (pieno, fondo \`--ink\`) · \`${cls('btn-text')}\` (link sottolineato da 1px). Sono le uniche due.
+
+**Form** — \`${cls('fg')}\` il campo · \`${cls('fg--error')}\` sul campo in errore · \`${cls('fg-error')}\` il messaggio · \`${cls('ads-form-card')}\` la card che contiene il form.
+
+**Movimento** — \`${cls('reveal')}\` più \`.visible\` quando entra nel viewport; \`${cls('d1')}\` e \`${cls('d2')}\` scaglionano.
+
+## Regole che non si negoziano
+
+1. **La palette è chiusa a undici colori.** Sono in \`tokens/tokens.css\`. Aggiungerne uno è un emendamento al sistema, non una scelta di pagina.
+2. **Il segnale non è mai il colore.** Un errore è il bordo inferiore che passa a 2px in \`--ink\`; una conferma non è verde e non ha spunte. In questa palette non esiste un rosso, e non va introdotto.
+3. **Non esiste una classe \`.h1\`.** L'\`<h1>\` si veste con \`.h2-lg\`. Livello semantico e taglia visiva sono decisi separatamente.
+4. **Un \`<h3>\` nudo non ha una dimensione** — riceve solo famiglia e peso. Se ti serve, dagli una classe.
+5. **Tre font, tre ruoli.** Jost è il testo corrente (è il font del \`body\`). Red Hat Display è display, occhielli, bottoni. Bodoni Moda corsivo serve **una o due parole dentro un titolo**, mai un paragrafo. Il gesto tipografico del sito è un titolo Red Hat 300 con due parole in corsivo Bodoni: una volta per pagina, non due.
+6. **Niente hero fotografica inventata.** Il sito vieta una hero senza un'immagine reale. Se una pagina ha bisogno di respiro visivo, lo ottiene con spazio, tipografia e fondi.
+7. **Copy.** Bandite: *beautiful, stunning, gorgeous, lovely, perfect, breathtaking, amazing*.
+
+## Dove sta la verità
+
+\`ds.css\` è il foglio di produzione del sito, copiato senza modifiche — 5.114 righe. Leggilo prima di inventare: se una classe ti serve, cercala lì. \`tokens/tokens.css\` ha i token; \`fonts/fonts.css\` i tre caratteri.
+
+## Esempio idiomatico
+
+\`\`\`html
+<section class="pad-lg s-pearl">
+  <div class="max" style="max-width:520px;text-align:center">
+    <div class="f-label">Sicily Wedding Guide</div>
+    <h1 class="h2-lg">It's on its <em>way</em></h1>
+    <p style="margin-top:24px;line-height:1.7;color:var(--mid)">…</p>
+    <p style="margin-top:36px"><a href="/call" class="btn-text">Check your date now &rarr;</a></p>
+  </div>
+</section>
+\`\`\`
+
+Le classi vestono; lo \`style\` inline fa solo la geometria di questo blocco. È la divisione che usa il sito.
+`;
+
 // verifica: ogni classe citata dalle schede deve esistere nel foglio
 const ghosts = [...used].filter((c) => !defined.has(c)).sort();
 if (ghosts.length) {
@@ -208,6 +272,7 @@ for (const c of CARDS) {
   manifest.push({ name: c.name, group: c.group, subtitle: c.subtitle, path: `components/${c.group}/${c.name}/${c.name}.html`, viewport: { width: c.width, height: c.height } });
 }
 writeFileSync(join(OUT, '_ds_cards.json'), JSON.stringify(manifest, null, 2) + '\n');
+writeFileSync(join(OUT, 'README.md'), README);
 
 console.log(`✓ ${CARDS.length} schede in ${OUT}`);
 console.log(`✓ ds.css ${(css.length / 1024).toFixed(0)} KB — il foglio reale, copiato`);

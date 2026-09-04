@@ -1,0 +1,5 @@
+{
+  "projectId": "a0da4f31-19ff-4d0e-834e-cd0c38794a5d",
+  "shape": "css",
+  "note": "Design system CSS, non una libreria di componenti. Il bundle si costruisce con `node scripts/ds-bundle.mjs` in ./ds-bundle (ignorato da git). Nessuno Storybook, nessun dist/: il converter dello skill non si applica."
+}
