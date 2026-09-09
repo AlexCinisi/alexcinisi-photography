@@ -4595,6 +4595,13 @@ a.journal-credit-name:hover {
   -webkit-appearance: none;
   font-family: inherit;
 }
+/* Il <select> resta fuori dalla regola qui sopra di proposito: quella usa la
+   shorthand `background`, che cancellerebbe la freccia SVG del selettore base.
+   Qui riceve solo le due cose che gli mancano davvero. */
+.ads-form-card select {
+  width: 100%;
+  font-family: inherit;
+}
 .ads-form-card input::placeholder,
 .ads-form-card textarea::placeholder {
   color: rgba(58, 56, 53, .28);
