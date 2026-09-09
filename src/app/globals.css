@@ -4618,13 +4618,23 @@ a.journal-credit-name:hover {
 /* Reset margine label perché ora il gap del form gestisce lo spacing */
 .ads-form-card .ads-form-service-selector { margin-top: 0; }
 
-.ads-form-privacy {
+/* Il secondo selettore non è ridondante: quando il consenso è un <label> —
+   come in GuideForm, che lo è per raggiungibilità da tastiera — `.ads-form-card
+   label` (0,1,1) batte `.ads-form-privacy` (0,1,0) e gli impone display block,
+   .58rem e maiuscolo. `.ads-form-card .ads-form-privacy` (0,2,0) lo riporta al
+   suo aspetto. Le tre neutralizzazioni servono solo in quel caso; su un <div>
+   (AdsForm) sono già i valori di partenza. */
+.ads-form-privacy,
+.ads-form-card .ads-form-privacy {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   font-size: .72rem;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--mid);
   line-height: 1.6;
+  margin-bottom: 0;
   cursor: pointer;
 }
 .ads-form-privacy input[type="checkbox"] {
