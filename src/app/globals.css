@@ -4287,7 +4287,10 @@ a.journal-credit-name:hover {
 .ads-gallery-item {
   position: relative;
   overflow: hidden;
-  height: 480px;
+  /* Altezza continua e non 480px fissi: fra i 768px e i ~1600px la colonna
+     si stringe ma l'altezza no, e le celle diventano ritratti 1:2. La classe
+     è codice morto fino alla landing della guida — nessuna pagina viva la usa. */
+  height: clamp(280px, 30vw, 480px);
 }
 .ads-gallery-item img {
   transition: opacity .3s ease;
@@ -5143,3 +5146,173 @@ a.region-card:hover { transform: translateY(-4px); }
   .legal-nat { border-right: none; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
   .legal-req { padding-top: 16px; }
 }
+
+/* ============================================
+   GUIDE LANDING — /sicily-wedding-guide
+   ============================================
+   Aggiunte dichiarate al design system (brief di design §7.9).
+   La pagina è la terza della famiglia delle ads — stessa forma, stesso
+   namespace .ads-* — non un dialetto nuovo. Qui sta solo ciò che quel
+   namespace non ha già.
+   ============================================ */
+
+/* --- Barra scura ---
+   .ads-header è bianca al 97%: sopra una hero fotografica scura a piena
+   altezza diventa una fascia chiara in cima alla pagina. Le due pagine ads
+   non passano il flag e restano bianche. */
+.ads-header--dark {
+  background: rgba(30,29,27,.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.ads-header--dark .ads-header-logo { color: var(--off-white); }
+.ads-header--dark .ads-header-cta {
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--white);
+}
+.ads-header--dark .ads-header-cta:hover {
+  background: transparent;
+  color: var(--white);
+}
+
+/* --- Hero della guida ---
+   Vincolo §10.1 del brief: H1, sottotitolo, bottone e microcopy tutti
+   visibili senza scroll su 390×700. Due cose lo rendono possibile.
+   1. svh e non vh: su Safari in-app (il bersaglio reale — il browser
+      dentro Instagram) 100vh è il viewport GRANDE, quello senza barre,
+      e la barra del browser taglia il fondo della hero.
+   2. H1 in clamp continuo invece dei due gradini fissi 3.8rem / 2.4rem. */
+.ads-hero.guide-hero { min-height: 100svh; }
+.ads-hero.guide-hero .ads-hero-content {
+  padding: clamp(96px, 15vh, 140px) 24px clamp(56px, 9vh, 80px);
+}
+.ads-hero.guide-hero h1 {
+  font-size: clamp(2.05rem, 5.6vw, 3.8rem);
+  letter-spacing: -.025em;
+}
+
+/* --- Hero su foto chiara ---
+   heroTextDark esiste nello schema Sanity dal 31/8. Senza queste regole
+   sarebbe un interruttore che in Studio non fa niente. */
+.ads-hero.ads-hero--text-dark .ads-hero-bg::after { background: rgba(250,250,248,.55); }
+.ads-hero.ads-hero--text-dark h1 { color: var(--ink); }
+.ads-hero.ads-hero--text-dark .ads-hero-eyebrow { color: var(--accent-dk); }
+.ads-hero.ads-hero--text-dark .ads-hero-subtitle { color: var(--charcoal); }
+.ads-hero.ads-hero--text-dark .ads-hero-micro { color: var(--mid); }
+.ads-hero.ads-hero--text-dark .ads-hero-cta {
+  background: var(--ink);
+  color: var(--off-white);
+  border-color: var(--ink);
+}
+.ads-hero.ads-hero--text-dark .ads-hero-cta:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+/* --- Press strip ---
+   §2.2: tre testate, testo puro. I loghi non esistono nel repo e non vanno
+   inventati. .ads-trust-bar non serve: è fatta di coppie numero+etichetta,
+   qui c'è un'etichetta sola sopra e tre nomi in fila sotto. */
+.guide-press {
+  background: var(--pearl);
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(30px, 5vw, 44px) clamp(20px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 20px);
+}
+.guide-press-label {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: .68rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.guide-press-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.guide-press-list li {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: clamp(.82rem, 2.2vw, 1rem);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  padding: 6px clamp(18px, 4vw, 40px);
+  border-right: 1px solid var(--rule);
+}
+.guide-press-list li:last-child { border-right: none; }
+
+/* --- Occhiello allineato a sinistra ---
+   .ads-eyebrow è centrato: nel form e nell'about della guida sta in una
+   colonna allineata a sinistra. */
+.ads-eyebrow--left { justify-content: flex-start; }
+
+/* --- Rassicurazioni con trattino oro ---
+   Stessa figura dell'occhiello (::before di 40px) e del bordo sinistro dei
+   pilastri, in scala minore. */
+.ads-form-reassurance--dash li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+.ads-form-reassurance--dash li::before {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 1px;
+  background: var(--accent);
+  transform: translateY(-4px);
+}
+
+/* --- About: colonna testo ---
+   Larghezza di lettura, non larghezza piena (§9 del brief). */
+.guide-about {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: flex-start;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.guide-about-portrait { flex: 1 1 280px; min-width: 0; margin: 0; }
+.guide-about-copy { flex: 1 1 380px; min-width: 0; }
+.guide-about-copy p {
+  max-width: 540px;
+  font-size: clamp(.98rem, 2.2vw, 1.05rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--charcoal);
+}
+
+/* --- Chiusura: riga legale ---
+   La pagina non ha footer (guscio spoglio): copyright e link legali stanno
+   qui o non stanno da nessuna parte. .ads-closing-copyright da sola è una
+   riga singola senza i due link. */
+.guide-legal-row {
+  max-width: 1100px;
+  margin: clamp(48px, 7vw, 72px) auto 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 28px;
+}
+.guide-legal-row span,
+.guide-legal-row a {
+  font-size: .75rem;
+  font-weight: 300;
+  color: var(--mid);
+}
+.guide-legal-row a:hover { color: var(--ink); }
