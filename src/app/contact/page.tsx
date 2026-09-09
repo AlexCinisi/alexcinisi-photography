@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { client } from '@/lib/sanity/client';
-import { contactPageQuery } from '@/lib/sanity/queries';
+import { contactPageQuery, siteSettingsQuery } from '@/lib/sanity/queries';
+import { bookingBaseYear, weddingDatePlaceholder } from '@/lib/availability';
 import { urlFor } from '@/lib/sanity/image';
 import Breadcrumb from '@/components/sections/Breadcrumb';
 import ContactForm from '@/components/sections/ContactForm';
@@ -49,7 +50,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const data = await client.fetch(contactPageQuery).catch(() => null);
+  const [data, settings] = await Promise.all([
+    client.fetch(contactPageQuery).catch(() => null),
+    client.fetch(siteSettingsQuery).catch(() => null),
+  ]);
 
   const title = data?.title || DEFAULTS.title;
   const subtitle = data?.subtitle || DEFAULTS.subtitle;
@@ -127,6 +131,7 @@ export default async function ContactPage() {
       {/* Form — il sidebar è DENTRO il componente */}
       <ContactForm
         variant="full"
+        datePlaceholder={weddingDatePlaceholder(bookingBaseYear(settings?.availabilityRolloverMonth ?? undefined))}
         sidebarImage={data?.sidebarImage}
         sidebarTestimonial={data?.sidebarTestimonial}
       />

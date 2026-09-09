@@ -511,3 +511,11 @@ export const guideLandingPageQuery = `*[_type == "guideLandingPage"][0] {
   metaTitle, metaDescription,
   ogImage { asset->, alt, hotspot, crop }
 }`
+
+export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
+  availabilityAutoYear,
+  availabilityRolloverMonth,
+  availabilityItems[] { year, status, substatus, dotClass },
+  availabilityText,
+  adsFormUrgency
+}`

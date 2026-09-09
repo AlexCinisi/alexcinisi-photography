@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { client } from '@/lib/sanity/client';
 import { urlFor } from '@/lib/sanity/image';
-import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery, featuredJournalPostsQuery, homepageLocationsQuery } from '@/lib/sanity/queries';
+import { homePageQuery, featuredPortfolioQuery, featuredTestimonialsQuery, featuredJournalPostsQuery, homepageLocationsQuery, siteSettingsQuery } from '@/lib/sanity/queries';
+import { resolveAvailability, bookingBaseYear, weddingDatePlaceholder, AVAILABILITY_TEXT_FALLBACK } from '@/lib/availability';
 
 // ISR: rigenera la pagina ogni 60 secondi per riflettere i contenuti Sanity
 export const revalidate = 3600;
@@ -92,12 +93,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-    const [homePage, portfolio, testimonials, featuredStories, locations] = await Promise.all([
+    const [homePage, portfolio, testimonials, featuredStories, locations, settings] = await Promise.all([
         client.fetch(homePageQuery).catch(() => null),
         client.fetch(featuredPortfolioQuery).catch(() => null),
         client.fetch(featuredTestimonialsQuery).catch(() => null),
         client.fetch(featuredJournalPostsQuery).catch(() => null),
         client.fetch(homepageLocationsQuery).catch(() => null),
+        client.fetch(siteSettingsQuery).catch(() => null),
     ]);
 
     return (
@@ -212,8 +214,17 @@ export default async function Home() {
                 fallbackGradient="linear-gradient(150deg, #c0b4a0 0%, #a49888 40%, #887c6c 100%)"
             />
             <FAQ />
-            <Availability />
-            <ContactForm ctaText="Tell Me About Your Wedding →" />
+            <Availability
+                items={resolveAvailability(settings?.availabilityItems, {
+                    autoYear: settings?.availabilityAutoYear,
+                    rolloverMonth: settings?.availabilityRolloverMonth,
+                })}
+                text={settings?.availabilityText || AVAILABILITY_TEXT_FALLBACK}
+            />
+            <ContactForm
+                ctaText="Tell Me About Your Wedding →"
+                datePlaceholder={weddingDatePlaceholder(bookingBaseYear(settings?.availabilityRolloverMonth ?? undefined))}
+            />
             <FinalCTA />
         </>
     );

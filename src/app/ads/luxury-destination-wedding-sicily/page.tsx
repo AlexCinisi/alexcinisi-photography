@@ -7,8 +7,9 @@ import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
 import PortfolioGrid from '@/components/sections/PortfolioGrid'
 import { client } from '@/lib/sanity/client'
-import { adsLuxuryPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
+import { adsLuxuryPageQuery, siteLogoQuery, siteSettingsQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
+
 import {
   ADS_TRUST_BAR_WEDDING,
   ADS_TESTIMONIALS,
@@ -54,9 +55,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function LuxuryWeddingAdsPage() {
-  const [data, siteData] = await Promise.all([
+  const [data, siteData, settings] = await Promise.all([
     client.fetch(adsLuxuryPageQuery).catch(() => null),
     client.fetch(siteLogoQuery).catch(() => null),
+    client.fetch(siteSettingsQuery).catch(() => null),
   ])
 
   const logoUrl = siteData?.siteLogo?.asset?.url || ''
@@ -246,7 +248,7 @@ export default async function LuxuryWeddingAdsPage() {
         ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"}
         headingText={data?.formHeading || "Begin Your Story"}
         descriptionText={data?.formDescription || "I accept a limited number of destination weddings each year to ensure every couple receives my full creative focus."}
-        urgencyText={data?.formUrgency || "Only 4 dates remaining for Autumn 2026."}
+        urgencyText={data?.formUrgency || settings?.adsFormUrgency || undefined}
       />
 
       {/* Closing */}

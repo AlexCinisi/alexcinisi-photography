@@ -9,8 +9,10 @@ import AdsWhatsApp from '@/components/ads/AdsWhatsApp'
 import AdsFaq from '@/components/ads/AdsFaq'
 import PortfolioGrid from '@/components/sections/PortfolioGrid'
 import { client } from '@/lib/sanity/client'
-import { adsProposalPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
+import { adsProposalPageQuery, siteLogoQuery, siteSettingsQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
+import { bookingBaseYear, weddingMonthPlaceholder } from '@/lib/availability'
+
 import {
   ADS_TRUST_BAR_PROPOSAL,
   ADS_INVESTMENT_PROPOSAL,
@@ -58,9 +60,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProposalAdsPage() {
-  const [data, siteData] = await Promise.all([
+  const [data, siteData, settings] = await Promise.all([
     client.fetch(adsProposalPageQuery).catch(() => null),
     client.fetch(siteLogoQuery).catch(() => null),
+    client.fetch(siteSettingsQuery).catch(() => null),
   ])
 
   const logoUrl = siteData?.siteLogo?.asset?.url || ''
@@ -232,9 +235,9 @@ export default async function ProposalAdsPage() {
         showWhatsApp={true}
         headingText="Let's Plan Your Moment in Sicily"
         descriptionText="Whether it's a surprise proposal, an intimate elopement, or a couple session, every shoot is shaped around your story and the place you choose."
-        urgencyText={data?.formUrgency || "Summer & Autumn 2026 — limited dates available."}
+        urgencyText={data?.formUrgency || settings?.adsFormUrgency || undefined}
         dateLabel="Preferred Date"
-        datePlaceholder="Month 2026 · or 'Flexible'"
+        datePlaceholder={weddingMonthPlaceholder(bookingBaseYear(settings?.availabilityRolloverMonth ?? undefined))}
         locationLabel="Where in Sicily?"
         locationPlaceholder="e.g. Valley of the Temples, or 'Help me choose'"
         visionLabel="Tell me about your moment"

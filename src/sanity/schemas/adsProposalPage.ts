@@ -287,7 +287,7 @@ export default defineType({
       title: 'Urgency Text',
       type: 'string',
       fieldset: 'form',
-      initialValue: 'Summer & Autumn 2026 — limited dates available.',
+      initialValue: 'Summer & Autumn — limited dates available.',
     }),
 
     // CLOSING

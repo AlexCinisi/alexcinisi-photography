@@ -9,6 +9,7 @@ import { urlFor } from '@/lib/sanity/image';
 
 interface ContactFormProps {
     variant?: 'compact' | 'full';     // DEFAULT: 'compact'
+    datePlaceholder?: string;         // esempio di data: l'anno lo calcola la pagina, non questo file
     venueHidden?: boolean;            // true nelle location pages
     venueValue?: string;              // pre-filled venue name
     ctaText?: string;                 // testo bottone submit
@@ -23,6 +24,10 @@ interface ContactFormProps {
 
 export default function ContactForm({
     variant = 'compact',
+    // Il ripiego è senza anno di proposito: questo è un componente client e
+    // non può calcolare l'anno di stagione senza rischiare un mismatch di
+    // idratazione. Meglio nessun anno che un anno scaduto.
+    datePlaceholder = "June 14 · or 'TBD'",
     venueHidden = false,
     venueValue = "",
     ctaText,
@@ -303,7 +308,7 @@ export default function ContactForm({
                 <>
                     <div className="fg">
                         <Label text="Wedding Date" required />
-                        <input type="text" name="weddingDate" placeholder="June 14, 2026 · or 'TBD'" value={formData.weddingDate} onChange={handleInputChange} />
+                        <input type="text" name="weddingDate" placeholder={datePlaceholder} value={formData.weddingDate} onChange={handleInputChange} />
                         <ErrorMsg field="weddingDate" />
                     </div>
                     <div className="fg">
@@ -352,7 +357,7 @@ export default function ContactForm({
                 <>
                     <div className="fg">
                         <Label text="Wedding Date" required />
-                        <input type="text" name="weddingDate" placeholder="June 14, 2026 · or 'TBD'" value={formData.weddingDate} onChange={handleInputChange} />
+                        <input type="text" name="weddingDate" placeholder={datePlaceholder} value={formData.weddingDate} onChange={handleInputChange} />
                         <ErrorMsg field="weddingDate" />
                     </div>
                     <div className="fg">

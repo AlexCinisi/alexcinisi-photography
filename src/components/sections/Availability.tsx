@@ -1,28 +1,17 @@
 import Link from 'next/link';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
-interface AvailabilityItem {
-    year: string;
-    status: string;
-    substatus: string;
-    dotClass: string;
-}
+import type { AvailabilityItem } from '@/lib/availability';
 
 interface AvailabilityProps {
-    items?: AvailabilityItem[];
-    text?: string;
+    /** Righe già risolte: gli anni li calcola `resolveAvailability`, non questo componente. */
+    items: AvailabilityItem[];
+    text: string;
 }
 
-const defaultItems: AvailabilityItem[] = [
-    { year: '2026', status: 'Select dates still available', substatus: 'Spring & Autumn openings remaining', dotClass: 'open' },
-    { year: '2027', status: 'Now accepting enquiries', substatus: 'Secure your date early', dotClass: 'soon' },
-];
-
-const defaultText = "I accept a limited number of weddings each year to ensure every couple receives my full creative attention and bespoke service. Peak season dates fill 12–18 months in advance.";
-
 export default function Availability({ items, text }: AvailabilityProps) {
-    const displayItems = items || defaultItems;
-    const displayText = text || defaultText;
+    // Senza righe la sezione non esiste: meglio niente che una card vuota.
+    if (items.length === 0) return null;
 
     return (
         <section className="s-offwh pad-sm">
@@ -31,11 +20,11 @@ export default function Availability({ items, text }: AvailabilityProps) {
                     <div>
                         <div className="f-label" style={{ marginBottom: '22px' }}>Availability</div>
                         <h2 className="h2" style={{ marginBottom: '16px' }}>Limited Dates<br /><em>Remaining</em></h2>
-                        <p>{displayText}</p>
+                        <p>{text}</p>
                         <Link href="#contact" className="btn-fill" style={{ marginTop: '28px' }}>Check Your Date</Link>
                     </div>
                     <div className="avail-cards">
-                        {displayItems.map((item, i) => (
+                        {items.map((item, i) => (
                             <div className="avail-card" key={i}>
                                 <div className={`avail-dot ${item.dotClass}`}></div>
                                 <div className="avail-yr">{item.year}</div>

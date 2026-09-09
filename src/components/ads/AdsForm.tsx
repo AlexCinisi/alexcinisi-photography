@@ -35,7 +35,9 @@ export default function AdsForm({
     '✓ No obligation to book',
     '✓ Free initial consultation call',
   ],
-  urgencyText = 'Only 4 dates remaining for Autumn 2026.',
+  // Nessun anno nel ripiego: questo è un componente client e non può calcolare
+  // l'anno di stagione. La catena vera è pagina Sanity → siteSettings → questo.
+  urgencyText = 'Limited dates remaining for the current season.',
   headingText = 'Begin Your Story',
   descriptionText = 'I accept a limited number of destination weddings each year to ensure every couple receives my full creative focus.',
   showWhatsApp = false,

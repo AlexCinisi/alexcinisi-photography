@@ -339,9 +339,10 @@ export default defineType({
     // === AVAILABILITY ===
     defineField({
       name: 'availabilityItems',
-      title: 'Availability Items',
+      title: 'Availability Items — solo se questa venue fa eccezione',
       type: 'array',
       fieldset: 'availability',
+      description: '⚠️ Lascialo VUOTO nel caso normale: la pagina eredita la disponibilità da ⚙️ Impostazioni sito, dove si aggiorna una volta per tutto il sito. Riempilo solo se questa venue ha davvero una disponibilità diversa dalle altre — e allora vale questo e non quella del sito.',
       of: [{
         type: 'object',
         fields: [
@@ -352,7 +353,7 @@ export default defineType({
         ],
       }],
     }),
-    defineField({ name: 'availabilityText', title: 'Availability Description', type: 'text', fieldset: 'availability', rows: 3 }),
+    defineField({ name: 'availabilityText', title: 'Availability Description — vuoto = eredita dal sito', type: 'text', fieldset: 'availability', rows: 3 }),
 
     // === TESTIMONIALS (references to testimonial documents) ===
     defineField({

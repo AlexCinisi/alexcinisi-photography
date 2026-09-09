@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/lib/sanity/client';
 import { urlFor } from '@/lib/sanity/image';
-import { locationPageBySlugQuery, allLocationSlugsQuery, homePageQuery } from '@/lib/sanity/queries';
+import { locationPageBySlugQuery, allLocationSlugsQuery, homePageQuery, siteSettingsQuery } from '@/lib/sanity/queries';
+import { resolveAvailability, bookingBaseYear, weddingDatePlaceholder, AVAILABILITY_TEXT_FALLBACK } from '@/lib/availability';
 import { PortableText } from '@portabletext/react';
 import Breadcrumb from '@/components/sections/Breadcrumb';
 import HeroLocation from '@/components/sections/HeroLocation';
@@ -65,6 +66,16 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
 
   // Fetch homepage data for shared components (About image)
   const homeData = await client.fetch(homePageQuery);
+  const settings = await client.fetch(siteSettingsQuery).catch(() => null);
+
+  // Disponibilità: la venue vince se ha righe proprie, altrimenti eredita
+  // quelle del sito. Un array vuoto in Studio significa «usa quelle del sito»,
+  // non «non mostrare la sezione».
+  const availabilityItems = resolveAvailability(
+    data.availabilityItems?.length ? data.availabilityItems : settings?.availabilityItems,
+    { autoYear: settings?.availabilityAutoYear, rolloverMonth: settings?.availabilityRolloverMonth },
+  );
+  const availabilityText = data.availabilityText || settings?.availabilityText || AVAILABILITY_TEXT_FALLBACK;
 
   // === SCHEMA MARKUP — Place (the venue, not the studio) ===
   const venueLocation = {
@@ -274,12 +285,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       )}
 
       {/* Availability */}
-      {data.availabilityItems?.length > 0 && (
-        <Availability
-          items={data.availabilityItems}
-          text={data.availabilityText || ''}
-        />
-      )}
+      <Availability items={availabilityItems} text={availabilityText} />
 
       {/* Related Stories from this venue (task 4.4 — cross-linking) */}
       {data.relatedStories?.length > 0 && (
@@ -321,6 +327,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
         variant="full"
         venueHidden={true}
         venueValue={data?.venueName || ''}
+        datePlaceholder={weddingDatePlaceholder(bookingBaseYear(settings?.availabilityRolloverMonth ?? undefined))}
       />
 
       <FinalCTA />
