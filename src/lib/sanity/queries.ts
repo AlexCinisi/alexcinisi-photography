@@ -496,3 +496,18 @@ export const guideConfirmedQuery = `*[_type == "guideLandingPage"][0] {
   tyHeading, tyBody, tySoftCtaLabel,
   tyVideo { asset-> { url } }
 }`
+
+export const guideLandingPageQuery = `*[_type == "guideLandingPage"][0] {
+  heroImage { asset->, alt, hotspot, crop },
+  heroEyebrow, heroHeading, heroSubtitle, heroCtaLabel, heroCtaMicrocopy, heroTextDark,
+  pressLabel, pressOutlets,
+  insideEyebrow, insideHeading, insideBullets[] { label, text },
+  portfolioImages[] { asset-> { _id, url, metadata { dimensions, lqip } }, alt, hotspot, crop },
+  formSectionEyebrow, formSectionHeading, formSectionBody, formReassurance,
+  formHeading, formCtaLabel, formGdprMicrocopy,
+  aboutLabel, aboutBody,
+  aboutPortrait { asset-> { _id, url, metadata { dimensions, lqip } }, alt, hotspot, crop },
+  finalHeading, finalBody, finalCtaLabel, finalSecondaryLabel,
+  metaTitle, metaDescription,
+  ogImage { asset->, alt, hotspot, crop }
+}`
