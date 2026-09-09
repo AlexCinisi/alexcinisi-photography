@@ -117,9 +117,16 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
         }
     };
 
+    // §2.5 del brief: i blocchi di testo piccolo sono DUE e non uno. Il
+    // consenso è legale e sta dentro la card, accanto alla casella che
+    // spunta; questa è commerciale e sta sotto il form. Appiattirli in un
+    // unico blocchetto grigio li fa leggere come la stessa cosa.
+    const noteParts = gdprMicrocopy.split('Privacy Policy');
+
     return (
+        <>
         <div className="ads-form-card">
-            <form onSubmit={handleSubmit} ref={formRef} id="guide-form">
+            <form onSubmit={handleSubmit} ref={formRef}>
                 <h3>{heading}</h3>
 
                 <div className={fieldClass('name')}>
@@ -151,7 +158,9 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
                 </div>
 
                 <div className="fg">
-                    <label htmlFor="guide-form-year">When are you getting married?</label>
+                    <label htmlFor="guide-form-year">
+                        When are you getting married? <span className="fg-optional">(optional)</span>
+                    </label>
                     <select
                         id="guide-form-year"
                         name="weddingYear"
@@ -217,14 +226,23 @@ export default function GuideForm({ heading, ctaLabel, gdprMicrocopy }: GuideFor
                     {status === 'submitting' ? 'Sending…' : ctaLabel}
                 </button>
 
-                <p style={{ fontSize: '.72rem', lineHeight: 1.6, color: 'var(--mid)', margin: 0 }}>
-                    {gdprMicrocopy}
-                </p>
-
                 {status === 'error' && errorMessage && (
                     <p className="fg-error">{errorMessage}</p>
                 )}
             </form>
         </div>
+
+        <p className="guide-form-note">
+            {noteParts.length === 2 ? (
+                <>
+                    {noteParts[0]}
+                    <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                    {noteParts[1]}
+                </>
+            ) : (
+                gdprMicrocopy
+            )}
+        </p>
+        </>
     );
 }

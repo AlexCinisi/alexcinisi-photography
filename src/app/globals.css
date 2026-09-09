@@ -5316,3 +5316,28 @@ a.region-card:hover { transform: translateY(-4px); }
   color: var(--mid);
 }
 .guide-legal-row a:hover { color: var(--ink); }
+
+/* --- Microcopy di valore, sotto la card ---
+   Vive sul fondo scuro della sezione form, non sul bianco della card:
+   il colore non può essere quello dei campi. */
+.guide-form-note {
+  max-width: 420px;
+  margin: 22px 0 0;
+  font-size: .76rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,.6);
+}
+.guide-form-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.guide-form-note a:hover { color: var(--white); }
+
+/* Il campo facoltativo lo dice, dentro l'etichetta e senza gridarlo. */
+.fg-optional {
+  letter-spacing: .1em;
+  text-transform: none;
+  font-size: .62rem;
+}
