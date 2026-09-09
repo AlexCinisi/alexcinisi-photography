@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/sanity/image'
 
 interface AdsHeroProps {
-  eyebrow: string
+  eyebrow?: string
   title: string
   subtitle: string
   ctaText: string
@@ -38,7 +38,8 @@ export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, 
         )}
       </div>
       <div className="ads-hero-content">
-        <p className="ads-hero-eyebrow">{eyebrow}</p>
+        {/* Facoltativo: un <p> vuoto lascerebbe comunque i suoi 28px di margine. */}
+        {eyebrow && <p className="ads-hero-eyebrow">{eyebrow}</p>}
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         <p className="ads-hero-subtitle">{subtitle}</p>
         <div className="ads-hero-ctas">
