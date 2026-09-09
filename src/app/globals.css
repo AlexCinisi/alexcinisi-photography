@@ -68,6 +68,32 @@ body {
   flex-shrink: 0;
 }
 
+/* La bussola è la hero della homepage: Red Hat 300 alla scala --type-h1, con
+   l'em in Bodoni corsivo. Finora quella scala viveva solo dentro `.hero h1 .l1`
+   e nei token, e NON esisteva nessuna regola base `h1`: un h1 che scrive il
+   testo direttamente nell'elemento, senza font-family propria, ereditava Jost
+   dal body. È così che `.ads-hero h1` è uscito in Jost per mesi.
+   Quattro h1 del sito (home, /contact, /about, /locations/[slug]) calcolano
+   ancora Jost sulla scatola: il testo si salva solo perché sta dentro span che
+   ridichiarano il font. Questa regola toglie la trappola. */
+h1 {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
+  font-weight: 300;
+  font-size: var(--type-h1);
+  letter-spacing: -.025em;
+  line-height: var(--lh-display);
+  color: var(--ink);
+}
+
+/* Peso 400 e non 300: Bodoni Moda è caricato solo al 400 (layout.tsx). Il
+   gruppo `.h2 em, .h2-lg em, h2 em` qui sotto dichiara 300 e non risolve a
+   una faccia reale — è un debito noto, non un modello da ripetere. */
+h1 em {
+  font-family: var(--font-bodoni), 'Bodoni Moda', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
 .h2,
 h2 {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
@@ -2748,6 +2774,9 @@ footer {
   font-style: italic;
   font-weight: 300;
   font-size: clamp(3rem, 6vw, 5.4rem);
+  /* Esplicita: la regola base `h1` porta -.025em, e una didone a corpo display
+     con tracking negativo si chiude. Il nome della coppia resta com'era. */
+  letter-spacing: normal;
   line-height: 1.08;
   color: var(--off-white);
   margin-bottom: 16px;
@@ -3937,6 +3966,10 @@ a.journal-credit-name:hover {
   font-weight: 300;
   font-size: clamp(2rem, 3.5vw, 2.8rem);
   letter-spacing: -0.025em;
+  /* Non è tipografia da display: è il titolo di un documento legale, e non ha
+     mai dichiarato un'interlinea. Esplicita perché la regola base `h1` porta
+     --lh-display (1.04) e qui stringerebbe la riga senza che nessuno lo chieda. */
+  line-height: normal;
   color: var(--ink);
   margin-bottom: 8px;
 }
@@ -4154,11 +4187,6 @@ a.journal-credit-name:hover {
   font-size: 3.8rem; font-weight: 300;
   line-height: 1.1; color: var(--white);
   margin-bottom: 24px;
-}
-.ads-hero h1 em {
-  font-family: var(--font-bodoni), 'Bodoni Moda', serif;
-  font-style: italic;
-  font-weight: 400;
 }
 .ads-hero-subtitle {
   font-weight: 300; font-size: 1.1rem;
