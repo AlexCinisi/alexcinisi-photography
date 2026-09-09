@@ -5166,6 +5166,12 @@ a.region-card:hover { transform: translateY(-4px); }
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .ads-header--dark .ads-header-logo { color: var(--off-white); }
+/* Il logo vero non è il testo qui sopra ma un SVG scuro, disegnato per la
+   barra bianca: sul fondo scuro spariva. È il ramo che va in produzione —
+   logoUrl arriva sempre da Sanity, la <span> è solo il ripiego.
+   brightness(0) invert(1) porta qualunque tinta a #FFFFFF, cioè --white:
+   nessun colore nuovo in palette. */
+.ads-header--dark .ads-header-logo-svg { filter: brightness(0) invert(1); }
 .ads-header--dark .ads-header-cta {
   background: var(--white);
   color: var(--ink);
