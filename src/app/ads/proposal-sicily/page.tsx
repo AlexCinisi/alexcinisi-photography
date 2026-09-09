@@ -72,7 +72,7 @@ export default async function ProposalAdsPage() {
 
   return (
     <>
-      <AdsHeader ctaText={data?.heroCtaText || "Plan Your Proposal"} logoUrl={logoUrl} />
+      <AdsHeader ctaText={data?.heroCtaText || "Plan Your Proposal"} logoUrl={logoUrl} dark />
 
       <AdsHero
         eyebrow={data?.heroEyebrow || "Proposal & Elopement Photography · Sicily"}

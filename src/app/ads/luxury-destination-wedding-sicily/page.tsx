@@ -67,7 +67,7 @@ export default async function LuxuryWeddingAdsPage() {
 
   return (
     <>
-      <AdsHeader ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"} logoUrl={logoUrl} />
+      <AdsHeader ctaText={data?.heroCtaText || "Request Your Bespoke Proposal"} logoUrl={logoUrl} dark />
 
       <AdsHero
         eyebrow={data?.heroEyebrow || "Luxury Destination Wedding Photography · Sicily"}

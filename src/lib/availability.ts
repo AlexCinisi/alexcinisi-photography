@@ -34,7 +34,11 @@ export const AVAILABILITY_FALLBACK: AvailabilityItemInput[] = [
 export const AVAILABILITY_TEXT_FALLBACK =
   'I accept a limited number of weddings each year to ensure every couple receives my full creative attention and bespoke service. Peak season dates fill 12–18 months in advance.'
 
-export const DEFAULT_ROLLOVER_MONTH = 9
+// Novembre e non settembre: la stagione siciliana arriva a ottobre, e finché
+// dura ha senso che il sito parli ancora dell'anno in corso. Deciso da Alex il
+// 9/9 guardando la conseguenza reale — col rollover a settembre la homepage
+// sarebbe passata a 2027/2028 lo stesso giorno del deploy.
+export const DEFAULT_ROLLOVER_MONTH = 11
 
 /**
  * L'anno di cui il sito parla per primo.

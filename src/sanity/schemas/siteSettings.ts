@@ -35,9 +35,9 @@ export default defineType({
     }),
     defineField({
       name: 'availabilityRolloverMonth', title: 'Da che mese il sito parla dell\'anno dopo', type: 'number',
-      fieldset: 'availability', initialValue: 9,
+      fieldset: 'availability', initialValue: 11,
       options: { list: MESI, layout: 'dropdown' },
-      description: 'Da questo mese in poi la prima riga passa all\'anno successivo. Serve perché a dicembre "anno corrente" è già una data scaduta per chi cerca un fotografo. Settembre è il default: la stagione è finita, le richieste guardano avanti.',
+      description: 'Da questo mese in poi la prima riga passa all\'anno successivo. Serve perché a dicembre "anno corrente" è già una data scaduta per chi cerca un fotografo. Novembre è il default: la stagione siciliana arriva a ottobre, e finché dura ha senso parlare ancora dell\'anno in corso.',
       hidden: ({ document }) => document?.availabilityAutoYear === false,
     }),
     defineField({
