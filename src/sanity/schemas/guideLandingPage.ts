@@ -25,6 +25,11 @@ export default defineType({
       name: 'heroImage', title: 'Hero Image', type: 'image', options: { hotspot: true }, fieldset: 'hero',
       fields: [ defineField({ name: 'alt', title: 'Alt Text', type: 'string', validation: (Rule) => Rule.required() }) ],
     }),
+    defineField({
+      name: 'heroEyebrow', title: 'Occhiello sopra l\'H1', type: 'string', fieldset: 'hero',
+      description: '⚠️ COPY DA SCRIVERE. Non è nel copypack: lo ha proposto il design. Proposta: "The Sicily Wedding Guide". Se lo lasci vuoto la hero non mostra nessun occhiello — è un elemento facoltativo.',
+      initialValue: '[ALEX] occhiello hero',
+    }),
     defineField({ name: 'heroHeading', title: 'H1 Heading', type: 'string', fieldset: 'hero', initialValue: 'Planning a Wedding in Sicily? Start Here.' }),
     defineField({ name: 'heroSubtitle', title: 'Subheadline', type: 'text', rows: 3, fieldset: 'hero', initialValue: 'The free guide international couples use to choose their venue, their season, and their light — written by a Sicilian-born wedding photographer published in Vogue Italia.' }),
     defineField({ name: 'heroCtaLabel', title: 'CTA button', type: 'string', fieldset: 'hero', initialValue: 'Send Me the Guide', description: 'Ancora verso il form, non invia. Sostituisce "Get the Free Guide" del copypack: imperativo transazionale vietato da brand-voice §7.' }),
@@ -39,6 +44,11 @@ export default defineType({
     }),
 
     // ──── WHAT'S INSIDE ────
+    defineField({
+      name: 'insideEyebrow', title: 'Occhiello sopra il titolo', type: 'string', fieldset: 'inside',
+      description: '⚠️ COPY DA SCRIVERE. Non è nel copypack: lo ha proposto il design. Proposta: "Inside". Vuoto = nessun occhiello.',
+      initialValue: '[ALEX] occhiello sezione inside',
+    }),
     defineField({ name: 'insideHeading', title: 'Section title', type: 'string', fieldset: 'inside', initialValue: "What's inside the guide" }),
     defineField({
       name: 'insideBullets', title: 'I 3 bullet', type: 'array', fieldset: 'inside',
@@ -70,7 +80,32 @@ export default defineType({
     }),
 
     // ──── FORM ────
-    defineField({ name: 'formHeading', title: 'Form title', type: 'string', fieldset: 'form', initialValue: 'Where should I send it?' }),
+    // Colonna sinistra della sezione form. Nessuno di questi quattro campi
+    // viene dal copypack: li ha proposti il design del 9/9 e vanno riscritti
+    // da Alex. Il titolo non è facoltativo — GuideForm apre con un <h3> e
+    // senza un <h2> in questa colonna la gerarchia salta da h1 a h3.
+    defineField({
+      name: 'formSectionEyebrow', title: 'Occhiello (colonna sinistra)', type: 'string', fieldset: 'form',
+      description: '⚠️ COPY DA SCRIVERE. Proposta del design: "The guide". Vuoto = nessun occhiello.',
+      initialValue: '[ALEX] occhiello sezione form',
+    }),
+    defineField({
+      name: 'formSectionHeading', title: 'H2 della sezione (obbligatorio)', type: 'string', fieldset: 'form',
+      description: '⚠️ COPY DA SCRIVERE. Proposta del design: "Twelve venues, four seasons, one island" — ricomposizione di copy già approvato. NON lasciarlo vuoto: è l\'unico h2 della sezione e senza di lui la gerarchia dei titoli salta da h1 a h3.',
+      initialValue: '[ALEX] titolo della sezione form',
+    }),
+    defineField({
+      name: 'formSectionBody', title: 'Paragrafo (colonna sinistra)', type: 'text', rows: 3, fieldset: 'form',
+      description: '⚠️ COPY DA SCRIVERE. Il design proponeva "Fifty-two pages, written for couples planning from another continent. It arrives in your inbox within a minute." — 🔴 il PDF in public/downloads ne ha 13, non 52. Il numero è stato tolto apposta: non riscriverlo senza contare le pagine. Vuoto = nessun paragrafo.',
+      initialValue: '[ALEX] paragrafo sezione form',
+    }),
+    defineField({
+      name: 'formReassurance', title: 'Rassicurazioni (max 3)', type: 'array', of: [{ type: 'string' }], fieldset: 'form',
+      description: '⚠️ COPY DA SCRIVERE. Proposte del design: "Instant download, no waiting list" · "Written from the island, not researched" · "Unsubscribe in one click". Vuoto = nessun elenco.',
+      validation: (Rule) => Rule.max(3),
+      initialValue: ['[ALEX] rassicurazione 1', '[ALEX] rassicurazione 2', '[ALEX] rassicurazione 3'],
+    }),
+    defineField({ name: 'formHeading', title: 'Titolo dentro la card', type: 'string', fieldset: 'form', initialValue: 'Where should I send it?' }),
     defineField({ name: 'formCtaLabel', title: 'Submit button', type: 'string', fieldset: 'form', initialValue: 'Send Me the Guide' }),
     defineField({
       name: 'formGdprMicrocopy', title: 'Microcopy sotto il form', type: 'text', rows: 3, fieldset: 'form',
