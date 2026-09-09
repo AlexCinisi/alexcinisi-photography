@@ -2248,6 +2248,7 @@ label {
 input,
 select,
 textarea {
+  font-family: inherit;
   background: var(--off-white);
   border: 1px solid var(--rule);
   color: var(--ink);
@@ -4114,6 +4115,7 @@ a.journal-credit-name:hover {
   }
 }
 .ads-header-cta {
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-size: .68rem; font-weight: 400;
   letter-spacing: .22em; text-transform: uppercase;
   color: var(--white); background: var(--ink);
@@ -4637,6 +4639,7 @@ a.journal-credit-name:hover {
 
 .ads-form-submit {
   width: 100%;
+  font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   background: var(--ink);
   color: var(--white);
   border: none;
