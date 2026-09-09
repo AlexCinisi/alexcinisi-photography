@@ -5,9 +5,13 @@ import { useEffect, useState } from 'react'
 interface AdsHeaderProps {
   ctaText: string
   logoUrl?: string
+  /** id dell'ancora a cui porta la CTA. Le due pagine ads usano 'book'. */
+  anchorId?: string
+  /** Barra scura anziché bianca: serve dove la hero è una foto scura a piena altezza. */
+  dark?: boolean
 }
 
-export default function AdsHeader({ ctaText, logoUrl }: AdsHeaderProps) {
+export default function AdsHeader({ ctaText, logoUrl, anchorId = 'book', dark = false }: AdsHeaderProps) {
   const [hidden, setHidden] = useState(false)
   const [lastY, setLastY] = useState(0)
 
@@ -23,11 +27,11 @@ export default function AdsHeader({ ctaText, logoUrl }: AdsHeaderProps) {
 
   const scrollToBook = (e: React.MouseEvent) => {
     e.preventDefault()
-    document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById(anchorId)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <header className={`ads-header ${hidden ? 'hidden' : ''}`}>
+    <header className={`ads-header ${dark ? 'ads-header--dark' : ''} ${hidden ? 'hidden' : ''}`}>
       {logoUrl ? (
         <img src={logoUrl} alt="Alex Cinisi Photography" className="ads-header-logo-svg" />
       ) : (

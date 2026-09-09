@@ -11,11 +11,15 @@ interface AdsHeroProps {
   microText: string
   image?: any // Sanity image object
   secondaryCta?: React.ReactNode
+  /** id dell'ancora a cui porta la CTA. Le due pagine ads usano 'book'. */
+  anchorId?: string
+  /** Modificatori di sezione, es. la variante testo scuro per foto chiare. */
+  className?: string
 }
 
-export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, image, secondaryCta }: AdsHeroProps) {
+export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, image, secondaryCta, anchorId = 'book', className = '' }: AdsHeroProps) {
   return (
-    <section className="ads-hero">
+    <section className={`ads-hero ${className}`.trim()}>
       <div className="ads-hero-bg">
         {image?.asset && (
           <Image
@@ -38,7 +42,7 @@ export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, 
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         <p className="ads-hero-subtitle">{subtitle}</p>
         <div className="ads-hero-ctas">
-          <a href="#book" className="ads-hero-cta">{ctaText}</a>
+          <a href={`#${anchorId}`} className="ads-hero-cta">{ctaText}</a>
           {secondaryCta}
         </div>
         <p className="ads-hero-micro">{microText}</p>
