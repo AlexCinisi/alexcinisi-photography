@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import CookiePrefsButton from '@/components/CookiePrefsButton';
+import { copyrightLine } from '@/lib/copyright';
 
 interface FooterProps {
     logo?: any;
@@ -24,7 +25,7 @@ export default function Footer({ logo, logoFooter }: FooterProps) {
                     "Alex Cinisi Photography"
                 )}
             </Link>
-            <p className="footer-copy">© 2026 Alex Cinisi Photography · Luxury Wedding Photographer · Sicily, Italy</p>
+            <p className="footer-copy">{copyrightLine()}</p>
             <div className="footer-links">
                 <Link href="/journal">Journal</Link>
                 <Link href="/locations">Locations</Link>

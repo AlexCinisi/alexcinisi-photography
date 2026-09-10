@@ -8,6 +8,7 @@ import RevealOnScroll from '@/components/ui/RevealOnScroll'
 import { client } from '@/lib/sanity/client'
 import { guideLandingPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
 import { urlFor } from '@/lib/sanity/image'
+import { copyrightLine } from '@/lib/copyright'
 
 // ⚠️ Guscio spoglio: LayoutShell non monta Nav, Footer, StickyMobileCTA né i
 // due JSON-LD su questa route (isBareShell). Ogni link è un'uscita da una
@@ -217,7 +218,7 @@ export default async function SicilyWeddingGuidePage() {
         </RevealOnScroll>
 
         <div className="guide-legal-row">
-          <span>© {new Date().getFullYear()} Alex Cinisi Photography</span>
+          <span>{copyrightLine()}</span>
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/cookie-policy">Cookie Policy</Link>
         </div>
