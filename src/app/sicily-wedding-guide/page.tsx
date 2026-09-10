@@ -205,7 +205,7 @@ export default async function SicilyWeddingGuidePage() {
       </section>
 
       {/* Chiusura: è anche il footer che questa pagina non ha */}
-      <section className="ads-closing">
+      <section className="ads-closing ads-closing--dark">
         <RevealOnScroll>
           <h2 className="ads-closing-quote">{data?.finalHeading || 'Ready when you are'}</h2>
           <p className="ads-section-subtitle">{data?.finalBody || 'Download the guide and take your time with it. Or, if Sicily is already decided, skip ahead —'}</p>

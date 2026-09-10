@@ -5356,6 +5356,38 @@ a.region-card:hover { transform: translateY(-4px); }
 }
 .guide-legal-row a:hover { color: var(--ink); }
 
+/* --- Chiusura scura ---
+   Ogni pagina del sito finisce su una fascia --ink: e' il <footer>. Questa
+   pagina ha il guscio spoglio e il footer non ce l'ha, quindi la chiusura ne
+   fa le veci - ma restava bianca, e la pagina finiva chiara mentre tutto il
+   resto del sito finisce scuro. I valori del testo non sono nuovi: quelli dei
+   titoli vengono da .ads-section-dark, quelli della riga legale dal <footer>.
+   Le due pagine ads non passano il modificatore e restano bianche. */
+.ads-closing--dark { background: var(--ink); }
+.ads-closing--dark .ads-closing-quote { color: var(--white); }
+.ads-closing--dark .ads-section-subtitle { color: rgba(255,255,255,.75); }
+.ads-closing--dark .ads-closing-cta {
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--white);
+}
+.ads-closing--dark .ads-closing-cta:hover {
+  background: transparent;
+  color: var(--white);
+}
+.ads-closing--dark .btn-text {
+  color: var(--off-white);
+  border-bottom-color: rgba(250,250,248,.4);
+}
+.ads-closing--dark .btn-text:hover {
+  color: var(--white);
+  border-bottom-color: var(--white);
+}
+.ads-closing--dark .guide-legal-row { border-top-color: rgba(250,250,248,.08); }
+.ads-closing--dark .guide-legal-row span,
+.ads-closing--dark .guide-legal-row a { color: rgba(250,250,248,.32); }
+.ads-closing--dark .guide-legal-row a:hover { color: var(--off-white); }
+
 /* --- Microcopy di valore, sotto la card ---
    Vive sul fondo scuro della sezione form, non sul bianco della card:
    il colore non può essere quello dei campi. */
