@@ -31,13 +31,13 @@ export default function AdsHeader({ ctaText, logoUrl, anchorId = 'book', dark = 
   }
 
   return (
-    <header className={`ads-header ${dark ? 'ads-header--dark' : ''} ${hidden ? 'hidden' : ''}`}>
+    <header className={`lp-header ${dark ? 'lp-header--dark' : ''} ${hidden ? 'hidden' : ''}`}>
       {logoUrl ? (
-        <img src={logoUrl} alt="Alex Cinisi Photography" className="ads-header-logo-svg" />
+        <img src={logoUrl} alt="Alex Cinisi Photography" className="lp-header-logo-svg" />
       ) : (
-        <span className="ads-header-logo">Alex Cinisi</span>
+        <span className="lp-header-logo">Alex Cinisi</span>
       )}
-      <button className="ads-header-cta" onClick={scrollToBook}>
+      <button className="lp-header-cta" onClick={scrollToBook}>
         {ctaText}
       </button>
     </header>

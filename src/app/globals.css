@@ -4121,8 +4121,13 @@ a.journal-credit-name:hover {
    ADS LANDING PAGES
    ============================================ */
 
-/* --- Ads Header --- */
-.ads-header {
+/* --- Header delle landing (ads + guida) ---
+   NON rinominare in .ads-header: quel nome esatto è nella lista di un filtro
+   cosmetico degli ad blocker, che lo manda in display:none. Verificato in
+   produzione il 10/9 — la barra spariva su tutte e tre le landing, mentre
+   .ads-hero, .ads-form-card e perfino ad-banner/advertisement restano normali.
+   Il prefisso lp- (landing page) è fuori dalla lista. */
+.lp-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; justify-content: space-between; align-items: center;
   padding: 18px 48px;
@@ -4131,23 +4136,23 @@ a.journal-credit-name:hover {
   border-bottom: 1px solid var(--rule);
   transition: transform .35s ease;
 }
-.ads-header.hidden { transform: translateY(-100%); }
-.ads-header-logo {
+.lp-header.hidden { transform: translateY(-100%); }
+.lp-header-logo {
   font-weight: 400; font-size: .8rem;
   letter-spacing: .32em; text-transform: uppercase;
   color: var(--ink); pointer-events: none;
 }
-.ads-header-logo-svg {
+.lp-header-logo-svg {
   height: 32px;
   width: auto;
   pointer-events: none;
 }
 @media (max-width: 768px) {
-  .ads-header-logo-svg {
+  .lp-header-logo-svg {
     height: 26px;
   }
 }
-.ads-header-cta {
+.lp-header-cta {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-size: .68rem; font-weight: 400;
   letter-spacing: .22em; text-transform: uppercase;
@@ -4155,7 +4160,7 @@ a.journal-credit-name:hover {
   padding: 12px 28px; border: none; cursor: pointer;
   transition: background .25s;
 }
-.ads-header-cta:hover { background: var(--charcoal); }
+.lp-header-cta:hover { background: var(--charcoal); }
 
 /* --- Ads Hero --- */
 .ads-hero {
@@ -4214,7 +4219,7 @@ a.journal-credit-name:hover {
   color: rgba(255,255,255,.6); margin-top: 16px;
 }
 @media (max-width: 768px) {
-  .ads-header { padding: 14px 20px; }
+  .lp-header { padding: 14px 20px; }
   .ads-hero h1 { font-size: 2.4rem; }
   .ads-hero-subtitle { font-size: 1rem; }
 }
@@ -5185,27 +5190,27 @@ a.region-card:hover { transform: translateY(-4px); }
    ============================================ */
 
 /* --- Barra scura ---
-   .ads-header è bianca al 97%: sopra una hero fotografica scura a piena
+   .lp-header è bianca al 97%: sopra una hero fotografica scura a piena
    altezza diventa una fascia chiara in cima alla pagina. Le due pagine ads
    non passano il flag e restano bianche. */
-.ads-header--dark {
+.lp-header--dark {
   background: rgba(30,29,27,.92);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
-.ads-header--dark .ads-header-logo { color: var(--off-white); }
+.lp-header--dark .lp-header-logo { color: var(--off-white); }
 /* Il logo vero non è il testo qui sopra ma un SVG scuro, disegnato per la
    barra bianca: sul fondo scuro spariva. È il ramo che va in produzione —
    logoUrl arriva sempre da Sanity, la <span> è solo il ripiego.
    brightness(0) invert(1) porta qualunque tinta a #FFFFFF, cioè --white:
    nessun colore nuovo in palette. */
-.ads-header--dark .ads-header-logo-svg { filter: brightness(0) invert(1); }
-.ads-header--dark .ads-header-cta {
+.lp-header--dark .lp-header-logo-svg { filter: brightness(0) invert(1); }
+.lp-header--dark .lp-header-cta {
   background: var(--white);
   color: var(--ink);
   border: 1px solid var(--white);
 }
-.ads-header--dark .ads-header-cta:hover {
+.lp-header--dark .lp-header-cta:hover {
   background: transparent;
   color: var(--white);
 }
