@@ -5191,8 +5191,9 @@ a.region-card:hover { transform: translateY(-4px); }
 
 /* --- Barra scura ---
    .lp-header è bianca al 97%: sopra una hero fotografica scura a piena
-   altezza diventa una fascia chiara in cima alla pagina. Le due pagine ads
-   non passano il flag e restano bianche. */
+   altezza diventa una fascia chiara in cima alla pagina. Nata per la landing
+   della guida, dal commit 61227e4 la passano anche le due pagine ads: oggi
+   tutte e tre le landing hanno la barra scura, nessuna resta bianca. */
 .lp-header--dark {
   background: rgba(30,29,27,.92);
   backdrop-filter: blur(6px);
