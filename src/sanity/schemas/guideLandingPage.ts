@@ -5,6 +5,26 @@ export default defineType({
   title: 'Guide LP — Sicily Wedding Guide',
   type: 'document',
 
+  // Guardia singleton. La pagina legge `*[_type == "guideLandingPage"][0]`:
+  // con due documenti vincerebbe quello che capita per primo, e le modifiche
+  // fatte sull'altro sembrerebbero semplicemente non arrivare in produzione —
+  // un difetto che non somiglia affatto alla sua causa.
+  // Blocca la pubblicazione del secondo, non la sua creazione: Sanity valida i
+  // documenti, non i click. Serve a rendere l'errore visibile subito e in
+  // Studio, non a rendere l'errore impossibile.
+  validation: (Rule) =>
+    Rule.custom(async (doc: any, context: any) => {
+      if (!doc?._id) return true
+      const baseId = String(doc._id).replace(/^drafts\./, '')
+      const client = context.getClient({ apiVersion: '2024-01-01' })
+      const ids: string[] = await client.fetch('*[_type == "guideLandingPage"]._id')
+      const altri = new Set(
+        ids.map((id) => id.replace(/^drafts\./, '')).filter((id) => id !== baseId),
+      )
+      if (altri.size === 0) return true
+      return `Esiste già un altro documento "Guide LP" (${[...altri].join(', ')}). La pagina ne legge uno solo: tieni questo oppure quello, non entrambi.`
+    }),
+
   fieldsets: [
     { name: 'hero', title: '🟢 Hero — Immagine + H1 + CTA', options: { collapsible: true, collapsed: false } },
     { name: 'press', title: '🟡 Press strip', options: { collapsible: true, collapsed: true } },
