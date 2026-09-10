@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity/image'
+import { goToForm } from '@/lib/go-to-form'
 
 interface AdsHeroProps {
   eyebrow?: string
@@ -43,7 +44,13 @@ export default function AdsHero({ eyebrow, title, subtitle, ctaText, microText, 
         <h1 dangerouslySetInnerHTML={{ __html: title }} />
         <p className="ads-hero-subtitle">{subtitle}</p>
         <div className="ads-hero-ctas">
-          <a href={`#${anchorId}`} className="ads-hero-cta">{ctaText}</a>
+          <a
+            href={`#${anchorId}`}
+            className="ads-hero-cta"
+            onClick={(e) => { e.preventDefault(); goToForm(anchorId) }}
+          >
+            {ctaText}
+          </a>
           {secondaryCta}
         </div>
         <p className="ads-hero-micro">{microText}</p>

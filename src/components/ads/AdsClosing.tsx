@@ -1,4 +1,5 @@
 import { copyrightLine } from '@/lib/copyright'
+import AnchorCta from './AnchorCta'
 
 interface AdsClosingProps {
   quote: string
@@ -9,7 +10,7 @@ export default function AdsClosing({ quote, ctaText }: AdsClosingProps) {
   return (
     <section className="ads-closing">
       <p className="ads-closing-quote">{quote}</p>
-      <a href="#book" className="ads-closing-cta">{ctaText}</a>
+      <AnchorCta anchorId="book" className="ads-closing-cta">{ctaText}</AnchorCta>
       <p className="ads-closing-copyright">{copyrightLine()}</p>
       <p style={{ marginTop: 12 }}>
         <a href="/privacy-policy" target="_blank" rel="noopener noreferrer"

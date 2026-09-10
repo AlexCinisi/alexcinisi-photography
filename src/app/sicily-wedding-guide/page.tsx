@@ -4,6 +4,7 @@ import Link from 'next/link'
 import AdsHeader from '@/components/ads/AdsHeader'
 import AdsHero from '@/components/ads/AdsHero'
 import GuideForm from '@/components/guide/GuideForm'
+import AnchorCta from '@/components/ads/AnchorCta'
 import RevealOnScroll from '@/components/ui/RevealOnScroll'
 import { client } from '@/lib/sanity/client'
 import { guideLandingPageQuery, siteLogoQuery } from '@/lib/sanity/queries'
@@ -210,7 +211,7 @@ export default async function SicilyWeddingGuidePage() {
         <RevealOnScroll>
           <h2 className="ads-closing-quote">{data?.finalHeading || 'Ready when you are'}</h2>
           <p className="ads-section-subtitle">{data?.finalBody || 'Download the guide and take your time with it. Or, if Sicily is already decided, skip ahead —'}</p>
-          <a href="#guide-form" className="ads-closing-cta">{data?.finalCtaLabel || 'Send Me the Guide'}</a>
+          <AnchorCta anchorId="guide-form" className="ads-closing-cta">{data?.finalCtaLabel || 'Send Me the Guide'}</AnchorCta>
           <p style={{ marginTop: '28px' }}>
             {/* L'unico link che esce dalla pagina */}
             <Link href="/call" className="btn-text">{data?.finalSecondaryLabel || 'Check your date instead →'}</Link>

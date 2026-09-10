@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { goToForm } from '@/lib/go-to-form'
 
 interface AdsHeaderProps {
   ctaText: string
@@ -27,7 +28,7 @@ export default function AdsHeader({ ctaText, logoUrl, anchorId = 'book', dark = 
 
   const scrollToBook = (e: React.MouseEvent) => {
     e.preventDefault()
-    document.getElementById(anchorId)?.scrollIntoView({ behavior: 'smooth' })
+    goToForm(anchorId)
   }
 
   return (
