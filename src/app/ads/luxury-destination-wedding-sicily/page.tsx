@@ -5,6 +5,7 @@ import AdsHero from '@/components/ads/AdsHero'
 import AdsTrustBar from '@/components/ads/AdsTrustBar'
 import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
+import AnchorCta from '@/components/ads/AnchorCta'
 import PortfolioGrid from '@/components/sections/PortfolioGrid'
 import { client } from '@/lib/sanity/client'
 import { adsLuxuryPageQuery, siteLogoQuery, siteSettingsQuery } from '@/lib/sanity/queries'
@@ -222,7 +223,7 @@ export default async function LuxuryWeddingAdsPage() {
             <li key={i}>{item}</li>
           ))}
         </ul>
-        <a href="#book" className="ads-closing-cta">{data?.heroCtaText || "Request Your Bespoke Proposal"}</a>
+        <AnchorCta anchorId="book" className="ads-closing-cta">{data?.heroCtaText || "Request Your Bespoke Proposal"}</AnchorCta>
       </section>
 
       {/* Testimonials */}

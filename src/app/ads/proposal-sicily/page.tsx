@@ -7,6 +7,7 @@ import AdsForm from '@/components/ads/AdsForm'
 import AdsClosing from '@/components/ads/AdsClosing'
 import AdsWhatsApp from '@/components/ads/AdsWhatsApp'
 import AdsFaq from '@/components/ads/AdsFaq'
+import AnchorCta from '@/components/ads/AnchorCta'
 import PortfolioGrid from '@/components/sections/PortfolioGrid'
 import { client } from '@/lib/sanity/client'
 import { adsProposalPageQuery, siteLogoQuery, siteSettingsQuery } from '@/lib/sanity/queries'
@@ -205,7 +206,7 @@ export default async function ProposalAdsPage() {
             ))}
           </div>
           <div style={{ marginTop: 40 }}>
-            <a href="#book" className="ads-closing-cta">Plan Your Proposal</a>
+            <AnchorCta anchorId="book" className="ads-closing-cta">Plan Your Proposal</AnchorCta>
           </div>
         </div>
       </section>
