@@ -11,6 +11,23 @@ updates:
       - "security"
     commit-message:
       prefix: "chore(deps):"
+    # react e react-dom devono avere la stessa versione esatta, o il build fallisce
+    # (PR #43, 24/8 e 14/9): arrivano sempre in una PR sola, anche come security update.
+    groups:
+      react:
+        applies-to: version-updates
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      react-security:
+        applies-to: security-updates
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
     ignore:
       # Direttiva di progetto: gli upgrade major si pianificano, mai automatici.
       # La wildcard copre tutte le dipendenze, presenti e future — l'elenco a mano
