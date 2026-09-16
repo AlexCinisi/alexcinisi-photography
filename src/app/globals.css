@@ -126,9 +126,19 @@ h2 em {
 .sec-title--h2 { font-size: var(--type-h2); line-height: var(--lh-display); }
 .sec-title--h3 { font-size: var(--type-h3); line-height: 1.2; }
 
+/* Stessa trappola chiusa sull'h1 il 9/9: dichiarare qui la famiglia senza la
+   misura lascia la scala al default del browser (1.17em, cioè 18,72px), che non
+   appartiene al design system. Misurato il 16/9 su 108 h3 in 14 rotte: nessuno
+   cambia: tutti ricevono già una misura da una regola più specifica. Questa vale
+   solo per un h3 futuro scritto nudo.
+   `--type-h3` è una scelta, non un default: è il token del suo livello e tiene la
+   simmetria con `h1`/`--type-h1`. L'alternativa considerata era `--type-h4`
+   (1,15rem), più vicina ai 13-22px degli h3 reali, che vivono tutti dentro un
+   componente. Se un h3 nudo dovrà stare in quella fascia, è una parola sola. */
 h3 {
   font-family: var(--font-redhat), 'Red Hat Display', sans-serif;
   font-weight: 400;
+  font-size: var(--type-h3);
 }
 
 .s-ink .h2,
