@@ -2287,6 +2287,17 @@ textarea {
   -webkit-appearance: none;
 }
 
+/* `button` non era nel gruppo qui sopra, e i controlli di form non ereditano il
+   font dal body: il default UA è Arial. Chi si chiama `btn-*` era coperto per
+   caso da `[class*="btn-"]` — un selettore per sottostringa, che né un grep di
+   `button` né ds:check possono vedere. Gli altri cinque no: misurati in Arial il
+   16/9 — .hamburger, .lb-close, .lb-arrow, .cc-close e .cc-customise, l'unico dei
+   cinque con testo visibile. Le classi che dichiarano un font proprio vincono. */
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 input::placeholder,
 textarea::placeholder {
   color: rgba(58, 56, 53, .28);
