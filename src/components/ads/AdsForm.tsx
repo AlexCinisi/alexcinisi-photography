@@ -66,7 +66,8 @@ export default function AdsForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!formData.firstName || !formData.email || !formData.privacyConsent) return
+    // Data e testo sono obbligatori in contact-schema.ts: senza, l'API risponde 400
+    if (!formData.firstName || !formData.email || !formData.weddingDate.trim() || !formData.vision.trim() || !formData.privacyConsent) return
     setStatus('submitting')
 
     try {
@@ -83,7 +84,7 @@ export default function AdsForm({
           phone: formData.phone,
           weddingDate: formData.weddingDate,
           location: formData.location,
-          message: formData.vision,
+          vision: formData.vision,
           source: urlSource ? `${source}-${urlSource}` : source,
           website: honeypot,
           turnstileToken,
@@ -213,10 +214,10 @@ export default function AdsForm({
               onChange={e => updateField('phone', e.target.value)}
             />
 
-            <label htmlFor="ads-date">{dateLabel}</label>
+            <label htmlFor="ads-date">{dateLabel} *</label>
             <input
               type={datePlaceholder ? 'text' : 'date'}
-              id="ads-date"
+              id="ads-date" required
               placeholder={datePlaceholder}
               value={formData.weddingDate}
               onChange={e => updateField('weddingDate', e.target.value)}
@@ -230,9 +231,9 @@ export default function AdsForm({
               onChange={e => updateField('location', e.target.value)}
             />
 
-            <label htmlFor="ads-vision">{visionLabel}</label>
+            <label htmlFor="ads-vision">{visionLabel} *</label>
             <textarea
-              id="ads-vision" rows={4}
+              id="ads-vision" rows={4} required
               placeholder={visionPlaceholder}
               value={formData.vision}
               onChange={e => updateField('vision', e.target.value)}
