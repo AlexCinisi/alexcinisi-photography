@@ -8,7 +8,8 @@
     "start": "next start",
     "ds:check": "node scripts/ds-check.mjs",
     "ds:check:strict": "node scripts/ds-check.mjs --strict",
-    "ds:selftest": "node scripts/ds-check.mjs --self-test"
+    "ds:selftest": "node scripts/ds-check.mjs --self-test",
+    "mappa:sito": "node scripts/mappa-sito.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^15.5.29",
