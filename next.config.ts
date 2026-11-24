@@ -2,10 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
     images: {
+        // Ridimensiona la pipeline di Sanity, non Vercel: vedi src/lib/sanity/image-loader.ts
+        loader: 'custom',
+        loaderFile: './src/lib/sanity/image-loader.ts',
+        // Solo il nostro progetto Sanity: prima passava qualsiasi progetto di cdn.sanity.io.
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname: 'cdn.sanity.io',
+                pathname: '/images/th9rzv5a/**',
             },
         ],
         qualities: [75, 85, 90],
